@@ -1,5 +1,6 @@
 package com.furelise.vacation.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -12,18 +13,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.furelise.emp.Emp;
+import com.furelise.emp.model.Emp;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "vacation")
-public class Vacation {
+@Data
+public class Vacation implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer vaID;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "empID", referencedColumnName = "empID")
-	private Emp emp;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "empID", referencedColumnName = "empID")
+	private Integer empID;
 	private Date vaStart;
 	private Date vaEnd;
 	
@@ -31,78 +35,4 @@ public class Vacation {
 	public Vacation() {
 		super();
 	}
-
-	// Constructor without PK
-	public Vacation(Emp emp, Date vaStart, Date vaEnd) {
-		super();
-		this.emp = emp;
-		this.vaStart = vaStart;
-		this.vaEnd = vaEnd;
-	}
-
-	public Vacation(Integer vaID, Emp emp, Date vaStart, Date vaEnd) {
-		super();
-		this.vaID = vaID;
-		this.emp = emp;
-		this.vaStart = vaStart;
-		this.vaEnd = vaEnd;
-	}
-
-	public Integer getVaID() {
-		return vaID;
-	}
-
-	public void setVaID(Integer vaID) {
-		this.vaID = vaID;
-	}
-
-	public Emp getEmp() {
-		return emp;
-	}
-
-	public void setEmp(Emp emp) {
-		this.emp = emp;
-	}
-
-	public Date getVaStart() {
-		return vaStart;
-	}
-
-	public void setVaStart(Date vaStart) {
-		this.vaStart = vaStart;
-	}
-
-	public Date getVaEnd() {
-		return vaEnd;
-	}
-
-	public void setVaEnd(Date vaEnd) {
-		this.vaEnd = vaEnd;
-	}
-
-	@Override
-	public String toString() {
-		return "Vacation [vaID=" + vaID + ", vaStart=" + vaStart + ", vaEnd=" + vaEnd + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(vaEnd, vaID, vaStart);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Vacation other = (Vacation) obj;
-		return Objects.equals(vaEnd, other.vaEnd) && Objects.equals(vaID, other.vaID)
-				&& Objects.equals(vaStart, other.vaStart);
-	}
-
-	
-
 }

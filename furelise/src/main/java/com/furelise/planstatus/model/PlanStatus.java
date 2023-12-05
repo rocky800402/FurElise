@@ -1,5 +1,6 @@
 package com.furelise.planstatus.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,9 +16,12 @@ import javax.persistence.Table;
 
 import com.furelise.planord.model.PlanOrd;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "planstatus")
-public class PlanStatus {
+@Data
+public class PlanStatus implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "planStatusID", updatable = false)
@@ -26,81 +30,12 @@ public class PlanStatus {
     @Column(name = "planStatus")
     private String planStatus;
     
-    @OneToMany(mappedBy = "planStatus", cascade = CascadeType.ALL)
-    @OrderBy("planStatusID")
-    private Set<PlanOrd> planOrds;
+//    @OneToMany(mappedBy = "planStatus", cascade = CascadeType.ALL)
+//    @OrderBy("planStatusID")
+//    private Set<PlanOrd> planOrds;
 
     public PlanStatus() {
         super();
     }
-
-    
-    public PlanStatus(String planStatus, Set<PlanOrd> planOrds) {
-		super();
-		this.planStatus = planStatus;
-		this.planOrds = planOrds;
-	}
-
-
-	public PlanStatus(Integer planStatusID, String planStatus, Set<PlanOrd> planOrds) {
-		super();
-		this.planStatusID = planStatusID;
-		this.planStatus = planStatus;
-		this.planOrds = planOrds;
-	}
-
-
-	public Set<PlanOrd> getPlanOrds() {
-		return planOrds;
-	}
-
-
-	public void setPlanOrds(Set<PlanOrd> planOrds) {
-		this.planOrds = planOrds;
-	}
-
-
-	public void setPlanStatusID(Integer planStatusID) {
-        this.planStatusID = planStatusID;
-    }
-
-    public Integer getPlanStatusID() {
-        return planStatusID;
-    }
-
-    public void setPlanStatus(String planStatus) {
-        this.planStatus = planStatus;
-    }
-
-    public String getPlanStatus() {
-        return planStatus;
-    }
-
-	@Override
-	public String toString() {
-		return "PlanStatus [planStatusID=" + planStatusID + ", planStatus=" + planStatus + ", planOrds=" + planOrds
-				+ "]";
-	}
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(planOrds, planStatus, planStatusID);
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PlanStatus other = (PlanStatus) obj;
-		return Objects.equals(planOrds, other.planOrds) && Objects.equals(planStatus, other.planStatus)
-				&& Objects.equals(planStatusID, other.planStatusID);
-	}
-
 
 }
