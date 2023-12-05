@@ -1,5 +1,6 @@
 package com.furelise.period.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,11 +16,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.furelise.planord.model.PlanOrd;
+
+
+import lombok.Data;
 
 @Entity
 @Table(name = "period")
-public class Period {
+@Data
+public class Period implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "periodID", updatable = false )
@@ -28,9 +32,9 @@ public class Period {
     @Column(name = "planPeriod")
     private Integer planPeriod;
     
-    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
-    @OrderBy("periodID")
-    private Set<PlanOrd> planOrds;
+//    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
+//    @OrderBy("periodID")
+//    private Set<PlanOrd> planOrds;
     
    
 
@@ -40,79 +44,7 @@ public class Period {
 
     
 
-    public Period(Integer planPeriod, Set<PlanOrd> planOrds) {
-		super();
-		this.planPeriod = planPeriod;
-		this.planOrds = planOrds;
-	}
-
-
-
-	public Period(Integer periodID, Integer planPeriod, Set<PlanOrd> planOrds) {
-		super();
-		this.periodID = periodID;
-		this.planPeriod = planPeriod;
-		this.planOrds = planOrds;
-	}
-
-
-
-	public Set<PlanOrd> getPlanOrds() {
-		return planOrds;
-	}
-
-
-
-	public void setPlanOrds(Set<PlanOrd> planOrds) {
-		this.planOrds = planOrds;
-	}
-
-
-
-	public void setPeriodID(Integer periodID) {
-        this.periodID = periodID;
-    }
-
-    public Integer getPeriodID() {
-        return periodID;
-    }
-
-    public void setPlanPeriod(Integer planPeriod) {
-        this.planPeriod = planPeriod;
-    }
-
-    public Integer getPlanPeriod() {
-        return planPeriod;
-    }
-
-
-
-	@Override
-	public String toString() {
-		return "Period [periodID=" + periodID + ", planPeriod=" + planPeriod + ", planOrds=" + planOrds + "]";
-	}
-
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(periodID, planOrds, planPeriod);
-	}
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Period other = (Period) obj;
-		return Objects.equals(periodID, other.periodID) && Objects.equals(planOrds, other.planOrds)
-				&& Objects.equals(planPeriod, other.planPeriod);
-	}
+    
 
     
     

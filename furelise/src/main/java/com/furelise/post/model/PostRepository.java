@@ -1,9 +1,9 @@
-package com.furelise.orddetail.model;
+package com.furelise.post.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrdDetailRepository extends JpaRepository<OrdDetail,OrdDetailPK>{
+public interface PostRepository extends JpaRepository<Post, Integer>{
 
 }

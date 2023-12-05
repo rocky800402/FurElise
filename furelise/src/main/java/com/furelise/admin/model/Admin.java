@@ -1,5 +1,6 @@
 package com.furelise.admin.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
-@Table(name = "`admin`")
-public class Admin {
+@Table(name = "admin")
+@Data
+public class Admin implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,81 +65,4 @@ public class Admin {
 		this.adStatus = adStatus;
 	}
 
-
-	public Integer getAdminID() {
-		return adminID;
-	}
-
-
-	public void setAdminID(Integer adminID) {
-		this.adminID = adminID;
-	}
-
-
-	public String getAdminAcc() {
-		return adminAcc;
-	}
-
-
-	public void setAdminAcc(String adminAcc) {
-		this.adminAcc = adminAcc;
-	}
-
-
-	public String getAdName() {
-		return adName;
-	}
-
-
-	public void setAdName(String adName) {
-		this.adName = adName;
-	}
-
-
-	public String getAdPass() {
-		return adPass;
-	}
-
-
-	public void setAdPass(String adPass) {
-		this.adPass = adPass;
-	}
-
-
-	public Boolean getAdStatus() {
-		return adStatus;
-	}
-
-
-	public void setAdStatus(Boolean adStatus) {
-		this.adStatus = adStatus;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Admin [adminID=" + adminID + ", adminAcc=" + adminAcc + ", adName=" + adName + ", adPass=" + adPass
-				+ ", adStatus=" + adStatus + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(adName, adPass, adStatus, adminAcc, adminID);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Admin other = (Admin) obj;
-		return Objects.equals(adName, other.adName) && Objects.equals(adPass, other.adPass)
-				&& Objects.equals(adStatus, other.adStatus) && Objects.equals(adminAcc, other.adminAcc)
-				&& Objects.equals(adminID, other.adminID);
-	}
-	
-	
 }
