@@ -100,6 +100,27 @@ public class Ord implements Serializable{
 		super();
 	}
 
+
+	public Ord(Timestamp ordDate, Integer memID, Integer payment, Integer deliver, String address, String cityCode,
+			Date deliverDate, BigDecimal sum, BigDecimal shipping, BigDecimal total, Integer saleID, Integer ordStatus,
+			Date arrival, Set<OrdDetail> ordDetails) {
+		super();
+		this.ordDate = ordDate;
+		this.memID = memID;
+		this.payment = payment;
+		this.deliver = deliver;
+		this.address = address;
+		this.cityCode = cityCode;
+		this.deliverDate = deliverDate;
+		this.sum = sum;
+		this.shipping = shipping;
+		this.total = total;
+		this.saleID = saleID;
+		this.ordStatus = ordStatus;
+		this.arrival = arrival;
+		this.ordDetails = ordDetails;
+	}
+
 	
 
 	

@@ -13,7 +13,7 @@ import com.furelise.product.model.Product;
 
 import lombok.Data;
 
-@Embeddable
+//@Embeddable
 @Data
 public class OrdDetailPK implements Serializable{
 	
