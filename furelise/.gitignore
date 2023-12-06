@@ -7,4 +7,3 @@ bin/
 *.idea
 *.iml
 src/main/resources/application.properties
-furelise/src/main/resources/application.properties
