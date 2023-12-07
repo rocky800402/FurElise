@@ -48,6 +48,10 @@ public class EstabCaseService {
 		return eCase;
 	}
 	
+	public List<EstabCase> getEstabCaseByPlanOrdID(Integer planOrdID) {
+		
+		return dao.findByPlanOrdID(planOrdID);
+	}
 	public EstabCase getEstabCasePK(Integer estabCaseID) {
 		return dao.findById(estabCaseID).orElseThrow();
 	}
@@ -56,15 +60,12 @@ public class EstabCaseService {
 		return dao.findAll();
 	}
 	
+	
 	//建立以成立案件(方案的金額 需要planOrd.plan.planPricePerCase)
 	public List<EstabCase> addEstabCases(Integer planOrdID, String planStart, Integer period, String day,BigDecimal planPricePerCase) {
-		
-//		
-
+	
 		List<EstabCase> eCases = new ArrayList<>();
 		List<java.util.Date> list = getSplitPlanOrd(planStart, period, day);
-		
-		
 		
 		for (java.util.Date date : list) {
 			EstabCase eCase = new EstabCase();
@@ -76,12 +77,8 @@ public class EstabCaseService {
 			dao.save(eCase);
 		}
 	
-		
-		
 		return null;
 	}
-	
-	
 	
 	
 	/**
@@ -115,7 +112,7 @@ public class EstabCaseService {
 		// 複製起始日期並設定結束日期
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(planStartDate);
-		calEnd.add(Calendar.MONTH, period);
+		calEnd.add(Calendar.DATE, (period*28));
 
 		// 測試區間日期指定禮拜產製日期
 //		getWeekBetweenDates(calStart, calEnd, "2");
@@ -156,7 +153,7 @@ public class EstabCaseService {
 		Calendar currentDate = (Calendar) calStart.clone();
 
 		// 將結束日期加一天，以便包含結束日期
-		calEnd.add(Calendar.DAY_OF_YEAR, 1);
+//		calEnd.add(Calendar.DAY_OF_YEAR, 1);
 
 		// 遍歷日期範圍
 		while (currentDate.before(calEnd)) {
