@@ -9,12 +9,14 @@
 		<version>2.7.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com</groupId>
+
+	<groupId>com.furelise</groupId>
 	<artifactId>furelise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>furelise</name>
-	<!-- <description>demo</description> -->
+	<description>com.furelise</description>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -25,11 +27,11 @@
 		</dependency>
 
 <!--		<dependency>&lt;!&ndash; ＠用途說明3: marked the embedded servlet container as-->
-<!--			provided &ndash;&gt;-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--			<scope>provided</scope>-->
-<!--		</dependency>-->
+		<dependency>
+	  		<groupId>org.springframework.boot</groupId>
+	  		<artifactId>spring-boot-starter-tomcat</artifactId>
+	  		<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
