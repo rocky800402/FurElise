@@ -115,7 +115,7 @@ public class EstabCaseController  {
 	@Autowired
 	private VacationRepository vacationRepository;
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/{id}")
 	public List<EstabCase> getAllEstabCases(@PathVariable String id){
 //		List<OrdDetail> ordDetailList=ordDetailRepository.findAll();
@@ -129,7 +129,7 @@ public class EstabCaseController  {
 		return estabCaseList;
 		
 	}
-	@CrossOrigin("*")
+	
 	@GetMapping("/admin")
 	public List<Admin> getAllAdmins(){
 		
@@ -139,7 +139,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/city")
 	public List<City> getAllCitys(){
 		
@@ -149,7 +149,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/complaint")
 	public List<Complaint> getAllComplaints(){
 		
@@ -159,7 +159,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/emp")
 	public List<Emp> getAllEmps(){
 		
@@ -169,7 +169,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/mem")
 	public List<Mem> getAllMems(){
 		
@@ -179,7 +179,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/ord")
 	public List<Ord> getAllOrds(){
 		
@@ -189,7 +189,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/orddetail")
 	public List<OrdDetail> getAllOrdDetails(){
 		
@@ -199,7 +199,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/periodList")
 	public List<Period> getAllPeriods(){
 		
@@ -209,7 +209,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/pickupTimeList")
 	public List<PickupTime> getAllPickupTime(){
 		
@@ -219,7 +219,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/pickupWayList")
 	public List<PickupWay> getAllPickupWay(){
 		
@@ -229,7 +229,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/planList")
 	public List<Plan> getAllPlan(){
 		
@@ -239,7 +239,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/planOrdList")
 	public List<PlanOrd> getAllPlanOrd(){
 		
@@ -249,7 +249,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/planStatusList")
 	public List<PlanStatus> getAllPlanStatus(){
 		
@@ -259,7 +259,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/postList")
 	public List<Post> getAllPosts(){
 		
@@ -269,7 +269,7 @@ public class EstabCaseController  {
 		
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/productList")
 	public List<Product> getAllProducts(){
 		
@@ -279,7 +279,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/productClassList")
 	public List<ProductClass> getAllProductClass(){
 		
@@ -289,7 +289,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/saleList")
 	public List<Sale> getAllSales(){
 		
@@ -299,7 +299,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/shopCartList")
 	public List<ShopCart> getAllShopCart(){
 		
@@ -309,7 +309,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/vacationList")
 	public List<Vacation> getAllVacation(){
 		
