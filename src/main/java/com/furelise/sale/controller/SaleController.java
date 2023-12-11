@@ -18,7 +18,7 @@ public class SaleController {
 	@Autowired
 	private SaleRepository saleRepository;
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/saleList")
 	public List<Sale> getAllSales(){
 		

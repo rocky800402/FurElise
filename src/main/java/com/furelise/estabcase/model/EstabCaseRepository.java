@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
-	
-	@Query("SELECT planOrdID FROM EstabCase")
-	List<EstabCase> findByPlanOrdID(Integer planOrdID);
+
+//	@Query("SELECT * FROM estabCase WHERE planOrdID = ?1 ORDER BY estabCaseDate DESC;")
+	List<EstabCase> findByPlanOrdIDOrderByEstabCaseDateDesc(Integer planOrdID);
 }
