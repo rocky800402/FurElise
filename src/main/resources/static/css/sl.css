@@ -1,0 +1,92 @@
+/* color: #9ac972標準綠、#DEF5EE暗綠、#EDEDED銀灰、#A5A5A5取消灰、#FFC2A0粉橘、#FE9A9A警告紅 */
+
+/* sidebar */
+.sidebar {
+    background-color: #fff; /* 侧边栏底色白色 */
+    color: #a5a5a5; /* 设置文字颜色为 #A5A5A5 */
+    padding: 10px;
+    border-right: 1px solid #ccc; /* 添加灰色分隔线 */
+    width: 250px;
+    position: fixed;
+  }
+  
+  .sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    padding: 5px 0;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+  }
+  
+  .sidebar a:link {
+    color: #a5a5a5;
+    font-size: 15px;
+    text-decoration: underline;
+  }
+  
+  .sidebar a:visited {
+    color: #a5a5a5;
+    text-decoration: underline;
+  }
+  
+  .content {
+    padding: 20px;
+    margin-left: 250px;
+  }
+  .p_title {
+    font-size: 30px;
+    font-weight: 600;
+  }
+  .p_subtitle {
+    font-size: 26px;
+    font-weight: 600;
+  }
+  .p_content {
+    font-size: 16px;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .sl_plan_name {
+    color: #ffc2a0;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 0;
+  }
+  .sl_custom-checkbox {
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    background-color: #fff;
+    border: 2px solid #9ac972;
+    color: #9ac972;
+    cursor: pointer;
+    text-align: center;
+    /* line-height: 100%; */
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    border-radius: 3px;
+    justify-content: center;
+  }
+  
+  /* 当选中时的样式 */
+  .checkbox-input:checked + .sl_custom-checkbox {
+    background-color: #9ac972;
+    border: 2px solid #9ac972;
+    color: #fff;
+  }
+  
+  ::placeholder {
+    color: #A5A5A5;
+  }
