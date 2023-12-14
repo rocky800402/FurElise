@@ -257,7 +257,15 @@
 			<version>3.0.0</version>
 		</dependency>
 
-
+		<!--
+		========================================================================================== -->
+		<!-- ●以下為 redis 使用● -->
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>5.1.0</version>
+		</dependency>
 
 	</dependencies>
 
