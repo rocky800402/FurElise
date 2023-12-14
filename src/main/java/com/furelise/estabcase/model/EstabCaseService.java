@@ -3,6 +3,9 @@ package com.furelise.estabcase.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 //import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -103,7 +106,17 @@ public class EstabCaseService {
 
 		return memEC;
 	}
+	public EstabCase updateEstabCaseLevel(EstabCaseLevelDTO estabCL){
+		LocalDateTime currentTime = LocalDateTime.now();
+		EstabCase estabCase = estabCaseR.findById(estabCL.getEstabCaseID()).orElseThrow();
+		estabCase.setEstabCaseLevel(estabCL.getEstabCaseLevel());
+		estabCase.setEstabCaseFeedback(estabCL.getEstabCaseFeedback());
+		estabCase.setEstabCaseFBTime(Timestamp.valueOf(currentTime));
 
+		estabCaseR.save(estabCase);
+
+		return estabCase;
+	}
 
 	public List<EstabCase> getEstabCaseByPlanOrdID(Integer planOrdID) {
 		
@@ -145,6 +158,7 @@ public class EstabCaseService {
 
 		return days;
 	}
+
 
 
 }

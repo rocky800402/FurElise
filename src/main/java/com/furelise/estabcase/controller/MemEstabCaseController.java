@@ -3,11 +3,14 @@ package com.furelise.estabcase.controller;
 
 import com.furelise.common.model.ErrorMessageVO;
 import com.furelise.estabcase.model.EstabCase;
+import com.furelise.estabcase.model.EstabCaseLevelDTO;
 import com.furelise.estabcase.model.EstabCaseService;
 import com.furelise.estabcase.model.MemEstabCaseVO;
 
 import com.furelise.planord.model.PlanOrdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,16 +45,12 @@ public class MemEstabCaseController {
 
 		return memEstabCaseVO;
 	}
-
-
-	public static void main(String[] args) {
-		String day = "1011000";
-
-
-			System.out.println(new EstabCaseService().getDaysOfWeek(day));
-
-
-
+	@PatchMapping()
+	public EstabCase updateEstabCaseLevel(
+			@Validated @RequestBody EstabCaseLevelDTO estabCaseLevelDTO){
+		return estabCaseService.updateEstabCaseLevel(estabCaseLevelDTO);
 	}
-	
+
+
+
 }
