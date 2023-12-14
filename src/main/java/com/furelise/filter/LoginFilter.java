@@ -1,4 +1,4 @@
-package com.furelise.Filter;
+package com.furelise.filter;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
