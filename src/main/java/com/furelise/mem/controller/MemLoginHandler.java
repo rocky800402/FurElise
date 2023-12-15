@@ -1,7 +1,6 @@
 package com.furelise.mem.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.furelise.mem.model.Mem;
-import com.furelise.mem.model.MemRepository;
+import com.furelise.mem.model.entity.Mem;
+import com.furelise.mem.repository.MemRepository;
 
 @WebServlet("/memloginhandler")
 public class MemLoginHandler extends HttpServlet {

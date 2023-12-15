@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für Elise-帳戶登入測試</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-group .btn {
+            width: 450px;
+            height: 75px;
+            margin-right: -4px;
+            font-size: 26px;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .hc_headerBox {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ececec;
+            border-top: 1px solid #ececec;
+            margin-bottom: 100px;
+        }
+
+        .hc_headerText {
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 15px;
+            padding-top: 15px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-check:focus+.btn-outline-primary,.btn-outline-primary:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-outline-primary,.btn-check:checked+.btn-outline-primary,.btn-outline-primary.active,.btn-outline-primary.dropdown-toggle.show,.btn-outline-primary:active{color:#fff !important;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-outline-primary:focus,.btn-check:checked+.btn-outline-primary:focus,.btn-outline-primary.active:focus,.btn-outline-primary.dropdown-toggle.show:focus,.btn-outline-primary:active:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-outline-primary.disabled,.btn-outline-primary:disabled{color:#9ac972;background-color:transparent}
+
+        .btn-group .btn.btn-outline-primary {
+            color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .btn-group .btn.btn-outline-primary:hover {
+            color: #fff;
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .btn-group .btn.btn-outline-primary:checked {
+            color: #fff;
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .hc_login_allBox {
+            display: inline-block;
+            vertical-align: middle;
+            width: 60%;
+            margin: auto;
+        }
+
+        .hc_login, .hc_login_emp {
+            display: inline-block;
+            vertical-align: middle;
+            width: 55%;
+            margin: auto;
+        }
+
+        .hc_login p, .hc_register p, .hc_login_emp p {
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hc_login input, .hc_login_emp input {
+            font-size: 24px;
+            width: 190%;
+        }
+
+        .hc_rmbMe {
+            font-size: 24px;
+            height: 100px;
+            margin-top: 10px;
+            width: 860px;
+        }
+
+        .hc_rmbMe_box {
+            text-align: left;
+            display: inline-block;
+        }
+
+        .hc_rmbMe input {
+            width: 20px;
+        }
+
+        #hc_forgetPW_btn, #hc_forgetPW_btn_emp {
+            background-color: white;
+            border: 2px solid white;
+            color: #000;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 24px;
+            margin-top: 10px;
+            margin-left: 65%;
+        }
+
+        #hc_forgetPW_btn:hover,  #hc_forgetPW_btn_emp:hover {
+            text-decoration: underline; /* 滑鼠懸停時添加底線效果 */
+        }
+
+        .hc_login_btn {
+            margin-bottom: 90px;
+        }
+
+        .hc_login_btn button {
+            width: 400px;
+            height: 60px;
+            margin-bottom: 50px;
+        }
+
+        .btn-primary {
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .hc_login_btn button.btn:hover {
+            background-color: rgba(26, 137, 26, 0.801);
+            border-color: rgba(26, 137, 26, 0.801);
+            color: white;
+        }
+
+
+        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+
+        .hc_forgetPW p {
+            margin-top: 70px;
+            font-size: 22px;
+        }
+
+        .hc_forgetPW input {
+            font-size: 22px;
+            width: 842px;
+        }
+
+        .hc_forgetPW > div {
+            margin-top: 50px;
+        }
+
+        .hc_register input {
+            font-size: 24px;
+            text-align: left;
+            width: 104.5%;
+        }
+
+        /* .hc_register_inputHalf {
+            display: inline-block;
+        } */
+
+
+    </style>
+</head>
+<body>
+<script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+
+<div class="headerPage"></div>
+
+<div class="hc_headerBox">
+    <div class="hc_headerText">我的帳戶</div>
+</div>
+<!-- switching button -->
+<div class="hc_login_allBox">
+    <div class="btn-group text-center" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="btnradio1">會員登入</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio3"
+               style="border-left: none; border-right: none;">夥伴登入</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio2">註冊</label>
+    </div>
+    <br>
+    <br>
+    <!-- member login -->
+    <div class="hc_login">
+        <div id="member_error" class="hidden">
+            <p style="color: red;">登入失敗，請重新登入。</p>
+        </div>
+        <div>
+            <p>使用者帳戶</p>
+            <input type="email" placeholder="電子信箱" id="hc_memUsername" name="memAccount">
+            <p>密碼</p>
+            <input type="password" id="hc_memPassword" name="memPassword">
+            <input type="hidden" name="action" value="memLogin">
+        </div>
+        <div class="hc_rmbMe">
+            <div class="hc_rmbMe_box">
+                <input type="checkbox" id="hc_rmbMe_btn">
+                <label for="hc_rmbMe_btn">記住我</label>
+            </div>
+            <button id="hc_forgetPW_btn">忘記密碼？</button>
+        </div>
+        <div class="hc_login_btn">
+            <button type="submit" class="btn btn-primary btn-lg" id="hc_memlogin_btn">登入</button>
+            <br>
+            <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>
+        </div>
+    </div>
+    <!-- emp login -->
+    <form action="emploginhandler" method="post">
+        <div class="hc_login_emp" style="display: none;">
+            <div th:if="${loginFailed}">
+                <p style="color: red;">登入失敗，請重新登入。</p>
+            </div>
+            <div>
+                <p>使用者帳戶</p>
+                <input type="text" placeholder="電子信箱" name="empAccount">
+
+                <p>密碼</p>
+                <input type="password" name="empPassword">
+            </div>
+            <div class="hc_rmbMe">
+                <div class="hc_rmbMe_box">
+                    <input type="checkbox" id="hc_emp_rmbMe_btn">
+                    <label for="hc_emp_rmbMe_btn">記住我</label>
+                </div>
+                <button id="hc_forgetPW_btn_emp">忘記密碼？</button>
+            </div>
+
+            <div class="hc_login_btn">
+                <button type="submit" class="btn btn-primary btn-lg" id="hc_emplogin_btn">登入</button>
+                <br>
+            </div>
+        </div>
+    </form>
+
+    <div class="hc_forgetPW" style="display: none;">
+        <p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
+        <input type="text" placeholder="請輸入Email" name="memForgetPW">
+        <input type="text" placeholder="請輸入Email" name="empForgetPW">
+        <div class="hc_login_btn">
+            <button type="submit" class="btn btn-primary btn-lg">重設密碼</button>
+            <br>
+        </div>
+    </div>
+
+    <script>
+        function init(){
+            // 會員登入/註冊畫面切換
+            $("#btnradio2").on("click", function() {
+                //會員登入收起
+                $(".hc_login").hide();
+                $(".hc_forgetPW").hide();
+                //夥伴登入收起
+                $(".hc_login_emp").hide();
+                $(".hc_forgetPW").hide();
+                //註冊展開
+                $(".hc_register").show();
+            });
+
+            $("#btnradio1").on("click", function() {
+                //註冊收起
+                $(".hc_register").hide();
+                //夥伴登入收起
+                $(".hc_login_emp").hide();
+                $(".hc_forgetPW").hide();
+                //會員登入展開
+                $(".hc_login").show();
+            });
+
+            $("#btnradio3").on("click", function() {
+                //註冊收起
+                $(".hc_register").hide();
+                //會員登入收起
+                $(".hc_login").hide();
+                $(".hc_forgetPW").hide();
+                //夥伴登入展開
+                $(".hc_login_emp").show();
+            });
+
+
+            // 忘記密碼部分顯示/隱藏
+            $("#hc_forgetPW_btn").on("click", function(e){
+                e.preventDefault();
+                $(".hc_forgetPW").show();
+                $("input[name='memForgetPW']").show();
+                $("input[name='empForgetPW']").hide();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            });
+
+            $("#hc_forgetPW_btn_emp").on("click", function(e){
+                e.preventDefault();
+                $(".hc_forgetPW").show();
+                $("input[name='empForgetPW']").show();
+                $("input[name='memForgetPW']").hide();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            });
+
+            $("#hc_memlogin_btn").on("click", function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: `${API_PATH}/auth/login`,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        email: $("#hc_memUsername").val(),
+                        password: $("#hc_memPassword").val()
+                    }),
+                    success: (data) => {
+                        console.log('login success')
+                         window.location.href = `${APP_BASE_URL}/home`;
+                    },
+                    error: () => {
+                     $("#member_error").removeClass("hidden");
+                    }
+                });
+
+            });
+
+        };
+
+        window.addEventListener("load", init);
+    </script>
+</div>
+
+<div class="footerPage"></div>
+<script>
+    $(".headerPage").load("header.html");
+    $(".footerPage").load("footer.html");
+</script>
+</body>
+</html>

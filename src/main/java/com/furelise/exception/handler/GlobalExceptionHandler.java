@@ -1,7 +1,9 @@
-package com.furelise.globalException.handler;
+package com.furelise.exception.handler;
 
 
 import com.furelise.common.model.ErrorMessageVO;
+import com.furelise.exception.UnauthorizedException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,80 +21,81 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /**
-  * 1) 藉由@ControllerAdvice註解，可將「對於控制器的全局(global)配置放在同一支程式中」
-  * 2) 註解@ControllerAdvice的類別中，可將@ModelAttribute，@InitBinder@ExceptionHandler註解到方法上
-  * 3) 註解@ControllerAdvice的類別，其作用，將作用於所有，有註解@RequestMapping的控制器的方法上
-  *
-  * 4) @ModelAttribute：其作用是綁定鍵值到Model中，此可以讓全部的@RequestMapping都能獲得在此處所設置的鍵值(key-value)對
-  * 5) @InitBinder：其作用是利用對WebDataBinder的設置，用於綁定前端請求參數送入到Model時的條件綁定(限制)
-  * 6) @ExceptionHandler：其作用是進行全局(global)的異常處理。攔截錯誤信息，返回報錯的提示畫面與內容
-  * 7) 每當請求通過@RequestMapping發送給控制器及其方法時，並且沒有本地定義的@ModelAttribute，@InitBinder和@ExceptionHandler時，將使用由@ControllerAdvice註釋的全局(global)配置
-  *
-  * 
-  * 
- */
+ *   * 1) 藉由@ControllerAdvice註解，可將「對於控制器的全局(global)配置放在同一支程式中」
+ *   * 2) 註解@ControllerAdvice的類別中，可將@ModelAttribute，@InitBinder@ExceptionHandler註解到方法上
+ *   * 3) 註解@ControllerAdvice的類別，其作用，將作用於所有，有註解@RequestMapping的控制器的方法上
+ * <p>
+ *   * 4) @ModelAttribute：其作用是綁定鍵值到Model中，此可以讓全部的@RequestMapping都能獲得在此處所設置的鍵值(key-value)對
+ *   * 5) @InitBinder：其作用是利用對WebDataBinder的設置，用於綁定前端請求參數送入到Model時的條件綁定(限制)
+ *   * 6) @ExceptionHandler：其作用是進行全局(global)的異常處理。攔截錯誤信息，返回報錯的提示畫面與內容
+ * 7) 每當請求通過@RequestMapping發送給控制器及其方法時，並且沒有本地定義的@ModelAttribute，@InitBinder和@ExceptionHandler時，將使用由@ControllerAdvice註釋的全局(global)配置
+ *   *
+ *   *
+ *   *
+ *  
+ */
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<Object> exceptionHandler(HttpServletRequest request, HttpServletResponse response,
-												   Exception ex) {
-		ex.printStackTrace();
-		return new ResponseEntity<>("{ \"message\": \"API is error\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnauthorizedException.class)
+    public ErrorMessageVO handleUnauthorizedException(UnauthorizedException e) {
+        return new ErrorMessageVO(e.getMessage());
+    }
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-		System.out.println("MethodArgumentNotValidException");
-		return new ResponseEntity<>(
-				"{ \"message\": \"" + e.getBindingResult().getAllErrors().stream()
-						.map(error -> error.getDefaultMessage()).collect(Collectors.joining("\n")) + "\"}",
-				HttpStatus.BAD_REQUEST);
-	}
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> exceptionHandler(HttpServletRequest request, HttpServletResponse response,
+                                                   Exception ex) {
+        ex.printStackTrace();
+        return new ResponseEntity<>("{ \"message\": \"API is error\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-	@ResponseBody
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	public ErrorMessageVO handleMethodArgumentNotValidException(MethodArgumentTypeMismatchException e) {
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ErrorMessageVO handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return new ErrorMessageVO(e.getBindingResult().getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(",")));
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ErrorMessageVO handleMethodArgumentNotValidException(MethodArgumentTypeMismatchException e) {
 //		System.out.println("MethodArgumentNotValidException");
 //		System.out.println(e.getName());
 //		System.out.println(e.getParameter());
 //		System.out.println(e.getMessage());
 //		System.out.println(e.getValue());
 
-		return new ErrorMessageVO(e.getValue() + " is not found");
-	}
-	@ResponseBody
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(NoSuchElementException.class)
-	public ErrorMessageVO handleMethodArgumentNotValidException(NoSuchElementException e) {
+        return new ErrorMessageVO(e.getValue() + " is not found");
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchElementException.class)
+    public ErrorMessageVO handleMethodArgumentNotValidException(NoSuchElementException e) {
 //		System.out.println("MethodArgumentNotValidException");
 //		System.out.println(e.getName());
 //		System.out.println(e.getParameter());
 //		System.out.println(e.getMessage());
 //		System.out.println(e.getValue());
 
-		return new ErrorMessageVO("ID number not found");
-	}
+        return new ErrorMessageVO("ID number not found");
+    }
 
-	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException e) {
-		System.out.println("EmptyResultDataAccessException");
-		return new ResponseEntity<>("{ \"message\": \"Id is not found\"}", HttpStatus.NOT_FOUND);
-	}
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException e) {
+        return new ResponseEntity<>("{ \"message\": \"Id is not found\"}", HttpStatus.NOT_FOUND);
+    }
 
-	@ExceptionHandler(MissingServletRequestParameterException.class)
-	public ResponseEntity<Object> handleMissingServletRequestParameterException(
-			MissingServletRequestParameterException e) {
-		System.out.println("MissingServletRequestParameterException");
-		return new ResponseEntity<>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.BAD_REQUEST);
-	}
-
-
-
-
-
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Object> handleMissingServletRequestParameterException(
+            MissingServletRequestParameterException e) {
+        return new ResponseEntity<>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.BAD_REQUEST);
+    }
 
 
 //	@ModelAttribute
