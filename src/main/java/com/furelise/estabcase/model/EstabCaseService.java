@@ -11,8 +11,8 @@ import java.util.List;
 
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
-import com.furelise.mem.model.Mem;
-import com.furelise.mem.model.MemRepository;
+import com.furelise.mem.model.entity.Mem;
+import com.furelise.mem.repository.MemRepository;
 import com.furelise.period.model.Period;
 import com.furelise.period.model.PeriodRepository;
 import com.furelise.pickuptime.model.PickupTime;
@@ -44,7 +44,7 @@ public class EstabCaseService {
 	@Autowired
 	CityRepository cityR;
 	@Autowired
-	MemRepository memR;
+    MemRepository memR;
 
 	
 	public EstabCase addEstabCase(Integer empID,Integer planOrdID,

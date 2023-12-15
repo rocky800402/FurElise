@@ -2,8 +2,9 @@ package com.furelise.estabcase.controller;
 
 import java.util.List;
 
+import com.furelise.mem.model.entity.Mem;
+import com.furelise.mem.repository.MemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,6 @@ import com.furelise.emp.model.Emp;
 import com.furelise.emp.model.EmpRepository;
 import com.furelise.estabcase.model.EstabCase;
 import com.furelise.estabcase.model.EstabCaseService;
-import com.furelise.mem.model.Mem;
-import com.furelise.mem.model.MemRepository;
 import com.furelise.ord.model.Ord;
 import com.furelise.ord.model.OrdRepository;
 import com.furelise.orddetail.model.OrdDetail;
