@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für Elise-會員中心</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="./css/emp_sidebar.css" th:href="@{/css/mem_sidebar.css}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .hc_headerBox {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ececec;
+            border-top: 1px solid #ececec;
+            /* margin-bottom: 100px; */
+        }
+
+        .hc_headerText {
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 15px;
+            padding-top: 15px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        p {
+            margin: 10px 0 10px 0;
+        }
+
+        input {
+            width: 535px;
+        }
+
+        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+        .btn-primary {
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+        .hc_mem_saveBtn:hover {
+            background-color: rgba(26, 137, 26, 0.801);
+            border-color: rgba(26, 137, 26, 0.801);
+            color: white;
+        }
+        .hc_mem_saveBtn, .hc_mem_discardBtn {
+            width: 150px;
+            height: 50px;
+            margin-top: 30px;
+        }
+        .hc_mem_discardBtn {
+            background-color: lightgray;
+            border-color: lightgray;
+            margin-left: 230px;
+        }
+        .hc_mem_discardBtn:hover, .hc_mem_discardBtn:focus {
+            background-color: gray;
+            border-color: gray;
+        }
+        
+        
+    
+    </style>
+</head>
+<body>
+    
+    <div class="headerPage"></div>
+    <div class="hc_headerBox">
+        <div class="hc_headerText">會員中心</div>
+    </div>
+    <div style="width: 100%; justify-content: center; display: flex;">
+
+        <div style="max-width: 1200px; display: flex;">
+            <div class="empSidebarPage"></div>
+            <!--  -->
+	<form th:action="@{update}" method="post" th:object="${emp}" enctype="multipart/form-data">
+            <div style="width: 950px; padding: 20px; margin-left: 50px;">
+            <!-- 寫在這裡 -->
+                <p style="display: inline-block;">姓名</p>
+                <p style="display: inline-block; margin-left: 250px;">手機號碼</p><br>
+                <input type="text" th:field="*{empName}" name="emp_name" style="width: 250px;">
+                <input type="text" th:field="*{empTel}" name="emp_tel" style="width: 250px; margin-left: 30px;">
+                <p>身分證</p>
+                <input type="text" th:field="*{IDNumber}" name="emp_idNo">
+                <p>出生年月日</p>
+                <input type="date" th:field="*${#dates.format(empBirth, 'yyyy/MM/dd')}" name="emp_birth">
+                <p>電子郵件</p>
+                <input type="email" th:field="*{IDNumber}" name="emp_email"><br>
+                <p>工作時段</p>
+                <select name="emp_workTime">
+                    <option value="0" selected>請選擇工作時段</option>
+                    <option value="1">9:00-17:00</option>
+                    <option value="2">19:00-21:00</option>
+                    <option value="3">21:00-22:30</option>
+                </select>
+                <br><br>
+                <p>變更安排工作區域</p>
+                <span>第一順位：</span>
+                <select name="emp_workArea1">
+                    <option value="0" selected>請選擇工作區域</option>
+                    <option value="100">台北市中正區</option>
+                    <option value="103">台北市大同區</option>
+                    <option value="104">台北市中山區</option>
+                    <option value="105">台北市松山區</option>
+                    <option value="106">台北市大安區</option>
+                    <option value="108">台北市萬華區</option>
+                    <option value="110">台北市信義區</option>
+                    <option value="111">台北市士林區</option>
+                    <option value="112">台北市北投區</option>
+                    <option value="114">台北市內湖區</option>
+                    <option value="115">台北市南港區</option>
+                    <option value="116">台北市文山區</option>
+                </select>
+                <br><br>
+                <span>第二順位：</span>
+                <select name="emp_workArea2">
+                    <option value="0" selected>請選擇工作區域</option>
+                    <option value="100">台北市中正區</option>
+                    <option value="103">台北市大同區</option>
+                    <option value="104">台北市中山區</option>
+                    <option value="105">台北市松山區</option>
+                    <option value="106">台北市大安區</option>
+                    <option value="108">台北市萬華區</option>
+                    <option value="110">台北市信義區</option>
+                    <option value="111">台北市士林區</option>
+                    <option value="112">台北市北投區</option>
+                    <option value="114">台北市內湖區</option>
+                    <option value="115">台北市南港區</option>
+                    <option value="116">台北市文山區</option>
+                </select>
+                <br><br>
+                <span>第三順位：</span>
+                <select name="emp_workArea3">
+                    <option value="0" selected>請選擇工作區域</option>
+                    <option value="100">台北市中正區</option>
+                    <option value="103">台北市大同區</option>
+                    <option value="104">台北市中山區</option>
+                    <option value="105">台北市松山區</option>
+                    <option value="106">台北市大安區</option>
+                    <option value="108">台北市萬華區</option>
+                    <option value="110">台北市信義區</option>
+                    <option value="111">台北市士林區</option>
+                    <option value="112">台北市北投區</option>
+                    <option value="114">台北市內湖區</option>
+                    <option value="115">台北市南港區</option>
+                    <option value="116">台北市文山區</option>
+                </select>
+
+                <br><br>
+                <p>變更密碼</p>
+                <p>目前的密碼</p>
+                <input type="password" name="emp_pw_old">
+                <p>新密碼</p>
+                <input type="password" name="emp_pw_new">
+                <p>確認新密碼</p>
+                <input type="password" name="emp_pw_newConfirm"><br>
+
+                <button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn">儲存設定</button>
+                <button type="button" class="btn btn-primary btn-lg hc_mem_discardBtn">取消修改</button>
+                <br><br>
+     </form>      
+            
+
+
+
+            </div>
+
+        </div>
+    </div>
+    
+    
+   
+
+    <div class="footerPage"></div>
+    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+
+    <script>
+        function init(){
+            // emp_tag更改到帳戶設定
+            $("li").removeClass("emp_tag");
+            $("ul li:nth-child(5)").addClass("emp_tag");
+
+
+
+        };
+
+
+        window.addEventListener("load", init);
+    </script>
+
+
+
+    <script>
+        $(".headerPage").load("header.html");
+        $(".footerPage").load("footer.html");
+        $(".empSidebarPage").load("empSidebar.html");
+        </script>
+</body>
+</html>
