@@ -1,5 +1,6 @@
-package com.furelise.mem.model;
+package com.furelise.mem.repository;
 
+import com.furelise.mem.model.entity.Mem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

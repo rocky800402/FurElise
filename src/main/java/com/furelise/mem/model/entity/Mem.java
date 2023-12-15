@@ -1,4 +1,4 @@
-package com.furelise.mem.model;
+package com.furelise.mem.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;

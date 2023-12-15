@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.furelise.mem.model.Mem;
+import com.furelise.mem.model.entity.Mem;
 import com.furelise.emp.model.Emp;
 
 @Controller
@@ -15,6 +15,11 @@ public class LoginController {
 	public String memLogin() {
 		return "login";
 	}
+
+    @GetMapping("/login-test")
+    public String memLoginTst() {
+        return "login-test";
+    }
 	
 	@GetMapping("/member_home_alter/{mem}")
 	public String memInfo(@RequestParam("mem") Mem mem , Model model) {
