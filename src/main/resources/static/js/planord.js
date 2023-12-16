@@ -1,7 +1,7 @@
 // 載入
 function init() {
     $.ajax({
-        url: "http://localhost:8081/furelise/planord/all", // 資料請求的網址
+        url: "http://localhost:8081/furelise/planorddto/finding", // 資料請求的網址
         type: "GET", // GET | POST | PUT | DELETE | PATCH
         // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
         dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -12,8 +12,8 @@ function init() {
                 list_html += `
                 <tr data-planordid="${item.planOrdID}">
                     <td>${item.planOrdID}</td>
-                    <td>${item.memID}</td>
-                    <td>${item.planID}</td>
+                    <td>${item.memName}</td>
+                    <td>${item.planName}</td>
                     <td>${item.planStart}</td>
                     <td>${item.planEnd}</td>
                     <td>${item.total}</td>

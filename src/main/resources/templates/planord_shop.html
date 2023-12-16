@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方案選購</title>
+    <link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
+<!--     <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}"> -->
+
+    <style>
+        .sl_btn_outline {
+            color: #9ac972;
+            border-color: #9ac972;
+            background-color: #fff;
+        }
+
+        .sl_btn_selected {
+            color: #fff;
+            border-color: #9ac972;
+            background-color: #9ac972;
+        }
+
+        .checkbox-input {
+            display: none;
+        }
+
+        /* 查看詳情button */
+        .sl_btn_chakan {
+            cursor: pointer;
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #9ac972;
+            --bs-btn-border-color: #9ac972;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #9ac972;
+            --bs-btn-hover-border-color: #9ac972;
+            --bs-btn-focus-shadow-rgb: 49, 132, 253;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #9ac972;
+            --bs-btn-active-border-color: #9ac972;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #9ac972;
+            --bs-btn-disabled-border-color: #9ac972;
+            --bs-btn-padding-x: 0.75rem;
+            --bs-btn-padding-y: 0.375rem;
+            --bs-btn-font-family: ;
+            --bs-btn-font-size: 1rem;
+            --bs-btn-font-weight: 400;
+            --bs-btn-line-height: 1.5;
+            --bs-btn-border-width: 1px;
+            --bs-btn-border-radius: 0.375rem;
+            --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+            --bs-btn-disabled-opacity: 0.65;
+            --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
+            display: inline-block;
+            padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+            font-family: var(--bs-btn-font-family);
+            font-size: var(--bs-btn-font-size);
+            font-weight: var(--bs-btn-font-weight);
+            line-height: var(--bs-btn-line-height);
+            color: var(--bs-btn-color);
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            -moz-user-select: none;
+            user-select: none;
+            border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+            border-radius: var(--bs-btn-border-radius);
+            background-color: var(--bs-btn-bg);
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        /* disable button */
+        .sl_btn_disable {
+            cursor: pointer;
+            --bs-btn-color: #9ac972;
+            --bs-btn-bg: #fff;
+            --bs-btn-border-color: #9ac972;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: ##fff;
+            --bs-btn-hover-border-color: #9ac972;
+            --bs-btn-focus-shadow-rgb: 49, 132, 253;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: ##fff;
+            --bs-btn-active-border-color: #9ac972;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #fff;
+            --bs-btn-disabled-border-color: #9ac972;
+            --bs-btn-padding-x: 0.75rem;
+            --bs-btn-padding-y: 0.375rem;
+            --bs-btn-font-family: ;
+            --bs-btn-font-size: 1rem;
+            --bs-btn-font-weight: 400;
+            --bs-btn-line-height: 1.5;
+            --bs-btn-border-width: 1px;
+            --bs-btn-border-radius: 0.375rem;
+            --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+            --bs-btn-disabled-opacity: 0.65;
+            --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
+            display: inline-block;
+            padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+            font-family: var(--bs-btn-font-family);
+            font-size: var(--bs-btn-font-size);
+            font-weight: var(--bs-btn-font-weight);
+            line-height: var(--bs-btn-line-height);
+            color: var(--bs-btn-color);
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            -moz-user-select: none;
+            user-select: none;
+            border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+            border-radius: var(--bs-btn-border-radius);
+            background-color: var(--bs-btn-bg);
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        @media (max-width: 767.98px) {}
+    </style>
+</head>
+
+<body>
+
+    <div class="headerPage"></div>
+
+        <div class="container">
+        <main class="content" style="width: 30%;">
+
+            <div>
+                選擇方案
+                <select name="planName" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style="margin-bottom: 20px;">
+
+                </select>
+
+                收取時段
+                <select id="pickupTime" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style=" margin-bottom:20px;">
+
+                </select>
+
+                訂購期間
+                <select id="period" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style=" margin-bottom:20px;">
+                    <!-- <option data-length="27" value="1">One</option> -->
+                </select>
+
+                每週收取次數
+                <select id="times" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style=" margin-bottom:20px;">
+                    <option class="sl_option" value="1">1</option>
+                    <option class="sl_option" value="2">2</option>
+                    <option class="sl_option" value="3">3</option>
+                    <option class="sl_option" value="4">4</option>
+                    <option class="sl_option" value="5">5</option>
+                </select>
+                收取日
+                <div id="sl_input">
+                    <label> <input name="day" type="checkbox" value="0" class="checkbox-input" id="default"> <span
+                            class="sl_custom-checkbox">星期一</span>
+                    </label>
+                    <label> <input name="day" type="checkbox" value="1" class="checkbox-input" id="unchecked"> <span
+                            class="sl_custom-checkbox">星期二</span>
+                    </label>
+                    <!-- <label hidden> <input name="day" type="checkbox" value="2" class="checkbox-input"> <span
+                            class="sl_custom-checkbox">星期三</span> -->
+                    </label>
+                    <label> <input name="day" type="checkbox" value="3" class="checkbox-input" id="unchecked"> <span
+                            class="sl_custom-checkbox">星期四</span>
+                    </label>
+                    <label> <input name="day" type="checkbox" value="4" class="checkbox-input" id="unchecked"> <span
+                            class="sl_custom-checkbox">星期五</span>
+                    </label>
+                    <label> <input name="day" type="checkbox" value="5" class="checkbox-input" id="unchecked"> <span
+                            class="sl_custom-checkbox">星期六</span>
+                    </label>
+                    <!-- <label hidden> <input name="day" type="checkbox" value="6" class="checkbox-input"> <span
+                            class="sl_custom-checkbox">星期日</span> -->
+                    </label>
+
+                </div>
+
+                收取方式
+                <select id="pickupWay" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style=" margin-bottom:20px;">
+                    <!-- <option value="1">One</option> -->
+
+                </select>
+
+                開始日期<br>
+                <label for="start"></label>
+                <input type="date" id="start" name="planStart" style=" margin-bottom:20px;">
+                <br>
+                自動計算結束日期<br>
+                <label for="end"></label>
+                <input readonly type="date" id="end" name="planEnd" style="margin-bottom: 20px;">
+                <br>
+
+                聯絡人姓名
+                <div class="input-group mb-3">
+                    <input placeholder="必填" id="contact" type="text" required>
+                </div>
+
+                聯絡電話
+                <div class="input-group mb-3">
+                    <input placeholder="必填，手機號碼" id="contactTel" type="text" required>
+                </div>
+
+                郵遞區號
+                <select id="cityCode" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style=" margin-bottom:20px;">
+
+                </select>
+
+                詳細地址
+                <div class="input-group mb-3">
+                    <input placeholder="必填" id="floor" type="text" size="40%" required>
+                </div>
+
+                擺放位置(請盡量填寫詳細)
+                <div class="input-group mb-3">
+                    <input id="pickupStop" placeholder="必填，面交請填無" type="text" size="40%">
+                </div>
+
+                小計
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input id="total" type="text" readonly>
+                </div>
+
+                <button type="submit" id="task_add" class="sl_btn_chakan" style="width:100%;">下一步</button>
+                <p></p>
+                <a href="/furelise/planord/intro"><button type="button" class="sl_btn_disable">回方案介紹</button></a>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="footerPage"></div>
+
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/planordshop.js}"></script>
+
+    <script>
+        $(".headerPage").load("header.html");
+        $(".footerPage").load("footer.html");
+
+
+        $(document).ready(function () {
+
+            planName_selector();
+            pickupTime_selector();
+            period_selector();
+            way_selector();
+            city_selector();
+
+            //開始日最快3天後
+            var today = new Date();
+            var defaultStartDate = new Date(today.setDate(today.getDate() + 3)).toLocaleDateString('fr-ca');
+
+            $('#start').val(defaultStartDate);
+            $('#start').attr('min', $('#start').val());
+
+            //結束日期設定
+            function updateEndDate() {
+
+                var startDate = $('#start').val();
+                $("[name='planEnd']").val(startDate);
+                var periodLength = $('#period option:selected').data('length');
+
+                if (startDate && periodLength) {
+                    var startDateObj = new Date(startDate);
+                    var endDateObj = new Date(startDateObj);
+                    endDateObj.setDate(startDateObj.getDate() + parseInt(periodLength));
+                    $('#end').val(endDateObj.toISOString().split('T')[0]);
+                }
+            }
+
+            // 頁面載入完成時，執行一次以顯示預設的結束日期
+            // 目前沒用
+            updateEndDate();
+
+            // 起始日期的 change 事件處理器
+            $('#start').change(function () {
+                updateEndDate();
+            });
+
+            // 期數的 change 事件處理器
+            $('#period').change(function () {
+                updateEndDate();
+            });
+
+         	// Initial calculation
+            $('#total').val(300);
+            // Change event handlers
+            $('[name="planName"], #period, #times').click(function () {
+                calculateTotal();
+            });
+
+        });
+
+        // 每週選收幾次，每次更改checkbox要重選  
+        // 一進畫面自動checked
+        $('#sl_input #default').prop('checked', true); //預設星期一
+        $('#sl_input #unchecked').attr('disabled', true); //其他鎖死
+        let a = $(".sl_option:selected").val(); //每周收取次數
+
+        $(document).on("change", "select#times", function () {
+            a = $(".sl_option:selected").val();
+            $('#sl_input .checkbox-input').prop('checked', false); //先把所有check拿掉
+            $('#sl_input .checkbox-input').prop('disabled', false); //把所有disable拿掉
+            $('#sl_input #default').prop('checked', true); //default加上check
+            // console.log($("#sl_input .checkbox-input:checked").length); //選了幾項
+            if ($("#sl_input .checkbox-input:checked").length >= a) {
+                $('#sl_input #unchecked').prop('disabled', true); //其他disable 
+            }
+
+        });
+
+        // 限制checkbox的數量
+        $(document).on("click", "#sl_input .checkbox-input", function () {
+            $("#sl_input .checkbox-input").attr('disabled', true);
+            if ($("#sl_input .checkbox-input:checked").length >= a) {
+                $("#sl_input .checkbox-input:checked").attr('disabled', false);
+            } else {
+                $('#sl_input .checkbox-input').attr('disabled', false);
+            }
+
+            //取得checkbox回傳值[]
+            var checkboxvalue = [];
+            $.each($("[name='day']:checked"), function () {
+                checkboxvalue.push($(this).val());
+            });
+            console.log(checkboxvalue);
+
+        });
+        
+     	// 抓小計
+        function calculateTotal() {
+            var planNamePrice = $("select[name='planName'] option:selected").data('price');
+            var periodLength = $("select#period option:selected").data('month');
+            var timesPerWeek = a;
+            var totalPrice = planNamePrice * periodLength * timesPerWeek;
+            console.log(totalPrice);
+            $('#total').val(totalPrice);
+        }
+    </script>
+</body>
+
+</html>

@@ -43,7 +43,6 @@ $("button#task_add").on("click", function () {
 	let liter = $("input#liter").val().trim();
 	let planPrice = $("input#planPrice").val().trim();
 	let planPricePerCase = $("input#planPricePerCase").val().trim();
-	let times = $("#times").val();
 	let planUpload = $("input#planUpload").val();
 	
     if (planName !== "" && liter !== "" && planPrice !== "" && planPricePerCase !== "") {
@@ -54,7 +53,6 @@ $("button#task_add").on("click", function () {
 	            "liter": liter,
 	            "planPrice": planPrice,
 	            "planPricePerCase": planPricePerCase,
-	            "times": times,
 	            "planUpload": planUpload
             };
 
@@ -64,7 +62,7 @@ $("button#task_add").on("click", function () {
                 // data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
                 contentType: "application/json",
                 data: JSON.stringify(form_data),
-                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+//                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
                 beforeSend: function () {
                     $("button#task_add").addClass("-disabled");
                 },

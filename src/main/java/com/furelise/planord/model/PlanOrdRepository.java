@@ -10,4 +10,6 @@ import com.furelise.planord.model.*;
 @Repository
 public interface PlanOrdRepository extends JpaRepository<PlanOrd, Integer>{
 	List<PlanOrd> findByMemID(Integer memID);
+	
+	PlanOrd findByMemIDAndPlanStatusID(Integer memID, Integer planStatusID);
 }
