@@ -129,6 +129,10 @@
 	color: #fff !important;
 	/* background-color: #FFC2A0 !important; */
 }
+.error{
+	color: red;
+	font-sizze: 20px;
+	}
 </style>
 </head>
 
@@ -141,16 +145,18 @@
 		<main class="content">
 			<p class="p_title">新增郵遞區號</p>
 
-			<form action="#" th:action="@{/city/new}" th:object="${city}"
+			<form th:action="@{/city/new}" th:object="${city}"
 				method="post">
 				<label>郵遞區號</label>
 				<div class="input-group mb-3">
-					<input type="text" th:field="*{cityCode}" />
+					<input placeholder="必填，3位數字 ex:999" type="text" th:field="*{cityCode}" onclick="hideContent('cityCode.errors');" required/>
+					<span  th:if="${#fields.hasErrors('cityCode')}" th:errors="*{cityCode}" class="error" id="cityCode.errors"></span>
 				</div>
 
 				<label>區域</label>
 				<div class="input-group mb-3">
-					<input type="text" th:field="*{cityName}" />
+					<input placeholder="必填" type="text" th:field="*{cityName}" onclick="hideContent('cityName.errors');" required/>
+					<span  th:if="${#fields.hasErrors('cityName')}" th:errors="*{cityName}" class="error" id="cityName.errors"></span>
 				</div>
 
 
@@ -172,7 +178,14 @@
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
 	<script>
+	
 		$(".sidebarPage").load("./backendsidebar.html");
+		
+		//清除提示訊息
+		function hideContent(d) {
+		     document.getElementById(d).style.display = "none";
+		}
+		
 	</script>
 
 </body>

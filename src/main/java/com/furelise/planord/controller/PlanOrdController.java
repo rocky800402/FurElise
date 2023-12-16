@@ -67,6 +67,7 @@ public class PlanOrdController {
 		model.addAttribute("contactTel", planOrd.getContactTel());
 		model.addAttribute("planOrdDate", planOrd.getPlanOrdDate());
 		model.addAttribute("amendLog", planOrd.getAmendLog());
+		model.addAttribute("planStatus", planOrdSvc.getPlanStatus(planOrd.getPlanStatusID()));
 		return "planord_detail";
 	}
 
@@ -77,11 +78,17 @@ public class PlanOrdController {
 	}
 
 	// return view
+	@GetMapping("/try")
+	public String planTry() {
+		return "planord_try";
+	}
+
+	// return view
 	@GetMapping("/shop")
 	public String planShop() {
 		return "planord_shop";
 	}
-	
+
 	@GetMapping("/cart")
 	public String planCart() {
 		return "planord_cart";
@@ -92,7 +99,7 @@ public class PlanOrdController {
 	@GetMapping("/planname")
 	@ResponseBody
 	public List<Object[]> getAllPlanNames() {
-		return planOrdSvc.findDistinctPlanNamesAndPrice();
+		return planOrdSvc.findDistinctPlanNamesPriceLiter();
 	}
 
 	// create timeRange drop down menu
@@ -110,7 +117,7 @@ public class PlanOrdController {
 	public List<Period> getAllPeriod() {
 		return planOrdSvc.getPeriod();
 	}
-	
+
 	// create wayName drop down menu
 	@CrossOrigin("*")
 	@GetMapping("/wayname")

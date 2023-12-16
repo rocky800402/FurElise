@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>方案選購</title>
+    <title>找出最適合您的方案</title>
     <link rel="stylesheet" type="text/css"
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
@@ -130,28 +130,25 @@
     <div class="headerPage"></div>
 
         <div class="container">
-        <main class="content">
+        <main class="content" style="width: 30%;">
 
-            <div class="first">
-                選擇方案
+            <div>
+                <strong>一次有多少垃圾</strong>
                 <select name="planName" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style="margin-bottom: 20px;">
-
+                </select>
+                
+                <strong>我們提供的收取方式</strong>
+                <select id="pickupWay" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    style=" margin-bottom:20px;">
                 </select>
 
-                收取時段
+                <strong>哪個時段方便呢</strong>
                 <select id="pickupTime" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style=" margin-bottom:20px;">
-
                 </select>
 
-                訂購期間
-                <select id="period" class="form-select form-select-sm" aria-label=".form-select-sm example"
-                    style=" margin-bottom:20px;">
-                    <!-- <option data-length="27" value="1">One</option> -->
-                </select>
-
-                每週收取次數
+                <strong>每個禮拜倒幾次<span style="color:#FE9A9A"><u>*三、日不收垃圾</u></span></strong>
                 <select id="times" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style=" margin-bottom:20px;">
                     <option class="sl_option" value="1">1</option>
@@ -160,88 +157,33 @@
                     <option class="sl_option" value="4">4</option>
                     <option class="sl_option" value="5">5</option>
                 </select>
-                收取日
-                <div id="sl_input">
-                    <label> <input name="day" type="checkbox" value="0" class="checkbox-input" id="default"> <span
-                            class="sl_custom-checkbox">星期一</span>
-                    </label>
-                    <label> <input name="day" type="checkbox" value="1" class="checkbox-input" id="unchecked"> <span
-                            class="sl_custom-checkbox">星期二</span>
-                    </label>
-                    <!-- <label hidden> <input name="day" type="checkbox" value="2" class="checkbox-input"> <span
-                            class="sl_custom-checkbox">星期三</span> -->
-                    </label>
-                    <label> <input name="day" type="checkbox" value="3" class="checkbox-input" id="unchecked"> <span
-                            class="sl_custom-checkbox">星期四</span>
-                    </label>
-                    <label> <input name="day" type="checkbox" value="4" class="checkbox-input" id="unchecked"> <span
-                            class="sl_custom-checkbox">星期五</span>
-                    </label>
-                    <label> <input name="day" type="checkbox" value="5" class="checkbox-input" id="unchecked"> <span
-                            class="sl_custom-checkbox">星期六</span>
-                    </label>
-                    <!-- <label hidden> <input name="day" type="checkbox" value="6" class="checkbox-input"> <span
-                            class="sl_custom-checkbox">星期日</span> -->
-                    </label>
 
-                </div>
-
-                收取方式
-                <select id="pickupWay" class="form-select form-select-sm" aria-label=".form-select-sm example"
+				<strong>想要拋開垃圾的煩惱多久</strong>
+                <select id="period" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style=" margin-bottom:20px;">
-                    <!-- <option value="1">One</option> -->
-
                 </select>
 
-                開始日期<br>
+                <strong>最快三天後開始</strong><br>
                 <label for="start"></label>
                 <input type="date" id="start" name="planStart" style=" margin-bottom:20px;">
                 <br>
-                自動計算結束日期<br>
-                <label for="end"></label>
-                <input readonly type="date" id="end" name="planEnd" style="margin-bottom: 20px;">
-                <br>
-
-                聯絡人姓名
-                <div class="input-group mb-3">
-                    <input id="contact" placeholder="必填" type="text" required>
-                </div>
-
-                聯絡電話
-                <div class="input-group mb-3">
-                    <input placeholder="必填，手機號碼" id="contactTel" type="text" maxlength=10 required>
-                </div>
-
-                郵遞區號
+                
+                <strong>確認您所在的地區於服務範圍內</strong>
                 <select id="cityCode" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style=" margin-bottom:20px;">
-
                 </select>
 
-                詳細地址
-                <div class="input-group mb-3">
-                    <input id="floor" placeholder="必填" type="text" size="40%" required>
-                </div>
-
-                擺放位置(請盡量填寫詳細)
-                <div class="input-group mb-3">
-                    <input id="pickupStop" type="text" size="40%" placeholder="必填，面交請填無">
-                </div>
-
-                小計
+                <strong>這是我們的最優惠價格</strong>
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
                     <input id="total" type="text" readonly>
                 </div>
-                <button type="button" id="show_sale" class="sl_btn_chakan" style="width: 50%;">繼續</button>
-            </div>
-            <p></p>
-            <p></p>
-            <a href="/furelise/planord/intro"><button type="button" class="sl_btn_disable">回方案介紹</button></a>
-         
 
-<!-- 			<button type="submit" id="task_add" class="sl_btn_chakan" style="width:100%;">下一步</button> -->
-                
+                <a href="shop"><button type="button" class="sl_btn_chakan" style="width:100%;">歡迎登入選購</button></a>
+                <p></p>
+                <a href="/furelise/planord/intro"><button type="button" class="sl_btn_disable">回方案介紹</button></a>
+            </div>
+
         </main>
     </div>
 

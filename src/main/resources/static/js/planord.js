@@ -17,6 +17,7 @@ function init() {
                     <td>${item.planStart}</td>
                     <td>${item.planEnd}</td>
                     <td>${item.total}</td>
+                    <td>${item.planStatus}</td>
 					<td><a href="/furelise/planord/detail?planOrdID=${item.planOrdID} "><span class="sl_btn_chakan" style="background-color: #9ac972">查看詳情</span></a></td>
                 </tr>
             `;

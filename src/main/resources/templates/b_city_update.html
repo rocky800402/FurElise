@@ -129,6 +129,10 @@
 	color: #fff !important;
 	/* background-color: #FFC2A0 !important; */
 }
+.error{
+	color: red;
+	font-sizze: 20px;
+	}
 </style>
 </head>
 
@@ -143,20 +147,20 @@
 
 			<form th:action="@{/city/update}" th:object="${city}"
 				method="post">
-				<label>郵遞區號ID</label>
+				<label>郵遞區號ID(不可修改)</label>
 				<div class="input-group mb-3">
 					<input type="text" th:field="*{cityID}" readonly/>
-				
 				</div>
 				
-				<label>郵遞區號</label>
+				<label>郵遞區號(不可修改)</label>
 				<div class="input-group mb-3">
-					<input type="text" th:field="*{cityCode}" />
+					<input type="text" th:field="*{cityCode}" onclick="hideContent('cityCode.errors');" readonly/>
 				</div>
 
 				<label>區域</label>
 				<div class="input-group mb-3">
-					<input type="text" th:field="*{cityName}" />
+					<input placeholder="必填" type="text" th:field="*{cityName}" onclick="hideContent('cityName.errors');" required/>
+					<span  th:if="${#fields.hasErrors('cityName')}" th:errors="*{cityName}" class="error" id="cityName.errors"></span>
 				</div>
 
 
