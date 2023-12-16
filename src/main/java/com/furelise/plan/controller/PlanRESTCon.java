@@ -22,11 +22,18 @@ public class PlanRESTCon {
 	@Autowired
 	PlanService planSvc;
 	
+	//一次產生五筆，
 	@CrossOrigin("*")
 	@PostMapping("/adding")
-	public Plan addPlan(@RequestBody Plan req) {
-		return planSvc.addPlan(req);
+	public void addPlan(@RequestBody Plan req) {
+		planSvc.addPlan(req);
 	}
+//	//一次一筆，ajax和service內容都要改寫才能用
+//	@CrossOrigin("*")
+//	@PostMapping("/adding")
+//	public Plan addPlan(@RequestBody Plan req) {
+//		return planSvc.addPlan(req);
+//	}
 	
 	@CrossOrigin("*")
 	@PutMapping("/updating")
