@@ -29,7 +29,7 @@ public class CityRESTCon {
 	@CrossOrigin("*")
 	@PostMapping("/add")
 	//如果要用@PostMapping要傳參數(可能是@RequestBody City city)
-	public City addCity(@RequestBody City req) {
+	public String addCity(@RequestBody City req) {
 		City city = new City();
 		city.setCityCode(req.getCityCode());
 		city.setCityName(req.getCityName());

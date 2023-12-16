@@ -29,6 +29,6 @@ public class PlanOrdDTO {
 //	private Date planStart;
 	private Date planEnd;
 	private BigDecimal total;
-	
+	private String planStatus;
 
 }

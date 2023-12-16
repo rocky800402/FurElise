@@ -7,11 +7,12 @@ function planName_selector() {
         // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
         dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
         success: function (data) {
-            // console.log(data);
+            // data = {planName, planPrice, liter}
+            // console.log(data[0][1]);
             let list_html = "";
             $.each(data, function (index, item) {
                 list_html += `
-                <option value="${item[0]}" data-price="${item[1]}">${item[0]}</option>
+                <option value="${item[0]}" data-price="${item[1]}">${item[0]}(${item[2]}公升)</option>
             `;
             });
             $("select[name='planName']").html(list_html);

@@ -15,8 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -29,6 +30,8 @@ public class Period implements Serializable{
     @Column(name = "periodID", updatable = false )
     private Integer periodID;
     
+    @Min(1)
+    @NotNull
     @Column(name = "planPeriod")
     private Integer planPeriod;
     

@@ -11,6 +11,8 @@ import com.furelise.pickupway.model.PickupWay;
 import com.furelise.pickupway.model.PickupWayRepository;
 import com.furelise.plan.model.Plan;
 import com.furelise.plan.model.PlanRepository;
+import com.furelise.planstatus.model.PlanStatusRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,9 @@ public class PlanOrdService {
 
 	@Autowired
 	CityRepository cityDao;
+
+	@Autowired
+	PlanStatusRepository planStatusDao;
 
 	public PlanOrd addPlanOrd(PlanOrdDTO req, Integer memID) {
 		// planStatusID、amendLog寫死
@@ -192,7 +197,7 @@ public class PlanOrdService {
 		return dao.findById(planOrdID).orElse(null);
 	}
 
-	// join查詢所有方案
+	// join查詢所有方案，以名稱而非ID顯示
 	public List<PlanOrdDTO> getPlanOrdInfo() {
 		Integer planOrdId = 0;
 		String memName = "";
@@ -200,6 +205,7 @@ public class PlanOrdService {
 		Date planStart = null;
 		Date planEnd = null;
 		BigDecimal total = new BigDecimal(0);
+		String planStatus = "";
 
 		List<PlanOrdDTO> infoList = new ArrayList<PlanOrdDTO>();
 
@@ -211,6 +217,8 @@ public class PlanOrdService {
 			planStart = p.getPlanStart();
 			planEnd = p.getPlanEnd();
 			total = p.getTotal();
+			planStatus = getPlanStatus(p.getPlanStatusID());
+
 			PlanOrdDTO info = new PlanOrdDTO();
 			info.setPlanOrdID(planOrdId);
 			info.setMemName(memName);
@@ -218,12 +226,14 @@ public class PlanOrdService {
 			info.setPlanStart(planStart);
 			info.setPlanEnd(planEnd);
 			info.setTotal(total);
+			info.setPlanStatus(planStatus);
+
 			infoList.add(info);
 		}
 		return infoList;
 	}
 
-	// ====for PlanOrdController====
+	// ====for list name instead of ID, PlanOrdController====
 
 	// planID找planName
 	public String getPlanNameById(Integer planID) {
@@ -248,6 +258,11 @@ public class PlanOrdService {
 	// periodID找planPeriod
 	public String getPlanPeriod(Integer periodID) {
 		return periodDao.findById(periodID).get().getPlanPeriod().toString();
+	}
+
+	// planStatusID找planStatus
+	public String getPlanStatus(Integer planStatusID) {
+		return planStatusDao.findById(planStatusID).get().getPlanStatus();
 	}
 
 	// day字串轉換為星期幾"1001100"
@@ -281,8 +296,8 @@ public class PlanOrdService {
 	// ====for PlanOrdRestCon====
 
 	// 取得不重複方案名 + 1次的價格
-	public List<Object[]> findDistinctPlanNamesAndPrice() {
-		return planDao.findDistinctPlanNamesAndPrice();
+	public List<Object[]> findDistinctPlanNamesPriceLiter() {
+		return planDao.findDistinctPlanNamesPriceLiter();
 	}
 
 	// 取得PickupTime

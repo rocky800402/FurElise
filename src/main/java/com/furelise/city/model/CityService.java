@@ -6,18 +6,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.furelise.city.model.*;
+
 @Service
 public class CityService {
 
 	@Autowired
 	CityRepository dao;
 
-	public City addCity(City city) {
-		return dao.save(city);
+	// 新增時cityName重複的話會停留在原畫面
+	public String addCity(City city) {
+		String judge = "b_city_create";
+		if (dao.existsByCityCode(city.getCityCode())) {
+			judge = "b_city_create";
+		} else {
+			dao.save(city);
+			judge = "redirect:/city/all";
+		}
+		return judge;
 	}
 
 	public City updateCity(City city) {
-		
 		return dao.save(city);
 	}
 
