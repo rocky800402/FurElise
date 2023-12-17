@@ -2,11 +2,14 @@ package com.furelise.planord.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +40,6 @@ public class PlanOrdController {
 	}
 
 	// list data, for ajax using
-	@CrossOrigin("*")
 	@GetMapping("/all")
 	@ResponseBody
 	public List<PlanOrd> getAllPlanOrds() {
@@ -88,14 +90,14 @@ public class PlanOrdController {
 	public String planShop() {
 		return "planord_shop";
 	}
-
+	
+	//return view, not in use currently
 	@GetMapping("/cart")
 	public String planCart() {
 		return "planord_cart";
 	}
 
 	// create planName drop down menu
-	@CrossOrigin("*")
 	@GetMapping("/planname")
 	@ResponseBody
 	public List<Object[]> getAllPlanNames() {
@@ -103,7 +105,6 @@ public class PlanOrdController {
 	}
 
 	// create timeRange drop down menu
-	@CrossOrigin("*")
 	@GetMapping("/timerange")
 	@ResponseBody
 	public List<PickupTime> getAllPickupTimes() {
@@ -111,7 +112,6 @@ public class PlanOrdController {
 	}
 
 	// create planPeriod drop down menu
-	@CrossOrigin("*")
 	@GetMapping("/planperiod")
 	@ResponseBody
 	public List<Period> getAllPeriod() {
@@ -119,7 +119,6 @@ public class PlanOrdController {
 	}
 
 	// create wayName drop down menu
-	@CrossOrigin("*")
 	@GetMapping("/wayname")
 	@ResponseBody
 	public List<PickupWay> getAllPickupWay() {
@@ -127,11 +126,23 @@ public class PlanOrdController {
 	}
 
 	// create city drop down menu
-	@CrossOrigin("*")
 	@GetMapping("/citycode")
 	@ResponseBody
 	public List<City> getAllCity() {
 		return planOrdSvc.getCity();
+	}
+	
+	// verify member w/o planord on progress
+	@PostMapping("/checkenddate")
+	@ResponseBody
+	public boolean verifyPlanOrdPurchase(HttpServletRequest req, @RequestBody PlanOrd planOrd) {
+		Mem mem = (Mem) req.getSession().getAttribute("account");
+		String planStart = planOrd.getPlanStart().toString();
+		//測試時先把mem、planStart寫死，(ajax測試時要搭配好planOrdDtoCon的addPlanOrd)
+		//Integer memID = mem.getMemID();
+		Integer memID = 110003;
+		return planOrdSvc.verifyPlanOrdPurchase(memID, planStart) ;
+		// true:可以訂 false:不可以訂
 	}
 
 //	// 暫不做修改功能

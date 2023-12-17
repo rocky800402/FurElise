@@ -49,47 +49,60 @@ public class PlanOrdService {
 	PlanStatusRepository planStatusDao;
 
 	public PlanOrd addPlanOrd(PlanOrdDTO req, Integer memID) {
-		// planStatusID、amendLog寫死
 
-		// 刷卡是否成功
-		boolean payment = true;
+		Integer planID = getPlanId(req.getPlanName(), req.getTimes());
+		String day = getPickupDay(req.getWeekDay());
 
-		if (payment) {
-			PlanOrd planOrd = new PlanOrd();
+		PlanOrd planOrd = new PlanOrd(planID, req.getTimeID(), req.getPeriodID(), day, req.getWayID(), memID,
+				req.getPlanStart(), req.getPlanEnd(), req.getCityCode(), req.getFloor(), req.getPickupStop(),
+				new BigDecimal(req.getAfterTotal()), 0, 210001, req.getContact(), req.getContactTel());
 
-			Integer planID = getPlanId(req.getPlanName(), req.getTimes());
-			planOrd.setPlanID(planID);
-
-			planOrd.setTimeID(req.getTimeID());
-			planOrd.setPeriodID(req.getPeriodID());
-
-			String day = getPickupDay(req.getWeekDay());
-			planOrd.setDay(day);
-
-			planOrd.setWayID(req.getWayID());
-			planOrd.setMemID(memID);
-			planOrd.setPlanStart(req.getPlanStart());
-
-			Date planEnd = getEndDate(req.getPlanStart(), Integer.valueOf(req.getPeriodID()));
-			planOrd.setPlanEnd(planEnd);
-
-			planOrd.setCityCode(req.getCityCode());
-			planOrd.setFloor(req.getFloor());
-			planOrd.setPickupStop(req.getPickupStop());
-			planOrd.setAmendLog(0);
-			planOrd.setPlanStatusID(210001);
-
-			BigDecimal total = getPlanPrice(planID, Integer.valueOf(req.getPeriodID()));
-			planOrd.setTotal(total);
-
-			planOrd.setContact(req.getContact());
-			planOrd.setContactTel(req.getContactTel());
-
-			return dao.save(planOrd);
-		} else {
-			return null;
-		}
+		return dao.save(planOrd);
 	}
+//		// planStatusID、amendLog寫死
+//
+//		// 刷卡是否成功
+//		boolean payment = true;
+//		
+//		if (payment) {
+//			PlanOrd planOrd = new PlanOrd();
+//
+//			Integer planID = getPlanId(req.getPlanName(), req.getTimes());
+//			planOrd.setPlanID(planID);
+//
+//			planOrd.setTimeID(req.getTimeID());
+//			planOrd.setPeriodID(req.getPeriodID());
+//
+//			String day = getPickupDay(req.getWeekDay());
+//			planOrd.setDay(day);
+//
+//			planOrd.setWayID(req.getWayID());
+//			planOrd.setMemID(memID);
+//			planOrd.setPlanStart(req.getPlanStart());
+//
+//			planOrd.setPlanEnd(req.getPlanEnd());
+////			Date planEnd = getEndDate(req.getPlanStart(), Integer.valueOf(req.getPeriodID()));
+////			planOrd.setPlanEnd(planEnd);
+//
+//			planOrd.setCityCode(req.getCityCode());
+//			planOrd.setFloor(req.getFloor());
+//			planOrd.setPickupStop(req.getPickupStop());
+//			planOrd.setAmendLog(0);
+//			planOrd.setPlanStatusID(210001);
+//			
+//			planOrd.setTotal(new BigDecimal(req.getAfterTotal()));
+//			System.out.println(req.getAfterTotal());
+////			BigDecimal total = getPlanPrice(planID, Integer.valueOf(req.getPeriodID()));
+////			planOrd.setTotal(total);
+//			
+//					
+//			planOrd.setContact(req.getContact());
+//			planOrd.setContactTel(req.getContactTel());
+//
+//			return dao.save(planOrd);
+//		} else {
+//			return null;
+//		}
 
 	// 方案名+收取次數取得方案ID
 	private Integer getPlanId(String planName, String times) {
@@ -106,30 +119,30 @@ public class PlanOrdService {
 //			return planID;
 	}
 
-	// 取得月數
+	// 取得月數 //沒用到
 	private Integer getPeriod(Integer periodID) {
 		return periodDao.findById(periodID).get().getPlanPeriod();
 	}
 
-	// 取得方案價格
-	private BigDecimal getPlanPrice(Integer planID, Integer periodID) {
-		// 拿月數
-		Integer planPeriod = getPeriod(periodID);
-		System.out.println("planPeriod: " + planPeriod);
-		// 拿到方案
-		Plan plan = planDao.findById(planID).get();
-		System.out.println(plan);
-		// 方案價格*月數
-		return plan.getPlanPrice().multiply(new BigDecimal(planPeriod));
-	}
-
-	// 計算結束日期
-	private Date getEndDate(Date planStart, Integer periodID) {
-		Integer planPeriod = getPeriod(periodID);
-		LocalDate ld = planStart.toLocalDate();
-		Date planEnd = Date.valueOf(ld.plusDays(planPeriod * 28 - 1));
-		return planEnd;
-	}
+//	// 取得方案價格 //沒用到
+//	private BigDecimal getPlanPrice(Integer planID, Integer periodID) {
+//		// 拿月數
+//		Integer planPeriod = getPeriod(periodID);
+//		System.out.println("planPeriod: " + planPeriod);
+//		// 拿到方案
+//		Plan plan = planDao.findById(planID).get();
+//		System.out.println(plan);
+//		// 方案價格*月數
+//		return plan.getPlanPrice().multiply(new BigDecimal(planPeriod));
+//	}
+//
+//	// 計算結束日期 //沒用到
+//	private Date getEndDate(Date planStart, Integer periodID) {
+//		Integer planPeriod = getPeriod(periodID);
+//		LocalDate ld = planStart.toLocalDate();
+//		Date planEnd = Date.valueOf(ld.plusDays(planPeriod * 28 - 1));
+//		return planEnd;
+//	}
 
 	// 取得收取日字串
 	private String getPickupDay(String[] weekDay) {
@@ -144,46 +157,27 @@ public class PlanOrdService {
 		return initDay.toString();
 	}
 
-//		{
-//		    "planName": "商務方案",
-//		    "timeID": "240002",
-//		    "periodID": "220001",
-//		    "times": "3",
-//		    "weekDay": [
-//		        "0",
-//		        "1",
-//		        "3"
-//		    ],
-//		    "wayID": "230004",
-//		    "planStart": "2024-12-25",
-//		    "contact": "小黃",
-//		    "contactTel": "0988587587",
-//		    "cityCode": "108",
-//		    "floor": "門口",
-//		    "pickupStop": "忠孝東路"
-//		}
-
 	// 修改
-	public PlanOrd updatePlanOrd(PlanOrd req) {
-		PlanOrd planOrd = new PlanOrd();
-		planOrd.setPlanOrdID(req.getPlanOrdID());
-		planOrd.setPlanID(req.getPlanID());
-		planOrd.setTimeID(req.getTimeID());
-		planOrd.setPeriodID(req.getPeriodID());
-		planOrd.setDay(req.getDay());
-		planOrd.setWayID(req.getWayID());
-		planOrd.setMemID(req.getMemID());
-		planOrd.setPlanStart(req.getPlanStart());
-		planOrd.setPlanEnd(req.getPlanEnd());
-		planOrd.setCityCode(req.getCityCode());
-		planOrd.setFloor(req.getFloor());
-		planOrd.setPickupStop(req.getPickupStop());
-		planOrd.setPlanStatusID(210001);
-		planOrd.setTotal(req.getTotal());
-		planOrd.setContact(req.getContact());
-		planOrd.setContactTel(req.getContactTel());
-		return dao.save(planOrd);
-	}
+//	public PlanOrd updatePlanOrd(PlanOrd req) {
+//		PlanOrd planOrd = new PlanOrd();
+//		planOrd.setPlanOrdID(req.getPlanOrdID());
+//		planOrd.setPlanID(req.getPlanID());
+//		planOrd.setTimeID(req.getTimeID());
+//		planOrd.setPeriodID(req.getPeriodID());
+//		planOrd.setDay(req.getDay());
+//		planOrd.setWayID(req.getWayID());
+//		planOrd.setMemID(req.getMemID());
+//		planOrd.setPlanStart(req.getPlanStart());
+//		planOrd.setPlanEnd(req.getPlanEnd());
+//		planOrd.setCityCode(req.getCityCode());
+//		planOrd.setFloor(req.getFloor());
+//		planOrd.setPickupStop(req.getPickupStop());
+//		planOrd.setPlanStatusID(210001);
+//		planOrd.setTotal(req.getTotal());
+//		planOrd.setContact(req.getContact());
+//		planOrd.setContactTel(req.getContactTel());
+//		return dao.save(planOrd);
+//	}
 
 	public void deletePlanOrd(Integer planOrdID) {
 		dao.deleteById(planOrdID);
@@ -263,6 +257,28 @@ public class PlanOrdService {
 	// planStatusID找planStatus
 	public String getPlanStatus(Integer planStatusID) {
 		return planStatusDao.findById(planStatusID).get().getPlanStatus();
+	}
+
+	// 找當前使用者memID的訂單是否有planEndDate晚於三天後的
+	public boolean verifyPlanOrdPurchase(Integer memID, String planStart) {
+		// find planOrd of a member
+		boolean proceed = false;
+		List<PlanOrd> planOrdList = dao.findByMemID(memID);
+		// no purchase record
+		if (planOrdList.isEmpty()) {
+			proceed = true;
+		} else {
+			for (PlanOrd p : planOrdList) {
+				// planStart later than existing planEnd
+				if (Date.valueOf(planStart).compareTo(p.getPlanEnd()) > 0) // 可以買
+					proceed = true;
+				else {
+					proceed = false;
+					break;
+				}
+			}
+		}
+		return proceed;
 	}
 
 	// day字串轉換為星期幾"1001100"
