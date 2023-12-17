@@ -77,7 +77,7 @@ public class EstabCase implements Serializable{
 	private byte[] estabCasePic;
 	
 	@Column(name = "takeStatus",nullable = true)
-	private boolean takeStatus;
+	private Boolean takeStatus;
 	
 	@Column(name = "estabCaseStatus" ,nullable = true)
 	private Integer estabCaseStatus;

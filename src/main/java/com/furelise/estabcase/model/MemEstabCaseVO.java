@@ -34,6 +34,7 @@ public class MemEstabCaseVO {
     private String contactTel;
 
 
+
     //EstabCase案件
 //    private Integer estabCaseID;
 //    private Date estabCaseDate;
@@ -42,12 +43,13 @@ public class MemEstabCaseVO {
 //    private Integer estabCaseLevel;
 //    private String estabCaseFeedback;
 //    private Timestamp estabCaseFBTime;
-    private List<EstabCase> estabCaseList;
+//    private List<EstabCase> estabCaseList;
+    private List<MemEstabCaseBO> memEstabCaseBO;
 
 
-   public  MemEstabCaseVO(){}
+    public  MemEstabCaseVO(){}
 
-    public MemEstabCaseVO(Integer planOrdID, String planName, String timeRange, Integer planPeriod, String day, String dayCode, String wayName, Date planStart, Date planEnd, BigDecimal total, String cityName, String cityCode, String floor, String contact, String contactTel, List<EstabCase> estabCaseList) {
+    public MemEstabCaseVO(Integer planOrdID, String planName, String timeRange, Integer planPeriod, String day, String dayCode, String wayName, Integer memID, String memName, Date planStart, Date planEnd, BigDecimal total, String cityName, String cityCode, String floor, String contact, String contactTel, List<MemEstabCaseBO> memEstabCaseBO) {
         this.planOrdID = planOrdID;
         this.planName = planName;
         this.timeRange = timeRange;
@@ -55,6 +57,8 @@ public class MemEstabCaseVO {
         this.day = day;
         this.dayCode = dayCode;
         this.wayName = wayName;
+        this.memID = memID;
+        this.memName = memName;
         this.planStart = planStart;
         this.planEnd = planEnd;
         this.total = total;
@@ -63,6 +67,6 @@ public class MemEstabCaseVO {
         this.floor = floor;
         this.contact = contact;
         this.contactTel = contactTel;
-        this.estabCaseList = estabCaseList;
+        this.memEstabCaseBO = memEstabCaseBO;
     }
 }

@@ -31,11 +31,11 @@ public class MemEstabCaseController {
 
 	@GetMapping
 	public MemEstabCaseVO getAllMemEstabCase( HttpServletRequest req){
-		System.out.println(req);
-		System.out.println(req.getSession());
+//		System.out.println(req);
+//		System.out.println(req.getSession());
 		Mem mem = (Mem) req.getSession().getAttribute("account");
-		System.out.println("mem");
-		System.out.println(mem);
+//		System.out.println("mem");
+//		System.out.println(mem);
 		PlanOrd planOrd = planOrdRepository.findByMemIDAndPlanStatusID(mem.getMemID(), 210001);
         return estabCaseService.getMemEstabCase(planOrd.getPlanOrdID());
 	}
