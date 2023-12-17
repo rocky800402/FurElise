@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="css/backend_form.css">
+    <link rel="stylesheet" href="css/membackend.css">
+</head>
+
+
+<body>
+    
+
+
+    <div class="container">
+        <div class="backendSidebarPage"></div>
+        <main class="content">
+            <p class="p_title">會員管理 </p>
+            <table id="example" class="display" style="width:100%">
+                
+
+                
+
+                <form action="#" method="post">
+                    <label for="memberID">會員ID：</label>
+                    <input type="text" id="memberID" name="memberID" required>
+                    <br>
+                    <br>
+                
+                    <label for="memberName">會員名字：</label>
+                    <input type="text" id="memberName" name="memberName" required>
+                    <br>
+                    <br>
+                    <label for="email">電子信箱：</label>
+                    <input type="email" id="email" name="email" required>
+                    <br>
+                    <br>
+                    <label for="phone">電話：</label>
+                    <select id="phone" name="phone">
+                        <option value="mobile">0912-345678</option>
+                        <option value="home">0988-654321</option>
+                    </select>
+                    <br>
+                    <br>
+                    <label for="registrationTime">註冊時間：</label>
+                    <input type="datetime-local" id="registrationTime" name="registrationTime" required>
+                    <br>
+                    <br>
+                    <label for="birthday">生日：</label>
+                    <input type="date" id="birthday" name="birthday" required>
+                    <br>
+                    <br>
+                    <button type="button" onclick="history.back()">回上一頁</button>
+                    <button type="submit" name="suspend">停權</button>
+                </form>
+
+                <tfoot>
+                    
+                </tfoot>
+            </table>
+        </main>
+    </div>
+
+
+    <div class="footerPage"></div>
+
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/jquery.dataTables.min.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+    <script>
+       $(".backendSidebarPage").load("backendSidebar.html");
+    </script>
+</body>
+
+
+</html>
+

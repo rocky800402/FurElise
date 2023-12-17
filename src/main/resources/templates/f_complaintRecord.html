@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="css/backend_form.css">
+    </head>
+    
+    
+    <body>
+        <div class="backendSidebarPage"></div>
+        <div class="headerPage"></div>
+        
+    
+        <div class="container">
+           
+            <main class="content">
+                <p class="p_title">申訴紀錄</p>
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>申訴編號</th>
+                            <th>案件編號</th>
+                            <th>會員編號</th>
+                            <th>申訴日期</th>
+                            <th>夥伴編號</th>
+                            <th>查看詳情</th>
+                            <th>狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>N0001</td>
+                            <td>C0001</td>
+                            <td>A0001</td>
+                            <td>1997/11/22</td>
+                            <td>E0001</td>
+                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
+                                        style="background-color: #9ac972">查看詳情</span></a></td>
+                            <td>已處理</td>
+                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>N0002</td>
+                            <td>C0002</td>
+                            <td>A0002</td>
+                            <td>1993/09/22</td>
+                            <td>E0002</td>
+                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
+                                        style="background-color: #9ac972">查看詳情</span></a></td>
+                            <td>未處理</td>
+                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>N0003</td>
+                            <td>C0003</td>
+                            <td>A0003</td>
+                            <td>2000/10/22</td>
+                            <td>E0003</td>
+                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
+                                        style="background-color: #9ac972">查看詳情</span></a></td>
+                            <td>已處理</td>
+                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>申訴編號</th>
+                            <th>案件編號</th>
+                            <th>會員編號</th>
+                            <th>申訴日期</th>
+                            <th>夥伴編號</th>
+                            <th>查看詳情</th>
+                            <th>狀態</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </main>
+        </div>
+    
+    
+        <div class="footerPage"></div>
+    
+    
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/jquery-3.7.1.min.js"></script>
+        <script src="./js/jquery.dataTables.min.js"></script>
+        <script>
+            new DataTable('#example');
+        </script>
+        <script>
+            $(".backendSidebarPage").load("backendSidebar.html");
+         </script>
+    </body>
+    
+    
+    </html>
+            
+
+

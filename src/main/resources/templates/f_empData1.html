@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="css/backend_form.css">
+    </head>
+    
+    
+    <body>
+        <div class="backendSidebarPage"></div>
+        <div class="headerPage"></div>
+        
+    
+        <div class="container">
+           
+            <main class="content">
+                <p class="p_title">夥伴查詢</p>
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>夥伴ID</th>
+                            <th>夥伴名字</th>
+                            <th>工作時段</th>
+                            <th>電話</th>
+                            <th>生日</th>
+                            <th>電子信箱</th>
+                            <th>查看詳情</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>E0001</td>
+                            <td>王曉明</td>
+                            <td>09:00-17:30</td>
+                            <td>0912-345678</td>
+                            <td>1997/11/22</td>
+                            <td>edinburgh@gmail.com</td>
+                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
+                                        style="background-color: #9ac972">查看詳情</span></a></td>
+                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>E0002</td>
+                            <td>王忠明</td>
+                            <td>19:00-21:00</td>
+                            <td>0988-123456</td>
+                            <td>1993/09/22</td>
+                            <td>tokyo@gmail.com</td>
+                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
+                                        style="background-color: #9ac972">查看詳情</span></a></td>
+                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>E0003</td>
+                            <td>王大明</td>
+                            <td>21:00-10:30</td>
+                            <td>0939-123456</td>
+                            <td>2000/10/22</td>
+                            <td>osaka@gmail.com</td>
+                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
+                                        style="background-color: #9ac972">查看詳情</span></a></td>
+                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>夥伴ID</th>
+                            <th>夥伴名字</th>
+                            <th>工作時段</th>
+                            <th>電話</th>
+                            <th>生日</th>
+                            <th>電子信箱</th>
+                            <th>查看詳情</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </main>
+        </div>
+    
+    
+        <div class="footerPage"></div>
+    
+    
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/jquery-3.7.1.min.js"></script>
+        <script src="./js/jquery.dataTables.min.js"></script>
+        <script>
+            new DataTable('#example');
+        </script>
+        <script>
+            $(".backendSidebarPage").load("backendSidebar.html");
+         </script>
+    </body>
+    
+    
+    </html>
+            
+
+
