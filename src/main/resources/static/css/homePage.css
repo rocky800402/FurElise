@@ -1,0 +1,79 @@
+
+/* 簡介調整了背景色與文字顏色 */
+#profile {
+    background-color:rgba(219, 240, 226, 0.442);
+    /* 第一段 */
+    color: #0e0d0d;
+    line-height:2
+}
+#profile h2 {
+    /* 最便利的倒垃圾預約服務 */
+    color:#1a1919;
+    font-weight: bolder;
+}
+
+/* 設定了內容寬度的上限 */
+#profile .inner {
+    max-width: 1000px;
+    margin: 0 auto;  /* 左右置中 */
+}
+
+#profile2 {
+    color: #0e0d0d;
+    line-height:3
+}
+
+#profile2 .inner2 {
+    max-width: 1000px;
+    margin: 0 auto; /*  左右置中 */ 
+}
+
+#profile2 h2 {
+    /* 最便利的倒垃圾預約服務 */
+    text-align: center;
+    color:brown;
+    font-weight: bolder;
+}
+
+.step{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -15px;
+}
+
+section {
+    margin: 40px 0px;/* 外距：上下48px  左右0px*/
+}
+
+/* ===================周邊介紹表格================*/
+#profile3 .content {
+    max-width: 1000px;
+    margin: 0 auto; /*  左右置中 */ 
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#profile3{
+	background: #F7F1EB;
+}
+
+caption{
+	font-size: 18px;
+	font-weight: 500;
+	padding: 10px;
+	background:#907D62;
+	color: #FFFFFF;
+}
+th,td {
+    border: solid 1px #999999;
+    padding: 16px;
+}
+th {
+	font-weight: 400;
+    background-color:#DDD7CE;
+}
+/* ========================================*/

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="css/backend_form.css">
+    <link rel="stylesheet" href="css/empbackend.css">
+</head>
+
+
+<body>
+    
+
+
+    <div class="container">
+        <div class="backendSidebarPage"></div>
+        <main class="content">
+            <p class="p_title">夥伴管理 > 註冊審查</p>
+            <table id="example" class="display" style="width:100%">
+                
+
+                
+
+                <form action="#" method="post">
+                    <label for="partnerName">夥伴姓名：</label>
+                    <input type="text" id="partnerName" name="partnerName" required>
+                    <br>
+                    <br>
+                    <label for="birthday">生日：</label>
+                    <input type="date" id="birthday" name="birthday" required>
+                    <br>
+                    <br>
+                    <label for="phone">手機號碼：</label>
+                    <select id="phone" name="phone">
+                        <option value="mobile">0912-345678</option>
+                        <option value="home">0988-654321</option>
+                    </select>
+                    <br>
+                    <br>
+                    <label for="IDnumber">身分證號碼：</label>
+                    <input type="text" id="IDnumber" name="IDnumber" required>
+                    <br>
+                    <br>
+                    <label for="transportation">交通工具：</label>
+                    <select id="transportation" name="transportation">
+                        <option value="car">汽車</option>
+                        <option value="motor">機車</option>
+                    </select>
+                    <br>
+                    <br>
+                    <label for="email">電子信箱：</label>
+                    <input type="email" id="email" name="email" required>
+                    <br>
+                    <br>
+                    <label for="applyDate">申請審查日期：</label>
+                    <input type="date" id="applyDate" name="applyDate" required>
+                    <br>
+                    <br>
+                    <label for="workShift">工作時段：</label>
+                    <select id="workShift" name="workShift">
+                        <option value="morning">早上10點~下午5點</option>
+                        <option value="night">下午5點~晚上10點</option>
+                    </select>
+                    <br>
+                    <br>
+                    <!-- 身分證圖片顯示區 -->
+                    <div id="idImageDisplay">
+                        <img src="example_id_image.jpg" alt="身分證照片(正面)">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- 身分證圖片顯示區 -->
+                    <div id="idImageDisplay2">
+                        <img src="example_id_image2.jpg" alt="身分證照片(背面)">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- 汽機車駕照圖片顯示區 -->
+                    <div id="driveImageDisplay">
+                        <img src="example_drive_image.jpg" alt="汽機車駕照圖片">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- 三個按鈕 -->
+                    
+                    <button type="button" name="modify">審核成功</button>
+                    <button type="submit" name="suspend">審核失敗</button>
+                </form>
+                
+                <tfoot>
+                    
+                </tfoot>
+            </table>
+
+            
+        
+                
+           
+        </main>
+    </div>
+
+
+    <div class="footerPage"></div>
+
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/jquery.dataTables.min.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+    <script>
+       $(".backendSidebarPage").load("backendSidebar.html");
+    </script>
+    
+
+</body>
+
+
+</html>
+
