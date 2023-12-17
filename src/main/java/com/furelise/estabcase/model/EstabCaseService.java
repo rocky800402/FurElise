@@ -6,11 +6,14 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
+import com.furelise.complaint.model.Complaint;
+import com.furelise.complaint.model.ComplaintRepository;
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
 import com.furelise.period.model.Period;
@@ -45,6 +48,9 @@ public class EstabCaseService {
 	CityRepository cityR;
 	@Autowired
     MemRepository memR;
+	@Autowired
+	ComplaintRepository complaintR;
+
 
 	
 	public EstabCase addEstabCase(Integer empID,Integer planOrdID,
@@ -74,6 +80,23 @@ public class EstabCaseService {
 		return eCase;
 	}
 
+	public MemEstabCaseBO getMemEstabCaseCom(Integer estabCaseID){
+		EstabCase estabCase = estabCaseR.findById(estabCaseID).orElseThrow();
+		List<Complaint> complaints=complaintR.findByEstabCaseID(estabCaseID);
+		MemEstabCaseBO memECBO = new MemEstabCaseBO(estabCase,complaints);
+		return memECBO;
+	}
+
+	public List<MemEstabCaseBO> getMemEstabCaseComs(List<EstabCase> estabCaseList){
+		List <MemEstabCaseBO> memECBOList = new ArrayList<>();
+		for(EstabCase estabCase:estabCaseList){
+			memECBOList.add(getMemEstabCaseCom(estabCase.getEstabCaseID()));
+		}
+
+		return memECBOList;
+	}
+
+
 	public MemEstabCaseVO getMemEstabCase(Integer planOrdID){
 		MemEstabCaseVO memEC = new MemEstabCaseVO();
 		PlanOrd planOrd = planOrdR.findById(planOrdID).orElseThrow();
@@ -83,6 +106,7 @@ public class EstabCaseService {
 		PickupWay planWay = pickupWayR.findById(planOrd.getWayID()).orElseThrow();
 		City city = cityR.findByCityCode(planOrd.getCityCode());
 		Mem mem = memR.findById(planOrd.getMemID()).orElseThrow();
+
 
 		memEC.setPlanOrdID(planOrdID);
 		memEC.setPlanName(plan.getPlanName());
@@ -101,8 +125,8 @@ public class EstabCaseService {
 		memEC.setFloor(planOrd.getFloor());
 		memEC.setContact(planOrd.getContact());
 		memEC.setContactTel(planOrd.getContactTel());
+		memEC.setMemEstabCaseBO(getMemEstabCaseComs(estabCaseR.findByPlanOrdIDOrderByEstabCaseDateDesc(planOrdID)));
 
-		memEC.setEstabCaseList(estabCaseR.findByPlanOrdIDOrderByEstabCaseDateDesc(planOrdID));
 
 		return memEC;
 	}
