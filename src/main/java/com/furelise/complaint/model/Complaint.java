@@ -34,7 +34,7 @@ public class Complaint implements Serializable {
 	private Integer estabCaseID;
 	private String comDetail;
 	private String comTel;
-	private boolean comStatus;
+	private Boolean comStatus;
 	private Timestamp comStart;
 	private Timestamp comEnd;
 //	@ManyToOne
