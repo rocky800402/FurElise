@@ -110,5 +110,29 @@ public class PlanOrd implements Serializable{
 
     public PlanOrd() {
         super();
-    }   
+    }
+
+	public PlanOrd(Integer planID, Integer timeID, Integer periodID, String day, Integer wayID, Integer memID,
+			Date planStart, Date planEnd, String cityCode, String floor, String pickupStop, BigDecimal total,
+			Integer amendLog, Integer planStatusID, String contact, String contactTel) {
+		super();
+		this.planID = planID;
+		this.timeID = timeID;
+		this.periodID = periodID;
+		this.day = day;
+		this.wayID = wayID;
+		this.memID = memID;
+		this.planStart = planStart;
+		this.planEnd = planEnd;
+		this.cityCode = cityCode;
+		this.floor = floor;
+		this.pickupStop = pickupStop;
+		this.total = total;
+		this.amendLog = amendLog;
+		this.planStatusID = planStatusID;
+		this.contact = contact;
+		this.contactTel = contactTel;
+	}
+    
+
 }

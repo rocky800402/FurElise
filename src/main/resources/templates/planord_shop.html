@@ -148,7 +148,6 @@
                 訂購期間
                 <select id="period" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style=" margin-bottom:20px;">
-                    <!-- <option data-length="27" value="1">One</option> -->
                 </select>
 
                 每週收取次數
@@ -189,7 +188,6 @@
                 收取方式
                 <select id="pickupWay" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     style=" margin-bottom:20px;">
-                    <!-- <option value="1">One</option> -->
 
                 </select>
 
@@ -266,17 +264,19 @@
             city_selector();
 
             //開始日最快3天後
+            
             var today = new Date();
             var defaultStartDate = new Date(today.setDate(today.getDate() + 3)).toLocaleDateString('fr-ca');
-
+            var defaultEndDate = new Date(today.setDate(today.getDate() + 27)).toLocaleDateString('fr-ca');
+            
             $('#start').val(defaultStartDate);
             $('#start').attr('min', $('#start').val());
+            $("[name='planEnd']").val(defaultEndDate);
 
             //結束日期設定
             function updateEndDate() {
 
                 var startDate = $('#start').val();
-                $("[name='planEnd']").val(startDate);
                 var periodLength = $('#period option:selected').data('length');
 
                 if (startDate && periodLength) {
@@ -286,10 +286,6 @@
                     $('#end').val(endDateObj.toISOString().split('T')[0]);
                 }
             }
-
-            // 頁面載入完成時，執行一次以顯示預設的結束日期
-            // 目前沒用
-            updateEndDate();
 
             // 起始日期的 change 事件處理器
             $('#start').change(function () {
