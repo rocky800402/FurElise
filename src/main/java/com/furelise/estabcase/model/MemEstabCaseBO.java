@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 public class MemEstabCaseBO {
@@ -26,10 +27,20 @@ public class MemEstabCaseBO {
 
     private List<Complaint> complaints;
 
+
+    private Integer complaintID;
+    private Integer memID;
+
+    private String comDetail;
+    private String comTel;
+    private boolean comStatus;
+    private Timestamp comStart;
+    private Timestamp comEnd;
+
     public MemEstabCaseBO() {
     }
 
-    public MemEstabCaseBO(EstabCase estabCase, List<Complaint> complaints) {
+    public MemEstabCaseBO(EstabCase estabCase, Complaint complaint) {
         this.estabCaseID=estabCase.getEstabCaseID();
         this.empID=estabCase.getEmpID();
         this.planOrdID=estabCase.getPlanOrdID();
@@ -43,7 +54,16 @@ public class MemEstabCaseBO {
         this.estabCaseLevel=estabCase.getEstabCaseLevel();
         this.estabCaseFeedback=estabCase.getEstabCaseFeedback();
         this.estabCaseFBTime=estabCase.getEstabCaseFBTime();
-        this.complaints=complaints;
+        if(!Objects.isNull(complaint)){
+            this.complaintID=complaint.getComplaintID();
+            this.memID=complaint.getMemID();
+            this.comDetail=complaint.getComDetail();
+            this.comTel=complaint.getComTel();
+            this.comStatus=complaint.getComStatus();
+            this.comStart=complaint.getComStart();
+            this.comEnd=complaint.getComEnd();
+
+        }
     }
 
 }

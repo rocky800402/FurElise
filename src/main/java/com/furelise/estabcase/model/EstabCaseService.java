@@ -5,7 +5,6 @@ import java.sql.Date;
 //import java.util.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,17 +79,17 @@ public class EstabCaseService {
 		return eCase;
 	}
 
-	public MemEstabCaseBO getMemEstabCaseCom(Integer estabCaseID){
+	public MemEstabCaseBO getMemEstabCaseCom(Integer estabCaseID, Integer memID){
 		EstabCase estabCase = estabCaseR.findById(estabCaseID).orElseThrow();
-		List<Complaint> complaints=complaintR.findByEstabCaseID(estabCaseID);
-		MemEstabCaseBO memECBO = new MemEstabCaseBO(estabCase,complaints);
+		Complaint complaintOpt=complaintR.findByEstabCaseIDAndMemID(estabCaseID,memID);
+		MemEstabCaseBO memECBO = new MemEstabCaseBO(estabCase,complaintOpt);
 		return memECBO;
 	}
 
-	public List<MemEstabCaseBO> getMemEstabCaseComs(List<EstabCase> estabCaseList){
+	public List<MemEstabCaseBO> getMemEstabCaseComs(List<EstabCase> estabCaseList, Integer memID){
 		List <MemEstabCaseBO> memECBOList = new ArrayList<>();
 		for(EstabCase estabCase:estabCaseList){
-			memECBOList.add(getMemEstabCaseCom(estabCase.getEstabCaseID()));
+			memECBOList.add(getMemEstabCaseCom(estabCase.getEstabCaseID(),memID));
 		}
 
 		return memECBOList;
@@ -125,7 +124,7 @@ public class EstabCaseService {
 		memEC.setFloor(planOrd.getFloor());
 		memEC.setContact(planOrd.getContact());
 		memEC.setContactTel(planOrd.getContactTel());
-		memEC.setMemEstabCaseBO(getMemEstabCaseComs(estabCaseR.findByPlanOrdIDOrderByEstabCaseDateDesc(planOrdID)));
+		memEC.setMemEstabCaseBO(getMemEstabCaseComs(estabCaseR.findByPlanOrdIDOrderByEstabCaseDateDesc(planOrdID),mem.getMemID()));
 
 
 		return memEC;
@@ -140,6 +139,20 @@ public class EstabCaseService {
 		estabCaseR.save(estabCase);
 
 		return estabCase;
+	}
+
+	public Complaint addcomplaint(MemEstabCaseComDTO memEstabCaseComDTO,Integer memID){
+		LocalDateTime currentTime = LocalDateTime.now();
+		Complaint complaint = new Complaint();
+		complaint.setMemID(memID);
+		complaint.setEstabCaseID(memEstabCaseComDTO.getEstabCaseID());
+		complaint.setComDetail(memEstabCaseComDTO.getComDetail());
+		complaint.setComTel(memEstabCaseComDTO.getComTel());
+		complaint.setComStatus(false);
+		complaint.setComStart(Timestamp.valueOf(currentTime));
+
+		complaintR.save(complaint);
+		return complaint;
 	}
 
 	public List<EstabCase> getEstabCaseByPlanOrdID(Integer planOrdID) {

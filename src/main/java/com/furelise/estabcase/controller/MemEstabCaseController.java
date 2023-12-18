@@ -2,10 +2,8 @@ package com.furelise.estabcase.controller;
 
 
 import com.furelise.common.model.ErrorMessageVO;
-import com.furelise.estabcase.model.EstabCase;
-import com.furelise.estabcase.model.EstabCaseLevelDTO;
-import com.furelise.estabcase.model.EstabCaseService;
-import com.furelise.estabcase.model.MemEstabCaseVO;
+import com.furelise.complaint.model.Complaint;
+import com.furelise.estabcase.model.*;
 
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.planord.model.PlanOrd;
@@ -41,18 +39,25 @@ public class MemEstabCaseController {
 	}
 
 
-	@GetMapping("/{id}/{no}")
-	public List<EstabCase> getAllEstabCases(@PathVariable String id, @PathVariable String no){
-		List<EstabCase> estabCaseList = estabCaseService.getAllEstabCase();
-		System.out.println(estabCaseList);
-		return estabCaseList;
-	}
+//	@GetMapping("/{id}/{no}")
+//	public List<EstabCase> getAllEstabCases(@PathVariable String id, @PathVariable String no){
+//		List<EstabCase> estabCaseList = estabCaseService.getAllEstabCase();
+//		System.out.println(estabCaseList);
+//		return estabCaseList;
+//	}
 
 
 	@PatchMapping()
 	public EstabCase updateEstabCaseLevel(
 			@Validated @RequestBody EstabCaseLevelDTO estabCaseLevelDTO){
 		return estabCaseService.updateEstabCaseLevel(estabCaseLevelDTO);
+	}
+
+	@PostMapping()
+	public Complaint addMemcomplaint(
+			@Validated @RequestBody MemEstabCaseComDTO memEstabCaseComDTO,HttpServletRequest req){
+		Mem mem = (Mem) req.getSession().getAttribute("account");
+		return estabCaseService.addcomplaint(memEstabCaseComDTO,mem.getMemID());
 	}
 
 
