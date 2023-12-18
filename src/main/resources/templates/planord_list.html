@@ -7,7 +7,7 @@
 <title>方案訂單管理</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/bootstrap.min.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/backend_sidebar.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
 <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
 <style>
@@ -86,10 +86,39 @@
 </head>
 
 <body>
-	<div class="headerPage"></div>
-
 	<div class="container">
-		<div class="sidebarPage"></div>
+		<div>
+			<aside class="sidebar">
+				<img class="backend_sidebar_logo" th:src="@{/images/fuer_elise.svg}" alt="">
+				<hr>
+				<h2>Für Elise
+				</h2>
+				<hr>
+				<div>
+					<ul>
+						<li><a href="#">會員管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">夥伴管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">商品管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="/furelise/planord/">方案訂單</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">商品訂單</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="/furelise/plan/">方案管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">派單管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">通知管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">優惠管理</a></li>
+						<hr class="backend_sidebar_line">
+						<li><a href="#">申訴管理</a></li>
+					</ul>
+				</div>
+			</aside>
+		</div>
 		<main class="content">
 
 			<p class="p_subtitle">方案訂單</p>
@@ -125,8 +154,6 @@
 		</main>
 	</div>
 
-	<div class="footerPage"></div>
-
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
@@ -136,7 +163,6 @@
 		$(function () {
 			init();
 		});
-		$(".sidebarPage").load("backendsidebar.html");
 	</script>
 </body>
 

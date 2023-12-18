@@ -17,4 +17,7 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>{
 
 	@Query("SELECT DISTINCT times FROM Plan WHERE planName = :planName")
 	List<Integer> findTimeByPlanName(@Param(value="planName") String planName);
+	
+	@Query("SELECT planID FROM Plan WHERE planName = :planName")
+	List<Integer> findIdByPlanName(@Param(value = "planName") String planName);
 }

@@ -51,9 +51,28 @@ public class Plan implements Serializable{
 //	@OrderBy("planOrdID asc")
 //	private Set<PlanOrd> planOrds;
 
-
 	public Plan() {
 		super();
 	}
+	
+	public Plan(String planName, Integer liter, BigDecimal planPrice, BigDecimal planPricePerCase, Integer times, Date planUpload) {
+		this.planName = planName;
+		this.liter = liter;
+		this.planPrice = planPrice;
+		this.planPricePerCase = planPricePerCase;
+		this.times = times;
+		this.planUpload = planUpload;		
+	}
 
+	public Plan(Integer planID, String planName, Integer liter, BigDecimal planPrice, BigDecimal planPricePerCase,
+			Integer times, Date planUpload) {
+		super();
+		this.planID = planID;
+		this.planName = planName;
+		this.liter = liter;
+		this.planPrice = planPrice;
+		this.planPricePerCase = planPricePerCase;
+		this.times = times;
+		this.planUpload = planUpload;
+	}
 }

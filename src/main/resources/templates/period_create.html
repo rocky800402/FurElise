@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新增訂購期間</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
-    <!-- <link rel="stylesheet" href="css/jquery.dataTables.min.css"> -->
     <style>
         /* 查看詳情button */
         .sl_btn_chakan {
@@ -127,17 +125,9 @@
 </head>
 
 <body>
-    <div class="headerPage"></div>
-
     <div class="container">
-        <div class="sidebarPage"></div>
         <main class="content">
             <p class="p_title">新增訂購期間</p>
-
-            <!-- <label>訂購期間ID</label>
-            <div class="input-group mb-3">
-                <input type="text" id="periodID" readonly style="background-color:lightgrey">
-            </div> -->
 
             <label>訂購期間</label>
             <div class="input-group mb-3">
@@ -153,15 +143,9 @@
         </main>
     </div>
 
-    <div class="footerPage"></div>
-
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/period.js}"></script>
-    <script>
-        $(".sidebarPage").load("backendsidebar.html");
-        // console.log($("button#task_add"));
-    </script>
     
 </body>
 

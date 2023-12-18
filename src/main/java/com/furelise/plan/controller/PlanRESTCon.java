@@ -41,13 +41,13 @@ public class PlanRESTCon {
 		return planSvc.updatePlan(req);
 	}
 	
-	@CrossOrigin("*")
+	//同名方案一次刪除
 	@DeleteMapping("deleting")
 	public String deletePlan(@RequestBody Plan req) {
-		planSvc.deletePlan(req.getPlanID());
+		planSvc.deletePlan(req.getPlanName());
 		return "deleted seccessfully";
 	}
-	
+
 	@CrossOrigin("*")
 	@GetMapping("/all")
 	public List<Plan> getAllPlans(){

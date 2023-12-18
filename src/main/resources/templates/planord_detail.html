@@ -7,9 +7,7 @@
 <title>方案訂單詳情</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/bootstrap.min.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
-<!-- 	<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}"> -->
 <style>
 /* 查看詳情button */
 .sl_btn_chakan {
@@ -134,10 +132,7 @@
 </head>
 
 <body>
-	<div class="headerPage"></div>
-
 	<div class="container">
-		<div class="sidebarPage"></div>
 		<main class="content">
 			<p class="p_title">方案訂單詳情</p>
 			<div class="container text-center">
@@ -174,20 +169,9 @@
 		</main>
 	</div>
 
-	<div class="footerPage"></div>
-
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<!-- 	<script th:src="@{/js/jquery.dataTables.min.js}"></script> -->
 	<script th:src="@{/js/planord.js}"></script>
-	<script>
-		$(".sidebarPage").load("backendsidebar.html");
-		// 上架日期
-		var today = new Date();
-		let start = new Date((today.setDate(today.getDate())))
-				.toLocaleDateString('fr-ca');
-		$(".sl_start").val(start);
-	</script>
 
 </body>
 

@@ -16,45 +16,27 @@ public class PlanService {
 	public List<Plan> addPlan(Plan req) {
 		List<Plan> pList = new ArrayList<Plan>();
 		for (int i = 0; i < 5; i++) {
-			Plan plan = new Plan();
-			plan.setPlanName(req.getPlanName());
-			plan.setLiter(req.getLiter());
-			plan.setPlanPrice(req.getPlanPrice().multiply(new BigDecimal(i + 1)));
-			plan.setPlanPricePerCase(req.getPlanPricePerCase());
-			plan.setTimes(i + 1);
-			plan.setPlanUpload(req.getPlanUpload());
+			Plan plan = new Plan(req.getPlanName(), req.getLiter(), req.getPlanPrice().multiply(new BigDecimal(i + 1)),
+					req.getPlanPricePerCase(), (i + 1), req.getPlanUpload());
 			dao.save(plan);
 			pList.add(plan);
 		}
 		return pList;
 	}
 
-//	// 一次產生一筆
-//	public Plan addPlan(Plan req) {
-//		Plan plan = new Plan();
-//		plan.setPlanName(req.getPlanName());
-//		plan.setLiter(req.getLiter());
-//		plan.setPlanPrice(req.getPlanPrice());
-//		plan.setPlanPricePerCase(req.getPlanPricePerCase());
-//		plan.setTimes(req.getTimes());
-//		plan.setPlanUpload(req.getPlanUpload());
-//		return dao.save(plan);
-//	}
-
 	public Plan updatePlan(Plan req) {
-		Plan plan = new Plan();
-		plan.setPlanID(req.getPlanID());
-		plan.setPlanName(req.getPlanName());
-		plan.setLiter(req.getLiter());
-		plan.setPlanPrice(req.getPlanPrice());
-		plan.setPlanPricePerCase(req.getPlanPricePerCase());
-		plan.setTimes(req.getTimes());
-		plan.setPlanUpload(req.getPlanUpload());
+		Plan plan = new Plan(req.getPlanID(), req.getPlanName(), req.getLiter(), req.getPlanPrice(), 
+				req.getPlanPricePerCase(), req.getTimes(), req.getPlanUpload());
 		return dao.save(plan);
 	}
 
-	public void deletePlan(Integer planID) {
-		dao.deleteById(planID);
+	// 同名方案一次刪除
+	public void deletePlan(String planName) {
+		// find planID by planName
+		List<Integer> planIDList = dao.findIdByPlanName(planName);
+		for (Integer planID : planIDList) {
+			dao.deleteById(planID);
+		}
 	}
 
 	public List<Plan> getAllPlan() {

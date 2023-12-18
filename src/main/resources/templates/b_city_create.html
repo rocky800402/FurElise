@@ -137,11 +137,8 @@
 </head>
 
 <body>
-	<div class="headerPage"></div>
-
 	<div class="container">
 
-		<div class="sidebarPage"></div>
 		<main class="content">
 			<p class="p_title">新增郵遞區號</p>
 
@@ -172,15 +169,11 @@
 	</main>
 	</div>
 
-	<div class="footerPage"></div>
-
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
 	<script>
 	
-		$(".sidebarPage").load("./backendsidebar.html");
-		
 		//清除提示訊息
 		function hideContent(d) {
 		     document.getElementById(d).style.display = "none";
