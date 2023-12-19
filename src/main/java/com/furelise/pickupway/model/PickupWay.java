@@ -36,4 +36,13 @@ public class PickupWay implements Serializable{
     public PickupWay() {
         super();
     }
+    
+    public PickupWay(Integer wayID, String wayName) {
+    	this.wayID = wayID;
+    	this.wayName = wayName;
+    }
+    
+    public PickupWay(String wayName) {
+    	this.wayName = wayName;
+    }
 }

@@ -12,15 +12,12 @@ public class PickupTimeService {
 	PickupTimeRepository dao;
 
 	public PickupTime addPickupTime(PickupTime req) {
-		PickupTime pickupTime = new PickupTime();
-		pickupTime.setTimeRange(req.getTimeRange());
+		PickupTime pickupTime = new PickupTime(req.getTimeRange());
 		return dao.save(pickupTime);
 	}
 
 	public PickupTime updatePickupTime(PickupTime req) {
-		PickupTime pickupTime = new PickupTime();
-		pickupTime.setTimeID(req.getTimeID());
-		pickupTime.setTimeRange(req.getTimeRange());
+		PickupTime pickupTime = new PickupTime(req.getTimeID(), req.getTimeRange());
 		return dao.save(pickupTime);
 	}
 

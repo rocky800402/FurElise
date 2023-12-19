@@ -41,13 +41,13 @@ public class PeriodRESTCon {
 
 	@CrossOrigin("*")
 	@PostMapping("/adding")
-	public Period addPeriod(@RequestBody Period req) {
+	public Period addPeriod(@Valid @RequestBody Period req) {
 		return periodSvc.addPeriod(req);
 	}
 
 	@CrossOrigin("*")
 	@PutMapping("/updating")
-	public Period updatePeriod(@RequestBody Period req) {
+	public Period updatePeriod(@Valid @RequestBody Period req) {
 		return periodSvc.updatePeriod(req);
 	}
 
@@ -61,8 +61,11 @@ public class PeriodRESTCon {
 	@CrossOrigin("*")
 	@DeleteMapping("/deleting")
 	public String deletePeriod(@RequestBody Period req) {
-		periodSvc.deletePeriod(req.getPeriodID());
-		return "deleted seccessfully";
+		boolean inUse = periodSvc.deletePeriod(req.getPeriodID());
+		if(inUse == true) 
+			return "could not be deleted";
+		else 
+			return "deleted successfully";
 	}
 
 //	@CrossOrigin("*")

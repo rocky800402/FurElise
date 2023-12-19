@@ -6,27 +6,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.furelise.planord.model.*;
+
 @Service
 public class PeriodService {
 
 	@Autowired
 	PeriodRepository dao;
 
+	@Autowired
+	PlanOrdRepository planOrdDao;
+
 	public Period addPeriod(Period req) {
-		Period period = new Period();
-		period.setPlanPeriod(req.getPlanPeriod());
+		Period period = new Period(req.getPlanPeriod());
 		return dao.save(period);
 	}
 
 	public Period updatePeriod(Period req) {
-		Period period = new Period();
-		period.setPeriodID(req.getPeriodID());
-		period.setPlanPeriod(req.getPlanPeriod());
+		Period period = new Period(req.getPeriodID(), req.getPlanPeriod());
 		return dao.save(period);
 	}
 
-	public void deletePeriod(Integer periodID) {
-		dao.deleteById(periodID);
+	public boolean deletePeriod(Integer periodID) {
+		boolean inUse = false;
+		for (PlanOrd p : planOrdDao.findAll()) {
+			if (p.getPeriodID().equals(periodID)) { // check if is used
+				inUse = true;
+			}
+		}
+		if (inUse == false)
+			dao.deleteById(periodID);
+		return inUse;
 	}
 
 	public List<Period> getAllPeriod() {

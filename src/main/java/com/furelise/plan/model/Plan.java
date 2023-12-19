@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 
@@ -32,12 +33,15 @@ public class Plan implements Serializable{
 	@Column(name = "planName")
 	private String planName;
 
+	@Min(value=1, message="垃圾容量請填正整數")
 	@Column(name = "liter")
 	private Integer liter;
 
+	@Min(value=1, message="方案價格請填正整數")
 	@Column(name = "planPrice")
 	private BigDecimal planPrice;
 
+	@Min(value=1, message="單筆案件報酬請填正整數")
 	@Column(name = "planPricePerCase")
 	private BigDecimal planPricePerCase;
 

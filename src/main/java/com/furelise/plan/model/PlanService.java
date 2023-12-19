@@ -14,20 +14,34 @@ public class PlanService {
 
 	// 一次產生五筆
 	public List<Plan> addPlan(Plan req) {
-		List<Plan> pList = new ArrayList<Plan>();
-		for (int i = 0; i < 5; i++) {
-			Plan plan = new Plan(req.getPlanName(), req.getLiter(), req.getPlanPrice().multiply(new BigDecimal(i + 1)),
-					req.getPlanPricePerCase(), (i + 1), req.getPlanUpload());
-			dao.save(plan);
-			pList.add(plan);
+		BigDecimal planPrice = req.getPlanPrice();
+		BigDecimal planPricePerCase = req.getPlanPricePerCase();
+
+		if (planPrice.compareTo(planPricePerCase) < 0 || planPrice.scale() != 0 || planPricePerCase.scale() != 0) {
+			return null;
+		} else {
+			List<Plan> pList = new ArrayList<Plan>();
+			for (int i = 0; i < 5; i++) {
+				Plan plan = new Plan(req.getPlanName(), req.getLiter(), planPrice.multiply(new BigDecimal(i + 1)),
+						planPricePerCase, (i + 1), req.getPlanUpload());
+				dao.save(plan);
+				pList.add(plan);
+			}
+			return pList;
 		}
-		return pList;
 	}
 
 	public Plan updatePlan(Plan req) {
-		Plan plan = new Plan(req.getPlanID(), req.getPlanName(), req.getLiter(), req.getPlanPrice(), 
-				req.getPlanPricePerCase(), req.getTimes(), req.getPlanUpload());
-		return dao.save(plan);
+		BigDecimal planPrice = req.getPlanPrice();
+		BigDecimal planPricePerCase = req.getPlanPricePerCase();
+		
+		if (planPrice.compareTo(planPricePerCase) < 0 || planPrice.scale() != 0 || planPricePerCase.scale() != 0) {
+			return null;
+		} else {
+			Plan plan = new Plan(req.getPlanID(), req.getPlanName(), req.getLiter(), planPrice, planPricePerCase,
+					req.getTimes(), req.getPlanUpload());
+			return dao.save(plan);
+		}
 	}
 
 	// 同名方案一次刪除

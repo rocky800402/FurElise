@@ -2,6 +2,8 @@ package com.furelise.plan.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,19 +27,16 @@ public class PlanRESTCon {
 	//一次產生五筆，
 	@CrossOrigin("*")
 	@PostMapping("/adding")
-	public void addPlan(@RequestBody Plan req) {
-		planSvc.addPlan(req);
+	public String addPlan(@Valid @RequestBody Plan req) {
+		if(planSvc.addPlan(req) == null) 
+			return "價格不可低於案件報酬且皆需為整數";
+		else
+			return "新增成功";
 	}
-//	//一次一筆，ajax和service內容都要改寫才能用
-//	@CrossOrigin("*")
-//	@PostMapping("/adding")
-//	public Plan addPlan(@RequestBody Plan req) {
-//		return planSvc.addPlan(req);
-//	}
 	
 	@CrossOrigin("*")
 	@PutMapping("/updating")
-	public Plan updatePlan(@RequestBody Plan req) {
+	public Plan updatePlan(@Valid @RequestBody Plan req) {
 		return planSvc.updatePlan(req);
 	}
 	
@@ -54,6 +53,13 @@ public class PlanRESTCon {
 		List<Plan> planList = planSvc.getAllPlan();
 		return planList;
 	}
+	
+//	//一次一筆，ajax和service內容都要改寫才能用
+//	@CrossOrigin("*")
+//	@PostMapping("/adding")
+//	public Plan addPlan(@RequestBody Plan req) {
+//		return planSvc.addPlan(req);
+//	}
 	
 //	@CrossOrigin("*")
 //	@GetMapping("/{planID}")

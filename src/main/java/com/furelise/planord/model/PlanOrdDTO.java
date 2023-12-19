@@ -3,6 +3,9 @@ package com.furelise.planord.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +20,7 @@ public class PlanOrdDTO {
 	private Integer wayID;
 	private Date planStart;
 	private String contact;
+	@Pattern(regexp="^\\d{10}$", message="手機號碼格式錯誤")
 	private String contactTel;
 	private String cityCode;
 	private String floor;
