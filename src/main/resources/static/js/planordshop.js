@@ -100,6 +100,31 @@ function city_selector() {
     });
 }
 
+//上架新方案
+function new_plan() {
+    $.ajax({
+        url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
+        type: "GET", // GET | POST | PUT | DELETE | PATCH
+        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+        success: function (data) {
+            let list_html = "";
+            console.log(data.length); //5
+            for (let i = 3; i < data.length; i++) {
+                list_html = `
+                            <div class="col">
+                                <div class="p-3 border bg-light" style="text-align: center;">
+                                    <p class="sl_plan_name">${data[i][0]}</p>
+                                    <img src="/furelise/images/product.png" alt="" width="90%">
+                                    <p>介紹還沒想</p>
+                                </div>
+                            </div>
+                            `;
+                $("#paste_here").append(list_html);
+            }
+        }
+    })
+};
 
 //驗證是否還有訂單&出現優惠碼欄位
 $(document).on("click", "button#show_sale", function () {
@@ -112,60 +137,61 @@ $(document).on("click", "button#show_sale", function () {
     let planStart = $("input[name='planStart']").val(); //planStart
     let times = $("select#times").val();
     let weekdayChoice = $("#sl_input .checkbox-input:checked").length;
-
-    if (times == weekdayChoice) {
-        if (contact !== "" && contactTel !== "" && floor !== "" && pickupStop !== "") {
-
-            $.ajax({
-                url: "http://localhost:8081/furelise/planord/checkenddate", // 資料請求的網址
-                type: "POST", // GET | POST | PUT | DELETE | PATCH
-                // data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
-                data: JSON.stringify({ "planStart": planStart }),
-                contentType: "application/json",
-                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-                success: function (data) {
-                    // console.log(data)
-                    if (data) {
-                        $(".first select, input").prop('disabled', true); //選好的不可改
-
-                        let list_html = "";
-                        list_html += `
-                                <hr>
-                                輸入優惠碼
-                                <div class="input-group mb-3">
-                                    <input id="coupon" type="text" autofocus>
-                                </div>
-                                <button type="submit" id="task_discount" class="sl_btn_chakan" style="width:20%;">確定</button>
-                                <p></p>
-                                結帳金額
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">$</span>
-                                    <input id="after_discount" type="text" readonly>
-                                </div>
-                                <button hidden type="submit" id="regret" class="sl_btn_chakan" style="width:50%;">重填</button>
-                                <button type="button" id="show_credit" class="sl_btn_chakan" style="width:50%;">繼續</button>
-                                <hr>
-                            `;
-                        $(that).after(list_html);
-                        $(that).prop('disabled', true);
-                        $(that).css('background-color', 'lightgray');
-                        $(that).css('border-color', 'lightgray');
-                        $("#after_discount").val(total); //after_discount的值要動態變化
-                    }
-                    else {
-                        alert('尚有尚未到期訂單');
-                    }
-                }
-            });
-        }
-        else {
-            alert('請填寫所有欄位');
-        }
+	if(contactTel.length == 10){
+	    if (times == weekdayChoice) {
+	        if (contact !== "" && contactTel !== "" && floor !== "" && pickupStop !== "") {
+	
+	            $.ajax({
+	                url: "http://localhost:8081/furelise/planord/checkenddate", // 資料請求的網址
+	                type: "POST", // GET | POST | PUT | DELETE | PATCH
+	                // data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
+	                data: JSON.stringify({ "planStart": planStart }),
+	                contentType: "application/json",
+	                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+	                success: function (data) {
+	                    // console.log(data)
+	                    if (data) {
+	                        $(".first select, input").prop('disabled', true); //選好的不可改
+	
+	                        let list_html = "";
+	                        list_html += `
+	                                <hr>
+	                                輸入優惠碼
+	                                <div class="input-group mb-3">
+	                                    <input id="coupon" type="text" autofocus>
+	                                </div>
+	                                <button type="submit" id="task_discount" class="sl_btn_chakan" style="width:20%;">確定</button>
+	                                <p></p>
+	                                結帳金額
+	                                <div class="input-group mb-3">
+	                                    <span class="input-group-text">$</span>
+	                                    <input id="after_discount" type="text" readonly>
+	                                </div>
+	                                <button type="button" id="task_add" class="sl_btn_chakan" style="width:50%;">結帳</button>
+	                                <hr>
+	                            `;
+	                        $(that).after(list_html);
+	                        $(that).prop('disabled', true);
+	                        $(that).css('background-color', 'lightgray');
+	                        $(that).css('border-color', 'lightgray');
+	                        $("#after_discount").val(total); //after_discount的值要動態變化
+	                    }
+	                    else {
+	                        alert('尚有尚未到期訂單');
+	                    }
+	                }
+	            });
+	        }
+	        else {
+	            alert('請填寫所有欄位');
+	        }
+	    } else {
+	        alert('請選擇收取日');
+	    }
     } else {
-        alert('請選擇收取日');
+        alert('請填手機號碼');
     }
 });
-
 
 //優惠碼驗證
 $(document).on("click", "#task_discount", function () {
@@ -191,6 +217,69 @@ $(document).on("click", "#task_discount", function () {
 
     }
 });
+
+//新增
+$(document).on("click", "#task_add", function () {
+    $(".first select, input").prop('disabled', false); //選好的不可改
+    let planName = $("select[name='planName']").val(); //String planName
+    let pickupTime = $("select#pickupTime").val(); //timeID
+    let period = $("select#period").val(); //periodID
+    let times = $("#times").val(); //String times
+
+    let weekDay = [];
+    $.each($("[name='day']:checked"), function () {
+        weekDay.push($(this).val());
+    }); // String[] weekDay
+
+    let pickupWay = $("select#pickupWay").val(); //wayID
+    let planStart = $("input[name='planStart']").val(); //planStart
+    let planEnd = $("input[name='planEnd']").val(); //planEnd
+    let contact = $("input#contact").val().trim(); //contact
+    let contactTel = $("input#contactTel").val().trim(); //contactTel
+    let cityCode = $("select#cityCode").val(); //cityCode
+    let floor = $("input#floor").val().trim(); //floor
+    let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
+    let afterTotal = $("input#after_discount").val(); //total after discount
+
+    let form_data = {
+        "planName": planName,
+        "timeID": pickupTime,
+        "periodID": period,
+        "times": times,
+        "weekDay": weekDay,
+        "wayID": pickupWay,
+        "planStart": planStart,
+        "planEnd" : planEnd,
+        "contact": contact,
+        "contactTel": contactTel,
+        "cityCode": cityCode,
+        "floor": floor,
+        "pickupStop": pickupStop,
+        "afterTotal": afterTotal
+    };
+
+    $.ajax({
+        url: "http://localhost:8081/furelise/planorddto/adding", // 資料請求的網址
+        type: "POST", // GET | POST | PUT | DELETE | PATCH
+        // data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
+        contentType: "application/json",
+        data: JSON.stringify(form_data),
+        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+        success: function (item) {
+            alert("訂購完成！");
+            window.location.href = 'intro';
+        },
+
+        complete: function () {
+            $("button.task_add").removeClass("-disabled");
+        }
+    });
+});
+
+
+// =============
+/*以下要用要改<button type="button" id="task_add" class="sl_btn_chakan" style="width:50%;">繼續</button>
+的id*/
 
 //出現信用卡欄位
 $(document).on("click", "#show_credit", function () {
@@ -278,126 +367,4 @@ $(document).on("click", "#task_add", function () {
     }
 });
 
-//新增
-$(document).on("click", "#task_add", function () {
-    $(".first select, input").prop('disabled', false); //選好的不可改
-    let planName = $("select[name='planName']").val(); //String planName
-    let pickupTime = $("select#pickupTime").val(); //timeID
-    let period = $("select#period").val(); //periodID
-    let times = $("#times").val(); //String times
-
-    let weekDay = [];
-    $.each($("[name='day']:checked"), function () {
-        weekDay.push($(this).val());
-    }); // String[] weekDay
-
-    let pickupWay = $("select#pickupWay").val(); //wayID
-    let planStart = $("input[name='planStart']").val(); //planStart
-    let planEnd = $("input[name='planEnd']").val(); //planEnd
-    let contact = $("input#contact").val().trim(); //contact
-    let contactTel = $("input#contactTel").val().trim(); //contactTel
-    let cityCode = $("select#cityCode").val(); //cityCode
-    let floor = $("input#floor").val().trim(); //floor
-    let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
-    let afterTotal = $("input#after_discount").val(); //total after discount
-
-    let form_data = {
-        "planName": planName,
-        "timeID": pickupTime,
-        "periodID": period,
-        "times": times,
-        "weekDay": weekDay,
-        "wayID": pickupWay,
-        "planStart": planStart,
-        "planEnd" : planEnd,
-        "contact": contact,
-        "contactTel": contactTel,
-        "cityCode": cityCode,
-        "floor": floor,
-        "pickupStop": pickupStop,
-        "afterTotal": afterTotal
-    };
-
-    $.ajax({
-        url: "http://localhost:8081/furelise/planorddto/adding", // 資料請求的網址
-        type: "POST", // GET | POST | PUT | DELETE | PATCH
-        // data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
-        contentType: "application/json",
-        data: JSON.stringify(form_data),
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (item) {
-            alert("訂購完成！");
-            window.location.href = 'intro';
-        },
-
-        complete: function () {
-            $("button.task_add").removeClass("-disabled");
-        }
-    });
-});
-
-
-//新增
-//$("button#task_add").on("click", function () {
-//    let planName = $("select[name='planName']").val(); //String planName
-//    let pickupTime = $("select#pickupTime").val(); //timeID
-//    let period = $("select#period").val(); //periodID
-//    let times = $("#times").val(); //String times
-//
-//    let weekDay = [];
-//    $.each($("[name='day']:checked"), function () {
-//        weekDay.push($(this).val());
-//    }); // String[] weekDay
-//
-//    let pickupWay = $("select#pickupWay").val(); //wayID
-//    let planStart = $("input[name='planStart']").val(); //planStart
-//    let contact = $("input#contact").val().trim(); //contact
-//    let contactTel = $("input#contactTel").val().trim(); //contactTel
-//    let cityCode = $("select#cityCode").val(); //cityCode
-//    let floor = $("input#floor").val().trim(); //floor
-//    let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
-//
-//    if (contact !== "" && contactTel !== "" && floor !== "" && pickupStop !== "") {
-//
-//        if (!$(this).hasClass("-disabled")) {
-//            let form_data = {
-//                "planName": planName,
-//                "timeID": pickupTime,
-//                "periodID": period,
-//                "times": times,
-//                "weekDay": weekDay,
-//                "wayID": pickupWay,
-//                "planStart": planStart,
-//                "contact": contact,
-//                "contactTel": contactTel,
-//                "cityCode": cityCode,
-//                "floor": floor,
-//                "pickupStop": pickupStop
-//            };
-//
-//            $.ajax({
-//                url: "http://localhost:8081/furelise/planorddto/adding", // 資料請求的網址
-//                type: "POST", // GET | POST | PUT | DELETE | PATCH
-//                // data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
-//                contentType: "application/json",
-//                data: JSON.stringify(form_data),
-//                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-//                beforeSend: function () {
-//                    $("button#task_add").addClass("-disabled");
-//                },
-//
-//                success: function (item) {
-//                    alert("訂購完成！");
-//                    window.location.href = 'intro';
-//                },
-//
-//                complete: function () {
-//                    $("button.task_add").removeClass("-disabled");
-//                }
-//            });
-//        }
-//    } else {
-//        alert("請填寫所有欄位");
-//    }
-//});
-
+// =============
