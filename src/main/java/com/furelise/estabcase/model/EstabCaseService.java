@@ -164,22 +164,22 @@ public class EstabCaseService {
 	
 	//建立以成立案件(方案的金額 需要planOrd.plan.planPricePerCase)
 	@Transactional(rollbackOn = Exception.class)
-	public void updatePlanOrd(MemPlantDTO memPlantDTO){
-		PlanOrd planOrd = planOrdR.findById(memPlantDTO.getPlanOrdID()).orElseThrow();
+	public void updatePlanOrd(MemPlanDTO memPlanDTO){
+		PlanOrd planOrd = planOrdR.findById(memPlanDTO.getPlanOrdID()).orElseThrow();
 		Plan plan = planR.findById(planOrd.getPlanID()).orElseThrow();
 		Period period = periodR.findById(planOrd.getPeriodID()).orElseThrow();
 		if(planOrd.getAmendLog()==0){
 			planOrd.setAmendLog(1);
-			planOrd.setTimeID(memPlantDTO.getTimeID());
-			planOrd.setDay(memPlantDTO.getDay());
+			planOrd.setTimeID(memPlanDTO.getTimeID());
+			planOrd.setDay(memPlanDTO.getDay());
 
 			modifyEstabCases(planOrd.getPlanOrdID());
 
 			LocalDate currentDate = LocalDate.now();
 			LocalDate threeDaysLater = currentDate.plus(3, ChronoUnit.DAYS);
 
-			List<java.util.Date> list = splitPlanOrdS.getSplitPlanOrd(String.valueOf(threeDaysLater),period.getPlanPeriod() , memPlantDTO.getDay());
-			int counts = estabCaseR.countByPlanOrdIDAndEstabCaseDateGreaterThanEqual(memPlantDTO.getPlanOrdID(), Date.valueOf(threeDaysLater));
+			List<java.util.Date> list = splitPlanOrdS.getSplitPlanOrd(String.valueOf(threeDaysLater),period.getPlanPeriod() , memPlanDTO.getDay());
+			int counts = estabCaseR.countByPlanOrdIDAndEstabCaseDateGreaterThanEqual(memPlanDTO.getPlanOrdID(), Date.valueOf(threeDaysLater));
 			System.out.println(counts);
 			int count=0;
 
@@ -189,7 +189,7 @@ public class EstabCaseService {
 						EstabCase eCase = new EstabCase();
 						java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 						eCase.setEstabCaseDate(sqlDate);
-						eCase.setPlanOrdID(memPlantDTO.getPlanOrdID());
+						eCase.setPlanOrdID(memPlanDTO.getPlanOrdID());
 						eCase.setPlanPricePerCase(plan.getPlanPricePerCase());
 						eCase.setTakeStatus(false);
 						eCase.setEstabCaseStatus(0);

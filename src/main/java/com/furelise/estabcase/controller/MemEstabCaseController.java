@@ -1,7 +1,6 @@
 package com.furelise.estabcase.controller;
 
 
-import com.furelise.common.model.ErrorMessageVO;
 import com.furelise.complaint.model.Complaint;
 import com.furelise.estabcase.model.*;
 
@@ -9,14 +8,10 @@ import com.furelise.mem.model.entity.Mem;
 import com.furelise.planord.model.PlanOrd;
 import com.furelise.planord.model.PlanOrdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/mem-estab-case")
@@ -62,8 +57,8 @@ public class MemEstabCaseController {
 
 	@PostMapping("/mem-plan-ord")
 	public void updateMemPlanOrd(
-			@Validated @RequestBody MemPlantDTO memPlantDTO){
-		estabCaseService.updatePlanOrd(memPlantDTO);
+			@Validated @RequestBody MemPlanDTO memPlanDTO){
+		estabCaseService.updatePlanOrd(memPlanDTO);
 	}
 
 
