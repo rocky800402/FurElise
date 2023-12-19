@@ -14,7 +14,7 @@ public class CityService {
 	@Autowired
 	CityRepository dao;
 
-	// 新增時cityName重複的話會停留在原畫面
+	// 新增時cityCode重複的話會停留在原畫面
 	public String addCity(City city) {
 		String judge = "b_city_create";
 		if (dao.existsByCityCode(city.getCityCode())) {

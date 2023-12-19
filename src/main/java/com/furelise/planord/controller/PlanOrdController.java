@@ -163,14 +163,6 @@ public class PlanOrdController {
 //		return planOrdSvc.updatePlanOrd(req);
 //	}
 
-//	// 不做刪除功能
-//	@DeleteMapping("/deleting")
-//	@ResponseBody
-//	public String deletePlanOrd(@RequestBody PlanOrd req) {
-//		planOrdSvc.deletePlanOrd(req.getPlanID());
-//		return "deleted seccessfully";
-//	}
-
 //	// 單筆查詢
 //	@GetMapping("/{planOrdID}")
 //	@ResponseBody

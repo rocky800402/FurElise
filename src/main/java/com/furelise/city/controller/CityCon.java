@@ -63,7 +63,7 @@ public class CityCon {
 	}
 	//
 	@PostMapping("/update")
-	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result, Model model) {
+	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result) {
 		// ID欄要用readonly，不能disabled
 		if (result.hasErrors()) {
 			return "b_city_update";

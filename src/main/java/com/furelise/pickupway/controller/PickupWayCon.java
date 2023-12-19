@@ -72,8 +72,8 @@ public class PickupWayCon {
 	@DeleteMapping("/deleting")
 	@ResponseBody
 	public String deletePickupWay(@RequestBody PickupWay req) {
-		pickupWaySvc.deletePickupWay(req.getWayID());
-		return "deleted seccessfully";
+		String result = pickupWaySvc.deletePickupWay(req.getWayID());
+		return result;
 	}
 
 //	// return view

@@ -148,12 +148,12 @@
 
             <label>方案價格</label>
             <div class="input-group mb-3">
-                <span class="input-group-text">$</span> <input type="text" id="planPrice" th:value="${planPrice}" >
+                <span class="input-group-text">$</span> <input type="text" id="planPrice" th:value="${planPrice.intValue()}" >
             </div>
 
             <label>單筆案件報酬</label>
             <div class="input-group mb-3">
-                <span class="input-group-text">$</span> <input type="text" id="planPricePerCase" th:value="${planPricePerCase}" >
+                <span class="input-group-text">$</span> <input type="text" id="planPricePerCase" th:value="${planPricePerCase.intValue()}" >
             </div>
 
 			<label>每週收取次數</label>

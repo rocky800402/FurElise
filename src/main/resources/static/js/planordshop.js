@@ -1,117 +1,117 @@
 // 載入
 
 function planName_selector() {
-    $.ajax({
-        url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
-        type: "GET", // GET | POST | PUT | DELETE | PATCH
-        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (data) {
-            // data = {planName, planPrice, liter}
-            // console.log(data[0][1]);
-            let list_html = "";
-            $.each(data, function (index, item) {
-                list_html += `
+	$.ajax({
+		url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
+		type: "GET", // GET | POST | PUT | DELETE | PATCH
+		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(data) {
+			// data = {planName, planPrice, liter}
+			// console.log(data[0][1]);
+			let list_html = "";
+			$.each(data, function(index, item) {
+				list_html += `
                 <option value="${item[0]}" data-price="${item[1]}">${item[0]}(${item[2]}公升)</option>
             `;
-            });
-            $("select[name='planName']").html(list_html);
-        }
-    });
+			});
+			$("select[name='planName']").html(list_html);
+		}
+	});
 }
 
 function pickupTime_selector() {
-    $.ajax({
-        url: "http://localhost:8081/furelise/planord/timerange", // 資料請求的網址
-        type: "GET", // GET | POST | PUT | DELETE | PATCH
-        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (data) {
-            // console.log(data);
-            let list_html = "";
-            $.each(data, function (index, item) {
-                list_html += `
+	$.ajax({
+		url: "http://localhost:8081/furelise/planord/timerange", // 資料請求的網址
+		type: "GET", // GET | POST | PUT | DELETE | PATCH
+		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(data) {
+			// console.log(data);
+			let list_html = "";
+			$.each(data, function(index, item) {
+				list_html += `
                 <option value="${item.timeID}">${item.timeRange}</option>
             `;
-            });
-            $("select#pickupTime").html(list_html);
-        }
-    });
+			});
+			$("select#pickupTime").html(list_html);
+		}
+	});
 }
 
 function period_selector() {
-    $.ajax({
-        url: "http://localhost:8081/furelise/planord/planperiod", // 資料請求的網址
-        type: "GET", // GET | POST | PUT | DELETE | PATCH
-        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (data) {
-            // console.log(data);
-            let list_html = "";
+	$.ajax({
+		url: "http://localhost:8081/furelise/planord/planperiod", // 資料請求的網址
+		type: "GET", // GET | POST | PUT | DELETE | PATCH
+		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(data) {
+			// console.log(data);
+			let list_html = "";
 
-            $.each(data, function (index, item) {
-                let length = 28 * item.planPeriod - 1;
-                list_html += `
+			$.each(data, function(index, item) {
+				let length = 28 * item.planPeriod - 1;
+				list_html += `
                 <option data-month="${item.planPeriod}" data-length="${length}" value="${item.periodID}">${item.planPeriod}個月</option>
             `;
-            });
-            $("select#period").html(list_html);
-        }
-    });
+			});
+			$("select#period").html(list_html);
+		}
+	});
 }
 
 function way_selector() {
-    $.ajax({
-        url: "http://localhost:8081/furelise/planord/wayname", // 資料請求的網址
-        type: "GET", // GET | POST | PUT | DELETE | PATCH
-        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (data) {
-            // console.log(data);
-            let list_html = "";
+	$.ajax({
+		url: "http://localhost:8081/furelise/planord/wayname", // 資料請求的網址
+		type: "GET", // GET | POST | PUT | DELETE | PATCH
+		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(data) {
+			// console.log(data);
+			let list_html = "";
 
-            $.each(data, function (index, item) {
-                list_html += `
+			$.each(data, function(index, item) {
+				list_html += `
                 <option value="${item.wayID}">${item.wayName}</option>
             `;
-            });
-            $("select#pickupWay").html(list_html);
-        }
-    });
+			});
+			$("select#pickupWay").html(list_html);
+		}
+	});
 }
 
 function city_selector() {
-    $.ajax({
-        url: "http://localhost:8081/furelise/planord/citycode", // 資料請求的網址
-        type: "GET", // GET | POST | PUT | DELETE | PATCH
-        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (data) {
-            // console.log(data);
-            let list_html = "";
+	$.ajax({
+		url: "http://localhost:8081/furelise/planord/citycode", // 資料請求的網址
+		type: "GET", // GET | POST | PUT | DELETE | PATCH
+		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(data) {
+			// console.log(data);
+			let list_html = "";
 
-            $.each(data, function (index, item) {
-                list_html += `
+			$.each(data, function(index, item) {
+				list_html += `
                 <option value="${item.cityCode}">${item.cityCode}${item.cityName}</option>
             `;
-            });
-            $("select#cityCode").html(list_html);
-        }
-    });
+			});
+			$("select#cityCode").html(list_html);
+		}
+	});
 }
 
 //上架新方案
 function new_plan() {
-    $.ajax({
-        url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
-        type: "GET", // GET | POST | PUT | DELETE | PATCH
-        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (data) {
-            let list_html = "";
-            console.log(data.length); //5
-            for (let i = 3; i < data.length; i++) {
-                list_html = `
+	$.ajax({
+		url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
+		type: "GET", // GET | POST | PUT | DELETE | PATCH
+		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(data) {
+			let list_html = "";
+			console.log(data.length); //5
+			for (let i = 3; i < data.length; i++) {
+				list_html = `
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">
                                     <p class="sl_plan_name">${data[i][0]}</p>
@@ -120,41 +120,41 @@ function new_plan() {
                                 </div>
                             </div>
                             `;
-                $("#paste_here").append(list_html);
-            }
-        }
-    })
+				$("#paste_here").append(list_html);
+			}
+		}
+	})
 };
 
 //驗證是否還有訂單&出現優惠碼欄位
-$(document).on("click", "button#show_sale", function () {
-    var that = $(this);
-    let contact = $("input#contact").val().trim(); //contact
-    let contactTel = $("input#contactTel").val().trim(); //contactTel
-    let floor = $("input#floor").val().trim(); //floor
-    let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
-    let total = $("#total").val();
-    let planStart = $("input[name='planStart']").val(); //planStart
-    let times = $("select#times").val();
-    let weekdayChoice = $("#sl_input .checkbox-input:checked").length;
-	if(contactTel.length == 10){
-	    if (times == weekdayChoice) {
-	        if (contact !== "" && contactTel !== "" && floor !== "" && pickupStop !== "") {
-	
-	            $.ajax({
-	                url: "http://localhost:8081/furelise/planord/checkenddate", // 資料請求的網址
-	                type: "POST", // GET | POST | PUT | DELETE | PATCH
-	                // data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
-	                data: JSON.stringify({ "planStart": planStart }),
-	                contentType: "application/json",
-	                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-	                success: function (data) {
-	                    // console.log(data)
-	                    if (data) {
-	                        $(".first select, input").prop('disabled', true); //選好的不可改
-	
-	                        let list_html = "";
-	                        list_html += `
+$(document).on("click", "button#show_sale", function() {
+	var that = $(this);
+	let contact = $("input#contact").val().trim(); //contact
+	let contactTel = $("input#contactTel").val().trim(); //contactTel
+	let floor = $("input#floor").val().trim(); //floor
+	let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
+	let total = $("#total").val();
+	let planStart = $("input[name='planStart']").val(); //planStart
+	let times = $("select#times").val();
+	let weekdayChoice = $("#sl_input .checkbox-input:checked").length;
+	if (contact !== "" && contactTel !== "" && floor !== "" && pickupStop !== "") {
+		if (contactTel.length == 10) {
+			if (times == weekdayChoice) {
+
+				$.ajax({
+					url: "http://localhost:8081/furelise/planord/checkenddate", // 資料請求的網址
+					type: "POST", // GET | POST | PUT | DELETE | PATCH
+					// data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
+					data: JSON.stringify({ "planStart": planStart }),
+					contentType: "application/json",
+					dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+					success: function(data) {
+						// console.log(data)
+						if (data) {
+							$(".first select, input").prop('disabled', true); //選好的不可改
+
+							let list_html = "";
+							list_html += `
 	                                <hr>
 	                                輸入優惠碼
 	                                <div class="input-group mb-3">
@@ -170,110 +170,117 @@ $(document).on("click", "button#show_sale", function () {
 	                                <button type="button" id="task_add" class="sl_btn_chakan" style="width:50%;">結帳</button>
 	                                <hr>
 	                            `;
-	                        $(that).after(list_html);
-	                        $(that).prop('disabled', true);
-	                        $(that).css('background-color', 'lightgray');
-	                        $(that).css('border-color', 'lightgray');
-	                        $("#after_discount").val(total); //after_discount的值要動態變化
-	                    }
-	                    else {
-	                        alert('尚有尚未到期訂單');
-	                    }
-	                }
-	            });
-	        }
-	        else {
-	            alert('請填寫所有欄位');
-	        }
-	    } else {
-	        alert('請選擇收取日');
-	    }
-    } else {
-        alert('請填手機號碼');
-    }
+							$(that).after(list_html);
+							$(that).prop('disabled', true);
+							$(that).css('background-color', 'lightgray');
+							$(that).css('border-color', 'lightgray');
+							$("#after_discount").val(total); //after_discount的值要動態變化
+						}
+						else {
+							alert('尚有尚未到期訂單');
+						}
+					}
+				});
+			}
+			else {
+				alert('請選擇收取日');
+			}
+		} else {
+			alert('請填手機號碼');
+		}
+	} else {
+		alert('請填寫所有欄位');
+	}
 });
 
 //優惠碼驗證
-$(document).on("click", "#task_discount", function () {
-    let before_discount = $("#after_discount").val();
-    let coupon = $("#coupon").val().trim();
-    let after_discount = before_discount - coupon;
-    var that = $(this);
-    console.log(coupon);
+$(document).on("click", "#task_discount", function() {
+	let before_discount = $("#after_discount").val();
+	let coupon = $("#coupon").val().trim();
+	let after_discount = before_discount - coupon;
+	var that = $(this);
+	console.log(coupon);
 
-    //有輸入折扣碼
-    if (coupon !== "") {
-        // ajax驗證折扣碼
+	//有輸入折扣碼
+	if (coupon !== "") {
+		// ajax驗證折扣碼
 
-        //成功就更新$("#after_discount").val()
+		//成功就更新$("#after_discount").val()
 
-        //失敗alert
+		//失敗alert
 
-        $("#after_discount").val(after_discount);
-        $("#coupon").prop('disabled', true);
-        $(that).prop('disabled', true);
-        $(that).css('background-color', 'lightgray');
-        $(that).css('border-color', 'lightgray');
+		$("#after_discount").val(after_discount);
+		$("#coupon").prop('disabled', true);
+		$(that).prop('disabled', true);
+		$(that).css('background-color', 'lightgray');
+		$(that).css('border-color', 'lightgray');
 
-    }
+	}
 });
 
 //新增
-$(document).on("click", "#task_add", function () {
-    $(".first select, input").prop('disabled', false); //選好的不可改
-    let planName = $("select[name='planName']").val(); //String planName
-    let pickupTime = $("select#pickupTime").val(); //timeID
-    let period = $("select#period").val(); //periodID
-    let times = $("#times").val(); //String times
+$(document).on("click", "#task_add", function() {
+	$(".first select, input").prop('disabled', false); //選好的不可改
+	let planName = $("select[name='planName']").val(); //String planName
+	let pickupTime = $("select#pickupTime").val(); //timeID
+	let period = $("select#period").val(); //periodID
+	let times = $("#times").val(); //String times
 
-    let weekDay = [];
-    $.each($("[name='day']:checked"), function () {
-        weekDay.push($(this).val());
-    }); // String[] weekDay
+	let weekDay = [];
+	$.each($("[name='day']:checked"), function() {
+		weekDay.push($(this).val());
+	}); // String[] weekDay
 
-    let pickupWay = $("select#pickupWay").val(); //wayID
-    let planStart = $("input[name='planStart']").val(); //planStart
-    let planEnd = $("input[name='planEnd']").val(); //planEnd
-    let contact = $("input#contact").val().trim(); //contact
-    let contactTel = $("input#contactTel").val().trim(); //contactTel
-    let cityCode = $("select#cityCode").val(); //cityCode
-    let floor = $("input#floor").val().trim(); //floor
-    let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
-    let afterTotal = $("input#after_discount").val(); //total after discount
+	let pickupWay = $("select#pickupWay").val(); //wayID
+	let planStart = $("input[name='planStart']").val(); //planStart
+	let planEnd = $("input[name='planEnd']").val(); //planEnd
+	let contact = $("input#contact").val().trim(); //contact
+	let contactTel = $("input#contactTel").val().trim(); //contactTel
+	let cityCode = $("select#cityCode").val(); //cityCode
+	let floor = $("input#floor").val().trim(); //floor
+	let pickupStop = $("input#pickupStop").val().trim(); //pickupstop
+	let afterTotal = $("input#after_discount").val(); //total after discount
 
-    let form_data = {
-        "planName": planName,
-        "timeID": pickupTime,
-        "periodID": period,
-        "times": times,
-        "weekDay": weekDay,
-        "wayID": pickupWay,
-        "planStart": planStart,
-        "planEnd" : planEnd,
-        "contact": contact,
-        "contactTel": contactTel,
-        "cityCode": cityCode,
-        "floor": floor,
-        "pickupStop": pickupStop,
-        "afterTotal": afterTotal
-    };
+	let form_data = {
+		"planName": planName,
+		"timeID": pickupTime,
+		"periodID": period,
+		"times": times,
+		"weekDay": weekDay,
+		"wayID": pickupWay,
+		"planStart": planStart,
+		"planEnd": planEnd,
+		"contact": contact,
+		"contactTel": contactTel,
+		"cityCode": cityCode,
+		"floor": floor,
+		"pickupStop": pickupStop,
+		"afterTotal": afterTotal
+	};
 
-    $.ajax({
-        url: "http://localhost:8081/furelise/planorddto/adding", // 資料請求的網址
-        type: "POST", // GET | POST | PUT | DELETE | PATCH
-        // data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
-        contentType: "application/json",
-        data: JSON.stringify(form_data),
-        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-        success: function (item) {
-            alert("訂購完成！");
-            window.location.href = 'intro';
-        },
+	$.ajax({
+		url: "http://localhost:8081/furelise/planorddto/adding", // 資料請求的網址
+		type: "POST", // GET | POST | PUT | DELETE | PATCH
+		// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
+		contentType: "application/json",
+		data: JSON.stringify(form_data),
+		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+		success: function(item) {
+			alert("成功新增資料，接著跳轉綠界");
 
-        complete: function () {
-            $("button.task_add").removeClass("-disabled");
-        }
-    });
+		}, error: function(xhr) {         // request 發生錯誤的話執行
+			if (xhr.status === 400) {
+				var errorMessage = xhr.responseText;
+				alert(errorMessage);
+				$(".first select, input").prop('disabled', true);
+				$("input#contactTel").prop('disabled', false);
+				$("input#contactTel").prop('autofocus', true);
+			} else {
+				alert('連線異常');
+				location.reload();
+			}
+		}
+	});
 });
 
 
@@ -282,10 +289,10 @@ $(document).on("click", "#task_add", function () {
 的id*/
 
 //出現信用卡欄位
-$(document).on("click", "#show_credit", function () {
-    var that = $(this);
-    let list_html = "";
-    list_html += `
+$(document).on("click", "#show_credit", function() {
+	var that = $(this);
+	let list_html = "";
+	list_html += `
     <p></p>
     持卡人姓名
     <input id="myName" type="text" autofocus required><br><br>
@@ -328,43 +335,43 @@ $(document).on("click", "#show_credit", function () {
     <button type="submit" id="task_add" class="sl_btn_chakan" style="width:50%;">結帳</button>
     `;
 
-    $(that).after(list_html);
-    $(that).prop('disabled', true);
-    $(that).css('background-color', 'lightgray');
-    $(that).css('border-color', 'lightgray');
-    $("#coupon").prop('disabled', true);
-    $("#task_discount").prop('disabled', true);
-    $("#task_discount").css('background-color', 'lightgray');
-    $("#task_discount").css('border-color', 'lightgray');
-    $("#myName").focus();
+	$(that).after(list_html);
+	$(that).prop('disabled', true);
+	$(that).css('background-color', 'lightgray');
+	$(that).css('border-color', 'lightgray');
+	$("#coupon").prop('disabled', true);
+	$("#task_discount").prop('disabled', true);
+	$("#task_discount").css('background-color', 'lightgray');
+	$("#task_discount").css('border-color', 'lightgray');
+	$("#myName").focus();
 
 });
 
 //驗證信用卡，success call新增function(參考chatGPT)
-$(document).on("click", "#task_add", function () {
-    var that = $(this);
-    $(".first select, input").prop('disabled', false);
-    $("input#after_discount").prop('disabled', false);
+$(document).on("click", "#task_add", function() {
+	var that = $(this);
+	$(".first select, input").prop('disabled', false);
+	$("input#after_discount").prop('disabled', false);
 
-    let myName = $("input#myName").val();
-    let pan_no1 = $("input[name='pan_no1']").val();
-    let pan_no2 = $("input[name='pan_no2']").val();
-    let pan_no3 = $("input[name='pan_no3']").val();
-    let pan_no4 = $("input[name='pan_no4']").val();
-    let year = $("select#year").val();
-    let month = $("select#month").val();
-    let verify = $("input#verify").val(); //planStart
-    let phone = $("input#phone").val().trim(); //contact
-    let afterTotal = $("input#after_discount").val(); //total
+	let myName = $("input#myName").val();
+	let pan_no1 = $("input[name='pan_no1']").val();
+	let pan_no2 = $("input[name='pan_no2']").val();
+	let pan_no3 = $("input[name='pan_no3']").val();
+	let pan_no4 = $("input[name='pan_no4']").val();
+	let year = $("select#year").val();
+	let month = $("select#month").val();
+	let verify = $("input#verify").val(); //planStart
+	let phone = $("input#phone").val().trim(); //contact
+	let afterTotal = $("input#after_discount").val(); //total
 
-    if (myName !== "" && verify !== "" && phone !== "" && pan_no1 !== "" && pan_no2 !== "" && pan_no3 !== "" && pan_no4 !== "") {
-    
-    //串金流
-    
-    
-    } else {
-        alert("請填寫所有欄位");
-    }
+	if (myName !== "" && verify !== "" && phone !== "" && pan_no1 !== "" && pan_no2 !== "" && pan_no3 !== "" && pan_no4 !== "") {
+
+		//串金流
+
+
+	} else {
+		alert("請填寫所有欄位");
+	}
 });
 
 // =============
