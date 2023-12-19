@@ -25,28 +25,28 @@ public class PickupWayRESTCon {
 	PickupWayService pickupWaySvc;
 
 //	// add data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@PostMapping("/adding")
 //	public PickupWay addPickupWay(@RequestBody PickupWay req) {
 //		return pickupWaySvc.addPickupWay(req);
 //	}
 
 //	//  amend data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@PutMapping("/updating")
 //	public PickupWay updatePickupWay(@RequestBody PickupWay req) {
 //		return pickupWaySvc.updatePickupWay(req);
 //	}
 
 //	// delete data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@DeleteMapping("/deleting")
 //	public String deletePickupWay(@RequestBody PickupWay req) {
 //		pickupWaySvc.deletePickupWay(req.getWayID());
 //		return "deleted seccessfully";
 //	}
 
-//	@CrossOrigin("*")
+//	
 //	@DeleteMapping("/{wayID}")
 //	public String deletePickupWay(@PathVariable Integer wayID) {
 //		pickupWaySvc.deletePickupWay(wayID);
@@ -54,7 +54,7 @@ public class PickupWayRESTCon {
 //	}
 
 //	// list data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("/all")
 //	public List<PickupWay> getAllPickupWays() {
 //		List<PickupWay> pickupWayList = pickupWaySvc.getAllPickupWay();
@@ -62,7 +62,7 @@ public class PickupWayRESTCon {
 //	}
 
 //	和pickupwaycon導向pickupway_update衝突
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("/{wayID}")
 //	public PickupWay getPickupWayById(@PathVariable("wayID") Integer wayID) {
 //		return pickupWaySvc.getPickupWayById(wayID);

@@ -31,7 +31,7 @@ public class PickupWayCon {
 	}
 
 	// list data, for ajax using
-	@CrossOrigin("*")
+	
 	@GetMapping("/all")
 	@ResponseBody
 	public List<PickupWay> getAllPickupWays() {

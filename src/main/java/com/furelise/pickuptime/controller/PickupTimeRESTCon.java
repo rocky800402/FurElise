@@ -28,19 +28,19 @@ public class PickupTimeRESTCon {
 	@Autowired
 	PickupTimeService pickupTimeSvc;
 
-	@CrossOrigin("*")
+	
 	@PostMapping("/adding")
 	public PickupTime addPickupTime(@Valid @RequestBody PickupTime req) {
 		return pickupTimeSvc.addPickupTime(req);
 	}
 
-	@CrossOrigin("*")
+	
 	@PutMapping("/updating")
 	public PickupTime updatePickupTime(@Valid @RequestBody PickupTime req) {
 		return pickupTimeSvc.updatePickupTime(req);
 	}
 	
-//	@CrossOrigin("*")
+//	
 //	@RequestMapping("/update")
 //	public PickupTime updatePickupTime() {
 //		PickupTime pickupTime = new PickupTime();
@@ -49,21 +49,21 @@ public class PickupTimeRESTCon {
 //		return pickupTimeSvc.updatePickupTime(pickupTime);
 //	}
 	
-	@CrossOrigin("*")
+	
 	@DeleteMapping("deleting")
 	public String deletePickupTime(@RequestBody PickupTime req) {
 		pickupTimeSvc.deletePickupTime(req.getTimeID());
 		return "deleted seccessfully";
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/all")
 	public List<PickupTime> getAllPickupTimes(){
 		List<PickupTime> pickupTimeList = pickupTimeSvc.getAllPickupTime();
 		return pickupTimeList;
 	}
 	
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("{timeID}")
 //	// 參數名和@PathVariable名一樣時可省略
 //	public PickupTime getPickupTimeById(@PathVariable("timeID") Integer timeID) {

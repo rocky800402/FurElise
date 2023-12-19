@@ -36,7 +36,7 @@ public class AuthController {
     }
     
 	
-//    @CrossOrigin("*")
+//    
 //    @GetMapping("/member_home_alter/{memID}")
 //	public String memInfo(@PathVariable("memID") Integer memID, Model model, HttpSession session) {
 //		Mem mem = (Mem) session.getAttribute("mem");
@@ -49,7 +49,7 @@ public class AuthController {
 //	    }
 //	}
     
-    @CrossOrigin("*")
+    
     @GetMapping("/emp_home_alter/{empID}")
 	public String empInfo(@PathVariable("empID") Integer empID, Model model, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("emp");
@@ -62,7 +62,7 @@ public class AuthController {
 	    }
 	}
 
-    @CrossOrigin("*")
+    
     @PostMapping("/login/mem")
     public MemVO memLogin(@RequestBody @Validated MemLoginDTO dto, HttpServletRequest req) {
         Mem mem = this.authService.verify(dto);
@@ -71,7 +71,7 @@ public class AuthController {
         return new MemVO(mem);
     }
 
-    @CrossOrigin("*")
+    
     @PostMapping("/login/emp")
     public EmpVO empLogin(@RequestBody @Validated EmpLoginDTO dto, HttpServletRequest req) {
         Emp emp = this.empAuthService.verify(dto);

@@ -26,7 +26,7 @@ public class CityRESTCon {
 	@Autowired
 	CityService citySvc;
 
-	@CrossOrigin("*")
+	
 	@PostMapping("/add")
 	public String addCity(@RequestBody City req) {
 		City city = new City();
@@ -35,7 +35,7 @@ public class CityRESTCon {
 		return citySvc.addCity(city);
 	}
 
-	@CrossOrigin("*")
+	
 	@RequestMapping("/update")
 	//如果要用@PutMapping要傳參數(可能是@RequestBody City city)
 	public String updateCity() {
@@ -46,14 +46,14 @@ public class CityRESTCon {
 		return citySvc.updateCity(city) + " updated successfully";
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/getall")
 	public List<City> getAllCitys(){
 		List<City> cityList = citySvc.getAllCity();
 		return cityList;
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping(path = "{cityID}")
 	public City getCityById(@PathVariable("cityID") Integer cityID) {
 		return citySvc.getCityById(cityID);

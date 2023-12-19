@@ -37,7 +37,7 @@ public class PlanOrdDTOCon {
 	}
 
 	// list data, for ajax using
-	@CrossOrigin("*")
+	
 	@GetMapping("/finding")
 	public List<PlanOrdDTO> getAllPlanOrds() {
 		return planOrdSvc.getPlanOrdInfo();

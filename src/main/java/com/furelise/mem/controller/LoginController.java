@@ -24,7 +24,7 @@ public class LoginController {
         return "login-test";
     }
 	
-    @CrossOrigin("*")
+    
     @GetMapping("/member_home_alter/{memID}")
 	public String memInfo(@PathVariable("memID") Integer memID, Model model, HttpSession session) {
 		Mem mem = (Mem) session.getAttribute("mem");
@@ -38,7 +38,7 @@ public class LoginController {
 	    }
 	}
     
-    @CrossOrigin("*")
+    
     @GetMapping("/emp_home_alter/{empID}")
 	public String empInfo(@PathVariable("empID") Integer empID, Model model, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("emp");

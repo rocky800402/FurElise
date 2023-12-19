@@ -25,7 +25,7 @@ public class PlanRESTCon {
 	PlanService planSvc;
 	
 	//一次產生五筆，
-	@CrossOrigin("*")
+	
 	@PostMapping("/adding")
 	public String addPlan(@Valid @RequestBody Plan req) {
 		if(planSvc.addPlan(req) == null) 
@@ -34,7 +34,7 @@ public class PlanRESTCon {
 			return "新增成功";
 	}
 	
-	@CrossOrigin("*")
+	
 	@PutMapping("/updating")
 	public Plan updatePlan(@Valid @RequestBody Plan req) {
 		return planSvc.updatePlan(req);
@@ -47,7 +47,7 @@ public class PlanRESTCon {
 		return "deleted seccessfully";
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/all")
 	public List<Plan> getAllPlans(){
 		List<Plan> planList = planSvc.getAllPlan();
@@ -55,13 +55,13 @@ public class PlanRESTCon {
 	}
 	
 //	//一次一筆，ajax和service內容都要改寫才能用
-//	@CrossOrigin("*")
+//	
 //	@PostMapping("/adding")
 //	public Plan addPlan(@RequestBody Plan req) {
 //		return planSvc.addPlan(req);
 //	}
 	
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("/{planID}")
 //	public Plan getPlanById(@PathVariable Integer planID) {
 //		return planSvc.getPlanById(planID);

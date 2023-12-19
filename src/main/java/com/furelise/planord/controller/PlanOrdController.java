@@ -156,7 +156,7 @@ public class PlanOrdController {
 //	}
 
 //	// amend data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@PutMapping("/updating")
 //	@ResponseBody
 //	public PlanOrd updatePlanOrd(@RequestBody PlanOrd req) {

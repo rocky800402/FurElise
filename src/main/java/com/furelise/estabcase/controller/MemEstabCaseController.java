@@ -26,7 +26,7 @@ public class MemEstabCaseController {
 	public MemEstabCaseVO getAllMemEstabCase( HttpServletRequest req){
 //		System.out.println(req);
 //		System.out.println(req.getSession());
-		Mem mem = (Mem) req.getSession().getAttribute("account");
+		Mem mem = (Mem) req.getSession().getAttribute("mem");
 //		System.out.println("mem");
 //		System.out.println(mem);
 		PlanOrd planOrd = planOrdRepository.findByMemIDAndPlanStatusID(mem.getMemID(), 210001);
@@ -51,7 +51,7 @@ public class MemEstabCaseController {
 	@PostMapping()
 	public Complaint addMemcomplaint(
 			@Validated @RequestBody MemEstabCaseComDTO memEstabCaseComDTO,HttpServletRequest req){
-		Mem mem = (Mem) req.getSession().getAttribute("account");
+		Mem mem = (Mem) req.getSession().getAttribute("mem");
 		return estabCaseService.addcomplaint(memEstabCaseComDTO,mem.getMemID());
 	}
 
