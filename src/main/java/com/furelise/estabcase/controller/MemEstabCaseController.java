@@ -60,6 +60,12 @@ public class MemEstabCaseController {
 		return estabCaseService.addcomplaint(memEstabCaseComDTO,mem.getMemID());
 	}
 
+	@PostMapping("/mem-plan-ord")
+	public void updateMemPlanOrd(
+			@Validated @RequestBody MemPlantDTO memPlantDTO){
+		estabCaseService.updatePlanOrd(memPlantDTO);
+	}
+
 
 
 }

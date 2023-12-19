@@ -25,11 +25,12 @@ public class SplitPlanOrdService {
             eCase.setEstabCaseDate(sqlDate);
             eCase.setPlanOrdID(planOrdID);
             eCase.setPlanPricePerCase(planPricePerCase);
+            eCase.setTakeStatus(false);
             eCase.setEstabCaseStatus(0);
             estabCaseR.save(eCase);
         }
 
-        return null;
+        return eCases;
     }
     /**
      * 方案猜單系統，取得指定日期範圍內符合指定星期幾的日期列表
@@ -62,7 +63,7 @@ public class SplitPlanOrdService {
         // 複製起始日期並設定結束日期
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(planStartDate);
-        calEnd.add(Calendar.DATE, (period*28));
+        calEnd.add(Calendar.DATE, (period*(28+1)));
 
         // 測試區間日期指定禮拜產製日期
 //		getWeekBetweenDates(calStart, calEnd, "2");

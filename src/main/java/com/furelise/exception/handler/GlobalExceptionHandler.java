@@ -45,6 +45,11 @@ public class GlobalExceptionHandler {
         return new ErrorMessageVO(e.getMessage());
     }
 
+
+    public  ErrorMessageVO handleNumberOfModificationsException(NoSuchElementException e){
+        return new ErrorMessageVO(e.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> exceptionHandler(HttpServletRequest request, HttpServletResponse response,
                                                    Exception ex) {
