@@ -61,6 +61,10 @@ public class MemEstabCaseController {
 		estabCaseService.updatePlanOrd(memPlanDTO);
 	}
 
-
+	@PatchMapping("/mem-plan-ord-status")
+	public PlanOrd updateMemPlanOrdStatus(
+			@Validated @RequestBody MemPlanStatusDTO memPlanStatusDTO){
+		return estabCaseService.updateMemPlanOrdStatus(memPlanStatusDTO);
+	}
 
 }
