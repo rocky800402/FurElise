@@ -1,24 +1,21 @@
 package com.furelise.mem.controller;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.service.MemService;
-import com.furelise.util.JedisUtil;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 @Controller
 @RequestMapping
@@ -26,9 +23,9 @@ public class VerificationController {
 
 	@Autowired
 	private MemService memSvc;
-	
-	@Autowired
-	private JedisPool jedisPool = null;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
 	@PostMapping("/verification")
 	protected String doVerify(HttpServletRequest req,
@@ -52,14 +49,10 @@ public class VerificationController {
 		
 		// ===1. action為按下驗證按鈕===
 		if ("get_EnteredCode".equals(action)) {
-			
-			jedisPool = JedisUtil.getJedisPool(); // 取得jedis連線池
-			Jedis jedis = jedisPool.getResource();
-			jedis.select(2);
+
 			// 到Redis資料庫確認驗證碼還在不在
-			String verifyCode = jedis.get("MemMail:" + email); 
-			jedis.close();
-			
+            String verifyCode =  redisTemplate.opsForValue().get("MemMail:" + email);
+
 			// 比對驗證碼是否輸入正確
 			if (enteredCode == null || (enteredCode.trim().length()) == 0) {
 				// 未輸入
@@ -99,28 +92,23 @@ public class VerificationController {
 		
 		// ===2. action為按下重發驗證碼按鈕===
 		if ("reSend_VerificationCode".equals(action)) {
-			
-			jedisPool = JedisUtil.getJedisPool(); // 取得jedis連線池
-			Jedis jedis = jedisPool.getResource();
-			jedis.select(2);
+
 			
 			// 到Redis資料庫確認驗證碼還在不在
-			String verifyCode = jedis.get("MemMail:" + email); 
+            String verifyCode = redisTemplate.opsForValue().get("MemMail:" + email);
 			// 如果原本的驗證碼尚有效，將其刪除
 			if (verifyCode != null) {
-				jedis.del("MemMail:" + email);
+                redisTemplate.delete("MemMail:" + email);
 			}
 			
 			String code = memSvc.returnAuthCode(); // 產生驗證碼
 			System.out.println("Auth code is: " + code);
-			
-			// 存入Redis
-			jedis.set("MemMail:" + email, code); // 格式：Email : code
-			jedis.expire("MemMail:" + email, 600); // TTL 10分鐘
+
+            // 存入Redis
+            redisTemplate.opsForValue().set("MemMail:" + email, code, Duration.ofMinutes(10));
 			
 			memSvc.sendVerificationCode(email, name, code);
-			jedis.close();
-			
+
 			// ===forward至驗證頁完成驗證===
 			errMsgs = "新驗證碼已重新寄發至您的email信箱！請至信箱收信並盡快完成驗證。";
 			model.addAttribute("errMsgs", errMsgs);
