@@ -73,6 +73,8 @@ public class EstabCaseService {
 		return eCase;
 	}
 
+
+
 	public MemEstabCaseBO getMemEstabCaseCom(Integer estabCaseID, Integer memID){
 		EstabCase estabCase = estabCaseR.findById(estabCaseID).orElseThrow();
 		Complaint complaintOpt=complaintR.findByEstabCaseIDAndMemID(estabCaseID,memID);
@@ -133,6 +135,14 @@ public class EstabCaseService {
 		estabCaseR.save(estabCase);
 
 		return estabCase;
+	}
+
+	public PlanOrd updateMemPlanOrdStatus(MemPlanStatusDTO memPlanStatusDTO){
+		PlanOrd planOrd = planOrdR.findById(memPlanStatusDTO.getPlanOrdID()).orElseThrow();
+		planOrd.setPlanStatusID(memPlanStatusDTO.getPlanStatusID());
+		planOrdR.save(planOrd);
+
+		return  planOrd;
 	}
 
 	public Complaint addcomplaint(MemEstabCaseComDTO memEstabCaseComDTO,Integer memID){
