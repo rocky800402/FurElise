@@ -25,4 +25,8 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
 	@Query("UPDATE EstabCase e SET e.estabCaseStatus = 3 WHERE e.planOrdID =:planOrdID AND e.estabCaseDate >=:estabCaseDate")
 	void updateEstabCaseStatus(@Param("planOrdID") Integer planOrdID, @Param("estabCaseDate") Date estabCaseDate);
 
+	List<EstabCase> findByEmpIDAndEstabCaseStatusOrderByEstabCaseDateDesc(
+			Integer empID,
+			Integer estabCaseStatus
+	);
 }
