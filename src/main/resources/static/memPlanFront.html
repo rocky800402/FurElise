@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員中心-方案管理</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/header.css">
+    <link rel="stylesheet" href="./css/memPlanFornt.css">
+    <link rel="stylesheet" href="./css/mem_sidebar.css">
+</head>
+
+<body>
+    <div class="mb_mem_wrap">
+
+        <div class="headerPage"></div>
+        <div class="mb_info_bar">
+            <p class="mb_mem_bar_text1">會員中心</p>
+            <p class="mb_mem_bar_text2">方案管理</p>
+        </div>
+        <div class="mb_container">
+            <div class="mb_flex">
+
+                <div class="memSidebarPage"></div>
+
+
+                <main class="mb_content_main">
+                    <section class="mb_plan_card">
+                        <div class="mb_plan_info">
+                            <div class="mb_plan_img_frame">
+                                <img class="mb_plan_img" src="./images/883AF41144-SP-8305544.jpg" alt="">
+                            </div>
+                            <div class="mb_plan_info_body">
+                                <p class="mb_plan_name" style="font-weight: 900;">小資方案</p>
+                                <p class="mb_plan_time_range"></p>
+                                <div class="mb_plan_ord_price">
+                                    <div class="mb_plan_monthly">
+                                        <p class="mb_plan_period">一個月<samp>，</samp></p>
+                                        <p class="mb_plan_week_cont">每週三次</p>
+                                    </div>
+                                    <p class="mb_plan_ord_total"><span>$</span>1140</p>
+                                </div>
+                                <div class="mb_plan_weekly">
+                                    <p class="mb_mon ">星期一</p>
+                                    <p class="mb_tue mb_off">星期二</p>
+                                    <p class="mb_wed mb_off">星期三</p>
+                                    <p class="mb_thu ">星期四</p>
+                                    <p class="mb_fri mb_off">星期五</p>
+                                    <p class="mb_sat ">星期六</p>
+                                    <p class="mb_sun mb_off">星期日</p>
+                                </div>
+                                <p class="mb_plan_way">到府收取</p>
+
+                            </div>
+                        </div>
+
+                        <div class="mb_mem_info">
+                           
+                        </div>
+
+                        <div class="mb_estab_case">
+                            <p>今日案件收取狀況</p>
+                            <div class="table mb_estab_case_frame_01">
+                                <table class="table mb_estab_case_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width: 20%;">日期</th>
+                                            <th scope="col" style="width: 25%;">時段</th>
+                                            <th scope="col" style="width: 15%;">狀態</th>
+                                            <th scope="col" style="width: 15%;">客服反映</th>
+                                            <th scope="col" style="width: 15%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="mb_estab_case_today">
+                                    </tbody>
+                                </table>
+                            </div>    
+
+                            <p>案件收取狀況</p>
+                            <div class="table mb_estab_case_frame_02">
+                                <table class="table mb_estab_case_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width: 20%;">日期</th>
+                                            <th scope="col" style="width: 25%;">時段</th>
+                                            <th scope="col" style="width: 15%;">狀態</th>
+                                            <th scope="col" style="width: 15%;">客服反映</th>
+                                            <th scope="col" style="width: 15%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="mb_estab_case_all">
+                                       
+                                    </tbody>
+                                </table>
+                               
+                            </div>
+
+                        </div>
+
+                    </section>
+                </main>
+            </div>
+        </div>
+
+    <div class="mb_pop_up_windows">
+
+    </div>
+
+    <div class="mb_pop_up_windows" id="updatePlanOrdID">
+
+    </div>
+        
+        
+        
+
+
+
+
+
+        <div class="footerPage"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/memPlanFront.js"></script>
+    <script>
+        
+
+        $(".headerPage").load("header.html");
+        $(".footerPage").load("footer.html");
+        $(".memSidebarPage").load("memSidebar.html");
+
+    </script>
+</body>
+
+</html>
