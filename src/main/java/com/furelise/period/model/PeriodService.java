@@ -27,16 +27,16 @@ public class PeriodService {
 		return dao.save(period);
 	}
 
-	public boolean deletePeriod(Integer periodID) {
-		boolean inUse = false;
+	public String deletePeriod(Integer periodID) {
+		String result = "deleted successfully";
 		for (PlanOrd p : planOrdDao.findAll()) {
 			if (p.getPeriodID().equals(periodID)) { // check if is used
-				inUse = true;
+				result = periodID + " is in use!";
 			}
 		}
-		if (inUse == false)
+		if (result.equals("deleted successfully"))
 			dao.deleteById(periodID);
-		return inUse;
+		return result;
 	}
 
 	public List<Period> getAllPeriod() {

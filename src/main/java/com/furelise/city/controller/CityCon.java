@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,40 +45,45 @@ public class CityCon {
 	}
 
 	// return data
-	// cityCode重複會停留在原畫面
 	@PostMapping("/new")
 	public String citySubmit(@Valid City city, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "b_city_create";
+		} else {
+			// true: break; false: proceed
+			boolean proceed = citySvc.addCity(city);
+			if (proceed) {
+				return "redirect:/city/all";
+			} else {
+				model.addAttribute("errorMessage", "郵遞區號已存在");
+				return "b_city_create";
+			}
 		}
-		System.out.println("cityCode= " + city.getCityCode());
-		return citySvc.addCity(city);
 	}
 
 	@PostMapping("/getOne")
 	public String getOne(@RequestParam Integer cityID, Model model) {
 		City city = citySvc.getCityById(cityID);
 		model.addAttribute("city", city);
-		System.out.println(city);
 		return "b_city_update";
 	}
-	//
+
+	// 不能用put
 	@PostMapping("/update")
-	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result) {
-		// ID欄要用readonly，不能disabled
+	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "b_city_update";
+		} else {
+			// true: break; false: proceed
+			boolean proceed = citySvc.updateCity(city);
+			if (proceed) {
+				return "redirect:/city/all";
+			} else {
+				model.addAttribute("errorMessage", "郵遞區號已存在");
+				return "b_city_update";
+			}
 		}
-		citySvc.updateCity(city);
-		return "redirect:/city/all";
 	}
-//	@PostMapping("/update")
-//	public String cityUpdate(@ModelAttribute City city, Model model) {
-//		System.out.println(city); // ID欄要用readonly，不能disabled
-//		City newCity = citySvc.updateCity(city);
-//		model.addAttribute("city", newCity);
-//		return "b_city_detail";
-//	}
 
 	@PostMapping("/delete")
 	public String cityDelete(@RequestParam String cityID, Model model) {

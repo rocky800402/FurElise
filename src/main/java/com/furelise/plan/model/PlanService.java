@@ -3,16 +3,24 @@ package com.furelise.plan.model;
 import java.math.BigDecimal;
 import java.util.*;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.furelise.planord.model.*;
 
 @Service
 public class PlanService {
 
 	@Autowired
 	PlanRepository dao;
+	
+	@Autowired
+	PlanOrdRepository planOrdDao;
 
 	// 一次產生五筆
+	@Transactional
 	public List<Plan> addPlan(Plan req) {
 		BigDecimal planPrice = req.getPlanPrice();
 		BigDecimal planPricePerCase = req.getPlanPricePerCase();
@@ -45,11 +53,14 @@ public class PlanService {
 	}
 
 	// 同名方案一次刪除
+	@Transactional
 	public void deletePlan(String planName) {
 		// find planID by planName
 		List<Integer> planIDList = dao.findIdByPlanName(planName);
+		// find planOrd by planID
 		for (Integer planID : planIDList) {
-			dao.deleteById(planID);
+			List<PlanOrd> planOrdList = planOrdDao.findByPlanID(planID);
+				dao.deleteById(planID);
 		}
 	}
 

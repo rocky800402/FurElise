@@ -25,7 +25,6 @@ public class PlanRESTCon {
 	PlanService planSvc;
 	
 	//一次產生五筆，
-	
 	@PostMapping("/adding")
 	public String addPlan(@Valid @RequestBody Plan req) {
 		if(planSvc.addPlan(req) == null) 

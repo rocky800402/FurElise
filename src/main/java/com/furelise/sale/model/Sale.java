@@ -51,4 +51,25 @@ public class Sale implements Serializable{
 	public Sale() {
 		super();
 	}
+	
+	public Sale(Integer saleID, String coupon, Date saleStart, 
+			Date saleEnd, BigDecimal disRequire, BigDecimal dis) {
+		this.saleID = saleID;
+		this.coupon = coupon;
+		this.saleStart = saleStart;
+		this.saleEnd = saleEnd;
+		this.disRequire = disRequire;
+		this.dis = dis;
+	}
+
+	public Sale(String coupon, Date saleStart, 
+			Date saleEnd, BigDecimal disRequire, BigDecimal dis) {
+		this.coupon = coupon;
+		this.saleStart = saleStart;
+		this.saleEnd = saleEnd;
+		this.disRequire = disRequire;
+		this.dis = dis;
+	}
+	
+	
 }

@@ -40,20 +40,10 @@ public class PickupTimeRESTCon {
 		return pickupTimeSvc.updatePickupTime(req);
 	}
 	
-//	
-//	@RequestMapping("/update")
-//	public PickupTime updatePickupTime() {
-//		PickupTime pickupTime = new PickupTime();
-//		pickupTime.setTimeID(240011);
-//		pickupTime.setTimeRange("08:00-12:00");
-//		return pickupTimeSvc.updatePickupTime(pickupTime);
-//	}
-	
-	
 	@DeleteMapping("deleting")
 	public String deletePickupTime(@RequestBody PickupTime req) {
-		pickupTimeSvc.deletePickupTime(req.getTimeID());
-		return "deleted seccessfully";
+		String result = pickupTimeSvc.deletePickupTime(req.getTimeID());
+		return result;
 	}
 	
 	

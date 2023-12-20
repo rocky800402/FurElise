@@ -1,31 +1,31 @@
 // 載入
 function init() {
-	$.ajax({
-		url: "http://localhost:8081/furelise/plan/all", // 資料請求的網址
-		type: "GET", // GET | POST | PUT | DELETE | PATCH
-		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
-		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-		success: function(data) {
-			// console.log(data);
-			let list_html = "";
-			$.each(data, function(index, item) {
-				list_html += `
-                <tr data-planid="${item.planID}">
+    $.ajax({
+        url: "http://localhost:8081/furelise/plan/all", // 資料請求的網址
+        type: "GET", // GET | POST | PUT | DELETE | PATCH
+        // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
+        dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+        success: function (data) {
+            // console.log(data);
+            let list_html = "";
+            $.each(data, function (index, item) {
+                list_html += `
+                <tr data-planid="${item.planID}" data-planname="${item.planName}">
                     <td>${item.planID}</td>
                     <td>${item.planName}</td>
                     <td>${item.liter}</td>
                     <td>${item.planPrice}</td>
                     <td>${item.planPricePerCase}</td>
                     <td>${item.times}</td>
-					<td><a href="/furelise/plan/update?planID=${item.planID} "><span class="sl_btn_chakan" style="background-color: #9ac972">修改</span></a></td>
+					<td><a href="/demo/plan/update"><span class="sl_btn_chakan" style="background-color: #9ac972">修改</span></a></td>
                     <td><input id="del" class="sl_btn_chakan" type="submit" value="刪除"></td>
                 </tr>
             `;
-			});
-			$(".plan_list").html(list_html);
-			$('#example4').DataTable();
-		}
-	});
+            });
+            $(".plan_list").html(list_html);
+            $('#example4').DataTable();
+        }
+    });
 }
 
 // enter送出
@@ -88,14 +88,13 @@ $("button#task_add").on("click", function() {
 $(document).on("click", "input#del", function() {
 	let r = confirm("是否確認刪除？");
 	if (r) {
-		let planID = $(this).closest('tr').data('planid');
+		let planName = $(this).closest('tr').data('planname');
 		let that = this;
 		$.ajax({
 			url: "http://localhost:8081/furelise/plan/deleting",           // 資料請求的網址
 			type: "DELETE",
 			contentType: "application/json", // Set the content type to JSON
-			data: JSON.stringify({ "planID": planID }), // Convert the data to JSON                  // GET | POST | PUT | DELETE | PATCH
-			// data: { "wayID": way_id },                // 將物件資料(不用雙引號) 傳送到指定的 url
+			data: JSON.stringify({ "planName": planName }), // Convert the data to JSON                  // GET | POST | PUT | DELETE | PATCH
 			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
 			beforeSend: function() {       // 在 request 發送之前執行
 			},
@@ -107,8 +106,6 @@ $(document).on("click", "input#del", function() {
 				}, 1000, "swing", function() {
 					$(this).remove();
 				});
-				// 無法遞補
-				// $('#example4').DataTable().draw();
 			},
 			error: function(xhr) {         // request 發生錯誤的話執行
 				alert("不可刪除！");

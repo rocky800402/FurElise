@@ -22,4 +22,9 @@ public interface PlanOrdRepository extends JpaRepository<PlanOrd, Integer>{
 	//pickupWayService
 	List<PlanOrd> findByWayID(Integer wayID);
 	
+	//planService
+	List<PlanOrd> findByPlanID(Integer planID);
+	
+	//pickupTimeService
+	List<PlanOrd> findByTimeID(Integer timeID);
 }

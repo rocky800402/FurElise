@@ -1,28 +1,30 @@
-package com.furelise.pickupway.controller;
+//////沒在用/////
 
-import java.util.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.furelise.pickupway.model.*;
-
-@RestController
-@RequestMapping("/pickupway")
-public class PickupWayRESTCon {
-
-	@Autowired
-	PickupWayService pickupWaySvc;
+//package com.furelise.pickupway.controller;
+//
+//import java.util.*;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.DeleteMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import com.furelise.pickupway.model.*;
+//
+//@RestController
+//@RequestMapping("/pickupway")
+//public class PickupWayRESTCon {
+//
+//	@Autowired
+//	PickupWayService pickupWaySvc;
 
 //	// add data, for ajax using
 //	
@@ -68,4 +70,4 @@ public class PickupWayRESTCon {
 //		return pickupWaySvc.getPickupWayById(wayID);
 //	}
 
-}
+//}

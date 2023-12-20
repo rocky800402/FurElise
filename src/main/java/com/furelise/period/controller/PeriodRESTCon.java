@@ -61,11 +61,8 @@ public class PeriodRESTCon {
 	
 	@DeleteMapping("/deleting")
 	public String deletePeriod(@RequestBody Period req) {
-		boolean inUse = periodSvc.deletePeriod(req.getPeriodID());
-		if(inUse == true) 
-			return "could not be deleted";
-		else 
-			return "deleted successfully";
+		String result = periodSvc.deletePeriod(req.getPeriodID());
+		return result;
 	}
 
 //	

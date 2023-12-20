@@ -95,19 +95,19 @@ $(document).on("click", "input#del", function() {
 			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
 			beforeSend: function() {       // 在 request 發送之前執行
 			},
-			success: function(data) {
-				if (data == 'deleted successfully') {
-					alert("刪除成功！");
+			success: function (data) {
+                if (data == 'deleted successfully') {
+                    alert(data);
 
-					$(that).closest('tr').animate({
-						"opacity": 0
-					}, 1000, "swing", function() {
-						$(this).remove();
-					});
-				} else if (data == 'could not be deleted') {
-					alert("不可刪除！");
-				}
-			},
+                    $(that).closest('tr').animate({
+                        "opacity": 0
+                    }, 1000, "swing", function () {
+                        $(this).remove();
+                    });
+                } else {
+                    alert(data);
+                }
+            },
 			error: function(xhr) {         // request 發生錯誤的話執行
 				alert('連線異常！')
 			},
