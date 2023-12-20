@@ -120,7 +120,6 @@
 			<!-- <version>4.0.1</version> -->
 			<scope>provided</scope> <!-- ※provided只提供編譯，jar檔不匯出 -->
 		</dependency>
-
 		<!-- JSTL -->                                         <!-- spring-boot 未內建依賴 -->
 		<dependency>
 			<groupId>org.apache.taglibs</groupId>
