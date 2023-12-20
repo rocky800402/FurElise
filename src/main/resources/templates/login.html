@@ -252,16 +252,31 @@
         </div>
 
 
-    <div class="hc_forgetPW" style="display: none;">
-        <p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
-        <input type="text" placeholder="請輸入Email" name="memForgetPW">
-        <input type="text" placeholder="請輸入Email" name="empForgetPW">
-        <div class="hc_login_btn">
-            <button type="submit" class="btn btn-primary btn-lg">重設密碼</button>
-            <br>
-        </div>
-    </div>
-
+	<form action="forgetpw" method="post">
+	    <div class="hc_forgetPW" style="display: none;">
+	        <p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
+	        <input type="email" placeholder="請輸入Email" name="memForgetPW">
+	        <input type="email" placeholder="請輸入Email" name="empForgetPW">
+	        
+	        <div th:if="${memMsgs != null}">
+	        	<p th:text="${memMsgs}" style="color:red;"></p>
+	        	<div id="forgetMemMsgs"></div>
+	        </div>
+	        <div th:if="${empMsgs != null}">
+	        	<p th:text="${empMsgs}" style="color:red;"></p>
+	        	<div id="forgetEmpMsgs"></div>
+	        </div>
+	        <div th:if="${resetMsgs != null}">
+	        	<p th:text="${resetMsgs}" style="color:red;"></p>
+	        	<div id="forgetpwMsgs"></div>
+	        </div>
+	        
+	        <div class="hc_login_btn">
+	            <button type="submit" class="btn btn-primary btn-lg">重設密碼</button>
+	            <br>
+	        </div>
+	    </div>
+	</form>
 
 	<!-- new member register -->
 	    <!-- 錯誤表列, FIXME: 需要調整  -->
@@ -367,7 +382,27 @@
                 $(".hc_register").show();
             } 
             
+            var forgetMemMsgs = document.getElementById('forgetMemMsgs');
+            if (forgetMemMsgs !== null) {
+            	$(".hc_forgetPW").show();
+                $("input[name='memForgetPW']").show();
+                $("input[name='empForgetPW']").hide();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            }
             
+            var forgetEmpMsgs = document.getElementById('forgetEmpMsgs');
+            if (forgetEmpMsgs !== null) {
+            	$(".hc_forgetPW").show();
+                $("input[name='empForgetPW']").show();
+                $("input[name='memForgetPW']").hide();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            }
             
             $("#hc_memlogin_btn").on("click", function(e){
                 e.preventDefault();
