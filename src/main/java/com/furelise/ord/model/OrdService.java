@@ -30,15 +30,15 @@ public class OrdService {
 
 	@Autowired
 	SaleService saleDao;
-	
+
 //	@Autowired
 //	ShopCartService scSvc;
-	
+
 	// 創建訂單 用OrdDTO抓
 //	public Ord createOrder(OrdDTO req, Model model, BigDecimal totalAmount) {
-//		
+//
 //		Ord ord = new Ord();
-//		
+//
 //		ord.setOrdDate(new Timestamp(System.currentTimeMillis()));
 //		ord.setMemID(req.getMemID());
 //		ord.setPayment(req.getPayment());
@@ -52,9 +52,9 @@ public class OrdService {
 //		ord.setSaleID(saleDao.getSaleByCoupon(null).getSaleID());
 //		ord.setOrdStatus(0); // 預設都為0(處理中)
 //		ord.setArrival(null); //送達時間初始為null
-//		
+//
 //		dao.save(ord);
-//		
+//
 //		// 創建訂單明細OrdDetail
 //		Map<String,String> shopCartItems = scSvc.getShopCartProducts(req.getMemID());
 //		List<OrdDetail> ordDetails = new ArrayList<>();
@@ -68,13 +68,13 @@ public class OrdService {
 //
 //		    // 設置 OrdDetail 的相關屬性
 //		    OrdDetail ordDetail = new OrdDetail();
-//		    
+//
 //		    // 這裡將 ordDetail 的 ordID 設置為 ord 的 ID
 //		    ordDetail.setOrdID(ord.getOrdID());
-//		    
+//
 //		    // pID 應該是由 shopCartItems 中取得
 //		    ordDetail.setPID(Integer.parseInt(pID));
-//		    
+//
 //		    ordDetail.setDetaQty(quantity);
 //		    ordDetail.setFeedback(null); // 訂單明細創建初始時評價為 null
 //		    ordDetail.setLevel(null); // 訂單明細創建初始時評價等級為 null
@@ -85,11 +85,11 @@ public class OrdService {
 //
 //	    ord.setOrdDetails(ordDetails);
 //
-//	    
+//
 //
 //	    return ord;
 //	}
-//	
+//
 //	//
 //	public Ord updateOrd(Integer ordID, Timestamp ordDate, Integer memID, Integer payment, Integer deliver,
 //			String address, String cityCode, Date deliverDate, BigDecimal sum, BigDecimal shipping, BigDecimal total,
@@ -98,8 +98,8 @@ public class OrdService {
 //		return null;
 //
 //	}
-	
-	
+
+
 	// 創建訂單 從購物車直接抓
 //	public Ord createOrder(Map<String, String> shopCartItems, BigDecimal totalAmount) {
 //
@@ -135,7 +135,7 @@ public class OrdService {
 //
 //		// 抓出購物車中的所有商品
 //		for (int i = 0; i < shopCartItems.size(); i++) {
-//			
+//
 //			String shopCartItemString = shopCartItems.get(i);
 //
 //			try {
@@ -157,5 +157,5 @@ public class OrdService {
 //		return ordDetails;
 //	}
 
-	
+
 }

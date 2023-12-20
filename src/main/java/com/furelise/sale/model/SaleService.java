@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class SaleService {
 	@Autowired
 	SaleRepository dao;
-	
+
 	public String addSale(Sale sale) {
 		String url = "b_sale_add";
 		if(dao.existsByCoupon(sale.getCoupon())) {
@@ -20,35 +20,35 @@ public class SaleService {
 			dao.save(sale);
 			url = "all";
 		}
-		
+
 		return url;
 	}
-	
+
 	public Sale updateSale(Sale sale) {
-		
+
 		return dao.save(sale);
-			
+
 	}
-	
+
 	public void deleteSale(Integer saleID) {
 		dao.deleteById(saleID);
 	}
-	
+
 	public Sale getOneSale(Integer saleID) {
 		Optional<Sale> optional = dao.findById(saleID);
 		return optional.orElse(null);
 	}
-	
+
 	public List<Sale> getAll(){
 		return dao.findAll();
 	}
-	
+
 	public Sale getSaleByCoupon(String coupon) {
-		
+
 		return dao.findSaleByCoupon(coupon);
-		
+
 	}
-	
+
 	//verify coupon
 	public String verifyCoupon(String coupon, String total) {
 		String result = "";
@@ -60,7 +60,7 @@ public class SaleService {
 		//if total >= disRequire
 		else if(new BigDecimal(total).compareTo(saleList.get(0).getDisRequire()) < 0){
 			result = "未達折扣門檻";
-		} else 
+		} else
 			result = "-" + saleList.get(0).getDis();
 		return result;
 	}

@@ -271,10 +271,10 @@ public class EstabCaseController  {
 	
 	@GetMapping("/productList")
 	public List<Product> getAllProducts(){
-		
-		List<Product> productList = productRepository.findAll();
-		System.out.println(productList);
-		return productList;
+
+//		List<Product> productList = productRepository.findAll();
+		System.out.println(productRepository.existsBypName("垃圾專用回收袋"));
+		return null;
 		
 	}
 	
