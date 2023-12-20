@@ -14,20 +14,24 @@ public class CityService {
 	@Autowired
 	CityRepository dao;
 
-	// 新增時cityCode重複的話會停留在原畫面
-	public String addCity(City city) {
-		String judge = "b_city_create";
-		if (dao.existsByCityCode(city.getCityCode())) {
-			judge = "b_city_create";
-		} else {
+	public boolean addCity(City city) {
+		//verify if cityCode duplicated
+		boolean proceed = false;
+		if (!dao.existsByCityCode(city.getCityCode())) {
 			dao.save(city);
-			judge = "redirect:/city/all";
+			proceed = true;
 		}
-		return judge;
+		return proceed;
 	}
-
-	public City updateCity(City city) {
-		return dao.save(city);
+	
+	public boolean updateCity(City city) {
+		//verify if cityCode duplicated
+		boolean proceed = false;
+		if (!dao.existsByCityCode(city.getCityCode())) {
+			dao.save(city);
+			proceed = true;
+		}
+		return proceed;
 	}
 
 	public void delete(Integer cityID) {

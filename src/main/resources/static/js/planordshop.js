@@ -193,32 +193,69 @@ $(document).on("click", "button#show_sale", function() {
 	}
 });
 
+//優惠碼enter送出、清空優惠碼提醒字
+$(document).on("keyup", "#coupon", function(e) {
+	if (e.which == 13) {
+		//enter也等於按按鍵
+		$("button#task_discount").click();
+	}
+	$("#replaceMe").text("");
+});
+
 //優惠碼驗證
 $(document).on("click", "#task_discount", function() {
 	let before_discount = $("#after_discount").val();
 	let coupon = $("#coupon").val().trim();
-	let after_discount = before_discount - coupon;
+
 	var that = $(this);
-	console.log(coupon);
 
 	//有輸入折扣碼
 	if (coupon !== "") {
-		// ajax驗證折扣碼
 
-		//成功就更新$("#after_discount").val()
+		let form_data = {
+			"coupon": coupon,
+			"total": before_discount
+		}
 
-		//失敗alert
+		$.ajax({
+			url: "http://localhost:8080/salecontroller/coupon", // 資料請求的網址
+			type: "POST", // GET | POST | PUT | DELETE | PATCH
+			// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
+			contentType: "application/json",
+			data: JSON.stringify(form_data),
+			dataType: "text", // 預期會接收到回傳資料的格式： json | xml | html
+			success: function(item) {
+				let replacement = `<p id="replaceMe">${item}</p>`;
 
-		$("#after_discount").val(after_discount);
-		$("#coupon").prop('disabled', true);
-		$(that).prop('disabled', true);
-		$(that).css('background-color', 'lightgray');
-		$(that).css('border-color', 'lightgray');
+				if (item == '折扣碼不存在') {
+					$("#coupon").after(replacement);
+				} else if (item == '未達折扣門檻') {
+					$("#coupon").after(replacement);
+				} else {
+					let discount = parseFloat(item.slice(1));
+					let after_discount = before_discount - discount; //折扣後
+					$("#coupon").after(replacement);
+					$("#after_discount").val(after_discount);
+					$("#coupon").prop('disabled', true);
+					$(that).prop('disabled', true);
+					$(that).css('background-color', 'lightgray');
+					$(that).css('border-color', 'lightgray');
+				}
 
+			}, error: function(xhr) {         // request 發生錯誤的話執行
+				if (xhr.status === 400) {
+					var errorMessage = xhr.responseText;
+					alert(errorMessage);
+				} else {
+					alert('連線異常');
+					location.reload();
+				}
+			}
+		});
 	}
 });
 
-//新增
+//新增，成功後跳轉綠界
 $(document).on("click", "#task_add", function() {
 	$(".first select, input").prop('disabled', false); //選好的不可改
 	let planName = $("select[name='planName']").val(); //String planName
@@ -289,89 +326,89 @@ $(document).on("click", "#task_add", function() {
 的id*/
 
 //出現信用卡欄位
-$(document).on("click", "#show_credit", function() {
-	var that = $(this);
-	let list_html = "";
-	list_html += `
-    <p></p>
-    持卡人姓名
-    <input id="myName" type="text" autofocus required><br><br>
-    信用卡卡號
-    <input type=text name=pan_no1 size=4 value="" maxlength=4 onKeyUp="setBlur(this,'pan_no2');" required>-
-    <input type=text name=pan_no2 size=4 value="" maxlength=4 onKeyUp="setBlur(this,'pan_no3');" required>-
-    <input type=text name=pan_no3 size=4 value="" maxlength=4 onKeyUp="setBlur(this,'pan_no4');" required>-
-    <input type=text name=pan_no4 size=4 value="" maxlength=4 required><br><br>
-    信用卡有效年月
-    <select id="year">
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-        <option value="2026">2026</option>
-        <option value="2027">2027</option>
-        <option value="2028">2028</option>
-        <option value="2029">2029</option>
-        <option value="2030">2030</option>
-    </select>年
-    <select id="month" >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-    </select>月
-
-    <br><br>
-    信用卡背面末三碼
-    <input id="verify" type="password" maxlength=3 required><br><br>
-    手機號碼
-    <input id="phone" type="text" maxlength=10 required>
-    <p></p>
-    <button type="submit" id="task_add" class="sl_btn_chakan" style="width:50%;">結帳</button>
-    `;
-
-	$(that).after(list_html);
-	$(that).prop('disabled', true);
-	$(that).css('background-color', 'lightgray');
-	$(that).css('border-color', 'lightgray');
-	$("#coupon").prop('disabled', true);
-	$("#task_discount").prop('disabled', true);
-	$("#task_discount").css('background-color', 'lightgray');
-	$("#task_discount").css('border-color', 'lightgray');
-	$("#myName").focus();
-
-});
-
-//驗證信用卡，success call新增function(參考chatGPT)
-$(document).on("click", "#task_add", function() {
-	var that = $(this);
-	$(".first select, input").prop('disabled', false);
-	$("input#after_discount").prop('disabled', false);
-
-	let myName = $("input#myName").val();
-	let pan_no1 = $("input[name='pan_no1']").val();
-	let pan_no2 = $("input[name='pan_no2']").val();
-	let pan_no3 = $("input[name='pan_no3']").val();
-	let pan_no4 = $("input[name='pan_no4']").val();
-	let year = $("select#year").val();
-	let month = $("select#month").val();
-	let verify = $("input#verify").val(); //planStart
-	let phone = $("input#phone").val().trim(); //contact
-	let afterTotal = $("input#after_discount").val(); //total
-
-	if (myName !== "" && verify !== "" && phone !== "" && pan_no1 !== "" && pan_no2 !== "" && pan_no3 !== "" && pan_no4 !== "") {
-
-		//串金流
-
-
-	} else {
-		alert("請填寫所有欄位");
-	}
-});
+//$(document).on("click", "#show_credit", function() {
+//	var that = $(this);
+//	let list_html = "";
+//	list_html += `
+//    <p></p>
+//    持卡人姓名
+//    <input id="myName" type="text" autofocus required><br><br>
+//    信用卡卡號
+//    <input type=text name=pan_no1 size=4 value="" maxlength=4 onKeyUp="setBlur(this,'pan_no2');" required>-
+//    <input type=text name=pan_no2 size=4 value="" maxlength=4 onKeyUp="setBlur(this,'pan_no3');" required>-
+//    <input type=text name=pan_no3 size=4 value="" maxlength=4 onKeyUp="setBlur(this,'pan_no4');" required>-
+//    <input type=text name=pan_no4 size=4 value="" maxlength=4 required><br><br>
+//    信用卡有效年月
+//    <select id="year">
+//        <option value="2024">2024</option>
+//        <option value="2025">2025</option>
+//        <option value="2026">2026</option>
+//        <option value="2027">2027</option>
+//        <option value="2028">2028</option>
+//        <option value="2029">2029</option>
+//        <option value="2030">2030</option>
+//    </select>年
+//    <select id="month" >
+//        <option value="1">1</option>
+//        <option value="2">2</option>
+//        <option value="3">3</option>
+//        <option value="4">4</option>
+//        <option value="5">5</option>
+//        <option value="6">6</option>
+//        <option value="7">7</option>
+//        <option value="8">8</option>
+//        <option value="9">9</option>
+//        <option value="10">10</option>
+//        <option value="11">11</option>
+//        <option value="12">12</option>
+//    </select>月
+//
+//    <br><br>
+//    信用卡背面末三碼
+//    <input id="verify" type="password" maxlength=3 required><br><br>
+//    手機號碼
+//    <input id="phone" type="text" maxlength=10 required>
+//    <p></p>
+//    <button type="submit" id="task_add" class="sl_btn_chakan" style="width:50%;">結帳</button>
+//    `;
+//
+//	$(that).after(list_html);
+//	$(that).prop('disabled', true);
+//	$(that).css('background-color', 'lightgray');
+//	$(that).css('border-color', 'lightgray');
+//	$("#coupon").prop('disabled', true);
+//	$("#task_discount").prop('disabled', true);
+//	$("#task_discount").css('background-color', 'lightgray');
+//	$("#task_discount").css('border-color', 'lightgray');
+//	$("#myName").focus();
+//
+//});
+//
+////驗證信用卡，success call新增function(參考chatGPT)
+//$(document).on("click", "#task_add", function() {
+//	var that = $(this);
+//	$(".first select, input").prop('disabled', false);
+//	$("input#after_discount").prop('disabled', false);
+//
+//	let myName = $("input#myName").val();
+//	let pan_no1 = $("input[name='pan_no1']").val();
+//	let pan_no2 = $("input[name='pan_no2']").val();
+//	let pan_no3 = $("input[name='pan_no3']").val();
+//	let pan_no4 = $("input[name='pan_no4']").val();
+//	let year = $("select#year").val();
+//	let month = $("select#month").val();
+//	let verify = $("input#verify").val(); //planStart
+//	let phone = $("input#phone").val().trim(); //contact
+//	let afterTotal = $("input#after_discount").val(); //total
+//
+//	if (myName !== "" && verify !== "" && phone !== "" && pan_no1 !== "" && pan_no2 !== "" && pan_no3 !== "" && pan_no4 !== "") {
+//
+//		//串金流
+//
+//
+//	} else {
+//		alert("請填寫所有欄位");
+//	}
+//});
 
 // =============

@@ -5,11 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.furelise.planord.model.*;
+
 @Service
 public class PickupTimeService {
 
 	@Autowired
 	PickupTimeRepository dao;
+
+	@Autowired
+	PlanOrdRepository planOrdDao;
 
 	public PickupTime addPickupTime(PickupTime req) {
 		PickupTime pickupTime = new PickupTime(req.getTimeRange());
@@ -21,14 +26,22 @@ public class PickupTimeService {
 		return dao.save(pickupTime);
 	}
 
-	public void deletePickupTime(Integer timeID) {
-		dao.deleteById(timeID);
+	public String deletePickupTime(Integer timeID) {
+		String result = "";
+		List<PlanOrd> list = planOrdDao.findByTimeID(timeID);
+		System.out.println(list);
+		if (list.isEmpty()) {
+			dao.deleteById(timeID);
+			result = "deleted successfully";
+		}else
+			result = timeID + " is in use!";
+		return result;
 	}
 
 	public List<PickupTime> getAllPickupTime() {
 		return dao.findAll();
 	}
-	
+
 	public PickupTime getPickupTimeById(Integer timeID) {
 		return dao.findById(timeID).orElse(null);
 	}
