@@ -58,6 +58,11 @@ public class MemService {
 		return mem;
 	}
 	
+	public Mem updateMem(Mem mem) {
+		memR.save(mem);
+		return mem;
+	}
+	
 	public Mem getOneMem(Integer memID) {
 		return memR.getReferenceById(memID);
 	}

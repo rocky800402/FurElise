@@ -9,12 +9,17 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Data;
 
@@ -25,6 +30,7 @@ import lombok.Data;
 
 @Entity
 @Table(name = "mem")
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public class Mem implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +43,13 @@ public class Mem implements Serializable {
 	private String memTel; // 4
 	private Date memBirth; // 5
 	private String memPass; // 6
+	
+	// 自動創建時間
+    @CreatedDate()
 	private Timestamp memRegiDate; // 7
+    
+    // 修改時自動創建時間
+    @LastModifiedDate
 	private Timestamp memLastModified; // 8
 	
 	@Column(name = "memIsSuspended", columnDefinition = "BIT(1) DEFAULT 0")

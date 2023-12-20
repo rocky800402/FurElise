@@ -14,6 +14,12 @@ public class EmpAuthService {
 	@Autowired
 	private EmpRepository empRepository;
 	
+	
+	public Emp updateEmp(Emp emp) {
+		empRepository.save(emp);
+		return emp;
+	}
+	
 	public Emp findByEmpMail(String empMail) {
 		return this.empRepository.findByEmpMail(empMail);
 	}
