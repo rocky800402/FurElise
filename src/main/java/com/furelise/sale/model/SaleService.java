@@ -2,6 +2,7 @@ package com.furelise.sale.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,43 @@ import org.springframework.stereotype.Service;
 public class SaleService {
 	@Autowired
 	SaleRepository dao;
+	
+	public String addSale(Sale sale) {
+		String url = "b_sale_add";
+		if(dao.existsByCoupon(sale.getCoupon())) {
+			url = "b_sale_add";
+		} else {
+			dao.save(sale);
+			url = "all";
+		}
+		
+		return url;
+	}
+	
+	public Sale updateSale(Sale sale) {
+		
+		return dao.save(sale);
+			
+	}
+	
+	public void deleteSale(Integer saleID) {
+		dao.deleteById(saleID);
+	}
+	
+	public Sale getOneSale(Integer saleID) {
+		Optional<Sale> optional = dao.findById(saleID);
+		return optional.orElse(null);
+	}
+	
+	public List<Sale> getAll(){
+		return dao.findAll();
+	}
+	
+	public Sale getSaleByCoupon(String coupon) {
+		
+		return dao.findSaleByCoupon(coupon);
+		
+	}
 	
 	//verify coupon
 	public String verifyCoupon(String coupon, String total) {
