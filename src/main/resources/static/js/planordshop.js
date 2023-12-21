@@ -218,7 +218,7 @@ $(document).on("click", "#task_discount", function() {
 		}
 
 		$.ajax({
-			url: "http://localhost:8080/salecontroller/coupon", // 資料請求的網址
+			url: "http://localhost:8081/furelise/sale/coupon", // 資料請求的網址
 			type: "POST", // GET | POST | PUT | DELETE | PATCH
 			// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
