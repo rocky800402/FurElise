@@ -44,7 +44,7 @@ import com.furelise.productclass.model.ProductClass;
 import com.furelise.productclass.model.ProductClassRepository;
 import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleRepository;
-import com.furelise.shopcart.model.ShopCart;
+//import com.furelise.shopcart.model.ShopCart;
 //import com.furelise.shopcart.model.ShopCartRepository;
 import com.furelise.vacation.model.Vacation;
 import com.furelise.vacation.model.VacationRepository;
