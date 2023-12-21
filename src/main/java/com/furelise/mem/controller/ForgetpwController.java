@@ -105,8 +105,9 @@ public class ForgetpwController {
 		
 		String memMail = (String) session.getAttribute("memMail");
 		String empMail = (String) session.getAttribute("empMail");
-		session.removeAttribute("memMail");
-		session.removeAttribute("empMail");
+		
+		System.out.println(memMail);
+		System.out.println(empMail);
 		
 		// ===錯誤驗證；新密碼與確認密碼必須相同===
 		if (!newPW.equals(cfmPW)) {
@@ -115,35 +116,19 @@ public class ForgetpwController {
 			return "resetpw-resetpage";
 		}
 		
-		if (memMail != null) {
-			// ===修改會員密碼===
-			// 1. 取得redis裡已存在的token
-			String existToken = redisTemplate.opsForValue().get("ResetMail:" + memMail);
-			// 2. 比對url取得的token，token相同則進行密碼修改
-			if (token.equals(existToken)) {
-				Mem mem = memSvc.findByMemMail(memMail);
-				mem.setMemPass(newPW);
-				memSvc.updateMem(mem);
-				return "resetpw-resetsuccess";
-			}
-			
-		} else if (empMail != null) {
-			// ===修改夥伴密碼===
-			// 1. 取得redis裡已存在的token
-			String existToken = redisTemplate.opsForValue().get("ResetMail:" + empMail);
-			// 2. 比對url取得的token，token相同則進行密碼修改
-			if (token.equals(existToken)) {
-				Emp emp = empSvc.findByEmpMail(empMail);
-				emp.setEmpPass(newPW);
-				empSvc.updateEmp(emp);
-				return "resetpw-resetsuccess";
-			}
-			
-		}
 		
-		errMsgs = "重設密碼失敗，請回到登入頁面 → 忘記密碼，再試一次。";
-		model.addAttribute("errMsgs", errMsgs);
-		return "resetpw-resetpage";
+		// ===修改密碼===
+		try {
+	        validSvc.updatePW(memMail, empMail, newPW, token);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        errMsgs = "重設密碼失敗，請重啟信件連結，或回到登入頁面 → 忘記密碼，再試一次。";
+	        model.addAttribute("errMsgs", errMsgs);
+	        return "resetpw-resetpage";
+	    }
+
+	    // 返回成功的視圖
+	    return "resetpw-resetsuccess";
 		
 	}
 	
