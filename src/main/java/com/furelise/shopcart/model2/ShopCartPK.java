@@ -1,4 +1,4 @@
-package com.furelise.shopcart.model;
+package com.furelise.shopcart.model2;
 
 import java.io.Serializable;
 
