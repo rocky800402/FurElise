@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 //import java.util.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
 import com.furelise.complaint.model.Complaint;
 import com.furelise.complaint.model.ComplaintRepository;
+import com.furelise.exception.NumberOfModificationsException;
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
 import com.furelise.period.model.Period;
@@ -28,9 +31,12 @@ import com.furelise.planord.model.PlanOrdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class EstabCaseService {
-	
+	@Autowired
+	SplitPlanOrdService splitPlanOrdS;
 	@Autowired
 	EstabCaseRepository estabCaseR;
 	@Autowired
@@ -52,19 +58,7 @@ public class EstabCaseService {
 
 
 	
-	public EstabCase addEstabCase(Integer empID,Integer planOrdID,
-			Date estabCaseDate,BigDecimal planPricePerCase) {
-		
-		EstabCase eCase = new EstabCase();
-		
-		eCase.setEmpID(empID);
-		eCase.setPlanOrdID(planOrdID);
-		eCase.setEstabCaseDate(estabCaseDate);
-		eCase.setPlanPricePerCase(planPricePerCase);
-		eCase.setEstabCaseStatus(0);
-		estabCaseR.save(eCase);
-		return eCase;
-	}
+
 	
 	public EstabCase updateEstabCase(Integer estabCaseID,Integer empID,Integer planOrdID,
 	Date estabCaseDate,BigDecimal planPricePerCase,Integer estabCaseStatus) {
@@ -78,6 +72,8 @@ public class EstabCaseService {
 		estabCaseR.save(eCase);
 		return eCase;
 	}
+
+
 
 	public MemEstabCaseBO getMemEstabCaseCom(Integer estabCaseID, Integer memID){
 		EstabCase estabCase = estabCaseR.findById(estabCaseID).orElseThrow();
@@ -141,6 +137,14 @@ public class EstabCaseService {
 		return estabCase;
 	}
 
+	public PlanOrd updateMemPlanOrdStatus(MemPlanStatusDTO memPlanStatusDTO){
+		PlanOrd planOrd = planOrdR.findById(memPlanStatusDTO.getPlanOrdID()).orElseThrow();
+		planOrd.setPlanStatusID(memPlanStatusDTO.getPlanStatusID());
+		planOrdR.save(planOrd);
+
+		return  planOrd;
+	}
+
 	public Complaint addcomplaint(MemEstabCaseComDTO memEstabCaseComDTO,Integer memID){
 		LocalDateTime currentTime = LocalDateTime.now();
 		Complaint complaint = new Complaint();
@@ -169,9 +173,46 @@ public class EstabCaseService {
 	
 	
 	//建立以成立案件(方案的金額 需要planOrd.plan.planPricePerCase)
+	@Transactional(rollbackOn = Exception.class)
+	public void updatePlanOrd(MemPlanDTO memPlanDTO){
+		PlanOrd planOrd = planOrdR.findById(memPlanDTO.getPlanOrdID()).orElseThrow();
+		Plan plan = planR.findById(planOrd.getPlanID()).orElseThrow();
+		Period period = periodR.findById(planOrd.getPeriodID()).orElseThrow();
+		if(planOrd.getAmendLog()==0){
+			planOrd.setAmendLog(1);
+			planOrd.setTimeID(memPlanDTO.getTimeID());
+			planOrd.setDay(memPlanDTO.getDay());
 
-	
+			modifyEstabCases(planOrd.getPlanOrdID());
 
+			LocalDate currentDate = LocalDate.now();
+			LocalDate threeDaysLater = currentDate.plus(3, ChronoUnit.DAYS);
+
+			List<java.util.Date> list = splitPlanOrdS.getSplitPlanOrd(String.valueOf(threeDaysLater),period.getPlanPeriod() , memPlanDTO.getDay());
+			int counts = estabCaseR.countByPlanOrdIDAndEstabCaseDateGreaterThanEqual(memPlanDTO.getPlanOrdID(), Date.valueOf(threeDaysLater));
+			System.out.println(counts);
+			int count=0;
+
+				for (java.util.Date date : list) {
+					if (count<counts){
+						count++;
+						EstabCase eCase = new EstabCase();
+						java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+						eCase.setEstabCaseDate(sqlDate);
+						eCase.setPlanOrdID(memPlanDTO.getPlanOrdID());
+						eCase.setPlanPricePerCase(plan.getPlanPricePerCase());
+						eCase.setTakeStatus(false);
+						eCase.setEstabCaseStatus(0);
+						estabCaseR.save(eCase);
+					}
+				}
+			planOrdR.save(planOrd);
+
+
+		}else{
+			throw new NumberOfModificationsException("Your modification limit has been reached.");
+		}
+	}
 
 
 	public String getDaysOfWeek(String day){
@@ -195,6 +236,15 @@ public class EstabCaseService {
 
 		return days;
 	}
+
+	public void modifyEstabCases(Integer planOrdID){
+		LocalDate currentDate = LocalDate.now();
+		LocalDate threeDaysLater = currentDate.plus(3, ChronoUnit.DAYS);
+		estabCaseR.updateEstabCaseStatus(planOrdID, Date.valueOf(threeDaysLater));
+
+//		List<java.util.Date> list = splitPlanOrdS.getSplitPlanOrd(String.valueOf(threeDaysLater), period, day);
+	}
+
 
 
 

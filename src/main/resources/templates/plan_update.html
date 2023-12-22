@@ -7,9 +7,7 @@
     <title>修改方案</title>
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/css/bootstrap.min.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
-<!-- 	<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}"> -->
     <style>
         /* 查看詳情button */
         .sl_btn_chakan {
@@ -128,10 +126,7 @@
 </head>
 
 <body>
-    <div class="headerPage"></div>
-
     <div class="container">
-        <div class="sidebarPage"></div>
         <main class="content">
             <p class="p_title">修改方案</p>
 
@@ -140,25 +135,25 @@
 				<input type="text" id="planID" th:value="${planID}" readonly style="background-color:lightgrey">
             </div>
 
-            <label>方案名稱</label>
+            <label>方案名稱(不可修改)</label>
             <div class="input-group mb-3">
-				<input type="text" id="planName" th:value="${planName}" autofocus>
+				<input type="text" id="planName" th:value="${planName}" readonly style="background-color:lightgrey">
             </div>
 
             <label>垃圾容量</label>
             <div class="input-group mb-3">
-                <input type="text" id="liter" th:value="${liter}" >
+                <input type="text" id="liter" th:value="${liter}" autofocus>
                 <span class="input-group-text">公升</span>
             </div>
 
             <label>方案價格</label>
             <div class="input-group mb-3">
-                <span class="input-group-text">$</span> <input type="text" id="planPrice" th:value="${planPrice}" >
+                <span class="input-group-text">$</span> <input type="text" id="planPrice" th:value="${planPrice.intValue()}" >
             </div>
 
             <label>單筆案件報酬</label>
             <div class="input-group mb-3">
-                <span class="input-group-text">$</span> <input type="text" id="planPricePerCase" th:value="${planPricePerCase}" >
+                <span class="input-group-text">$</span> <input type="text" id="planPricePerCase" th:value="${planPricePerCase.intValue()}" >
             </div>
 
 			<label>每週收取次數</label>
@@ -183,14 +178,10 @@
         </main>
     </div>
 
-    <div class="footerPage"></div>
-
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<!-- 	<script th:src="@{/js/jquery.dataTables.min.js}"></script> -->
     <script th:src="@{/js/plan.js}"></script>
     <script>
-        $(".sidebarPage").load("backendsidebar.html");
         // 上架日期
         var today = new Date();
         let start = new Date((today.setDate(today.getDate()))).toLocaleDateString('fr-ca');

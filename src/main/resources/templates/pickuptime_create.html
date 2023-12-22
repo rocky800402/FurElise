@@ -127,21 +127,13 @@
 </head>
 
 <body>
-    <div class="headerPage"></div>
-
     <div class="container">
-        <div class="sidebarPage"></div>
         <main class="content">
             <p class="p_title">新增收取時段</p>
 
-            <!-- <label>訂購期間ID</label>
-            <div class="input-group mb-3">
-                <input type="text" id="timeID" readonly style="background-color:lightgrey">
-            </div> -->
-
             <label>收取時段</label>
             <div class="input-group mb-3">
-                <span><input type="text" id="timeRange" autofocus></span>
+                <span><input type="text" placeholder="如00:00-23:59" id="timeRange" autofocus></span>
             </div>
 
             <div class="row justify-content-start">
@@ -158,10 +150,6 @@
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/pickuptime.js}"></script>
-    <script>
-        $(".sidebarPage").load("backendsidebar.html");
-        // console.log($("button#task_add"));
-    </script>
     
 </body>
 

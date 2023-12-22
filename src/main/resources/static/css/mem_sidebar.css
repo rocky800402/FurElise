@@ -1,0 +1,67 @@
+/* sidebar */
+.mb_sidebar {
+    background-color: #fff; /* 侧边栏底色白色 */
+    color: #a5a5a5; /* 设置文字颜色为 #A5A5A5 */
+    padding: 10px;
+    border-right: 1px solid #ccc; /* 添加灰色分隔线 */
+    width: 250px;
+    height: 100%;
+    /* position: fixed; */
+  }
+  
+  .mb_sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .mb_sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .mb_sidebar li{
+    padding-left: 15px;
+    margin-top: 5px;
+  }
+  
+  .mb_sidebar hr{
+    margin: 6px;
+  }
+   
+  .mb_sidebar a {
+    text-decoration: none;
+  }
+  
+  .mb_sidebar a:link{
+    color: #a5a5a5;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .mb_sidebar a:visited{
+    color: #a5a5a5;
+    text-decoration: underline;
+  }
+  .mb_mem_name_img{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    
+  }
+
+  .mb_mem_img{
+    max-width: 50%;
+    -webkit-clip-path:circle(50% at 50% 50%);
+  }
+
+  .mb_mem_name{
+    font-size: 18px;
+    padding-top: 20%; 
+    padding-left: 15px;   
+  }
+
+  .mb_tag{
+    border-right:5px solid #A7D87D;
+  }
+
+  

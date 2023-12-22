@@ -3,6 +3,7 @@ package com.furelise.planord.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -26,18 +27,17 @@ public class PlanOrdDTOCon {
 
 	// add data, for ajax using
 	@PostMapping("/adding")
-	public PlanOrd addPlanOrd(@RequestBody PlanOrdDTO dto, HttpServletRequest req) {
+	public PlanOrd addPlanOrd(@Valid @RequestBody PlanOrdDTO dto, HttpServletRequest req) {
 
 		Mem mem = (Mem)(req.getSession().getAttribute("account"));
 //		Integer memID = mem.getMemID();
 		//測試用寫死
 		Integer memID = 110003;
-
-		return planOrdSvc.addPlanOrd(dto, memID);
+		return planOrdSvc.addPlanOrd(dto, memID); //回傳新增的方案訂單物件
 	}
 
 	// list data, for ajax using
-	@CrossOrigin("*")
+	
 	@GetMapping("/finding")
 	public List<PlanOrdDTO> getAllPlanOrds() {
 		return planOrdSvc.getPlanOrdInfo();

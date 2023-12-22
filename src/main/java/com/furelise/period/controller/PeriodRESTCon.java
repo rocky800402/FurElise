@@ -30,7 +30,7 @@ public class PeriodRESTCon {
 	PeriodService periodSvc;
 
 	//驗證
-//	@CrossOrigin("*")
+//	
 //	@PostMapping("/adding")
 //	public Period addPeriod(@RequestBody Period req, BindingResult result) {
 //		if (!result.hasErrors())
@@ -39,33 +39,33 @@ public class PeriodRESTCon {
 //			return null;
 //	}
 
-	@CrossOrigin("*")
+	
 	@PostMapping("/adding")
-	public Period addPeriod(@RequestBody Period req) {
+	public Period addPeriod(@Valid @RequestBody Period req) {
 		return periodSvc.addPeriod(req);
 	}
 
-	@CrossOrigin("*")
+	
 	@PutMapping("/updating")
-	public Period updatePeriod(@RequestBody Period req) {
+	public Period updatePeriod(@Valid @RequestBody Period req) {
 		return periodSvc.updatePeriod(req);
 	}
 
-	@CrossOrigin("*")
+	
 	@GetMapping("/all")
 	public List<Period> getAllPeriods() {
 		List<Period> periodList = periodSvc.getAllPeriod();
 		return periodList;
 	}
 
-	@CrossOrigin("*")
+	
 	@DeleteMapping("/deleting")
 	public String deletePeriod(@RequestBody Period req) {
-		periodSvc.deletePeriod(req.getPeriodID());
-		return "deleted seccessfully";
+		String result = periodSvc.deletePeriod(req.getPeriodID());
+		return result;
 	}
 
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("{periodID}")
 //	public Period getPeriodById(@PathVariable("periodID") Integer periodID) {
 //		return periodSvc.getPeriodById(periodID);

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -30,19 +31,22 @@ public class Period implements Serializable{
     @Column(name = "periodID", updatable = false )
     private Integer periodID;
     
-    @Min(1)
+    @Min(value=1, message="請填正整數")
     @NotNull
     @Column(name = "planPeriod")
     private Integer planPeriod;
     
-//    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
-//    @OrderBy("periodID")
-//    private Set<PlanOrd> planOrds;
-    
-   
-
     public Period() {
         super();
+    }
+    
+    public Period(Integer planPeriod) {
+    	this.planPeriod = planPeriod;
+    }
+    
+    public Period(Integer periodID, Integer planPeriod) {
+    	this.periodID = periodID;
+    	this.planPeriod = planPeriod;
     }
 
     

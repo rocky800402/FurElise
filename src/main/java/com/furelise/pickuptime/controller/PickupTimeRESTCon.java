@@ -2,6 +2,8 @@ package com.furelise.pickuptime.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,42 +28,32 @@ public class PickupTimeRESTCon {
 	@Autowired
 	PickupTimeService pickupTimeSvc;
 
-	@CrossOrigin("*")
+	
 	@PostMapping("/adding")
-	public PickupTime addPickupTime(@RequestBody PickupTime req) {
+	public PickupTime addPickupTime(@Valid @RequestBody PickupTime req) {
 		return pickupTimeSvc.addPickupTime(req);
 	}
 
-	@CrossOrigin("*")
+	
 	@PutMapping("/updating")
-	public PickupTime updatePickupTime(@RequestBody PickupTime req) {
+	public PickupTime updatePickupTime(@Valid @RequestBody PickupTime req) {
 		return pickupTimeSvc.updatePickupTime(req);
 	}
 	
-//	@CrossOrigin("*")
-//	@RequestMapping("/update")
-//	public PickupTime updatePickupTime() {
-//		PickupTime pickupTime = new PickupTime();
-//		pickupTime.setTimeID(240011);
-//		pickupTime.setTimeRange("08:00-12:00");
-//		return pickupTimeSvc.updatePickupTime(pickupTime);
-//	}
-	
-	@CrossOrigin("*")
 	@DeleteMapping("deleting")
 	public String deletePickupTime(@RequestBody PickupTime req) {
-		pickupTimeSvc.deletePickupTime(req.getTimeID());
-		return "deleted seccessfully";
+		String result = pickupTimeSvc.deletePickupTime(req.getTimeID());
+		return result;
 	}
 	
-	@CrossOrigin("*")
+	
 	@GetMapping("/all")
 	public List<PickupTime> getAllPickupTimes(){
 		List<PickupTime> pickupTimeList = pickupTimeSvc.getAllPickupTime();
 		return pickupTimeList;
 	}
 	
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("{timeID}")
 //	// 參數名和@PathVariable名一樣時可省略
 //	public PickupTime getPickupTimeById(@PathVariable("timeID") Integer timeID) {

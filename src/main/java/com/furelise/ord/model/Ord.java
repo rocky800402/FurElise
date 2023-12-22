@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -85,7 +86,7 @@ public class Ord implements Serializable{
 //	private Mem mem;
 	
 	@OneToMany(mappedBy = "ordID", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<OrdDetail> ordDetails;
+	private List<OrdDetail> ordDetails;
 
 
 //	public Set<OrdDetail> getOrdDetails() {
@@ -103,7 +104,7 @@ public class Ord implements Serializable{
 
 	public Ord(Timestamp ordDate, Integer memID, Integer payment, Integer deliver, String address, String cityCode,
 			Date deliverDate, BigDecimal sum, BigDecimal shipping, BigDecimal total, Integer saleID, Integer ordStatus,
-			Date arrival, Set<OrdDetail> ordDetails) {
+			Date arrival, List<OrdDetail> ordDetails) {
 		super();
 		this.ordDate = ordDate;
 		this.memID = memID;

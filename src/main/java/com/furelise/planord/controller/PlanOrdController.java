@@ -156,19 +156,11 @@ public class PlanOrdController {
 //	}
 
 //	// amend data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@PutMapping("/updating")
 //	@ResponseBody
 //	public PlanOrd updatePlanOrd(@RequestBody PlanOrd req) {
 //		return planOrdSvc.updatePlanOrd(req);
-//	}
-
-//	// 不做刪除功能
-//	@DeleteMapping("/deleting")
-//	@ResponseBody
-//	public String deletePlanOrd(@RequestBody PlanOrd req) {
-//		planOrdSvc.deletePlanOrd(req.getPlanID());
-//		return "deleted seccessfully";
 //	}
 
 //	// 單筆查詢

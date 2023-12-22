@@ -31,7 +31,6 @@ public class PickupWayCon {
 	}
 
 	// list data, for ajax using
-	@CrossOrigin("*")
 	@GetMapping("/all")
 	@ResponseBody
 	public List<PickupWay> getAllPickupWays() {
@@ -72,14 +71,10 @@ public class PickupWayCon {
 	@DeleteMapping("/deleting")
 	@ResponseBody
 	public String deletePickupWay(@RequestBody PickupWay req) {
-		pickupWaySvc.deletePickupWay(req.getWayID());
-		return "deleted seccessfully";
+		String result = pickupWaySvc.deletePickupWay(req.getWayID());
+		return result;
 	}
 
-//	// return view
-//	@GetMapping("/update") //用("/{wayID}")畫面大失控
-//	public String updatePickupWay() {
-//		return "pickupway_update";
-//	}
+
 
 }

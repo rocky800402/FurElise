@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>city_create新增郵遞區號</title>
+<title>新增郵遞區號</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
@@ -137,11 +137,8 @@
 </head>
 
 <body>
-	<div class="headerPage"></div>
-
 	<div class="container">
 
-		<div class="sidebarPage"></div>
 		<main class="content">
 			<p class="p_title">新增郵遞區號</p>
 
@@ -149,8 +146,9 @@
 				method="post">
 				<label>郵遞區號</label>
 				<div class="input-group mb-3">
-					<input placeholder="必填，3位數字 ex:999" type="text" th:field="*{cityCode}" onclick="hideContent('cityCode.errors');" required/>
+					<input placeholder="必填，3位數字 ex:999" type="text" th:field="*{cityCode}" onclick="hideContent('cityCode.errors');" autofocus required/>
 					<span  th:if="${#fields.hasErrors('cityCode')}" th:errors="*{cityCode}" class="error" id="cityCode.errors"></span>
+					<span class="error" th:utext="${errorMessage}">${errorMessage}</span>
 				</div>
 
 				<label>區域</label>
@@ -172,15 +170,11 @@
 	</main>
 	</div>
 
-	<div class="footerPage"></div>
-
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
 	<script>
 	
-		$(".sidebarPage").load("./backendsidebar.html");
-		
 		//清除提示訊息
 		function hideContent(d) {
 		     document.getElementById(d).style.display = "none";

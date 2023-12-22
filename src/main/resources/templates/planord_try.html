@@ -10,7 +10,6 @@
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
-<!--     <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}"> -->
 
     <style>
         .sl_btn_outline {
@@ -127,7 +126,25 @@
 
 <body>
 
-    <div class="headerPage"></div>
+    <div>
+    <header class="header">
+	    <div class="header-content">
+	        <div class="logo">
+	            <img th:src="@{/images/fuer_elise.svg}" alt="Your Logo" width="500">
+	        </div>
+	        <nav class="navigation">
+	            <ul>
+	                <li><a href="#">方案介紹</a></li>
+	                <li><a href="#">購物商城</a></li>
+	                <li><a href="#">聯絡我們</a></li>
+	                <li><a href="#">成為收取夥伴</a></li>
+	                <li><a href="#"><img th:src="@{/images/shopping_cart.svg}" alt="shopping cart"></a></li>
+	                <li><a href="#">登入/註冊(已登入狀態要改成會員中心)</a></li>
+	            </ul>
+	        </nav>
+	    </div>
+	</header>
+    </div>
 
         <div class="container">
         <main class="content" style="width: 30%;">
@@ -187,7 +204,38 @@
         </main>
     </div>
 
-    <div class="footerPage"></div>
+    <div>
+    	<footer class="footer">
+		    <div class="footer-content">
+		        <div class="footer-section">
+		            <h3>網站導覽</h3>
+		            <ul>
+		                <li><a href="#">方案介紹</a></li>
+		                <li><a href="#">購物商城</a></li>
+		                <li><a href="#">聯絡我們</a></li>
+		                <li><a href="#">成為收取夥伴</a></li>
+		            </ul>
+		        </div>
+		        <div class="footer-section">
+		            <h3>關注Für Elise</h3>
+		            <a href="#"><img th:src="@{/images/entypo-social_fb-with-circle.svg}" alt="facebook Logo"></a>
+		            <a href="#"><img th:src="@{/images/entypo-social_instagram-with-circle.svg}" alt="instagram Logo"></a>
+		            <a href="#"><img th:src="@{/images/entypo-social_youtube-with-circle.svg}" alt="youtube Logo"></a>
+		        </div>
+		
+		
+		        <div class="footer-section">
+		            <h3>聯繫我們</h3>
+		            <p>
+		                給愛麗絲有限公司<br>
+		                統一編號：90355170<br>
+		                信箱：test101@elise.com.tw<br>
+		                104台北市中山區南京東路三段219號5樓
+		            </p>
+		        </div>
+		    </div>
+		</footer>
+    </div>
 
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
@@ -195,10 +243,6 @@
     <script th:src="@{/js/planordshop.js}"></script>
 
     <script>
-        $(".headerPage").load("header.html");
-        $(".footerPage").load("footer.html");
-
-
         $(document).ready(function () {
 
             planName_selector();

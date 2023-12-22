@@ -10,6 +10,11 @@
         * {
             box-sizing: border-box;
         }
+
+        .hidden {
+            display: none;
+        }
+
         .btn-group {
             display: flex;
             justify-content: center;
@@ -172,6 +177,8 @@
 <body>
 <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+
 <div class="headerPage"></div>
 
 <div class="hc_headerBox">
@@ -184,51 +191,51 @@
         <label class="btn btn-outline-primary" for="btnradio1">會員登入</label>
 
         <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio3" style="border-left: none; border-right: none;">夥伴登入</label>
+        <label class="btn btn-outline-primary" for="btnradio3"
+               style="border-left: none; border-right: none;">夥伴登入</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+        	   th:checked="${#strings.contains(#request.getRequestURI(), '/register') and not #strings.isEmpty(errMsgs)}">
         <label class="btn btn-outline-primary" for="btnradio2">註冊</label>
     </div>
     <br>
     <br>
     <!-- member login -->
-    <form action="memloginhandler" method="post">
-        <div class="hc_login">
-            <div th:if="${loginFailed}">
-                <p style="color: red;">登入失敗，請重新登入。</p>
-            </div>
-            <div>
-                <p>使用者帳戶</p>
-                <input type="text" placeholder="電子信箱" id="hc_memUsername" name="memAccount">
-                <p>密碼</p>
-                <input type="password" id="hc_memPassword" name="memPassword">
-                <input type="hidden" name="action" value="memLogin">
-            </div>
-            <div class="hc_rmbMe">
-                <div class="hc_rmbMe_box">
-                    <input type="checkbox" id="hc_rmbMe_btn">
-                    <label for="hc_rmbMe_btn">記住我</label>
-                </div>
-                <button id="hc_forgetPW_btn">忘記密碼？</button>
-            </div>
-            <div class="hc_login_btn">
-                <button type="submit" class="btn btn-primary btn-lg" id="hc_memlogin_btn">登入</button><br>
-                <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>
-            </div>
+    <div class="hc_login">
+        <div id="member_error" class="hidden">
+            <p style="color: red;">登入失敗，請重新登入。</p>
         </div>
-    </form>
+        <div>
+            <p>使用者帳戶</p>
+            <input type="email" placeholder="電子信箱" id="hc_memUsername" name="memAccount">
+            <p>密碼</p>
+            <input type="password" id="hc_memPassword" name="memPassword">
+            <input type="hidden" name="action" value="memLogin">
+        </div>
+        <div class="hc_rmbMe">
+            <div class="hc_rmbMe_box">
+                <input type="checkbox" id="hc_rmbMe_btn">
+                <label for="hc_rmbMe_btn">記住我</label>
+            </div>
+            <button id="hc_forgetPW_btn">忘記密碼？</button>
+        </div>
+        <div class="hc_login_btn">
+            <button type="submit" class="btn btn-primary btn-lg" id="hc_memlogin_btn">登入</button>
+            <br>
+            <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>
+        </div>
+    </div>
     <!-- emp login -->
-    <form action="emploginhandler" method="post">
         <div class="hc_login_emp" style="display: none;">
-            <div th:if="${loginFailed}">
+            <div id="emp_error" class="hidden">
                 <p style="color: red;">登入失敗，請重新登入。</p>
             </div>
             <div>
                 <p>使用者帳戶</p>
-                <input type="text" placeholder="電子信箱" name="empAccount">
+                <input type="text" placeholder="電子信箱" name="empAccount" id="hc_empUsername">
 
                 <p>密碼</p>
-                <input type="password" name="empPassword">
+                <input type="password" name="empPassword" id="hc_empPassword">
             </div>
             <div class="hc_rmbMe">
                 <div class="hc_rmbMe_box">
@@ -239,37 +246,71 @@
             </div>
 
             <div class="hc_login_btn">
-                <button type="submit" class="btn btn-primary btn-lg" id="hc_emplogin_btn">登入</button><br>
+                <button type="submit" class="btn btn-primary btn-lg" id="hc_emplogin_btn">登入</button>
+                <br>
+            </div>
+        </div>
+
+
+	<form action="forgetpw" method="post">
+	    <div class="hc_forgetPW" style="display: none;">
+	        <p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
+	        <input type="email" placeholder="請輸入Email" name="memForgetPW">
+	        <input type="email" placeholder="請輸入Email" name="empForgetPW">
+	        
+	        <div th:if="${memMsgs != null}">
+	        	<p th:text="${memMsgs}" style="color:red;"></p>
+	        	<div id="forgetMemMsgs"></div>
+	        </div>
+	        <div th:if="${empMsgs != null}">
+	        	<p th:text="${empMsgs}" style="color:red;"></p>
+	        	<div id="forgetEmpMsgs"></div>
+	        </div>
+	        <div th:if="${resetMsgs != null}">
+	        	<p th:text="${resetMsgs}" style="color:red;"></p>
+	        	<div id="forgetpwMsgs"></div>
+	        </div>
+	        
+	        <div class="hc_login_btn">
+	            <button type="submit" class="btn btn-primary btn-lg">重設密碼</button>
+	            <br>
+	        </div>
+	    </div>
+	</form>
+
+	<!-- new member register -->
+	    <!-- 錯誤表列, FIXME: 需要調整  -->
+	    <form action="register" method="post">
+        <div class="hc_register" style="display: none;">
+	        <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
+			    <span style="color:red; font-size: 20px">請修正以下錯誤:</span>
+			    <ul>
+			        <li th:each="message : ${errMsgs}" style="color:red; font-size: 20px" th:text="${message}"></li>
+			    </ul>
+		    </div>
+            <!-- <p>使用者名稱</p>
+            <input type="text" name="rUsername"> -->
+            <p>電子信箱</p>
+            <input type="email" name="rEmail">
+            <p>姓名</p>
+            <input type="text" name="rName">
+            <p>生日</p>
+            <input type="date" name="rBirth">
+            <p>電話</p>
+            <input type="text" name="rTel" placeholder="僅輸入數字即可，例：0227120589">
+            <p>密碼</p>
+            <input type="password" class="hc_register_inputHalf" name="rPassword">
+            <p>確認密碼</p>
+            <input type="password" class="hc_register_inputHalf" name="rConfirmPassword">
+
+            <div class="hc_login_btn">
+                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 70px;">註冊</button><br>
+                <input type="hidden" name="action" value="register">
+                <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>
             </div>
         </div>
     </form>
 
-    <div class="hc_forgetPW" style="display: none;">
-        <p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
-        <input type="text" placeholder="請輸入Email" name="memForgetPW">
-        <input type="text" placeholder="請輸入Email" name="empForgetPW">
-        <div class="hc_login_btn">
-            <button type="submit" class="btn btn-primary btn-lg">重設密碼</button><br>
-        </div>
-    </div>
-    <!-- new member register -->
-    <!-- 錯誤表列, FIXME: 需要調整  -->
-    <!--    <form action="registerservlet" method="post" th:object="${newMem}" enctype="multipart/form-data">-->
-    <!--        <div class="hc_register" style="display: none;">-->
-    <!--            <div th:if="${#lists.isNotEmpty(errMsgs)}">-->
-    <!--                <span style="color:red; font-size: 20px">請修正以下錯誤:</span>-->
-    <!--                <ul>-->
-    <!--                    <li th:each="message : ${errMsgs}" style="color:red; font-size: 20px" th:text="${message}"></li>-->
-    <!--                </ul>-->
-    <!--            </div>-->
-
-    <!--            <div class="hc_login_btn">-->
-    <!--                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 70px;">註冊</button><br>-->
-    <!--                <input type="hidden" name="action" value="register">-->
-    <!--                <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </form>-->
 
     <script>
         function init(){
@@ -328,9 +369,85 @@
                     behavior: 'smooth' // 使用平滑滾動效果
                 });
             });
+
+            var btnradio2 = document.getElementById('btnradio2');
+            if (btnradio2.checked) {
+            	//會員登入收起
+                $(".hc_login").hide();
+                $(".hc_forgetPW").hide();
+                //夥伴登入收起
+                $(".hc_login_emp").hide();
+                $(".hc_forgetPW").hide();
+                //註冊展開
+                $(".hc_register").show();
+            } 
+            
+            var forgetMemMsgs = document.getElementById('forgetMemMsgs');
+            if (forgetMemMsgs !== null) {
+            	$(".hc_forgetPW").show();
+                $("input[name='memForgetPW']").show();
+                $("input[name='empForgetPW']").hide();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            }
+            
+            var forgetEmpMsgs = document.getElementById('forgetEmpMsgs');
+            if (forgetEmpMsgs !== null) {
+            	$(".hc_forgetPW").show();
+                $("input[name='empForgetPW']").show();
+                $("input[name='memForgetPW']").hide();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            }
+            
+            $("#hc_memlogin_btn").on("click", function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: `${API_PATH}/auth/login/mem`,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        email: $("#hc_memUsername").val(),
+                        password: $("#hc_memPassword").val()
+                    }),
+                    success: (data) => {
+                        console.log('login success')
+                         window.location.href = `${APP_BASE_URL}/member_home_alter/${data.memID}`;
+                    },
+                    error: () => {
+                     $("#member_error").removeClass("hidden");
+                    }
+                });
+
+            });
+
+
+            $("#hc_emplogin_btn").on("click", function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: `${API_PATH}/auth/login/emp`,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        email: $("#hc_empUsername").val(),
+                        password: $("#hc_empPassword").val()
+                    }),
+                    success: (data) => {
+                        console.log('login success')
+                         window.location.href = `${APP_BASE_URL}/emp_home_alter/${data.empID}`;
+                    },
+                    error: () => {
+                     $("#emp_error").removeClass("hidden");
+                    }
+                });
+
+            });
+
         };
-
-
 
         window.addEventListener("load", init);
     </script>

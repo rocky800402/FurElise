@@ -20,7 +20,7 @@ import java.util.List;
 //	Mem mem = new Mem();
 
 //	// add data, for ajax using
-//	@CrossOrigin("*")
+//	
 //	@PostMapping()
 //	public PlanOrd addPlanOrd(@RequestBody PlanOrd req) {
 ////	驗證使用者是否登入
@@ -31,7 +31,7 @@ import java.util.List;
 //	}
 
 //	不做刪除功能
-//	@CrossOrigin("*")
+//	
 //	@DeleteMapping("deleting")
 //	public String deletePlanOrd(@RequestBody PlanOrd req) {
 //		planOrdSvc.deletePlanOrd(req.getPlanID());
@@ -39,7 +39,7 @@ import java.util.List;
 //	}
 
 	
-//	@CrossOrigin("*")
+//	
 //	@GetMapping("/{planOrdID}")
 //	public PlanOrd getPlanOrdById(@PathVariable Integer planOrdID) {
 //		return planOrdSvc.getPlanOrdById(planOrdID);

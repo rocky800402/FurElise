@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 案件管理頁面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員中心-方案管理</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/emp_sidebar.css}">
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/jack_caseManagement.css}">
+</head>
+
+<body>
+    <div class="headerPage"></div>
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <div style="max-width: 1200px; display: flex;">
+            <div class="empSidebarPage"></div>
+            <!-- empsidebar -->
+            <div style="width: 950PX; padding: 10px;">
+
+<!--                <div class="jack_container">-->
+<!--                    <main class="content">-->
+<!--                        <p class="jack_section_title">進行中案件</p>-->
+<!--                        <table id="example" class="display" style="width:100%">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <th>案件編號</th>-->
+<!--                                    <th>收取時間</th>-->
+<!--                                    <th>地點</th>-->
+<!--                                    <th>案件資訊</th>-->
+<!--                                    <th>案件狀況</th>-->
+<!--                                    <th>是否棄單</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr>-->
+<!--                                    <td>001</td>-->
+<!--                                    <td>2023/10/12</td>-->
+<!--                                    <td>台北市中山區</td>-->
+<!--                                    <td><a class="jack_information">資訊</a></td>-->
+<!--                                    <td></td>-->
+<!--                                    <td>-->
+<!--                                        <button class="jack_button_accept">接單</button>-->
+<!--                                        <button class="jack_button_reject">拒單</button>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </main>-->
+<!--                </div>-->
+
+<!--                <div class="jack_container">-->
+<!--                    <main class="content">-->
+<!--                        &lt;!&ndash; <div class="jack_section"> &ndash;&gt;-->
+<!--                            <div class="jack_section_title">已完成案件</div>-->
+<!--                            <table id="example1" class="display" style="width:100%">-->
+
+<!--                                <button type="button" class="jack_calendar" id="datepickerButton">選擇日期</button>-->
+
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th>案件編號</th>-->
+<!--                                        <th>收取時間</th>-->
+<!--                                        <th>地點</th>-->
+<!--                                        <th>收入</th>-->
+<!--                                        <th>案件資訊</th>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                    <tr>-->
+<!--                                        <td>A000002</td>-->
+<!--                                        <td>2023/10/12</td>-->
+<!--                                        <td>台北市中山區</td>-->
+<!--                                        <td>60</td>-->
+<!--                                        <td><a class="jack_information">資訊</a></td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        &lt;!&ndash; </div> &ndash;&gt;-->
+<!--                    </main>-->
+<!--                </div>-->
+                <div class="jack_container">
+                    <main class="content">
+                        <p class="jack_section_title">進行中案件</p>
+                        <table id="example" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>案件編號</th>
+                                <th>收取時間</th>
+                                <th>地點</th>
+                                <th>案件資訊</th>
+                                <th>案件狀況</th>
+                                <th>是否棄單</th>
+                            </tr>
+                            </thead>
+                            <tbody id="inProgressCasesBody">
+                            <!-- 数据将在这里动态添加 -->
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+
+                <!-- 已完成案件表格 -->
+                <div class="jack_container">
+                    <main class="content">
+                        <div class="jack_section_title">已完成案件</div>
+                        <table id="example1" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>案件編號</th>
+                                <th>收取時間</th>
+                                <th>地點</th>
+                                <th>收入</th>
+                                <th>案件資訊</th>
+                            </tr>
+                            </thead>
+                            <tbody id="completedCasesBody">
+                            <!-- 数据将在这里动态添加 -->
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footerPage"></div>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script th:src="@{/js/jack_caseManagement.js}"></script>
+
+    <script>
+        $(".headerPage").load("/header.html");
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("empSidebar.html");//
+
+
+        $(document).ready(function() {
+            // 获取进行中案件数据
+            $.ajax({
+                url: '/estabcasemanage/getEmpEstabCase',
+                method: 'GET',
+                data: { empID: yourEmpID, estabCaseStatus: yourInProgressStatus },
+                success: function(data) {
+                    // 渲染进行中案件表格
+                    renderCaseTable('#example', data.estabCaseList, 'inProgress');
+                },
+                error: function(error) {
+                    console.error('Error fetching in-progress cases:', error);
+                }
+            });
+
+            // 获取已完成案件数据
+            $.ajax({
+                url: '/estabcasemanage/getEmpEstabCase',
+                method: 'GET',
+                data: { empID: yourEmpID, estabCaseStatus: yourCompletedStatus },
+                success: function(data) {
+                    // 渲染已完成案件表格
+                    renderCaseTable('#example1', data.estabCaseList, 'completed');
+                },
+                error: function(error) {
+                    console.error('Error fetching completed cases:', error);
+                }
+            });
+
+            function renderCaseTable(tableId, data, type) {
+                var tableBody = $('#' + type + 'CasesBody');
+
+                // 清空表格内容
+                tableBody.empty();
+
+                // 动态添加数据
+                $.each(data, function(index, caseData) {
+                    var row = '<tr>';
+                    row += '<td>' + caseData.estabCaseID + '</td>';
+                    row += '<td>' + caseData.estabCaseDate + '</td>';
+                    row += '<td>' + caseData.cityName + '</td>';
+                    // 其他字段的渲染
+
+                    if (type === 'inProgress') {
+                        row += '<td><a class="jack_information" href="#">資訊</a></td>';
+                        row += '<td></td>';
+                        row += '<td><button class="jack_button_accept">接單</button><button class="jack_button_reject">拒單</button></td>';
+                    } else if (type === 'completed') {
+                        row += '<td>' + caseData.income + '</td>';
+                        row += '<td><a class="jack_information" href="#">資訊</a></td>';
+                    }
+
+                    row += '</tr>';
+                    tableBody.append(row);
+                });
+
+                // 初始化DataTable，如果需要的话
+                $(tableId).DataTable();
+            }
+        });
+    </script>
+</body>
+
+</html>

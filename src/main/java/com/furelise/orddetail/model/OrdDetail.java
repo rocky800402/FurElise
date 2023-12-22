@@ -60,6 +60,17 @@ public class OrdDetail implements Serializable{
 	public OrdDetail() {
 		super();
 	}
+	
+	
+	public OrdDetail(Integer ordID, Integer pID, Integer detaQty, String feedback, Integer level, Timestamp fbTime) {
+		super();
+		this.ordID = ordID;
+		this.pID = pID;
+		this.detaQty = detaQty;
+		this.feedback = feedback;
+		this.level = level;
+		this.fbTime = fbTime;
+	}
 
 	
 }

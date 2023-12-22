@@ -2,6 +2,7 @@ package com.furelise.exception.handler;
 
 
 import com.furelise.common.model.ErrorMessageVO;
+import com.furelise.exception.NumberOfModificationsException;
 import com.furelise.exception.UnauthorizedException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +44,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public ErrorMessageVO handleUnauthorizedException(UnauthorizedException e) {
+        return new ErrorMessageVO(e.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberOfModificationsException.class)
+    public  ErrorMessageVO handleNumberOfModificationsException(NumberOfModificationsException e){
         return new ErrorMessageVO(e.getMessage());
     }
 
@@ -97,6 +106,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("{ \"message\": \"" + e.getMessage() + "\"}", HttpStatus.BAD_REQUEST);
     }
 
+    //佳妮加的
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException e){
+        return new ResponseEntity<>("輸入格式不正確", HttpStatus.BAD_REQUEST);
+    }
 
 //	@ModelAttribute
 //	public void modelAttribute(Model model) {

@@ -1,0 +1,368 @@
+.mb_info_bar {
+    background-color: #EDEDED;
+    padding: 3px 0;
+    text-align: center;
+}
+
+.mb_mem_bar_text1 {
+    font-size: 26px;
+    max-height: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #151515;
+}
+
+.mb_mem_bar_text2 {
+    font-size: 16px;
+    max-height: 16px;
+    margin-bottom: 10px;
+    color: #151515;
+
+}
+
+.mb_mem_wrap {
+    width: 100%;
+}
+
+.mb_container {
+    width: 100%;
+    /* align-content: center;   */
+    display: flex;
+    justify-content: center;
+}
+
+.mb_plan_card {
+    box-shadow: 8px 5px 15px rgb(181, 181, 181);
+    padding: 15px;
+}
+
+.mb_content_main {
+    max-width: 950px;
+    padding: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.mb_flex {
+    max-width: 1200px;
+    display: flex;
+}
+
+.mb_plan_info {
+    display: flex;
+}
+
+.mb_plan_info p {
+    font-weight: 600;
+}
+
+.mb_plan_img_frame {
+    width: 20%;
+    height: 20%;
+    margin-right: 10px;
+    border: 1px;
+    border-color: gray;
+}
+
+.mb_plan_img {
+    width: 100%;
+}
+
+.mb_plan_info_body {
+    width: 80%;
+    margin-left: 10px;
+}
+
+.mb_plan_name {
+    font-size: 26px;
+
+    margin-bottom: 5px;
+
+}
+
+.mb_plan_ord_price {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.mb_plan_ord_price p {
+    margin-bottom: 0;
+}
+
+
+.mb_plan_monthly {
+    display: flex;
+}
+
+.mb_plan_time_range {
+    margin-bottom: 0;
+}
+
+.mb_plan_weekly {
+    display: flex;
+}
+
+.mb_plan_weekly p {
+    margin-right: 5px;
+    margin-bottom: 0;
+}
+
+.mb_off {
+    display: none;
+}
+
+.mb_mem_info {
+    padding-top: 10px;
+}
+
+.mb_mem_info p,
+.mb_mem_info p span {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.mb_mem_info_01 {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.mb_mem_info_02 {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.mb_mem_info_03 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: -15px;
+
+}
+
+.mb_btn_off {
+    display: none;
+}
+
+.mb_mem_info_off {
+    margin-top: 0px;
+}
+
+.mb_plan_Update_btn {
+    color: white;
+    background-color: #FE9A9A;
+
+}
+
+.mb_estab_case tr {
+    vertical-align: baseline;
+}
+
+.mb_estab_case p {
+    margin-bottom: 0;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.mb_estab_case_frame_01 {
+    border: 1px gray dashed;
+    padding: 10px;
+
+}
+
+.mb_estab_case_frame_02 {
+    border: 1px gray dashed;
+    padding: 10px;
+
+}
+
+.mb_mem_complaint_btn {
+    color: white;
+    background-color: #FE9A9A;
+
+}
+
+.mb_estab_case_level_btn {
+    color: white;
+    background-color: #A7D87D;
+    width: 90px;
+}
+
+.mb_estab_case_status_frame {
+    /* align-self:center; */
+}
+
+.mb_estab_case_status_3 {
+    width: 90px;
+    /* height: 38px; */
+    color: white;
+    background-color: #FE9A9A;
+    text-align: center
+}
+.mb_estab_case_status_1 {
+    width: 90px;
+    /* height: 38px; */
+    color: white;
+    background-color: #FFC2A0;
+    text-align: center
+}
+.mb_estab_case_status_2 {
+    width: 90px;
+    /* height: 38px; */
+    color: white;
+    background-color: #A7D87D;
+    text-align: center
+}
+
+.mb_plan_time_range_09_btn,
+.mb_plan_time_range_19_btn,
+.mb_plan_time_range_21_btn {
+    color: #A7D87D;
+    border-color: #A7D87D;
+}
+
+.mb_plan_time_btn_on {
+    color: white;
+    background-color: #A7D87D;
+}
+
+.mb_mon_btn,
+.mb_tue_btn,
+.mb_thu_btn,
+.mb_fri_btn,
+.mb_sat_btn {
+    color: #A7D87D;
+    border-color: #A7D87D;
+}
+
+.mb_plan_weekly_btn_on{
+    color: white;
+    background-color: #A7D87D;
+}
+
+.mb_confirm_btn{
+    color: white;
+    background-color: #A7D87D;
+    border-color:#A7D87D;
+    margin: 20px 40px 20px 0px;
+    width: 180px;
+}
+.mb_cancel_btn{
+    color: white;
+    background-color: #A5A5A5;
+    border-color:#A5A5A5;
+    margin: 20px 0px 20px 0px;
+    width: 180px;
+}
+/* 評價畫面 */
+.mb_estab_case_level_modal_footer{
+    justify-content: space-between;
+    border-top: 0; 
+    padding: 10px 0px;
+    
+}
+
+
+.mb_estab_case_level_cancel_btn{
+    width: 200px;
+    color: #A7D87D;
+    background-color: #ffffff;
+    border-color: #A7D87D;
+}
+
+.mb_estab_case_level_confirm_btn{
+    width: 200px;
+    color: #ffffff;
+    background-color: #A7D87D;
+    border-color: #A7D87D;
+}
+
+.mb_level_star{
+    width: 30px;
+    height: 30px;
+}
+
+.star.-on{
+    color: rgb(245, 219, 74);
+}
+
+.mb_star{
+    color:#D9D9D9;
+}
+
+div.star_block{
+    /* padding-top: 10px; */
+    margin: 0 90px;
+    display: flex;
+    justify-content: space-around;
+}
+label.mb_modal_label{
+    /* font-weight: 600; */
+    display: block;
+    padding: 2px 0px;
+}
+
+label.mb_mem_name{
+    /* font-weight: 600; */
+        padding: 25px 0px 10px 0px;
+}
+
+h5.mb_modal_title{
+    display: flex;
+    justify-content: space-around;
+    /* font-weight: 600; */
+    align-content: center;
+}
+div.mb_modal_header{
+    border-bottom: 0; 
+    padding:16px 22px 10px 22px;
+    
+}
+
+div.mb_modal_body{
+    padding-top: 1px;
+    padding: 0px 22px;
+}
+
+div.mb_modal_header_h5{
+    display:block;
+    width: 100%;
+}
+
+.mb_modal_body_div{
+    /* padding-bottom: 10px; */
+    margin-bottom: 0;
+}
+
+/* 申述畫面 */
+.mb_estab_case_complaint_cancel_btn{
+    width: 200px;
+    color: #A7D87D;
+    background-color: #ffffff;
+    border-color: #A7D87D;
+    margin: 0;
+}
+
+.mb_estab_case_complaint_confirm_btn{
+    width: 200px;
+    color: #ffffff;
+    background-color: #A7D87D;
+    border-color: #A7D87D;
+}
+
+.mb_disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.mb_hide{
+    display: none;
+}
+p{
+ margin-top:0px;
+}
+
