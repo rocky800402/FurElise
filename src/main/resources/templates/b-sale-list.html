@@ -1,29 +1,19 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.productclass.model.*"%>
-
-<%
-	ProductClassService pcSvc = new ProductClassService();
-    List<ProductClass> list = pcSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
-
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet"  href="${pageContext.request.contextPath}/css/header.css">
-    <link rel="stylesheet"  href="${pageContext.request.contextPath}/css/jquery.dataTables.min.css">
-    <link rel="stylesheet"  href="${pageContext.request.contextPath}/css/sl.css">
-    <link rel="stylesheet"  href="${pageContext.request.contextPath}/css/backend_sidebar.css">
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.dataTables.min.js"></script>
-    <title>商品類別管理</title>
+    <title>優惠管理</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/backend_sidebar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.min.css}">
+    
+    
+    
     <style>
         /* 查看詳情button */
         .sl_btn_chakan {
@@ -93,50 +83,66 @@
             color: #fff !important;
             /* background-color: #FFC2A0 !important; */
         }
+		.error{
+			color: red;
+			font-sizze: 20px;
+		}      
     </style>
 </head>
 
 <body>
-    <div class="headerPage"></div>
+    
 
     <div class="container">
         
         <div class="sidebarPage"></div>
         <main class="content">
             <div>
-                <p class="p_subtitle" style="float:left; margin-top:0;">商品類別</p>
-                <a href="b_productClass_add.jsp"><button type="button" class="sl_btn_chakan"
+                <p class="p_subtitle" style="float:left; margin-top:0;">優惠碼</p>
+                <a href="add"><button type="button" class="sl_btn_chakan"
                         style="float:right; margin-bottom: 20px;">新增</button></a>
             </div>
             <table id="example1" class="display" style="width:100%">
                 <thead>
-                    <tr>
-                        <th>商品類別ID</th>
-                        <th>商品類別名稱</th>
+                    <tr >
+                        <th>優惠碼ID</th>
+                        <th>優惠碼</th>
+                        <th>優惠開始日</th>
+                        <th>優惠結束日</th>
+                        <th>優惠條件</th>
+						<th>折抵金額</th>
 						<th>修改</th>
                     </tr>
                 </thead>
                 <tbody>
                     
-	<c:forEach var="productClass" items="${list}" >
-		
+	<th:block th:each = "sale : ${ saleList }">
 		<tr>
-			<td>${productClass.pClassID}</td>
-			<td>${productClass.pClassName}</td>
+			<td th:text=${sale.saleID}></td>
+			<td th:text=${sale.coupon}></td>
+			<td th:text=${sale.saleStart}></td>
+			<td th:text=${sale.saleEnd}></td>
+			<td th:text=${sale.disRequire}></td>
+			<td th:text=${sale.dis}></td>
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/productClass/pc.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" th:action="@{/sale/getone}" style="margin-bottom: 0px;">
+			     <input type="hidden" name="saleID"  th:value="${sale.saleID}">
 			     <input type="submit" value="修改" class="sl_sp_badge" style="background-color: #9ac972">
-			     <input type="hidden" name="pClassID"  value="${productClass.pClassID}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			  </FORM> 
 			</td>
+			
 		</tr>
-	</c:forEach>
+	</th:block>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>商品類別ID</th>
-                        <th>商品類別名稱</th>
+                        <th>優惠碼ID</th>
+                        <th>優惠碼</th>
+                        <th>優惠開始日</th>
+                        <th>優惠結束日</th>
+                        <th>優惠條件</th>
+						<th>折抵金額</th>
 						<th>修改</th>
                     </tr>
                 </tfoot>
@@ -147,7 +153,9 @@
 
     <div class="footerPage"></div>
 
-
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
     
     <script>
         new DataTable('#example1');
@@ -155,7 +163,7 @@
     <script>
         // $(".headerPage").load("header.html");
         // $(".footerPage").load("footer.html");
-          $(".sidebarPage").load("backendSidebar.html");
+          $(".sidebarPage").load("/backendSidebar.html");
     </script>
 </body>
 

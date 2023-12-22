@@ -1,13 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.productclass.model.*"%>
-
-<%
-ProductClass productClass = (ProductClass) request.getAttribute("productClass");
-%>
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -42,7 +34,7 @@ ProductClass productClass = (ProductClass) request.getAttribute("productClass");
 	--bs-btn-disabled-border-color: #9ac972;
 	--bs-btn-padding-x: 0.75rem;
 	--bs-btn-padding-y: 0.375rem;
-	--bs-btn-font-family:;
+	--bs-btn-font-family:
 	--bs-btn-font-size: 1rem;
 	--bs-btn-font-weight: 400;
 	--bs-btn-line-height: 1.5;
@@ -91,7 +83,7 @@ ProductClass productClass = (ProductClass) request.getAttribute("productClass");
 	--bs-btn-disabled-border-color: #9ac972;
 	--bs-btn-padding-x: 0.75rem;
 	--bs-btn-padding-y: 0.375rem;
-	--bs-btn-font-family:;
+	--bs-btn-font-family:
 	--bs-btn-font-size: 1rem;
 	--bs-btn-font-weight: 400;
 	--bs-btn-line-height: 1.5;

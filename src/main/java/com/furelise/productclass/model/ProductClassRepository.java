@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductClassRepository extends JpaRepository<ProductClass, Integer>{
-
+	
+	boolean  existsBypClassName(String pClassName);
 }

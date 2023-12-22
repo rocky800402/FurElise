@@ -3,6 +3,7 @@ package com.furelise.sale.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -12,13 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleDTO;
 import com.furelise.sale.model.SaleService;
 
-@RestController
+@Controller
 @RequestMapping("/sale")
 public class SaleController {
 
@@ -29,44 +29,57 @@ public class SaleController {
 	public String saleList(Model model) {
 		model.addAttribute("saleList", saleSvc.getAll());
 
-		return "b_sale_list";
+		return "b-sale-list";
 
 	}
 
 	@GetMapping("/add")
 	public String addSale(Model model) {
-		
+
 		model.addAttribute("sale", new Sale());
-		
-		return "b_sale_add";
+
+		return "b-sale-add";
 	}
-	
+
 	// 重複的coupon會停留在原畫面
 	@PostMapping("/add")
-	public String saleSubmit(@Valid Sale sale, BindingResult result, ModelMap model) {
+	public String saleSubmit(Sale sale, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return "b_sale_add";
+			return "b-sale-add";
+		} else {
+			boolean isPass = saleSvc.addSale(sale);
+			if (isPass) {
+				return "/all";
+			} else {
+				model.addAttribute("errorMsgs", "優惠代碼重複");
+				return "b-city-create";
+			}
 		}
-		System.out.println("coupon= " + sale.getCoupon());
-		return saleSvc.addSale(sale);
 	}
 
 	@PostMapping("/update")
 	public String updateSale(@Valid @ModelAttribute Sale sale, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return "b_sale_update";
+		if (result.hasErrors()) {
+			return "b-sale-update";
 		}
 		saleSvc.updateSale(sale);
-		return "all";
+		return "redirect:/sale/all";
 
 	}
-	
+
 	@PostMapping("/getone")
 	public String getOne(@RequestParam Integer saleID, Model model) {
 		Sale sale = saleSvc.getOneSale(saleID);
 		model.addAttribute("sale", sale);
 		System.out.print(sale);
-		return "b_sale_update";
+		return "b-sale-update";
+	}
+
+	@PostMapping("/coupon")
+	public String verifyCoupon(@RequestBody SaleDTO req) {
+
+		String result = saleSvc.verifyCoupon(req.getCoupon(), req.getTotal());
+		return result;
 	}
 	
 	@PostMapping("/coupon")
