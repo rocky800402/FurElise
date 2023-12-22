@@ -60,11 +60,11 @@ public class ProductClassController {
 	}
 
 	@PostMapping("/update")
-	public String updateProductClass(@Valid ProductClass proguctClass, BindingResult result, Model model) {
+	public String updateProductClass(@Valid ProductClass productClass, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "b-productClass-update";
 		} else {
-			boolean isPass = pcSvc.updateProductClass(proguctClass);
+			boolean isPass = pcSvc.updateProductClass(productClass);
 			if(isPass) {
 				return "redirect:/productclass/all";
 			} else {

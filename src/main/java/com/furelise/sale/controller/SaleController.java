@@ -53,7 +53,7 @@ public class SaleController {
         } else {
             boolean isPass = saleSvc.addSale(sale);
             if (isPass) {
-                return "/all";
+                return "redirect:/sale/all";
             } else {
                 model.addAttribute("errorMsgs", "優惠代碼重複");
                 return "b-sale-add";
@@ -63,12 +63,13 @@ public class SaleController {
 
     @PostMapping("/update")
     public String updateSale(@Valid @ModelAttribute Sale sale, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "b-sale-update";
-        }
-        saleSvc.updateSale(sale);
-        return "redirect:/sale/all";
-
+    	if(result.hasErrors()) {
+    		return "b-sale-update";
+    	} else {
+    		sale = saleSvc.updateSale(sale);
+    			return "redirect:/sale/all";
+    		
+    	}
     }
 
     @PostMapping("/getone")
