@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class ProductClassService {
 
@@ -26,13 +24,13 @@ public class ProductClassService {
 	}
 
 	public boolean updateProductClass(ProductClass productClass) {
-
 		boolean isPass = false;
 		if (!dao.existsBypClassName(productClass.getPClassName())) {
 			dao.save(productClass);
 			isPass = true;
 		}
 		return isPass;
+
 	}
 
 	public ProductClass getProductClassByID(Integer pClassID) {

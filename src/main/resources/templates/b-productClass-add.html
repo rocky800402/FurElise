@@ -130,6 +130,10 @@
 	color: #fff !important;
 	/* background-color: #FFC2A0 !important; */
 }
+.error{
+	color: red;
+	font-size: 20px;
+	}
     </style>
 </head>
 
@@ -142,29 +146,17 @@
         <main class="content">
             <p class="p_title">新增商品類別</p>
 
-            <form method="post" th:action="@{/city/add}" name="form1">
-            
-<!--             <div> -->
-<!-- 				<label>商品類別名稱:</label> -->
-<!-- 				<input type="text" th:field="*{PClassName}" onclick="hideContent('PClassName.errors');" /><br/> -->
-<!-- 				<span  th:if="${#fields.hasErrors('PClassName')}" th:errors="*{PClassName}" class="error" id="PClassName.errors"></span> -->
-<!-- 			</div> -->
+            <form method="post" th:action="@{/productclass/add}" th:object="${productClass}" name="form1">
 			
-                <table>
+			<label>商品類別名稱</label>
+				<input placeholder="必填" type="text" th:field="*{pClassName}" onclick="hideContent('pClassName.errors');" required/>
+				<span  th:if="${#fields.hasErrors('pClassName')}" th:errors="*{pClassName}" class="error" id="pClassName.errors"></span>
+				<br>
 
-                    <tr>
-                        <td>商品類別名稱:</td>
-                        <td><input placeholder="必填，只能填入中文" type="text" name="pClassName"
-                                th:value="${productClass != null ? productClass.pClassName : '請輸入商品類別名稱'}"
-                                size="45" /></td>
-                    </tr>
-
-                </table>
                 <br>
                 <div class="row justify-content-start">
                     <div class="col-4">
                         <button type="button" onclick="history.go(-1)" class="sl_btn_disable">回商品列表</button>
-                        <input type="hidden" th:name="action" th:value="add">
                         <button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button>
                     </div>
                 </div>

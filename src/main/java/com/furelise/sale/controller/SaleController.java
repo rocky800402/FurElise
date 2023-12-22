@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleDTO;
@@ -52,7 +53,7 @@ public class SaleController {
         } else {
             boolean isPass = saleSvc.addSale(sale);
             if (isPass) {
-                return "/all";
+                return "redirect:/sale/all";
             } else {
                 model.addAttribute("errorMsgs", "優惠代碼重複");
                 return "b-sale-add";
@@ -62,12 +63,13 @@ public class SaleController {
 
     @PostMapping("/update")
     public String updateSale(@Valid @ModelAttribute Sale sale, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "b-sale-update";
-        }
-        saleSvc.updateSale(sale);
-        return "redirect:/sale/all";
-
+    	if(result.hasErrors()) {
+    		return "b-sale-update";
+    	} else {
+    		sale = saleSvc.updateSale(sale);
+    			return "redirect:/sale/all";
+    		
+    	}
     }
 
     @PostMapping("/getone")
@@ -79,6 +81,7 @@ public class SaleController {
     }
 
     @PostMapping("/coupon")
+    @ResponseBody
     public String verifyCoupon(@RequestBody SaleDTO req) {
 
         String result = saleSvc.verifyCoupon(req.getCoupon(), req.getTotal());
