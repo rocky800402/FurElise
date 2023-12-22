@@ -43,7 +43,9 @@ public class SaleController {
 
 	// 重複的coupon會停留在原畫面
 	@PostMapping("/add")
-	public String saleSubmit(Sale sale, BindingResult result, ModelMap model) {
+	public String saleSubmit(@Valid Sale sale, BindingResult result, ModelMap model) {
+		System.out.println("getAllErrors");
+		result.getAllErrors().forEach(System.out::println);
 		if (result.hasErrors()) {
 			return "b-sale-add";
 		} else {
@@ -52,7 +54,7 @@ public class SaleController {
 				return "/all";
 			} else {
 				model.addAttribute("errorMsgs", "優惠代碼重複");
-				return "b-city-create";
+				return "b-sale-add";
 			}
 		}
 	}
