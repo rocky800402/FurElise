@@ -6,7 +6,7 @@
     <title>Für Elise-會員中心</title>
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
-    <link rel="stylesheet" href="./css/emp_sidebar.css" th:href="@{/css/mem_sidebar.css}">
+    <link rel="stylesheet" href="./css/emp_sidebar.css" th:href="@{/css/emp_sidebar.css}">
     <style>
         * {
             box-sizing: border-box;
@@ -78,97 +78,106 @@
         <div style="max-width: 1200px; display: flex;">
             <div class="empSidebarPage"></div>
             <!--  -->
-	<form th:action="@{update}" method="post" th:object="${emp}" enctype="multipart/form-data">
+	<form th:action="@{'/emp_home_alter/' + ${empID} + '/updateEmp'}" method="post" th:object="${emp}" enctype="multipart/form-data">
             <div style="width: 950px; padding: 20px; margin-left: 50px;">
             <!-- 寫在這裡 -->
+            	<div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
+				    <ul>
+				        <li th:each="message : ${errMsgs}" style="color:red; font-size: 16px;" th:text="${message}"></li>
+				    </ul>
+				</div>
+				<div th:if="${successMsg != null}" id="successMsg">
+	        		<p th:text="${successMsg}" style="color:red; font-size: 16px;"></p>
+	        	</div>	
                 <p style="display: inline-block;">姓名</p>
                 <p style="display: inline-block; margin-left: 250px;">手機號碼</p><br>
-                <input type="text" th:field="*{empName}" name="emp_name" style="width: 250px;">
-                <input type="text" th:field="*{empTel}" name="emp_tel" style="width: 250px; margin-left: 30px;">
+                <input type="text" th:field="*{empName}" name="empName" style="width: 250px;">
+                <input type="text" th:field="*{empTel}" name="empTel" style="width: 250px; margin-left: 30px;">
                 <p>身分證</p>
-                <input type="text" th:field="*{IDNumber}" name="emp_idNo">
+                <input type="text" th:field="*{IDNumber}" name="emp_idNo" disabled="disabled">
                 <p>出生年月日</p>
-                <input type="date" th:field="*${#dates.format(empBirth, 'yyyy/MM/dd')}" name="emp_birth">
+                <input type="date" th:field="*{empBirth}" name="emp_birth" disabled="disabled">
                 <p>電子郵件</p>
-                <input type="email" th:field="*{IDNumber}" name="emp_email"><br>
+                <input type="email" th:field="*{empMail}" name="emp_email" disabled="disabled"><br>
                 <p>工作時段</p>
                 <select name="emp_workTime">
-                    <option value="0" selected>請選擇工作時段</option>
-                    <option value="1">9:00-17:00</option>
-                    <option value="2">19:00-21:00</option>
-                    <option value="3">21:00-22:30</option>
+                    <option value="240000">請選擇工作時段</option>
+                    <option value="240001" th:selected="${emp.timeID eq 240001}">9:00-17:00</option>
+                    <option value="240002" th:selected="${emp.timeID eq 240002}">19:00-21:00</option>
+                    <option value="240003" th:selected="${emp.timeID eq 240003}">21:00-22:30</option>
                 </select>
                 <br><br>
                 <p>變更安排工作區域</p>
                 <span>第一順位：</span>
                 <select name="emp_workArea1">
-                    <option value="0" selected>請選擇工作區域</option>
-                    <option value="100">台北市中正區</option>
-                    <option value="103">台北市大同區</option>
-                    <option value="104">台北市中山區</option>
-                    <option value="105">台北市松山區</option>
-                    <option value="106">台北市大安區</option>
-                    <option value="108">台北市萬華區</option>
-                    <option value="110">台北市信義區</option>
-                    <option value="111">台北市士林區</option>
-                    <option value="112">台北市北投區</option>
-                    <option value="114">台北市內湖區</option>
-                    <option value="115">台北市南港區</option>
-                    <option value="116">台北市文山區</option>
+                    <option value="0">請選擇工作區域</option>
+                    <option value="100" th:selected="${emp.empArea1 eq 100}">台北市中正區</option>
+                    <option value="103" th:selected="${emp.empArea1 eq 103}">台北市大同區</option>
+                    <option value="104" th:selected="${emp.empArea1 eq 104}">台北市中山區</option>
+                    <option value="105" th:selected="${emp.empArea1 eq 105}">台北市松山區</option>
+                    <option value="106" th:selected="${emp.empArea1 eq 106}">台北市大安區</option>
+                    <option value="108" th:selected="${emp.empArea1 eq 108}">台北市萬華區</option>
+                    <option value="110" th:selected="${emp.empArea1 eq 110}">台北市信義區</option>
+                    <option value="111" th:selected="${emp.empArea1 eq 111}">台北市士林區</option>
+                    <option value="112" th:selected="${emp.empArea1 eq 112}">台北市北投區</option>
+                    <option value="114" th:selected="${emp.empArea1 eq 114}">台北市內湖區</option>
+                    <option value="115" th:selected="${emp.empArea1 eq 115}">台北市南港區</option>
+                    <option value="116" th:selected="${emp.empArea1 eq 116}">台北市文山區</option>
                 </select>
                 <br><br>
                 <span>第二順位：</span>
                 <select name="emp_workArea2">
                     <option value="0" selected>請選擇工作區域</option>
-                    <option value="100">台北市中正區</option>
-                    <option value="103">台北市大同區</option>
-                    <option value="104">台北市中山區</option>
-                    <option value="105">台北市松山區</option>
-                    <option value="106">台北市大安區</option>
-                    <option value="108">台北市萬華區</option>
-                    <option value="110">台北市信義區</option>
-                    <option value="111">台北市士林區</option>
-                    <option value="112">台北市北投區</option>
-                    <option value="114">台北市內湖區</option>
-                    <option value="115">台北市南港區</option>
-                    <option value="116">台北市文山區</option>
+                    <option value="100" th:selected="${emp.empArea2 eq 100}">台北市中正區</option>
+                    <option value="103" th:selected="${emp.empArea2 eq 103}">台北市大同區</option>
+                    <option value="104" th:selected="${emp.empArea2 eq 104}">台北市中山區</option>
+                    <option value="105" th:selected="${emp.empArea2 eq 105}">台北市松山區</option>
+                    <option value="106" th:selected="${emp.empArea2 eq 106}">台北市大安區</option>
+                    <option value="108" th:selected="${emp.empArea2 eq 108}">台北市萬華區</option>
+                    <option value="110" th:selected="${emp.empArea2 eq 110}">台北市信義區</option>
+                    <option value="111" th:selected="${emp.empArea2 eq 111}">台北市士林區</option>
+                    <option value="112" th:selected="${emp.empArea2 eq 112}">台北市北投區</option>
+                    <option value="114" th:selected="${emp.empArea2 eq 114}">台北市內湖區</option>
+                    <option value="115" th:selected="${emp.empArea2 eq 115}">台北市南港區</option>
+                    <option value="116" th:selected="${emp.empArea2 eq 116}">台北市文山區</option>
                 </select>
                 <br><br>
                 <span>第三順位：</span>
                 <select name="emp_workArea3">
                     <option value="0" selected>請選擇工作區域</option>
-                    <option value="100">台北市中正區</option>
-                    <option value="103">台北市大同區</option>
-                    <option value="104">台北市中山區</option>
-                    <option value="105">台北市松山區</option>
-                    <option value="106">台北市大安區</option>
-                    <option value="108">台北市萬華區</option>
-                    <option value="110">台北市信義區</option>
-                    <option value="111">台北市士林區</option>
-                    <option value="112">台北市北投區</option>
-                    <option value="114">台北市內湖區</option>
-                    <option value="115">台北市南港區</option>
-                    <option value="116">台北市文山區</option>
+                    <option value="100" th:selected="${emp.empArea3 eq 100}">台北市中正區</option>
+                    <option value="103" th:selected="${emp.empArea3 eq 103}">台北市大同區</option>
+                    <option value="104" th:selected="${emp.empArea3 eq 104}">台北市中山區</option>
+                    <option value="105" th:selected="${emp.empArea3 eq 105}">台北市松山區</option>
+                    <option value="106" th:selected="${emp.empArea3 eq 106}">台北市大安區</option>
+                    <option value="108" th:selected="${emp.empArea3 eq 108}">台北市萬華區</option>
+                    <option value="110" th:selected="${emp.empArea3 eq 110}">台北市信義區</option>
+                    <option value="111" th:selected="${emp.empArea3 eq 111}">台北市士林區</option>
+                    <option value="112" th:selected="${emp.empArea3 eq 112}">台北市北投區</option>
+                    <option value="114" th:selected="${emp.empArea3 eq 114}">台北市內湖區</option>
+                    <option value="115" th:selected="${emp.empArea3 eq 115}">台北市南港區</option>
+                    <option value="116" th:selected="${emp.empArea3 eq 116}">台北市文山區</option>
                 </select>
 
                 <br><br>
                 <p>變更密碼</p>
                 <p>目前的密碼</p>
-                <input type="password" name="emp_pw_old">
+                <input type="text" name="emp_pw_old" th:field="*{empPass}" readonly>
                 <p>新密碼</p>
                 <input type="password" name="emp_pw_new">
                 <p>確認新密碼</p>
                 <input type="password" name="emp_pw_newConfirm"><br>
 
-                <button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn">儲存設定</button>
+                <button type="submit" class="btn btn-primary btn-lg hc_mem_saveBtn">儲存設定</button>
                 <button type="button" class="btn btn-primary btn-lg hc_mem_discardBtn">取消修改</button>
                 <br><br>
+            </div>
      </form>      
             
 
 
 
-            </div>
+            
 
         </div>
     </div>
@@ -187,7 +196,10 @@
             $("li").removeClass("emp_tag");
             $("ul li:nth-child(5)").addClass("emp_tag");
 
-
+         	// 取消修改，emp資料重取
+			$(".hc_mem_discardBtn").on("click", function(){
+				location.reload();
+			});
 
         };
 
@@ -198,9 +210,9 @@
 
 
     <script>
-        $(".headerPage").load("header.html");
-        $(".footerPage").load("footer.html");
-        $(".empSidebarPage").load("empSidebar.html");
+        $(".headerPage").load("/header.html");
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("/empSidebar.html");
         </script>
 </body>
 </html>
