@@ -2,7 +2,7 @@
 
 function planName_selector() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
+		url: "http://localhost:8080/planord/planname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -22,7 +22,7 @@ function planName_selector() {
 
 function pickupTime_selector() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/planord/timerange", // 資料請求的網址
+		url: "http://localhost:8080/planord/timerange", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -41,7 +41,7 @@ function pickupTime_selector() {
 
 function period_selector() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/planord/planperiod", // 資料請求的網址
+		url: "http://localhost:8080/planord/planperiod", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -62,7 +62,7 @@ function period_selector() {
 
 function way_selector() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/planord/wayname", // 資料請求的網址
+		url: "http://localhost:8080/planord/wayname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -82,7 +82,7 @@ function way_selector() {
 
 function city_selector() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/planord/citycode", // 資料請求的網址
+		url: "http://localhost:8080/planord/citycode", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -103,7 +103,7 @@ function city_selector() {
 //上架新方案
 function new_plan() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/planord/planname", // 資料請求的網址
+		url: "http://localhost:8080/planord/planname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -142,7 +142,7 @@ $(document).on("click", "button#show_sale", function() {
 			if (times == weekdayChoice) {
 
 				$.ajax({
-					url: "http://localhost:8081/furelise/planord/checkenddate", // 資料請求的網址
+					url: "http://localhost:8080/planord/checkenddate", // 資料請求的網址
 					type: "POST", // GET | POST | PUT | DELETE | PATCH
 					// data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
 					data: JSON.stringify({ "planStart": planStart }),
@@ -218,7 +218,7 @@ $(document).on("click", "#task_discount", function() {
 		}
 
 		$.ajax({
-			url: "http://localhost:8081/furelise/sale/coupon", // 資料請求的網址
+			url: "http://localhost:8080/sale/coupon", // 資料請求的網址
 			type: "POST", // GET | POST | PUT | DELETE | PATCH
 			// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
@@ -296,7 +296,7 @@ $(document).on("click", "#task_add", function() {
 	};
 
 	$.ajax({
-		url: "http://localhost:8081/furelise/planorddto/adding", // 資料請求的網址
+		url: "http://localhost:8080/planorddto/adding", // 資料請求的網址
 		type: "POST", // GET | POST | PUT | DELETE | PATCH
 		// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 		contentType: "application/json",
@@ -312,7 +312,11 @@ $(document).on("click", "#task_add", function() {
 				$(".first select, input").prop('disabled', true);
 				$("input#contactTel").prop('disabled', false);
 				$("input#contactTel").prop('autofocus', true);
-			} else {
+			} else if (xhr.status === 200) {
+				$(".first select, input").prop('disabled', true);
+				alert('請重新登入');
+			}
+			else {
 				alert('連線異常');
 				location.reload();
 			}

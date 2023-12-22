@@ -1,7 +1,7 @@
 // 載入
 function init() {
     $.ajax({
-        url: "http://localhost:8081/furelise/plan/all", // 資料請求的網址
+        url: "http://localhost:8080/plan/all", // 資料請求的網址
         type: "GET", // GET | POST | PUT | DELETE | PATCH
         // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
         dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -17,7 +17,7 @@ function init() {
                     <td>${item.planPrice}</td>
                     <td>${item.planPricePerCase}</td>
                     <td>${item.times}</td>
-					<td><a href="/demo/plan/update"><span class="sl_btn_chakan" style="background-color: #9ac972">修改</span></a></td>
+					<td><a href="update?planID=${item.planID}"><span class="sl_btn_chakan" style="background-color: #9ac972">修改</span></a></td>
                     <td><input id="del" class="sl_btn_chakan" type="submit" value="刪除"></td>
                 </tr>
             `;
@@ -57,7 +57,7 @@ $("button#task_add").on("click", function() {
 			};
 
 			$.ajax({
-				url: "http://localhost:8081/furelise/plan/adding", // 資料請求的網址
+				url: "http://localhost:8080/plan/adding", // 資料請求的網址
 				type: "POST", // GET | POST | PUT | DELETE | PATCH
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
@@ -91,7 +91,7 @@ $(document).on("click", "input#del", function() {
 		let planName = $(this).closest('tr').data('planname');
 		let that = this;
 		$.ajax({
-			url: "http://localhost:8081/furelise/plan/deleting",           // 資料請求的網址
+			url: "http://localhost:8080/plan/deleting",           // 資料請求的網址
 			type: "DELETE",
 			contentType: "application/json", // Set the content type to JSON
 			data: JSON.stringify({ "planName": planName }), // Convert the data to JSON                  // GET | POST | PUT | DELETE | PATCH
@@ -136,7 +136,7 @@ $("button#task_update").on("click", function() {
 			"planUpload": planUpload
 		}
 		$.ajax({
-			url: "http://localhost:8081/furelise/plan/updating",           // 資料請求的網址
+			url: "http://localhost:8080/plan/updating",           // 資料請求的網址
 			type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
 			// data: { "wayID": wayID, "wayName": wayName },                // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
@@ -157,7 +157,7 @@ $("button#task_update").on("click", function() {
 				} else if (xhr.status === 500) {
 					alert('連線異常');
 				} else if (xhr.status ===200) {
-					alert('價格不可低於案件報酬且皆需為整數');
+					alert('價格不可低於案件報酬');
 				}
 			}
 		});
