@@ -3,24 +3,33 @@ package com.furelise.productclass.model;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductClassService {
 
 	@Autowired
 	private ProductClassRepository dao;
 
-	public ProductClass addProductClass(ProductClass productClass) {
+	public boolean addProductClass(ProductClass productClass) {
 
-		dao.save(productClass);
-
-		return productClass;
+		boolean isPass = false;
+		if (!dao.existsBypClassName(productClass.getPClassName())) {
+			dao.save(productClass);
+			isPass = true;
+		}
+		return isPass;
 
 	}
 
-	public ProductClass updateProductClass(ProductClass productClass) {
+	public boolean updateProductClass(ProductClass productClass) {
 
-		return dao.save(productClass);
-
+		boolean isPass = false;
+		if (!dao.existsBypClassName(productClass.getPClassName())) {
+			dao.save(productClass);
+			isPass = true;
+		}
+		return isPass;
 	}
 
 	public ProductClass getProductClassByID(Integer pClassID) {
@@ -32,6 +41,5 @@ public class ProductClassService {
 	public List<ProductClass> getAll() {
 		return dao.findAll();
 	}
-
 
 }

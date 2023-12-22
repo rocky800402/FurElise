@@ -12,22 +12,24 @@ public class SaleService {
 	@Autowired
 	SaleRepository dao;
 
-	public String addSale(Sale sale) {
-		String url = "b_sale_add";
-		if(dao.existsByCoupon(sale.getCoupon())) {
-			url = "b_sale_add";
-		} else {
+	public boolean addSale(Sale sale) {
+		boolean isPass = false;
+		if (!dao.existsByCoupon(sale.getCoupon())) {
 			dao.save(sale);
-			url = "all";
+			isPass = true;
 		}
 
-		return url;
+		return isPass;
 	}
 
-	public Sale updateSale(Sale sale) {
+	public boolean updateSale(Sale sale) {
+		boolean isPass = false;
+		if (!dao.existsByCoupon(sale.getCoupon())) {
+			dao.save(sale);
+			isPass = true;
+		}
 
-		return dao.save(sale);
-
+		return isPass;
 	}
 
 	public void deleteSale(Integer saleID) {
@@ -39,7 +41,7 @@ public class SaleService {
 		return optional.orElse(null);
 	}
 
-	public List<Sale> getAll(){
+	public List<Sale> getAll() {
 		return dao.findAll();
 	}
 
@@ -49,16 +51,16 @@ public class SaleService {
 
 	}
 
-	//verify coupon
+	// verify coupon
 	public String verifyCoupon(String coupon, String total) {
 		String result = "";
-		//if sale in active
+		// if sale in active
 		List<Sale> saleList = dao.findActiveSalesWithCoupon(coupon);
 		System.out.println(saleList);
-		if(saleList.isEmpty())
+		if (saleList.isEmpty())
 			result = "折扣碼不存在";
-		//if total >= disRequire
-		else if(new BigDecimal(total).compareTo(saleList.get(0).getDisRequire()) < 0){
+		// if total >= disRequire
+		else if (new BigDecimal(total).compareTo(saleList.get(0).getDisRequire()) < 0) {
 			result = "未達折扣門檻";
 		} else
 			result = "-" + saleList.get(0).getDis();
