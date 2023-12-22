@@ -1,4 +1,4 @@
-package com.furelise.common.model;
+package com.furelise.common;
 
 import java.io.IOException;
 import java.math.BigDecimal;

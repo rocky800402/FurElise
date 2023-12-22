@@ -1,4 +1,4 @@
-package com.furelise.common.model;
+package com.furelise.common;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.*;
@@ -27,7 +27,6 @@ public class BigDecimalSerializer extends JsonSerializer<BigDecimal> implements 
             	
                 BigDecimalFormat bigDecimalFormat = beanProperty.getAnnotation((BigDecimalFormat.class));
                 if(bigDecimalFormat == null){
-                	
                     bigDecimalFormat = beanProperty.getContextAnnotation(BigDecimalFormat.class);
                 }
                 BigDecimalSerializer bigDecimalSerializer = new BigDecimalSerializer();
