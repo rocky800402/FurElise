@@ -151,7 +151,7 @@
 			<!-- 					</c:forEach> -->
 			<!-- 				</ul> -->
 			<!-- 			</c:if> -->
-			<FORM METHOD="post" ACTION="sale.do" name="form1">
+			<FORM METHOD="post" th:action="@{update}" name="form1">
 				<table>
 					<tr>
 						<td>優惠編號:<font color="red"><b>*</b></font></td>
@@ -204,9 +204,6 @@
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
 	<script>
-		$(".sidebarPage").load("/backendSidebar.html");
-	</script>
-	<script>
 		// 日期
 		// 		var today = new Date();
 		// 		sl_start.min = new Date((today.setDate(today.getDate())))
@@ -249,6 +246,7 @@
 </style>
 
 <script>
+$(".sidebarPage").load("/backendSidebar.html");
 	$.datetimepicker.setLocale('zh');
 	$('#f_date1').datetimepicker({
 		theme : '', //theme: 'dark',
