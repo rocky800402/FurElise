@@ -1,7 +1,7 @@
 package com.furelise.emp.model;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.Set;
 
@@ -57,13 +57,13 @@ public class Emp implements Serializable{
     private boolean empLicense;
 
     @Column(name = "empArea1")
-    private Integer empArea1;
+    private String empArea1;
 
     @Column(name = "empArea2")
-    private Integer empArea2;
+    private String empArea2;
 
     @Column(name = "empArea3")
-    private Integer empArea3;
+    private String empArea3;
 
     @Column(name = "timeID")
     private Integer timeID;
