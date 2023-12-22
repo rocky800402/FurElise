@@ -141,38 +141,23 @@
 		<main class="content">
 			<p class="p_title">商品類別名稱修改</p>
 
-<!-- 			<%-- 錯誤表列 --%> -->
-<!-- 			<c:if test="${not empty errorMsgs}"> -->
-<!-- 				<font style="color: red">請修正以下錯誤:</font> -->
-<!-- 				<ul> -->
-<!-- 					<c:forEach var="message" items="${errorMsgs}"> -->
-<!-- 						<li style="color: red">${message}</li> -->
-<!-- 					</c:forEach> -->
-<!-- 				</ul> -->
-<!-- 			</c:if> -->
-			<FORM METHOD="post" th:action="@{update}" name="form1">
-				<table>
-					<tr>
-					    <td>商品類別編號:<font color="red"><b>*</b></font></td>
-					    <td th:text="${productClass.pClassID}"></td>
-					</tr>
-					<tr>
-					    <td>商品類別名稱:</td>
-					    <td><input type="text" th:field="*{pClassName}" size="45" /></td>
-					</tr>
-
-
-
-
-				</table>
+			<FORM METHOD="post" th:action="@{/productclass/update}" th:object="${productClass}" name="form1">
+				
+				<label>商品類別編號(不可修改)</label>
+				<div class="input-group mb-3">
+					<input type="text" th:field="*{pClassID}" readonly/>
+				</div>
+				
+				<label>商品類別名稱</label>
+				<div class="input-group mb-3">
+					<input placeholder="必填" type="text" th:field="*{pClassName}" onclick="hideContent('pClassName.errors');" required/>
+					<span  th:if="${#fields.hasErrors('pClassName')}" th:errors="*{pClassName}" class="error" id="pClassName.errors" style="color:red;"></span>
+				</div>
 
 				<div class="row justify-content-start">
 					<div class="col-4">
 					<button type="submit" onclick="history.go(-1)" class="sl_btn_disable">回上一頁</button>
-						<input type="hidden" name="action" value="update"> <input
-							type="hidden" name="pClassID"
-							value="<%=productClass.getpClassID()%>">
-						<button type="submit" class="sl_btn_chakan" style="float: right;">送出修改</button>
+					<button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button>
 					</div>
 				</div>
 
