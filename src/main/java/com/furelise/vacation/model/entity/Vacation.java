@@ -1,4 +1,4 @@
-package com.furelise.vacation.model;
+package com.furelise.vacation.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;

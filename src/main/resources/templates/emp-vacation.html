@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für Elise-會員中心</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="./css/emp_sidebar.css" th:href="@{/css/emp_sidebar.css}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .hc_headerBox {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ececec;
+            border-top: 1px solid #ececec;
+            /* margin-bottom: 100px; */
+        }
+
+        .hc_headerText {
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 15px;
+            padding-top: 15px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        p {
+            margin: 10px 0 10px 0;
+            font-size: 20px;
+        }
+
+        input {
+            width: 300px;
+            height: 30px;
+        }
+
+        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+        .btn-primary {
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+        .hc_mem_saveBtn:hover {
+            background-color: rgba(26, 137, 26, 0.801);
+            border-color: rgba(26, 137, 26, 0.801);
+            color: white;
+        }
+        .hc_mem_saveBtn {
+            width: 150px;
+            height: 50px;
+            margin-top: 30px;
+        }
+        
+        .emp_vacationBox {
+            height: 600px;
+            width: 50%;
+            background-color: #fff;
+            margin: 40px 0 40px 0;
+            -webkit-box-shadow: 3px 3px 5px 5px #ddd;
+            -moz-box-shadow: 3px 3px 5px 5px #ddd;
+            box-shadow: 3px 3px 5px 5px #ddd;
+            overflow-y: auto;
+            font-size: 20px;
+        }
+
+        .emp_vacaList {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .emp_vacaList li {
+            border-bottom: 1px solid lightgray;
+            margin: 20px 0 20px 20px;
+        }
+    
+    </style>
+</head>
+<body>
+    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+    
+    
+    <div class="headerPage"></div>
+    <div class="hc_headerBox">
+        <div class="hc_headerText">會員中心</div>
+    </div>
+    <div style="width: 100%; justify-content: center; display: flex;">
+
+        <div style="max-width: 1200px; display: flex;">
+            <div class="empSidebarPage"></div>
+            <!--  -->
+
+            <div style="width: 950px; padding: 20px; margin-left: 50px;">
+            <!-- 寫在這裡 -->
+                <p style="font-size: 25px; font-weight: bold; display: inline-block;">已請假日</p>
+                <!-- <select name="emp_vacation_month" style="width: 130px; margin-left: 150px;">
+                    <option selected>2023/12</option>
+                    <option>2023/11</option>
+                    <option>2023/10</option>
+                    <option>2023/09</option>
+                    <option>2023/08</option>
+                </select> -->
+
+                <div class="emp_vacationBox">
+                    <div>
+                        <span style="margin-left: 20px; border-bottom: 1px solid lightgray;">開始休假日</span>
+                        <span style="margin-left: 100px; border-bottom: 1px solid lightgray;">結束休假日</span>
+                        <ul class="emp_vacaList">
+                            <li><span>2023/10/01</span><span style="margin-left: 110px;">2023/10/12</span></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                
+                <div>
+                    <p>開始休假日</p>
+                    <input type="date" name="emp_vacationFrom" id="emp_vaStart">
+                    <p>結束休假日</p>
+                    <input type="date" name="emp_vacationTo" id="emp_vaEnd">
+                    <br>
+                    <button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn" id="sendVa_btn">送出假單</button>
+                </div>
+                    
+                
+            
+
+
+
+            </div>
+
+        </div>
+    </div>
+    
+    
+   
+
+    <div class="footerPage"></div>
+    
+    <script>
+        function init(){
+            // emp_tag更改到
+            // $("li").removeClass("emp_tag");
+            // $("ul li:nth-child(5)").addClass("emp_tag");
+            
+            
+            function getEmpIDFromURL() {
+	    		// 獲取當前網頁的 URL
+	    		var url = window.location.href;
+	
+	    		// 使用正則表達式提取 URL 中的 empID，這裡假設 empID 是數字
+	    		var match = url.match(/\/vacation\/(\d+)/);
+	
+	    		// 如果匹配成功，返回提取到的 empID，否則返回 null
+	    		return match ? parseInt(match[1], 10) : null;
+			}
+
+			// 使用示例
+			var empID = getEmpIDFromURL();
+			
+			if (empID !== null) {
+			    console.log("EmpID found in URL:", empID);
+			    // 發送 AJAX 請求
+			    $.ajax({
+	                url: "http://localhost:8080/vacation/" + empID + "/all",
+	                type: "GET",
+	                contentType: "application/json",
+	                //data: JSON.stringify({
+	                //    "empID": empID
+	                //}),
+	                success: (data) => {
+	                    console.log("getting all holidays of emp successfully");
+	                    console.log(data);
+
+	                    let list_html = "";
+
+	                 	// Assuming data is an array of objects
+	                    $.each(data, function(index, item){
+            				list_html += `<li><span>${item.vaStart}</span><span style="margin-left: 110px;">${item.vaEnd}</span></li>`;
+        				});
+
+	                    // 插入到指定的元素
+	                    $(".emp_vacaList").html(list_html);
+	                },
+	                error: function(xhr){      
+	                    console.log("error");
+	                    console.log(xhr);
+	                }
+	            });
+			} else {
+   				console.log("EmpID not found in URL");
+			}
+
+            
+
+
+            $("#sendVa_btn").on("click", function(){
+            	
+            	if ($("#emp_vaStart").val() == null || $("#emp_vaEnd").val() == null) {
+            		
+            	} else {
+            		
+            		$.ajax({
+                        url: "http://localhost:8080/api/vacation/" + empID + "/add",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            vaStart: $("#emp_vaStart").val(),
+                            vaEnd: $("#emp_vaEnd").val()
+                        }),
+                        beforeSend: function(){
+                            $("#sendVa_btn").addClass("-disabled");
+                        },
+                        success: (data) => {
+
+                            console.log("add new vacation into vacation list");
+
+                            let list_html = "";
+
+                            list_html +=
+                                `<li><span>${data.vaStart}</span><span style="margin-left: 110px;">${data.vaEnd}</span></li>`
+
+                            $(".emp_vacaList").prepend(list_html);
+                            $("#emp_vaStart").val("");
+                            $("#emp_vaEnd").val("");
+
+                        },
+                        complete: function(){
+                            $("#sendVa_btn").removeClass("-disabled");
+                            //location.reload();
+                        }
+                    });
+            		
+            	}
+
+                
+
+            });
+
+
+        };
+
+
+        window.addEventListener("load", init);
+    </script>
+
+
+
+    <script>
+        $(".headerPage").load("/header.html");
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("/empSidebar.html");
+        </script>
+</body>
+</html>
