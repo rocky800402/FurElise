@@ -81,11 +81,4 @@ public class SaleController {
 		String result = saleSvc.verifyCoupon(req.getCoupon(), req.getTotal());
 		return result;
 	}
-	
-	@PostMapping("/coupon")
-	public String verifyCoupon(@RequestBody SaleDTO req) {
-		
-		String result = saleSvc.verifyCoupon(req.getCoupon(), req.getTotal());
-		return result;
-	}
 }

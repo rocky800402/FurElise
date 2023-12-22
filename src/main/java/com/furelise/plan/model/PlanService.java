@@ -25,7 +25,7 @@ public class PlanService {
 		BigDecimal planPrice = req.getPlanPrice();
 		BigDecimal planPricePerCase = req.getPlanPricePerCase();
 
-		if (planPrice.compareTo(planPricePerCase) < 0 || planPrice.scale() != 0 || planPricePerCase.scale() != 0) {
+		if (planPrice.compareTo(planPricePerCase) < 0 ) {
 			return null;
 		} else {
 			List<Plan> pList = new ArrayList<Plan>();
@@ -43,7 +43,7 @@ public class PlanService {
 		BigDecimal planPrice = req.getPlanPrice();
 		BigDecimal planPricePerCase = req.getPlanPricePerCase();
 		
-		if (planPrice.compareTo(planPricePerCase) < 0 || planPrice.scale() != 0 || planPricePerCase.scale() != 0) {
+		if (planPrice.compareTo(planPricePerCase) < 0) {
 			return null;
 		} else {
 			Plan plan = new Plan(req.getPlanID(), req.getPlanName(), req.getLiter(), planPrice, planPricePerCase,
