@@ -12,17 +12,14 @@ public class ProductService {
 	@Autowired
 	ProductRepository dao;
 
-	public String addProduct(Product product) {
-		String page = "b_product_add";
-		if(dao.existsBypName(product.getPName())) {
-			page = "b_product_add";
-		} else {
+	public boolean addProduct(Product product) {
+		
+		boolean isPass = false;
+		if(!dao.existsBypName(product.getPName())) {
 			dao.save(product);
-			page =  "redirect:/product/all";
-
+			isPass = true;
 		}
-
-		return page;
+		return isPass;
 	}
 
 	public Product updateProduct(Product product) {
