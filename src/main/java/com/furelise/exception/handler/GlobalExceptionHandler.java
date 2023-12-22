@@ -1,13 +1,18 @@
 package com.furelise.exception.handler;
 
 
-import com.furelise.common.model.ErrorMessageVO;
-import com.furelise.exception.NumberOfModificationsException;
-import com.furelise.exception.UnauthorizedException;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.UnexpectedTypeException;
+
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,12 +20,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import com.furelise.common.model.ErrorMessageVO;
+import com.furelise.exception.NumberOfModificationsException;
+import com.furelise.exception.UnauthorizedException;
 
 /**
  *   * 1) 藉由@ControllerAdvice註解，可將「對於控制器的全局(global)配置放在同一支程式中」
@@ -53,6 +56,13 @@ public class GlobalExceptionHandler {
     public  ErrorMessageVO handleNumberOfModificationsException(NumberOfModificationsException e){
         return new ErrorMessageVO(e.getMessage());
     }
+    
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UnexpectedTypeException.class)
+    public  ErrorMessageVO handleUnexpectedTypeException(UnexpectedTypeException e){
+        return new ErrorMessageVO(e.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> exceptionHandler(HttpServletRequest request, HttpServletResponse response,
@@ -65,7 +75,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorMessageVO handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return new ErrorMessageVO(e.getBindingResult().getAllErrors().stream()
+        e.printStackTrace();
+    	return new ErrorMessageVO(e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(",")));
     }
 

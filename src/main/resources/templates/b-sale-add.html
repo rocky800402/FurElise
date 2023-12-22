@@ -157,6 +157,7 @@
 				<label>優惠結束日:</label>
 				<input type="date" th:field="*{saleEnd}" onclick="hideContent('saleEnd.errors');" /><br/>
 				<span  th:if="${#fields.hasErrors('saleEnd')}" th:errors="*{saleEnd}" class="error" id="saleEnd.errors"></span>
+                    <div>[[${endDateError}]]</div>
 				</div><br>
 				
 				<div>

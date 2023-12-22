@@ -5,14 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新增商品類別</title>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/header.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/sl.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/backend_sidebar.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
+    <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
 <!-- <link rel="stylesheet" href="css/jquery.dataTables.min.css"> -->
 <style>
 /* 查看詳情button */
@@ -146,26 +141,26 @@
 		<main class="content">
 			<p class="p_title">商品類別名稱修改</p>
 
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
-			<FORM METHOD="post" ACTION="pc.do" name="form1">
+<!-- 			<%-- 錯誤表列 --%> -->
+<!-- 			<c:if test="${not empty errorMsgs}"> -->
+<!-- 				<font style="color: red">請修正以下錯誤:</font> -->
+<!-- 				<ul> -->
+<!-- 					<c:forEach var="message" items="${errorMsgs}"> -->
+<!-- 						<li style="color: red">${message}</li> -->
+<!-- 					</c:forEach> -->
+<!-- 				</ul> -->
+<!-- 			</c:if> -->
+			<FORM METHOD="post" th:action="@{update}" name="form1">
 				<table>
 					<tr>
-						<td>商品類別編號:<font color=red><b>*</b></font></td>
-						<td><%=productClass.getpClassID()%></td>
+					    <td>商品類別編號:<font color="red"><b>*</b></font></td>
+					    <td th:text="${productClass.pClassID}"></td>
 					</tr>
 					<tr>
-						<td>商品類別名稱:</td>
-						<td><input type="TEXT" name="pClassName"
-							value="<%=productClass.getpClassName()%>" size="45" /></td>
+					    <td>商品類別名稱:</td>
+					    <td><input type="text" th:field="*{pClassName}" size="45" /></td>
 					</tr>
+
 
 
 
@@ -189,11 +184,11 @@
 	<div class="footerPage"></div>
 
 	<script
-		src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+		 th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script  th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
 	<script>
-		$(".sidebarPage").load("backendSidebar.html");
+		$(".sidebarPage").load("/backendSidebar.html");
 	</script>
 	<script>
 		// 日期

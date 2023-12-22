@@ -1,9 +1,12 @@
 package com.furelise.productclass.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class ProductClassService {
@@ -33,8 +36,8 @@ public class ProductClassService {
 	}
 
 	public ProductClass getProductClassByID(Integer pClassID) {
-
-		return dao.findById(pClassID).orElse(null);
+		Optional<ProductClass> optional = dao.findById(pClassID);
+		return optional.orElse(null);
 
 	}
 
