@@ -44,8 +44,8 @@ import com.furelise.productclass.model.ProductClass;
 import com.furelise.productclass.model.ProductClassRepository;
 import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleRepository;
-import com.furelise.shopcart.model.ShopCart;
-import com.furelise.shopcart.model.ShopCartRepository;
+//import com.furelise.shopcart.model.ShopCart;
+//import com.furelise.shopcart.model.ShopCartRepository;
 import com.furelise.vacation.model.Vacation;
 import com.furelise.vacation.model.VacationRepository;
 
@@ -108,8 +108,8 @@ public class EstabCaseController  {
 	@Autowired
 	private SaleRepository saleRepository;
 	
-	@Autowired
-	private ShopCartRepository shopCartRepository;
+//	@Autowired
+//	private ShopCartRepository shopCartRepository;
 	
 	@Autowired
 	private VacationRepository vacationRepository;
@@ -298,14 +298,14 @@ public class EstabCaseController  {
 	}
 	
 	
-	@GetMapping("/shopCartList")
-	public List<ShopCart> getAllShopCart(){
-		
-		List<ShopCart> shopCartList = shopCartRepository.findAll();
-		System.out.println(shopCartList);
-		return shopCartList;
-		
-	}
+//	@GetMapping("/shopCartList")
+//	public List<ShopCart> getAllShopCart(){
+//		
+//		List<ShopCart> shopCartList = shopCartRepository.findAll();
+//		System.out.println(shopCartList);
+//		return shopCartList;
+//		
+//	}
 	
 	
 	@GetMapping("/vacationList")

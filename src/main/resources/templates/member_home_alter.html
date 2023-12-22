@@ -1,140 +1,149 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Für Elise-會員中心</title>
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
-    <link rel="stylesheet" href="./css/mem_sidebar.css" th:href="@{/css/mem_sidebar.css}">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        .hc_headerBox {
-            background-color: #f7f7f7;
-            border-bottom: 1px solid #ececec;
-            border-top: 1px solid #ececec;
-            /* margin-bottom: 100px; */
-        }
-
-        .hc_headerText {
-            color: #000;
-            font-weight: bold;
-            text-align: center;
-            padding-bottom: 15px;
-            padding-top: 15px;
-            font-size: 30px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        p {
-            margin: 10px 0 10px 0;
-        }
-
-        input {
-            width: 535px;
-        }
-
-        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
-        .btn-primary {
-            background-color: #9ac972;
-            border-color: #9ac972;
-        }
-        .hc_mem_saveBtn:hover {
-            background-color: rgba(26, 137, 26, 0.801);
-            border-color: rgba(26, 137, 26, 0.801);
-            color: white;
-        }
-        .hc_mem_saveBtn, .hc_mem_discardBtn {
-            width: 150px;
-            height: 50px;
-            margin-top: 30px;
-        }
-        .hc_mem_discardBtn {
-            background-color: lightgray;
-            border-color: lightgray;
-            margin-left: 230px;
-        }
-        .hc_mem_discardBtn:hover, .hc_mem_discardBtn:focus {
-            background-color: gray;
-            border-color: gray;
-        }
-        
-        
-    
-    </style>
-</head>
-<body>
-    
-    <div class="headerPage"></div>
-    <div class="hc_headerBox">
-        <div class="hc_headerText">會員中心</div>
-    </div>
-    <div style="width: 100%; justify-content: center; display: flex;">
-
-        <div style="max-width: 1200px; display: flex;">
-            <div class="memSidebarPage"></div>
-            <!--  -->
-		<form th:action="@{update}" method="post" th:object="${mem}" enctype="multipart/form-data">
-            <div style="width: 950px; padding: 20px; margin-left: 50px;">
-            <!-- 寫在這裡 -->
-                <p style="display: inline-block;">名字</p>
-                <p style="display: inline-block; margin-left: 250px;">電話</p><br>
-                <input type="text" th:field="*{memID}" name="mem_name" style="width: 250px;">
-                <input type="text" th:field="*{memTel}" name="mem_tel" style="width: 250px; margin-left: 30px;">
-                <p>生日</p>
-                <input type="date" th:field="*${#dates.format(memBirth, 'yyyy/MM/dd')}" name="mem_birth">
-                <p>電子郵件</p>
-                <input type="email" th:field="*{memMail}" name="mem_email">
-                <br><br>
-                <p>變更密碼</p>
-                <p>目前的密碼</p>
-                <input type="password" th:field="*{memPass}" name="mem_pw_old">
-                <p>新密碼</p>
-                <input type="password" name="mem_pw_new">
-                <p>確認新密碼</p>
-                <input type="password" name="mem_pw_newConfirm"><br>
-
-                <button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn">儲存設定</button>
-                <button type="button" class="btn btn-primary btn-lg hc_mem_discardBtn">取消修改</button>
-                <br><br>
-            </div>
-		</form>
-
-        </div>
-    </div>
-    
-    
-   
-
-    <div class="footerPage"></div>
-    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    <script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
-
-
-    <script>
-        function init(){
-            // mb_tag更改到帳戶設定
-            $("li").removeClass("mb_tag");
-            $("ul li:nth-child(5)").addClass("mb_tag");
-
-
-
-        };
-
-
-        window.addEventListener("load", init);
-    </script>
-
-
-
-    <script>
-        $(".headerPage").load("header.html");
-        $(".footerPage").load("footer.html");
-        $(".memSidebarPage").load("memSidebar.html");
-        </script>
-</body>
-</html>
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Für Elise-會員中心</title>
+	    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+	    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+	    <link rel="stylesheet" href="./css/mem_sidebar.css" th:href="@{/css/mem_sidebar.css}">
+	    <style>
+	        * {
+	            box-sizing: border-box;
+	        }
+	
+	        .hc_headerBox {
+	            background-color: #f7f7f7;
+	            border-bottom: 1px solid #ececec;
+	            border-top: 1px solid #ececec;
+	            /* margin-bottom: 100px; */
+	        }
+	
+	        .hc_headerText {
+	            color: #000;
+	            font-weight: bold;
+	            text-align: center;
+	            padding-bottom: 15px;
+	            padding-top: 15px;
+	            font-size: 30px;
+	            margin-left: auto;
+	            margin-right: auto;
+	        }
+	
+	        p {
+	            margin: 10px 0 10px 0;
+	        }
+	
+	        input {
+	            width: 535px;
+	        }
+	
+	        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+	        .btn-primary {
+	            background-color: #9ac972;
+	            border-color: #9ac972;
+	        }
+	        .hc_mem_saveBtn:hover {
+	            background-color: rgba(26, 137, 26, 0.801);
+	            border-color: rgba(26, 137, 26, 0.801);
+	            color: white;
+	        }
+	        .hc_mem_saveBtn, .hc_mem_discardBtn {
+	            width: 150px;
+	            height: 50px;
+	            margin-top: 30px;
+	        }
+	        .hc_mem_discardBtn {
+	            background-color: lightgray;
+	            border-color: lightgray;
+	            margin-left: 230px;
+	        }
+	        .hc_mem_discardBtn:hover, .hc_mem_discardBtn:focus {
+	            background-color: gray;
+	            border-color: gray;
+	        }
+	        
+	        
+	    
+	    </style>
+	</head>
+	<body>
+		<script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+		<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+		
+	    <div class="headerPage"></div>
+	    
+	    <div class="hc_headerBox">
+	        <div class="hc_headerText">會員中心</div>
+	    </div>
+	    
+	    <div style="width: 100%; justify-content: center; display: flex;">
+	
+	        <div style="max-width: 1200px; display: flex;">
+	            <div class="memSidebarPage"></div>
+	            <!--  -->
+			<form th:action="@{'/member_home_alter/' + ${memID} + '/updateMem'}" method="post" th:object="${mem}" enctype="multipart/form-data">
+	            <div style="width: 950px; padding: 20px; margin-left: 50px;">
+	            <!-- 寫在這裡 -->
+			        <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
+					    <ul>
+					        <li th:each="message : ${errMsgs}" style="color:red; font-size: 16px;" th:text="${message}"></li>
+					    </ul>
+				    </div>
+				    <div th:if="${successMsg != null}" id="successMsg">
+	        			<p th:text="${successMsg}" style="color:red; font-size: 16px;"></p>
+	        		</div>	
+	                <p style="display: inline-block;">名字</p>
+	                <p style="display: inline-block; margin-left: 250px;">電話</p><br>
+	                <input type="text" th:field="*{memName}" name="memName" style="width: 250px;">
+	                <input type="text" th:field="*{memTel}" name="memTel" style="width: 250px; margin-left: 30px;">
+	                <p>生日</p>
+	                <input type="date" th:field="*{memBirth}" name="memBirth">
+	                <p>電子郵件</p>
+	                <input type="email" th:field="*{memMail}" name="memMail" disabled="disabled">
+	                <br><br>
+	                <p>變更密碼</p>
+	                <p>目前的密碼</p>
+	                <input type="text" th:field="*{memPass}" name="memPass" readonly>
+	                <p>新密碼</p>
+	                <input type="password" name="mem_pw_new">
+	                <p>確認新密碼</p>
+	                <input type="password" name="mem_pw_newConfirm"><br>
+	
+	                <button type="submit" class="btn btn-primary btn-lg hc_mem_saveBtn">儲存設定</button>
+	                <button type="button" class="btn btn-primary btn-lg hc_mem_discardBtn">取消修改</button>
+	                <br><br>
+	            </div>
+			</form>
+	
+	        </div>
+	    </div>
+	    
+	  
+	    
+	    <script>
+	        function init(){
+	            // mb_tag更改到帳戶設定
+	            $("li").removeClass("mb_tag");
+	            $("ul li:nth-child(5)").addClass("mb_tag");
+	
+				// 取消修改，mem資料重取
+				$(".hc_mem_discardBtn").on("click", function(){
+					location.reload();
+				});
+	
+	        };
+	
+	
+	        window.addEventListener("load", init);
+	    </script>
+	
+		<div class="footerPage"></div>
+	    <script>
+	        $(".headerPage").load("/header.html");
+	        $(".footerPage").load("/footer.html");
+	        $(".memSidebarPage").load("/memSidebar.html");
+	    </script>
+	</body>
+	</html>

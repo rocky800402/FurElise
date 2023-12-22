@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.furelise.emp.controller.EmpAuthService;
+import com.furelise.emp.model.Emp;
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
 
@@ -15,6 +17,12 @@ public class ValidateService {
 
 	@Autowired
 	private MemRepository memR;
+	
+	@Autowired
+	private MemService memSvc;
+	
+	@Autowired
+	private EmpAuthService empSvc;
 	
 	@Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -58,11 +66,40 @@ public class ValidateService {
 	
 	// 重設密碼
 	// 重設密碼頁面驗證token後進行密碼更改
-	public void updatePW(String pw, String token) {
+	public String updatePW(String memMail, String empMail, String pw, String token) {
 		
+		if (memMail != null) {
+			// ===修改會員密碼===
+			// 1. 取得redis裡已存在的token
+			String existToken = redisTemplate.opsForValue().get("ResetMail:" + memMail);
+			// 2. 比對url取得的token，token相同則進行密碼修改
+			if (token.equals(existToken)) {
+				Mem mem = memSvc.findByMemMail(memMail);
+				mem.setMemPass(pw);
+				memSvc.updateMem(mem);
+				// 將token從資料庫刪除
+				redisTemplate.delete("ResetMail:" + memMail);
+				return "resetpw-resetsuccess";
+			}
+			
+		} else if (empMail != null) {
+			// ===修改夥伴密碼===
+			// 1. 取得redis裡已存在的token
+			String existToken = redisTemplate.opsForValue().get("ResetMail:" + empMail);
+			// 2. 比對url取得的token，token相同則進行密碼修改
+			if (token.equals(existToken)) {
+				Emp emp = empSvc.findByEmpMail(empMail);
+				emp.setEmpPass(pw);
+				empSvc.updateEmp(emp);
+				// 將token從資料庫刪除
+				redisTemplate.delete("ResetMail:" + empMail);
+				return "resetpw-resetsuccess";
+			}
 		
+		}
+		
+		return null;
 		
 	}
-	
 	
 }

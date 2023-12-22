@@ -16,6 +16,7 @@ import com.furelise.mem.repository.MemRepository;
 import com.furelise.orddetail.model.OrdDetail;
 import com.furelise.product.model.Product;
 import com.furelise.sale.model.SaleService;
+import com.furelise.shopcart.model2.ShopCartService;
 //import com.furelise.shopcart.model2.ShopCart;
 //import com.furelise.shopcart.model2.ShopCartService;
 
@@ -31,73 +32,73 @@ public class OrdService {
 	@Autowired
 	SaleService saleDao;
 
-//	@Autowired
-//	ShopCartService scSvc;
+	@Autowired
+	ShopCartService scSvc;
 
 	// 創建訂單 用OrdDTO抓
-//	public Ord createOrder(OrdDTO req, Model model, BigDecimal totalAmount) {
-//
-//		Ord ord = new Ord();
-//
-//		ord.setOrdDate(new Timestamp(System.currentTimeMillis()));
-//		ord.setMemID(req.getMemID());
-//		ord.setPayment(req.getPayment());
-//		ord.setDeliver(req.getDeliver());
-//		ord.setAddress(req.getAddress());
-//		ord.setCityCode(req.getCityCode());
-//		ord.setDeliverDate(null); //出貨時間初始為null
-//		ord.setSum(req.getSum());
-//		ord.setShipping(req.getShipping());
-//		ord.setTotal(totalAmount);
-//		ord.setSaleID(saleDao.getSaleByCoupon(null).getSaleID());
-//		ord.setOrdStatus(0); // 預設都為0(處理中)
-//		ord.setArrival(null); //送達時間初始為null
-//
-//		dao.save(ord);
-//
-//		// 創建訂單明細OrdDetail
-//		Map<String,String> shopCartItems = scSvc.getShopCartProducts(req.getMemID());
-//		List<OrdDetail> ordDetails = new ArrayList<>();
-//
-//		for (Map.Entry<String, String> entry : shopCartItems.entrySet()) {
-//		    String pID = entry.getKey();
-//		    String quantityString = entry.getValue();
-//
-//		    // 轉換數量字串為整數
-//		    int quantity = Integer.parseInt(quantityString);
-//
-//		    // 設置 OrdDetail 的相關屬性
-//		    OrdDetail ordDetail = new OrdDetail();
-//
-//		    // 這裡將 ordDetail 的 ordID 設置為 ord 的 ID
-//		    ordDetail.setOrdID(ord.getOrdID());
-//
-//		    // pID 應該是由 shopCartItems 中取得
-//		    ordDetail.setPID(Integer.parseInt(pID));
-//
-//		    ordDetail.setDetaQty(quantity);
-//		    ordDetail.setFeedback(null); // 訂單明細創建初始時評價為 null
-//		    ordDetail.setLevel(null); // 訂單明細創建初始時評價等級為 null
-//		    ordDetail.setFbTime(null); // 訂單明細創建初始時評價內容為 null
-//
-//		    ordDetails.add(ordDetail);
-//	    }
-//
-//	    ord.setOrdDetails(ordDetails);
-//
-//
-//
-//	    return ord;
-//	}
-//
-//	//
-//	public Ord updateOrd(Integer ordID, Timestamp ordDate, Integer memID, Integer payment, Integer deliver,
-//			String address, String cityCode, Date deliverDate, BigDecimal sum, BigDecimal shipping, BigDecimal total,
-//			Integer saleID, Integer ordStatus, Date arrival) {
-//
-//		return null;
-//
-//	}
+	public Ord createOrder(OrdDTO req, Model model, BigDecimal totalAmount) {
+
+		Ord ord = new Ord();
+
+		ord.setOrdDate(new Timestamp(System.currentTimeMillis()));
+		ord.setMemID(req.getMemID());
+		ord.setPayment(req.getPayment());
+		ord.setDeliver(req.getDeliver());
+		ord.setAddress(req.getAddress());
+		ord.setCityCode(req.getCityCode());
+		ord.setDeliverDate(null); //出貨時間初始為null
+		ord.setSum(req.getSum());
+		ord.setShipping(req.getShipping());
+		ord.setTotal(totalAmount);
+		ord.setSaleID(saleDao.getSaleByCoupon(null).getSaleID());
+		ord.setOrdStatus(0); // 預設都為0(處理中)
+		ord.setArrival(null); //送達時間初始為null
+
+		
+
+		// 創建訂單明細OrdDetail
+		Map<String,String> shopCartItems = scSvc.getShopCartProducts(req.getMemID());
+		List<OrdDetail> ordDetails = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : shopCartItems.entrySet()) {
+		    String pID = entry.getKey();
+		    String quantityString = entry.getValue();
+
+		    // 轉換數量字串為整數
+		    int quantity = Integer.parseInt(quantityString);
+
+		    // 設置 OrdDetail 的相關屬性
+		    OrdDetail ordDetail = new OrdDetail();
+
+		    // 這裡將 ordDetail 的 ordID 設置為 ord 的 ID
+		    ordDetail.setOrdID(ord.getOrdID());
+
+		    // pID 應該是由 shopCartItems 中取得
+		    ordDetail.setPID(Integer.parseInt(pID));
+
+		    ordDetail.setDetaQty(quantity);
+		    ordDetail.setFeedback(null); // 訂單明細創建初始時評價為 null
+		    ordDetail.setLevel(null); // 訂單明細創建初始時評價等級為 null
+		    ordDetail.setFbTime(null); // 訂單明細創建初始時評價內容為 null
+
+		    ordDetails.add(ordDetail);
+	    }
+
+	    ord.setOrdDetails(ordDetails);
+
+	    dao.save(ord);
+
+	    return ord;
+	}
+
+	//
+	public Ord updateOrd(Integer ordID, Timestamp ordDate, Integer memID, Integer payment, Integer deliver,
+			String address, String cityCode, Date deliverDate, BigDecimal sum, BigDecimal shipping, BigDecimal total,
+			Integer saleID, Integer ordStatus, Date arrival) {
+
+		return null;
+
+	}
 
 
 	// 創建訂單 從購物車直接抓

@@ -24,6 +24,11 @@ public class EmpAuthService {
 		return this.empRepository.findByEmpMail(empMail);
 	}
 	
+	public Emp getOneEmp(Integer empID) {
+		return empRepository.getReferenceById(empID);
+	}
+	
+	
 	public Emp verify(EmpLoginDTO dto) {
 		Emp emp = this.findByEmpMail(dto.getEmail());
 		// 判斷有無emp存在，或已被停權，或密碼輸入錯誤，或帳號尚未審核通過
