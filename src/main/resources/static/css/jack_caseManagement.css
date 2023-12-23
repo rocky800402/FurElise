@@ -1,0 +1,108 @@
+        /* 消除外邊距和內邊距 */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        tr,td {
+            text-align: center;
+        }
+        
+
+        /* 表格文字置中 */
+        /* .jack_case_info tr th,
+        .jack_case_info tr td {
+            text-align: center;
+            border-left: none;
+            border-right: none;
+        } */
+
+        /* 頁面容器設置 */
+        .jack_container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* .jack_section {
+            margin-bottom: 20px;
+        } */
+
+        .jack_section_title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* .jack_menu {
+            float: right;
+            color: black;
+            padding: 0px 25px;
+            font-size: 16px;
+            border: 1px solid#605d5d;
+            cursor: pointer;
+        } */
+
+
+        /* 按鈕樣式 */
+        .jack_button_accept,
+        .jack_button_reject {
+            background-color: #9ac972;
+            color: black;
+            padding: 5px 16px;
+            font-size: 16px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        /* .jack_button_reject{
+            background-color: #FE9A9A;
+        } */
+
+        /* 鼠標移動到按鈕產生的變化 */
+        .jack_button_accept:hover,
+        .jack_button_reject:hover {
+            background-color: #EDEDED;
+        }
+
+        .jack_information {
+            color: #FE9A9A;
+        }
+
+        /* 日歷CSS */
+        .jack_calendar {
+            float: right;
+            padding: 5px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .jack_calendar:hover {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        /* 調整日期選擇器中的格線樣式 */
+        .datepicker table {
+            width: 100%;
+        }
+
+        /* 調整單元格中的對齊和邊距 */
+        .datepicker table tr td {
+            text-align: center;
+            padding: 6px;
+            border: 1px solid #ddd;
+        }
+
+        /* 高亮顯示當前日期的格線顏色 */
+        .datepicker table tr td.today {
+            border: 1px solid #337ab7;
+        }

@@ -56,8 +56,14 @@
                                     <span th:if="${unsendcase.estabCaseStatus == 1}">完成收取</span>
                                 </td>
                                 <td>
-                                    <button class="jack_button_accept" th:attr="data-action='accept', data-id=${unsendcase.estabCaseID}" onclick="updateStatus('accept', this.getAttribute('data-id'))">接單</button>
-                                    <button class="jack_button_reject" th:attr="data-action='reject', data-id=${unsendcase.estabCaseID}" onclick="updateStatus('reject', this.getAttribute('data-id'))">拒單</button>
+                                    <button class="jack_button_accept"
+                                            th:attr="data-action='accept', data-id=${unsendcase.estabCaseID}"
+                                            onclick="updateStatus('accept', this.getAttribute('data-id'))">接單
+                                    </button>
+                                    <button class="jack_button_reject"
+                                            th:attr="data-action='reject', data-id=${unsendcase.estabCaseID}"
+                                            onclick="updateStatus('reject', this.getAttribute('data-id'))">拒單
+                                    </button>
                                 </td>
                             </tr>
                         </th:block>
@@ -112,37 +118,39 @@
 <script>
     $(".headerPage").load("/header.html");
     $(".footerPage").load("/footer.html");
-    $(".empSidebarPage").load("/testempSidebar.html");//用empSidebar.html會跳到首頁 先加test以及改html檔名避免filter攔截
+    $(".empSidebarPage").load("/empSidebar.html");//用empSidebar.html會跳到首頁 先加test以及改html檔名避免filter攔截
     function updateStatus(action, estabCaseID) {
+
+        var acceptButton = $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]');
+        var rejectButton = $('.jack_button_reject[data-action="reject"][data-id="' + estabCaseID + '"]');
         $.ajax({
             type: 'POST',
-            url: '/updateCaseStatus',  // 替换成实际的后端更新数据的接口
+            url: '/updateCaseStatus',
             data: {
                 action: action,
                 estabCaseID: estabCaseID
             },
             success: function (response) {
-                // 处理成功响应
+
                 console.log('Update successful');
 
-                // 根据返回的数据或其他条件执行不同的逻辑
-                if (response.success) {
+                if (response) {
                     if (action === 'accept') {
-                        response.takeStatus = true;
-                        $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]').text('已接單');
+                        acceptButton.text('已接單').prop('disabled', true);
+                        rejectButton.prop('disabled', true);
                         console.log('Accept logic');
+
                     } else if (action === 'reject') {
-                        // 处理拒单逻辑
-                        $('.jack_button_reject[data-action="reject"][data-id="' + estabCaseID + '"]').text('已拒單');
+
+                        rejectButton.text('已拒單').prop('disabled', true);
+                        acceptButton.prop('disabled', true);
                         console.log('Reject logic');
                     }
                 } else {
-                    // 处理其他成功但不同于预期的情况
                     console.log('Unexpected success response');
                 }
             },
             error: function (error) {
-                // 处理错误响应
                 console.error('Update failed', error);
             }
         });
