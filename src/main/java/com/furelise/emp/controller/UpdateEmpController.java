@@ -29,9 +29,9 @@ public class UpdateEmpController {
 		String name = req.getParameter("empName");
 		String tel = req.getParameter("empTel");
 		Integer timeID = Integer.parseInt(req.getParameter("emp_workTime"));
-		Integer workArea1 = Integer.parseInt(req.getParameter("emp_workArea1"));
-		Integer workArea2 = Integer.parseInt(req.getParameter("emp_workArea2"));
-		Integer workArea3 = Integer.parseInt(req.getParameter("emp_workArea3"));
+		String workArea1 = req.getParameter("emp_workArea1");
+		String workArea2 = req.getParameter("emp_workArea2");
+		String workArea3 = req.getParameter("emp_workArea3");
 		String newPass = req.getParameter("emp_pw_new");
 		String cfmPass = req.getParameter("emp_pw_newConfirm");
 		// 註：因夥伴申請帳號時有身分驗證，故不得更改身分證字號、出生日期
@@ -74,10 +74,10 @@ public class UpdateEmpController {
         }
 		
         // 工作區域錯誤處理
-        if (workArea1 == 0) {
+        if ("0".equals(workArea1)) {
         	// 沒有選第一順位工作區域
         	errMsgs.add(" 請至少選擇第一順位工作區域！");
-        } else if (workArea2 == 0 && workArea3 != 0) {
+        } else if ("0".equals(workArea2) && !"0".equals(workArea3)) {
         	// 沒有照順序選取工作順位，只選一和三
         	errMsgs.add("請按照順位順序選擇工作區域！");
         }
