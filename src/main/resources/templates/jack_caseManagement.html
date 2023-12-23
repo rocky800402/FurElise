@@ -116,9 +116,9 @@
 <script th:src="@{/js/jack_caseManagement.js}"></script>
 
 <script>
-    $(".headerPage").load("/testheader.html");
-    $(".footerPage").load("/testfooter.html");
-    $(".empSidebarPage").load("/testempSidebar.html");//用empSidebar.html會跳到首頁 先加test以及改html檔名避免filter攔截
+    $(".headerPage").load("/header.html");
+    $(".footerPage").load("/footer.html");
+    $(".empSidebarPage").load("/empSidebar.html");//用empSidebar.html會跳到首頁 先加test以及改html檔名避免filter攔截
     function updateStatus(action, estabCaseID) {
 
         var acceptButton = $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]');

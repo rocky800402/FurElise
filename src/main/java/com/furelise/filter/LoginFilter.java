@@ -18,7 +18,7 @@ import java.util.List;
 public class LoginFilter extends OncePerRequestFilter {
 
     // 定義需要進行過濾的路徑清單
-    private final List<String> pathsToFilter = Arrays.asList("/city","/emp", "/otherPath");
+    private final List<String> pathsToFilter = Arrays.asList("/city","/otherPath");
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
