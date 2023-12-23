@@ -46,8 +46,7 @@ import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleRepository;
 
 import com.furelise.shopcart.model2.ShopCartService;
-import com.furelise.vacation.model.Vacation;
-import com.furelise.vacation.model.VacationRepository;
+
 
 
 @RestController

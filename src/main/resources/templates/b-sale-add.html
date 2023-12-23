@@ -194,38 +194,7 @@
 					<button type="submit" id="submit" class="sl_btn_chakan">確認送出</button>
 					<div></div>
 				</div>
-
-				<!-- 				<table> -->
-				<!-- 					<tr> -->
-				<!-- 						<td>優惠代碼:</td> -->
-				<!-- 						<td><input type="text" name="coupon" th:field="*{coupon}" size="45" /></td> -->
-				<!-- 					</tr> -->
-				<!-- 					<tr> -->
-				<!-- 						<td>優惠開始日:</td> -->
-				<!-- 						<td><input name="saleStart" id="f_date1" type="text"></td> -->
-				<!-- 					</tr> -->
-				<!-- 					<tr> -->
-				<!-- 						<td>優惠結束日:</td> -->
-				<!-- 						<td><input name="saleEnd" id="f_date2" type="text"></td> -->
-				<!-- 					</tr> -->
-				<!-- 					<tr> -->
-				<!-- 						<td>優惠條件:</td> -->
-				<!-- 						<td><input type="text" name="disRequire" th:field="*{disRequire}" size="45" /></td> -->
-				<!-- 					</tr> -->
-				<!-- 					<tr> -->
-				<!-- 						<td>優惠折抵:</td> -->
-				<!-- 						<td><input type="text" name="dis" th:field="*{dis}" size="45" /></td> -->
-				<!-- 					</tr> -->
-				<!-- 				</table> -->
-
-
-				<!-- 				<div class="row justify-content-start"> -->
-				<!-- 					<div class="col-4"> -->
-				<!-- 						<button type="button" onclick="history.go(-1)" class="sl_btn_disable">回上一頁</button> -->
-				<!-- 												<input type="hidden" name="action" value="insert"> -->
-				<!-- 						<a href="add"><button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button></a> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
+				
 			</form>
 		</main>
 	</div>
@@ -241,34 +210,34 @@
 	$(document).ready(function () {
 		$(".sidebarPage").load("/backendSidebar.html");
 		
-		 // 获取当前日期
+		 // 取得當前日期
         var today = new Date();
         
-        // 格式化日期为 'YYYY-MM-DD'
+        // 預設日期為 'YYYY-MM-DD'
         var formattedDate = today.toISOString().split('T')[0];
 
-        // 设置優惠開始日和優惠結束日输入框的值为今天
+        // 設置優惠開始日和優惠結束日输入框的值為今天
         $('#saleS').val(formattedDate);
         $('#saleE').val(formattedDate);
 
-        // 初始化 datetimepicker
-        $('#f_date1').datetimepicker({
-            theme: '',
-            timepicker: false,
-            step: 1,
-            format: 'Y-m-d',
-            value: saleStartValue,
-            minDate: '-1970-01-01',
-        });
+//         // 初始化 datetimepicker
+//         $('#f_date1').datetimepicker({
+//             theme: '',
+//             timepicker: false,
+//             step: 1,
+//             format: 'Y-m-d',
+//             value: saleStartValue,
+//             minDate: '-1970-01-01',
+//         });
 
-        $('#f_date2').datetimepicker({
-            theme: '',
-            timepicker: false,
-            step: 1,
-            format: 'Y-m-d',
-            value: formattedDate,
-            minDate: '-1970-01-01',
-        });
+//         $('#f_date2').datetimepicker({
+//             theme: '',
+//             timepicker: false,
+//             step: 1,
+//             format: 'Y-m-d',
+//             value: formattedDate,
+//             minDate: '-1970-01-01',
+//         });
 	});
 	</script>
 

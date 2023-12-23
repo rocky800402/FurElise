@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+body{
+  background-color: #f1f1f1;
+}
+
+main.content{
+  margin: 0 20% 0 20%;
+
+}
+
+.yh_the_detail{
+  background-color: white;
+  width: 800px;
+  min-height: 1000px;
+  padding: 20px;
+}
+
+.yh_the_detail_n{
+  background-color: #f1f1f1;
+}
+
+.yh_the_detail > p{
+  margin-bottom: 20px;
+  display: inline-block;
+} 
+
+.yh_pro_inside_detail{
+  width: 700px;
+  height: 300px;
+  margin-left: 5% ;
+  text-align: center;
+
+}
+
+div > img{
+  width: 200px;
+  height: 170px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+  background-color: #a5a5a5;
+}
+
+.btn-primary{
+  margin-top: 30px;
+}

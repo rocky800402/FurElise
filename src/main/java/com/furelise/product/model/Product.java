@@ -2,25 +2,25 @@ package com.furelise.product.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Set;
+import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import com.furelise.orddetail.model.OrdDetail;
-//import com.furelise.productclass.model.ProductClass;
-//import com.furelise.shopcart.model.ShopCart;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.furelise.common.annotation.BigDecimalFormat;
+import com.furelise.productclass.model.ProductClass;
+import com.furelise.validation.ValidByteArray;
 
 import lombok.Data;
 
@@ -35,32 +35,42 @@ public class Product implements Serializable{
 	@Column(name = "pID", updatable = false)
 	private Integer pID;
 
+	@NotBlank(message="商品名稱請勿空白")
 	@Column(name = "pName")
 	private String pName;
-
+	
+	@BigDecimalFormat
+    @NotNull(message = "不可為空")
 	@Column(name = "pPrice")
 	private BigDecimal pPrice;
 	
-	private Integer pClassID;
+//	private Integer pClassID;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "pClassID", referencedColumnName = "pClassID")
-//	private ProductClass productClass;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "pClassID", referencedColumnName = "pClassID")
+	private ProductClass productClass;
 
+
+	public void setProductClass(ProductClass productClass) {
+		this.productClass = productClass;
+	}
 	
-
+	@NotNull
 	@Column(name = "pStock")
 	private Integer pStock;
 
 	@Column(name = "pStatus")
 	private Boolean pStatus;
 
+	@NotNull(message="不可為空")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name = "pUpload")
-	private Date pUpload;
+	private LocalDate pUpload;
 
 	@Column(name = "pDetail")
 	private String pDetail;
 
+	@ValidByteArray(message= "請至少上傳一張照片")
 	@Column(name = "pImage1", columnDefinition = "longblob")
 	private byte[] pImage1;
 
