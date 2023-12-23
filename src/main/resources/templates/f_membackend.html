@@ -1,31 +1,28 @@
 <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="/css/backend_form.css">
-    <link rel="stylesheet" href="/css/membackend.css">
+    <title>會員停權頁面</title>
+    <link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/backend_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
+	<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+    <link rel="stylesheet" th:href="@{/css/membackend.css}">
 </head>
 
-
 <body>
-    
-
-
     <div class="container">
         <div class="backendSidebarPage"></div>
         <main class="content">
             <p class="p_title">會員管理 </p>
             <table id="example" class="display" style="width:100%">
                 
-
-                
-
                 <form action="#" method="post">
                     <label for="memberID">會員ID：</label>
                     <input type="text" id="memberID" name="memberID" required>
@@ -66,13 +63,11 @@
         </main>
     </div>
 
-
     <div class="footerPage"></div>
 
-
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/jquery-3.7.1.min.js"></script>
-    <script src="/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script>
         new DataTable('#example');
     </script>

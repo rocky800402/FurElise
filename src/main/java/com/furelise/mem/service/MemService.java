@@ -1,13 +1,17 @@
-	package com.furelise.mem.service;
+package com.furelise.mem.service;
+
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
+
+import antlr.collections.List;
 
 @Service
 public class MemService {
@@ -65,6 +69,10 @@ public class MemService {
 	
 	public Mem getOneMem(Integer memID) {
 		return memR.getReferenceById(memID);
+	}
+	
+	public java.util.List<Mem> getAllMem(){
+		return memR.findAll();
 	}
 	
 	
