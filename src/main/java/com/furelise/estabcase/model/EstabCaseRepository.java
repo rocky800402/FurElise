@@ -34,7 +34,6 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
             Integer empID,
             Integer estabCaseStatus
     );
-
     List<EstabCase> findByEmpID(Integer empID);
 
 	Page<EstabCase> findAllByTakeStatus(boolean takeStatus, Pageable pageable);

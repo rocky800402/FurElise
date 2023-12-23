@@ -4,12 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>新增商品類別</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
-    <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
-<!-- <link rel="stylesheet" href="css/jquery.dataTables.min.css"> -->
-<style>
+<title>後臺-商品管理-商品查詢</title>
+<!-- <%@ include file="included-fragment.file"%> -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+<link rel="stylesheet" th:href="@{/css/backend_form.css}">
+<link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
+<style type="text/css">
 /* 查看詳情button */
 .sl_btn_chakan {
 	cursor: pointer;
@@ -121,67 +123,115 @@
 	font-size: var(--bs-badge-font-size);
 	font-weight: var(--bs-badge-font-weight);
 	line-height: 1;
-	color: var(--bs-badge-color);
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: var(--bs-badge-border-radius);
-	color: #fff !important;
-	/* background-color: #FFC2A0 !important; */
+	color: #fff /* background-color: #FFC2A0 !important; */
 }
 </style>
 </head>
 
+
 <body>
 
-	<div class="headerPage"></div>
-
 	<div class="container">
-		<div class="sidebarPage"></div>
+		<div class="backendSidebarPage"></div>
 		<main class="content">
-			<p class="p_title">商品類別名稱修改</p>
+			<div>
+				<!--     <p class="p_subtitle" style="float:left; margin-top:0;">優惠碼</p> -->
+				<a th:href="add" class="sl_btn_chakan btn btn-primary"
+					style="float: right; margin-bottom: 20px;">新增</a>
+			</div>
 
-			<FORM METHOD="post" th:action="@{/productclass/update}" th:object="${productClass}" name="form1">
-				
-				<label>商品類別編號(不可修改)</label>
-				<div class="input-group mb-3">
-					<input type="text" th:field="*{pClassID}" readonly/>
-				</div>
-				
-				<label>商品類別名稱</label>
-				<div class="input-group mb-3">
-					<input placeholder="必填" type="text" th:field="*{pClassName}" onclick="hideContent('pClassName.errors');" required/>
-					<span  th:if="${#fields.hasErrors('pClassName')}" th:errors="*{pClassName}" class="error" id="pClassName.errors" style="color:red;"></span>
-				</div>
+			<p class="p_title">後臺-商品管理-商品查詢</p>
 
-				<div class="row justify-content-start">
-					<div class="col-4">
-					<a href="all"><button type="button" class="sl_btn_disable">回商品類別列表</button></a>
-					<button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button>
-					</div>
-				</div>
+			<table id="example" class="display" style="width: 100%">
+				<thead>
+					<tr style="height: 20px">
+						<th>商品編號</th>
+						<th>商品名稱</th>
+						<th>商品價格</th>
+						<th>庫存</th>
+						<th>商品狀態</th>
+						<th>修改</th>
+						<th>查看詳情</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="product : ${productList}">
+						<td th:text="${product.pID}"></td>
+						<td th:text="${product.pName}"></td>
+						<td th:text="${product.pPrice}"></td>
+						<td th:text="${product.pStock}"></td>
+						<td class="pStatus" th:text="${product.pStatus ? '上架中' : '未上架'}"></td>
+
+						<td>
+							<form method="post" th:action="@{/product-backen/getone}">
+								<button type="submit" class="sl_sp_badge"
+									style="background-color: white; color: #9ac972; border: solid 1px #9ac972;">修改</button>
+								<input type="hidden" name="pID" th:value="${product.pID}" />
+							</form>
+						</td>
+
+						<td>
+							<form method="get" th:action="@{/product-backen/check-detail}">
+								<button type="submit" class="sl_sp_badge" 
+ 									style="background-color: #9ac972; color: white; border: solid 1px #9ac972;">查看詳情</button> 
+								<input type="hidden" name="pID" th:value="${product.pID}" />
+							</form>
+<!-- 							<form method="post" th:action="@{/product/getone}"> -->
+<!-- 								<button type="submit" class="sl_sp_badge" -->
+<!-- 									style="background-color: #9ac972;">查看詳情</button> -->
+<!-- 								<input type="hidden" name="pID" th:value="${product.pID}" /> <input -->
+<!-- 									type="hidden" name="action" value="getOne_For_Check" /> -->
+<!-- 							</form> -->
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>商品編號</th>
+						<th>商品名稱</th>
+						<th>商品價格</th>
+						<th>庫存</th>
+						<th>商品狀態</th>
+						<th>修改</th>
+						<th>查看詳情</th>
+					</tr>
+				</tfoot>
+			</table>
 
 
-			</FORM>
-		</main>
-	</div>
 
-	<div class="footerPage"></div>
+			<!-- 	<div class="footerPage"></div> -->
 
-	<script
-		 th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script  th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
-	<script>
-		$(".sidebarPage").load("/backendSidebar.html");
-	</script>
-	<script>
-		// 日期
-		// 		var today = new Date();
-		// 		sl_start.min = new Date((today.setDate(today.getDate())))
-		// 				.toLocaleDateString('fr-ca');
-		// 		sl_end.min = sl_start.min;
-	</script>
+			<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+			<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+			<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+			<script>
+				new DataTable('#example');
+			</script>
+			<script>
+				$(".backendSidebarPage").load("/backendSidebar.html");
+
+				// 		const statusElements = document.querySelectorAll('.pStatus');
+
+				// 	    // 迭代每個元素
+				// 	    statusElements.forEach(element => {
+				// 	        const status = element.textContent.trim(); // 獲取元素內文本並去除空格
+
+				// 	        if (status === '上架中') {
+				// 	            // 如果商品狀態為 '上架中'，添加 'status-true' 類別
+				// 	            element.classList.add('status-true');
+				// 	        } else if (status === '未上架') {
+				// 	            // 如果商品狀態為 '未上架'，添加 'status-false' 類別
+				// 	            element.classList.add('status-false');
+				// 	        }
+				// 	    });
+			</script>
 </body>
 
 </html>

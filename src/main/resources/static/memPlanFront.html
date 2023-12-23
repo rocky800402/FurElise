@@ -29,28 +29,10 @@
                     <section class="mb_plan_card">
                         <div class="mb_plan_info">
                             <div class="mb_plan_img_frame">
-                                <img class="mb_plan_img" src="./images/883AF41144-SP-8305544.jpg" alt="">
+                                <img class="mb_plan_img" src="./images/13102.jpg" alt="">
                             </div>
                             <div class="mb_plan_info_body">
-                                <p class="mb_plan_name" style="font-weight: 900;">小資方案</p>
-                                <p class="mb_plan_time_range"></p>
-                                <div class="mb_plan_ord_price">
-                                    <div class="mb_plan_monthly">
-                                        <p class="mb_plan_period">一個月<samp>，</samp></p>
-                                        <p class="mb_plan_week_cont">每週三次</p>
-                                    </div>
-                                    <p class="mb_plan_ord_total"><span>$</span>1140</p>
-                                </div>
-                                <div class="mb_plan_weekly">
-                                    <p class="mb_mon ">星期一</p>
-                                    <p class="mb_tue mb_off">星期二</p>
-                                    <p class="mb_wed mb_off">星期三</p>
-                                    <p class="mb_thu ">星期四</p>
-                                    <p class="mb_fri mb_off">星期五</p>
-                                    <p class="mb_sat ">星期六</p>
-                                    <p class="mb_sun mb_off">星期日</p>
-                                </div>
-                                <p class="mb_plan_way">到府收取</p>
+                                
 
                             </div>
                         </div>
@@ -125,7 +107,91 @@
     <script src="./js/jquery-3.7.1.min.js"></script>
     <script src="./js/memPlanFront.js"></script>
     <script>
-        
+                function alert(data, callback) { //回调函数，data -> alert函数的值 -> alert(data)
+            console.log(data);
+            // 创建新的元素
+            var alert_bg = document.createElement('div'),// 背景蒙版
+                alert_box = document.createElement('div'),// 背景弹框
+                alert_text = document.createElement('div'),// 承载data的div
+                alert_btn = document.createElement('div'),// 点击按钮
+                textNode = document.createTextNode(data ? data : ''),// 用户向alert()传值时，例：alert(data),赋值给textNode
+                btnText = document.createTextNode('確定');
+
+            // 元素的css样式
+            css(alert_bg, {
+                'position': 'fixed',
+                'top': '0',
+                'left': '0',
+                'right': '0',
+                'bottom': '0',
+                'background-color': 'rgba(0, 0, 0, 0.1)',
+                'z-index': '999999999'
+            });
+
+            css(alert_box, {
+                'width': '300px',
+                'max-width': '90%',
+                'font-size': '16px',
+                'text-align': 'center',
+                'background-color': '#fff',
+                'border-radius': '15px',
+                'position': 'absolute',
+                'top': '15%',
+                'left': '50%',
+                'transform': 'translate(-50%, -50%)'
+            });
+
+            css(alert_text, {
+                'padding': '30px 30px'
+            });
+
+            css(alert_btn, {
+                'padding': '10px 0',
+                'width': '80px',
+                'float': 'right',
+                'background-color': '#ffffff',
+                'color': '#A7D87D',
+                'border-color': '#A7D87D',
+                'border': '1px solid ',
+                'font-weight': '600',
+                'margin': '2px 2px',
+                'cursor': 'pointer'
+            });
+
+            // 内部结构套入
+            // 套盒子：
+            // 提示信息套进alert_text
+            alert_text.appendChild(textNode);
+            // "确定"套进alert_btn
+            alert_btn.appendChild(btnText);
+            // 再套进alert弹框
+            alert_box.appendChild(alert_text);
+            alert_box.appendChild(alert_btn);
+            // 最后套进蒙版(蒙版：防止用户点击其他地方)
+            alert_bg.appendChild(alert_box);
+
+            // 整体显示到页面内(把弹框挂载到页面上)
+            document.getElementsByTagName('body')[0].appendChild(alert_bg);
+
+            // 确定绑定点击事件删除标签
+            alert_btn.onclick = function () {
+                alert_bg.parentNode.removeChild(alert_bg);
+                if (typeof callback === 'function') {
+                    callback(); //回调
+                }
+            }
+        }
+
+        function css(targetObj, cssObj) {
+    var str = targetObj.getAttribute("style") ? targetObj.getAttribute('style') : '';
+    for (var i in cssObj) {
+        str += i + ':' + cssObj[i] + ';';
+    }
+    targetObj.style.cssText = str;
+    }
+
+
+
 
         $(".headerPage").load("header.html");
         $(".footerPage").load("footer.html");

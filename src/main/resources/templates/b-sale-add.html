@@ -128,6 +128,10 @@
 	color: #fff !important;
 	/* background-color: #FFC2A0 !important; */
 }
+.error{
+	color: red;
+	font-size: 20px;
+	}
 </style>
 </head>
 
@@ -136,80 +140,61 @@
 	<!--     <div th:replace="fragments/header :: header"></div> -->
 
 	<div class="container">
-		<!--         <div th:replace="fragments/sidebar :: sidebar"></div> -->
+		<div class="sidebarPage"></div>
+
 		<main class="content">
 			<p class="p_title">新增優惠</p>
 
-			<form method="post" th:action="@{add}" th:object="${sale}" name="form1">
+			<form method="post" th:action="@{/sale/add}" th:object="${sale}"
+				name="form1">
 				<div>
-				<label>優惠代碼:</label>
-				<input type="text" th:field="*{coupon}" onclick="hideContent('coupon.errors');" /><br/>
-				<span  th:if="${#fields.hasErrors('coupon')}" th:errors="*{coupon}" class="error" id="coupon.errors"></span>
-				</div><br>
-				
-				<div>
-				<label>優惠開始日:</label>
-				<input type="date" th:field="*{saleStart}" onclick="hideContent('saleStart.errors');" /><br/>
-				<span  th:if="${#fields.hasErrors('saleStart')}" th:errors="*{saleStart}" class="error" id="saleStart.errors"></span>
-				</div><br>
-				
-				<div>
-				<label>優惠結束日:</label>
-				<input type="date" th:field="*{saleEnd}" onclick="hideContent('saleEnd.errors');" /><br/>
-				<span  th:if="${#fields.hasErrors('saleEnd')}" th:errors="*{saleEnd}" class="error" id="saleEnd.errors"></span>
-                    <div>[[${endDateError}]]</div>
-				</div><br>
-				
-				<div>
-				<label>優惠條件:</label>
-				<input type="text" th:field="*{disRequire}" onclick="hideContent('disRequire.errors');" /><br/>
-				<span  th:if="${#fields.hasErrors('disRequire')}" th:errors="*{disRequire}" class="error" id="disRequire.errors"></span>
-				</div><br>
-				
-				<div>
-				<label>優惠折抵:</label>
-				<input type="text" th:field="*{dis}" onclick="hideContent('dis.errors');" /><br/>
-				<span  th:if="${#fields.hasErrors('dis')}" th:errors="*{dis}" class="error" id="dis.errors"></span>
-				</div><br>
-				
-				<div>
-					<div></div>
-					<button type="button" onclick="history.go(-1)" class="sl_btn_disable">回上一頁</button>
-					<button type="submit" id="submit" class="sl_btn_chakan"> 確認送出 </button>
-					<div></div>
-				</div>		
-				
-<!-- 				<table> -->
-<!-- 					<tr> -->
-<!-- 						<td>優惠代碼:</td> -->
-<!-- 						<td><input type="text" name="coupon" th:field="*{coupon}" size="45" /></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<td>優惠開始日:</td> -->
-<!-- 						<td><input name="saleStart" id="f_date1" type="text"></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<td>優惠結束日:</td> -->
-<!-- 						<td><input name="saleEnd" id="f_date2" type="text"></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<td>優惠條件:</td> -->
-<!-- 						<td><input type="text" name="disRequire" th:field="*{disRequire}" size="45" /></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<td>優惠折抵:</td> -->
-<!-- 						<td><input type="text" name="dis" th:field="*{dis}" size="45" /></td> -->
-<!-- 					</tr> -->
-<!-- 				</table> -->
+					<label>優惠代碼:</label> <input type="text" th:field="*{coupon}"
+						onclick="hideContent('coupon.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('coupon')}" th:errors="*{coupon}"
+						class="error" id="coupon.errors"></span>
+				</div>
+				<br>
 
+				<div>
+					<label>優惠開始日:</label> <input id="saleS" type="date" th:field="*{saleStart}"
+						onclick="hideContent('saleStart.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('saleStart')}" th:errors="*{saleStart}"
+						class="error" id="saleStart.errors"></span>
+				</div>
+				<br>
+
+				<div>
+					<label>優惠結束日:</label> <input id="saleE" name="saleE" type="date" th:field="*{saleEnd}"
+						onclick="hideContent('saleEnd.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('saleEnd')}" th:errors="*{saleEnd}"
+						class="error" id="saleEnd.errors"></span>
+					<div>[[${endDateError}]]</div>
+				</div>
+				<br>
+
+				<div>
+					<label>優惠條件:</label> <input type="text" th:field="*{disRequire}"
+						onclick="hideContent('disRequire.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('disRequire')}"
+						th:errors="*{disRequire}" class="error" id="disRequire.errors"></span>
+				</div>
+				<br>
+
+				<div>
+					<label>優惠折抵:</label> <input type="text" th:field="*{dis}"
+						onclick="hideContent('dis.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('dis')}" th:errors="*{dis}"
+						class="error" id="dis.errors"></span>
+				</div>
+				<br>
+
+				<div>
+					<div></div>
+					<button type="button" onclick="history.go(-1)" class="sl_btn_disable">回優惠列表</button>
+					<button type="submit" id="submit" class="sl_btn_chakan">確認送出</button>
+					<div></div>
+				</div>
 				
-<!-- 				<div class="row justify-content-start"> -->
-<!-- 					<div class="col-4"> -->
-<!-- 						<button type="button" onclick="history.go(-1)" class="sl_btn_disable">回上一頁</button> -->
-<!-- 												<input type="hidden" name="action" value="insert"> -->
-<!-- 						<a href="add"><button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button></a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 			</form>
 		</main>
 	</div>
@@ -220,46 +205,79 @@
 
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
 	<script>
+	$(document).ready(function () {
 		$(".sidebarPage").load("/backendSidebar.html");
+		
+		 // 取得當前日期
+        var today = new Date();
+        
+        // 預設日期為 'YYYY-MM-DD'
+        var formattedDate = today.toISOString().split('T')[0];
+
+        // 設置優惠開始日和優惠結束日输入框的值為今天
+        $('#saleS').val(formattedDate);
+        $('#saleE').val(formattedDate);
+
+//         // 初始化 datetimepicker
+//         $('#f_date1').datetimepicker({
+//             theme: '',
+//             timepicker: false,
+//             step: 1,
+//             format: 'Y-m-d',
+//             value: saleStartValue,
+//             minDate: '-1970-01-01',
+//         });
+
+//         $('#f_date2').datetimepicker({
+//             theme: '',
+//             timepicker: false,
+//             step: 1,
+//             format: 'Y-m-d',
+//             value: formattedDate,
+//             minDate: '-1970-01-01',
+//         });
+	});
 	</script>
 
 
 
+<!-- 	<script th:inline="javascript"> -->
+		
+	
+<!-- // 		$(document).ready(function() { -->
+<!-- // 			//$.datetimepicker.setLocale('zh'); -->
+<!-- // 			$('#f_date1').datetimepicker({ -->
+<!-- // 				theme : '', //theme: 'dark', -->
+<!-- // 				timepicker : false, //timepicker:true, -->
+<!-- // 				step : 1, //step: 60 (這是timepicker的預設間隔60分鐘) -->
+<!-- // 				format : 'Y-m-d', //format:'Y-m-d H:i:s', -->
+<!-- // 				value : '<%=saleStart%>', // value:   new Date(), -->
+<!-- // 				//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含 -->
+<!-- // 				//startDate:	            '2017/07/10',  // 起始日 -->
+<!-- // 				minDate : '-1970-01-01', // 去除今日(不含)之前 -->
+<!-- // 			//maxDate:               '+1970-01-01'  // 去除今日(不含)之後 -->
+<!-- // 			}); -->
 
-	<script th:inline="javascript">
-		$(document).ready(function() {
-			//$.datetimepicker.setLocale('zh');
-			$('#f_date1').datetimepicker({
-				theme : '', //theme: 'dark',
-				timepicker : false, //timepicker:true,
-				step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
-				format : 'Y-m-d', //format:'Y-m-d H:i:s',
-				value : '<%=saleStart%>', // value:   new Date(),
-				//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-				//startDate:	            '2017/07/10',  // 起始日
-				minDate : '-1970-01-01', // 去除今日(不含)之前
-			//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-			});
+<!-- // 			$.datetimepicker.setLocale('zh'); -->
+<!-- // 			$('#f_date2').datetimepicker({ -->
+<!-- // 				theme : '', //theme: 'dark', -->
+<!-- // 				timepicker : false, //timepicker:true, -->
+<!-- // 				step : 1, //step: 60 (這是timepicker的預設間隔60分鐘) -->
+<!-- // 				format : 'Y-m-d', //format:'Y-m-d H:i:s', -->
+<!-- // 				value : '<%=saleEnd%>', // value:   new Date(), -->
+<!-- // 				//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含 -->
+<!-- // 				//startDate:	            '2017/07/10',  // 起始日 -->
+<!-- // 				minDate : '-1970-01-01', // 去除今日(不含)之前 -->
+<!-- // 			//maxDate:               '+1970-01-01'  // 去除今日(不含)之後 -->
+<!-- // 			}); -->
+<!-- // 		}) -->
+<!-- 	</script> -->
 
-			$.datetimepicker.setLocale('zh');
-			$('#f_date2').datetimepicker({
-				theme : '', //theme: 'dark',
-				timepicker : false, //timepicker:true,
-				step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
-				format : 'Y-m-d', //format:'Y-m-d H:i:s',
-				value : '<%=saleEnd%>', // value:   new Date(),
-				//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-				//startDate:	            '2017/07/10',  // 起始日
-				minDate : '-1970-01-01', // 去除今日(不含)之前
-			//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-			});
-		})
-	</script>
-
-	<link rel="stylesheet" type="text/css" href="/datetimepicker/jquery.datetimepicker.css" />
-	<script src="/datetimepicker/jquery.js"></script>
-	<script src="/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/datetimepicker/jquery.datetimepicker.css}" />
+	<script th:src="@{/datetimepicker/jquery.js}"></script>
+	<script th:src="@{/datetimepicker/jquery.datetimepicker.full.js}"></script>
 
 
 </body>
@@ -295,9 +313,5 @@
 	height: 151px; /* height:  151px; */
 }
 </style>
-
-<script>
-	
-</script>
 
 </html>
