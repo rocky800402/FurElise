@@ -29,5 +29,5 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
 			Integer empID,
 			Integer estabCaseStatus
 	);
-	EstabCase findByEmpID(Integer empID);
+	List<EstabCase> findByEmpID(Integer empID);
 }
