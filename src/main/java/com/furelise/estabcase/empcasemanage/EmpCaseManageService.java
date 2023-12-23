@@ -27,10 +27,7 @@ public class EmpCaseManageService {
     PickupTimeRepository pickupTimeRepository;
     @Autowired
     CityRepository cityRepository;
-    public EstabCase updateEstabCase(Integer estabCaseID) {
-        EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElseThrow();
-        return estabCaseRepository.save(estabCase);
-    }
+
     public EstabCase updateEstabCase(Integer estabCaseID, Boolean takeStatus, Integer estabCaseStatus) {
         EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElse(null);
         if (estabCase != null) {
@@ -41,11 +38,6 @@ public class EmpCaseManageService {
         return estabCase;
     }
 
-//    public Optional<EstabCase> getEstabCaseById(Integer estabCaseID){
-//        return estabCaseRepository.findById(estabCaseID);
-//    }
-//    //Boolean takeStatus,Integer estabCaseStatus
-
     public List<EmpCaseManageVO> getEmpEstabCase(Integer empID){
         List<EmpCaseManageVO> listEc = new ArrayList<EmpCaseManageVO>();
 
@@ -53,9 +45,11 @@ public class EmpCaseManageService {
         List<EstabCase> estabCases = estabCaseRepository.findByEmpID(empID);
         for(EstabCase estabCase :estabCases){
             EmpCaseManageVO ecVO = new EmpCaseManageVO();
+
             PlanOrd planOrd = planOrdRepository.findById(estabCase.getPlanOrdID()).orElseThrow();
             PickupTime pickupTime = pickupTimeRepository.findById(planOrd.getTimeID()).orElseThrow();
             City city = cityRepository.findByCityCode(planOrd.getCityCode());
+
             ecVO.setEstabCaseID(estabCase.getEstabCaseID());
             ecVO.setEstabCaseDate(estabCase.getEstabCaseDate());
             ecVO.setTimeRange(pickupTime.getTimeRange());
