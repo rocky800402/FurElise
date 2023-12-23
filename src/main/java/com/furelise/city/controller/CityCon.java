@@ -70,20 +70,30 @@ public class CityCon {
 
 	// 不能用put
 	@PostMapping("/update")
-	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result, Model model) {
+	public String cityUpdate(@Valid City city, BindingResult result, @RequestParam Integer cityID, Model model) {
+		String oldCityCode = citySvc.getCityById(cityID).getCityCode();
 		if (result.hasErrors()) {
 			return "b_city_update";
 		} else {
-			// true: break; false: proceed
-			boolean proceed = citySvc.updateCity(city);
-			if (proceed) {
+			boolean proceed = citySvc.updateCity(city, oldCityCode);
+			if(proceed) 
 				return "redirect:/city/all";
-			} else {
+			else {
 				model.addAttribute("errorMessage", "郵遞區號已存在");
 				return "b_city_update";
 			}
 		}
 	}
+	
+//	@PostMapping("/update")
+//	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result, Model model) {
+//		if (result.hasErrors()) {
+//			return "b_city_update";
+//		} else {
+//			citySvc.updateCity(city);
+//			return "redirect:/city/all";
+//		}
+//	}
 
 	@PostMapping("/delete")
 	public String cityDelete(@RequestParam String cityID, Model model) {

@@ -151,7 +151,7 @@
 				
 				<label>郵遞區號</label>
 				<div class="input-group mb-3">
-					<input placeholder="必填，3位數字 ex:999" type="text" th:field="*{cityCode}" onclick="hideContent('cityCode.errors');" required/>
+					<input type="text" th:field="*{cityCode}" onclick="hideContent('cityCode.errors');" autofocus required/>
 					<span  th:if="${#fields.hasErrors('cityCode')}" th:errors="*{cityCode}" class="error" id="cityCode.errors"></span>
 					<span class="error" th:utext="${errorMessage}">${errorMessage}</span>
 				</div>
