@@ -136,13 +136,16 @@ public class PlanOrdController {
 	@PostMapping("/checkenddate")
 	@ResponseBody
 	public boolean verifyPlanOrdPurchase(HttpServletRequest req, @RequestBody PlanOrd planOrd) {
-		Mem mem = (Mem) req.getSession().getAttribute("account");
-		String planStart = planOrd.getPlanStart().toString();
-		//測試時先把mem、planStart寫死，(ajax測試時要搭配好planOrdDtoCon的addPlanOrd)
-		//Integer memID = mem.getMemID();
-		Integer memID = 110003;
-		return planOrdSvc.verifyPlanOrdPurchase(memID, planStart) ;
-		// true:可以訂 false:不可以訂
+		//測試時先把mem寫死(ajax測試時要搭配好planOrdDtoCon的addPlanOrd)
+//		Mem mem = (Mem) req.getSession().getAttribute("mem");
+//		if (mem != null) {
+			String planStart = planOrd.getPlanStart().toString();
+			//Integer memID = mem.getMemID();
+			Integer memID = 110003;
+			return planOrdSvc.verifyPlanOrdPurchase(memID, planStart) ;
+			// true:可以訂 false:不可以訂
+//		} else
+//			return false;		
 	}
 
 //	// 暫不做修改功能

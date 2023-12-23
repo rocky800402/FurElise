@@ -1,7 +1,7 @@
 // 載入
 function init() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/pickuptime/all", // 資料請求的網址
+		url: "http://localhost:8080/pickuptime/all", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -13,7 +13,7 @@ function init() {
                 <tr data-timeid="${item.timeID}">
                     <td>${item.timeID}</td>
                     <td>${item.timeRange}</td>
-					<td><a href="/furelise/pickuptime/update?timeID=${item.timeID}"><span class="sl_btn_chakan" style="background-color: #9ac972">修改</span></a></td>
+					<td><a href="update?timeID=${item.timeID}"><span class="sl_btn_chakan" style="background-color: #9ac972">修改</span></a></td>
                     <td><input id="del" class="sl_btn_chakan" type="submit" value="刪除"></td>
                 </tr>
             `;
@@ -44,7 +44,7 @@ $("button#task_add").on("click", function() {
 			};
 
 			$.ajax({
-				url: "http://localhost:8081/furelise/pickuptime/adding", // 資料請求的網址
+				url: "http://localhost:8080/pickuptime/adding", // 資料請求的網址
 				type: "POST", // GET | POST | PUT | DELETE | PATCH
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
@@ -77,7 +77,7 @@ $(document).on("click", "input#del", function() {
 		let timeID = $(this).closest('tr').data('timeid');
 		let that = this;
 		$.ajax({
-			url: "http://localhost:8081/furelise/pickuptime/deleting",           // 資料請求的網址
+			url: "http://localhost:8080/pickuptime/deleting",           // 資料請求的網址
 			type: "DELETE",
 			contentType: "application/json", // Set the content type to JSON
 			data: JSON.stringify({ "timeID": timeID }), // Convert the data to JSON                  // GET | POST | PUT | DELETE | PATCH
@@ -112,8 +112,6 @@ $("button#task_update").on("click", function() {
 	let update_text = $("input#timeRange")
 		.val()
 		.trim();
-	// console.log($("input#wayID").val());
-	// console.log(update_text);
 	if (update_text == "") {
 		alert("請輸入收取時段！");
 	} else {
@@ -122,9 +120,8 @@ $("button#task_update").on("click", function() {
 			"timeRange": update_text
 		}
 		$.ajax({
-			url: "http://localhost:8081/furelise/pickuptime/updating",           // 資料請求的網址
+			url: "http://localhost:8080/pickuptime/updating",           // 資料請求的網址
 			type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
-			// data: { "wayID": wayID, "wayName": wayName },                // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
 			data: JSON.stringify(update_data),
 			dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html

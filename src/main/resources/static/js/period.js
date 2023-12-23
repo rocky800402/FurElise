@@ -2,7 +2,7 @@
 // 載入
 function init() {
 	$.ajax({
-		url: "http://localhost:8081/furelise/period/all", // 資料請求的網址
+		url: "http://localhost:8080/period/all", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -14,7 +14,7 @@ function init() {
                 <tr data-periodid="${item.periodID}">
                     <td>${item.periodID}</td>
                     <td>${item.planPeriod}</td>
-					<td><a href="/furelise/period/update?periodID=${item.periodID}">
+					<td><a href="update?periodID=${item.periodID}">
 					<span class="sl_btn_chakan" style="background-color: #9ac972">修改</span>
 					</a></td>
                     <td><input id="del" class="sl_btn_chakan" type="submit" value="刪除"></td>
@@ -46,7 +46,7 @@ $("button#task_add").on("click", function() {
 			};
 
 			$.ajax({
-				url: "http://localhost:8081/furelise/period/adding", // 資料請求的網址
+				url: "http://localhost:8080/period/adding", // 資料請求的網址
 				type: "POST", // GET | POST | PUT | DELETE | PATCH
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
@@ -88,7 +88,7 @@ $(document).on("click", "input#del", function() {
 		let periodID = $(this).closest('tr').data('periodid');
 		let that = this;
 		$.ajax({
-			url: "http://localhost:8081/furelise/period/deleting",           // 資料請求的網址
+			url: "http://localhost:8080/period/deleting",           // 資料請求的網址
 			type: "DELETE",
 			contentType: "application/json", // Set the content type to JSON
 			data: JSON.stringify({ "periodID": periodID }), // Convert the data to JSON                  // GET | POST | PUT | DELETE | PATCH
@@ -132,7 +132,7 @@ $("button#task_update").on("click", function() {
 			"planPeriod": update_text
 		}
 		$.ajax({
-			url: "http://localhost:8081/furelise/period/updating",           // 資料請求的網址
+			url: "http://localhost:8080/period/updating",           // 資料請求的網址
 			type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
 			contentType: "application/json",
 			data: JSON.stringify(update_data),

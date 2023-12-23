@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
+import com.furelise.vacation.model.entity.Vacation;
+import com.furelise.vacation.repository.VacationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,8 +48,7 @@ import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleRepository;
 //import com.furelise.shopcart.model.ShopCart;
 //import com.furelise.shopcart.model.ShopCartRepository;
-import com.furelise.vacation.model.Vacation;
-import com.furelise.vacation.model.VacationRepository;
+
 
 
 @RestController

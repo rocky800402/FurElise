@@ -28,7 +28,7 @@ public class PlanRESTCon {
 	@PostMapping("/adding")
 	public String addPlan(@Valid @RequestBody Plan req) {
 		if(planSvc.addPlan(req) == null) 
-			return "價格不可低於案件報酬且皆需為整數";
+			return "價格不可低於案件報酬";
 		else
 			return "新增成功";
 	}

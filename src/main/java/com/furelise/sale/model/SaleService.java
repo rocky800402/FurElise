@@ -22,14 +22,9 @@ public class SaleService {
 		return isPass;
 	}
 
-	public boolean updateSale(Sale sale) {
-		boolean isPass = false;
-		if (!dao.existsByCoupon(sale.getCoupon())) {
-			dao.save(sale);
-			isPass = true;
-		}
-
-		return isPass;
+	public Sale updateSale(Sale sale) {
+			dao.save(sale);	
+		return sale;
 	}
 
 	public void deleteSale(Integer saleID) {

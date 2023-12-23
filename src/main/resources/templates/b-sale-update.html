@@ -129,6 +129,10 @@
 	color: #fff !important;
 	/* background-color: #FFC2A0 !important; */
 }
+.error{
+	color: red;
+	font-size: 20px;
+	}
 </style>
 </head>
 
@@ -141,56 +145,52 @@
 		<main class="content">
 			<p class="p_title">優惠資料修改</p>
 
+			<FORM METHOD="post" th:action="@{/sale/update}" th:object="${sale}"
+				name="form1">
 
-			<!-- 			<%-- 錯誤表列 --%> -->
-			<!-- 			<c:if test="${not empty errorMsgs}"> -->
-			<!-- 				<font style="color: red">請修正以下錯誤:</font> -->
-			<!-- 				<ul> -->
-			<!-- 					<c:forEach var="message" items="${errorMsgs}"> -->
-			<!-- 						<li style="color: red">${message}</li> -->
-			<!-- 					</c:forEach> -->
-			<!-- 				</ul> -->
-			<!-- 			</c:if> -->
-			<FORM METHOD="post" ACTION="sale.do" name="form1">
-				<table>
-					<tr>
-						<td>優惠編號:<font color="red"><b>*</b></font></td>
-						<td th:text="${sale.saleID}"></td>
-					</tr>
-					<tr>
-						<td>優惠代碼:</td>
-						<td><input type="text" name="coupon"
-							th:value="${sale.coupon}" size="45" /></td>
-					</tr>
-					<tr>
-						<td>優惠開始日:</td>
-						<td><input name="saleStart" id="f_date1" type="text"
-							th:value="${sale.saleStart}" /></td>
-					</tr>
-					<tr>
-						<td>優惠結束日:</td>
-						<td><input name="saleEnd" id="f_date2" type="text"
-							th:value="${sale.saleEnd}" /></td>
-					</tr>
-					<tr>
-						<td>優惠條件:</td>
-						<td><input type="text" name="disRequire"
-							th:value="${sale.disRequire}" size="45" /></td>
-					</tr>
-					<tr>
-						<td>優惠折抵:</td>
-						<td><input type="text" name="dis" th:value="${sale.dis}"
-							size="45" /></td>
-					</tr>
-				</table>
+				<label>優惠編號:</label>
+					<input type="text" th:field="*{saleID}" readonly /><br><br>
+				
+				<label>優惠代碼:</label>
+				
+					<input placeholder="必填" type="text" th:field="*{coupon}"
+						onclick="hideContent('coupon.errors');" readonly required /> <span
+						th:if="${#fields.hasErrors('coupon')}" th:errors="*{coupon}"
+						class="error" id="coupon.errors"></span><br><br>
+				
+				<label>優惠開始日:</label>
+				
+					<input id="saleS" type="date" th:field="*{saleStart}"
+						onclick="hideContent('saleStart.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('saleStart')}" th:errors="*{saleStart}"
+						class="error" id="saleStart.errors"></span><br>
+		
+				<label>優惠結束日:</label>
+				
+					<input id="saleE" name="saleE" type="date" th:field="*{saleEnd}"
+						onclick="hideContent('saleEnd.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('saleEnd')}" th:errors="*{saleEnd}"
+						class="error" id="saleEnd.errors"></span>
+					<div>[[${endDateError}]]</div><br>
+				
+				<label>優惠條件:</label> 
+					<input type="text" th:field="*{disRequire}"
+						onclick="hideContent('disRequire.errors');" required /><br /> <span
+						th:if="${#fields.hasErrors('disRequire')}"
+						th:errors="*{disRequire}" class="error" id="disRequire.errors"></span><br>
+				
+
+				<label>優惠折抵:</label> 
+					<input type="text" th:field="*{dis}"
+						onclick="hideContent('dis.errors');" required /><br /> <span
+						th:if="${#fields.hasErrors('dis')}" th:errors="*{dis}"
+						class="error" id="dis.errors"></span><br>
+
 
 				<br>
 				<div class="row justify-content-start">
 					<div class="col-4">
-						<a href="all"><button style="width: 140px" type="button"
-								class="sl_btn_disable">返回優惠列表</button></a> <input type="hidden"
-							name="action" value="update"> <input type="hidden"
-							name="saleID" value="<%=sale.getSaleID()%>">
+						<a href="all"><button style="width: 140px" type="button" class="sl_btn_disable">返回優惠列表</button></a>
 						<button type="submit" class="sl_btn_chakan" style="float: right;">送出修改</button>
 					</div>
 				</div>
@@ -203,36 +203,8 @@
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
-	<script>
-		$(".sidebarPage").load("/backendSidebar.html");
-	</script>
-	<script>
-		// 日期
-		// 		var today = new Date();
-		// 		sl_start.min = new Date((today.setDate(today.getDate())))
-		// 				.toLocaleDateString('fr-ca');
-		// 		sl_end.min = sl_start.min;
-	</script>
 </body>
 
-<!-- <%  -->
-<!--   java.sql.Date saleStart = null; -->
-<!--   try { -->
-<!-- 	  saleStart = sale.getSaleStart(); -->
-<!--    } catch (Exception e) { -->
-<!-- 	   saleStart = new java.sql.Date(System.currentTimeMillis()); -->
-<!--    } -->
-<!-- %> -->
-
-<!-- <%  -->
-
-<!--   java.sql.Date saleEnd = null; -->
-<!--   try { -->
-<!-- 	  saleEnd = sale.getSaleEnd(); -->
-<!--    } catch (Exception e) { -->
-<!-- 	   saleEnd = new java.sql.Date(System.currentTimeMillis()); -->
-<!--    } -->
-<!-- %> -->
 <link rel="stylesheet" type="text/css"
 	th:href="@{/datetimepicker/jquery.datetimepicker.css}" />
 <script th:src="@{/datetimepicker/jquery.js}"></script>
@@ -249,6 +221,7 @@
 </style>
 
 <script>
+	$(".sidebarPage").load("/backendSidebar.html");
 	$.datetimepicker.setLocale('zh');
 	$('#f_date1').datetimepicker({
 		theme : '', //theme: 'dark',

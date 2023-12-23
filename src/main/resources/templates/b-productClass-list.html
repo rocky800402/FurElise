@@ -106,12 +106,11 @@
                         <td th:text="${productClass.pClassID}"></td>
                         <td th:text="${productClass.pClassName}"></td>
                         <td>
-                            <form method="post" th:action="@{'/productClass/pc.do'}" style="margin-bottom: 0px;">
-                                <input type="submit" value="修改" class="sl_sp_badge" style="background-color: #9ac972">
-                                <input type="hidden" name="pClassID" th:value="${productClass.pClassID}">
-                                <input type="hidden" name="action" th:value="getOne_For_Update">
-                            </form>
-                        </td>
+								<form method="post" th:action="@{/productclass/getone}">
+									<input type="hidden" name="pClassID" th:value="${productClass.pClassID}">
+									<input class="sl_btn_chakan" type="submit" value="修改">
+								</form>
+							</td>
                     </tr>
                 </tbody>
                 <tfoot>

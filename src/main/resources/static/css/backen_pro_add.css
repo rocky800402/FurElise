@@ -1,21 +1,89 @@
-<!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+* {
+  box-sizing: border-box;
+}
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>新增商品分類</title>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/header.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/sl.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/backend_sidebar.css">
-<!-- <link rel="stylesheet" href="css/jquery.dataTables.min.css"> -->
-<style>
-/* 查看詳情button */
+
+
+body{
+  background-color: #f1f1f1;
+}
+
+main.content{
+  margin: 0 20% 0 20%;
+
+}
+
+.yh_the_detail{
+  background-color: white;
+  width: 800px;
+  min-height: 1000px;
+  padding: 20px;
+}
+
+.yh_the_detail_n{
+  background-color: #f1f1f1;
+}
+
+.yh_the_detail > p{
+  margin-bottom: 20px;
+  display: inline-block;
+  margin-right: 10px;
+} 
+
+.yh_pro_inside_detail{
+  width: 700px;
+  height: 300px;
+  margin-left: 5% ;
+  text-align: center;
+
+}
+
+div > img{
+  width: 200px;
+  height: 170px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+/*   background-color: #a5a5a5; */
+}
+
+.btn-primary{
+  margin-top: 30px;
+}
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul > li{
+  display: inline-block; /*橫向排列*/
+  vertical-align: top; /*上方切齊*/
+}
+
+.preview{
+  max-width: 250px;
+}
+
+li > div{
+  max-width: 200px;
+}
+
+.btn_check{
+  background-color: white;
+  color: #9ac972;
+  border: 1px solid #9ac972;
+}
+
+button > a{
+  color: white;
+  text-decoration:none;
+}
+button > a:hover{
+  color: white;
+  text-decoration:none;
+  
+}
+
 .sl_btn_chakan {
 	cursor: pointer;
 	--bs-btn-color: #fff;
@@ -34,7 +102,7 @@
 	--bs-btn-disabled-border-color: #9ac972;
 	--bs-btn-padding-x: 0.75rem;
 	--bs-btn-padding-y: 0.375rem;
-	--bs-btn-font-family:
+	--bs-btn-font-family: ;
 	--bs-btn-font-size: 1rem;
 	--bs-btn-font-weight: 400;
 	--bs-btn-line-height: 1.5;
@@ -83,7 +151,7 @@
 	--bs-btn-disabled-border-color: #9ac972;
 	--bs-btn-padding-x: 0.75rem;
 	--bs-btn-padding-y: 0.375rem;
-	--bs-btn-font-family:
+	--bs-btn-font-family: ;
 	--bs-btn-font-size: 1rem;
 	--bs-btn-font-weight: 400;
 	--bs-btn-line-height: 1.5;
@@ -134,69 +202,7 @@
 	color: #fff !important;
 	/* background-color: #FFC2A0 !important; */
 }
-</style>
-</head>
-
-<body>
-
-	<div class="headerPage"></div>
-
-	<div class="container">
-		<div class="sidebarPage"></div>
-		<main class="content">
-			<p class="p_title">修改商品類別</p>
-			<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-			<FORM METHOD="post" ACTION="pc.do" name="form1">
-				<table>
-
-					<tr>
-						<td>商品類別名稱:</td>
-						<td><input type="TEXT" name="pClassName"
-							value="<%=(productClass == null) ? "請輸入商品類別名稱" : productClass.getpClassName()%>"
-							size="45" /></td>
-					</tr>
-
-
-				</table>
-				<br> <input type="hidden" name="action" value="update">
-				<input type="hidden" name="pClassID" value="<%=productClass.getpClassID()%>">
-				<input type="submit" value="送出修改">
-			</FORM>
-		</main>
-	</div>
-
-	<div class="footerPage"></div>
-
-	<script
-		src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-
-	<script>
-		$(".sidebarPage").load("backendSidebar.html");
-	</script>
- 	<script> 
- 		// 日期
- // 		var today = new Date();
- // 		sl_start.min = new Date((today.setDate(today.getDate())))
- // 				.toLocaleDateString('fr-ca');
- // 		sl_end.min = sl_start.min;
- 	</script>
-	
-</body>
-
-
-
-
-
-
-
-
-</html>
+.error{
+	color: red;
+	font-sizze: 20px;
+	}
