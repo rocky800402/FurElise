@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.furelise.product.model.Product;
 import com.furelise.product.model.ProductService;
@@ -38,7 +40,7 @@ public class ShopMallController {
 		model.addAttribute("productList", pSvc.getAllProduct());
 		  List<ProductClass> pClassList = pcr.findAll();
 	        model.addAttribute("pClassList", pClassList);
-        return "shopMall";  // 返回Thymeleaf模板名称
+        return "m-shopMall";  // 返回Thymeleaf模板名称
     }
 	
 	@GetMapping("/getone/{pID}")
@@ -54,7 +56,7 @@ public class ShopMallController {
 	    model.addAttribute("productDetail", productDetail);
 	    
 
-	    return "mall_product_detail";
+	    return "m-product_detail";
 	}
 	
 	@GetMapping("/{pClassID}")
@@ -66,10 +68,15 @@ public class ShopMallController {
 		  List<ProductClass> pClassList = pcr.findAll();
 	        model.addAttribute("pClassList", pClassList);
 	        ProductClass productClass = pcSvc.getProductClassByID(pClassID);
-//	        String pClassName = pcr.findById(pClassID).get().getPClassName();
 	        model.addAttribute("productClass", productClass);
 		
-		return "product-by-class";
+		return "m-product-by-class";
 		
+	}
+	
+	@PostMapping("/add/{pID}")
+	public String addToCart(@RequestParam(required = false) Integer memID, @PathVariable Integer pID, @RequestParam Integer quantity) {
+	    scSvc.addProduct(memID, pID, quantity);
+	    return "redirect:/shopmall/";
 	}
 }
