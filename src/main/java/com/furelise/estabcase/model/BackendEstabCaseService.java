@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BackendEstabCaseService {
@@ -107,16 +108,23 @@ public class BackendEstabCaseService {
 
     public BackendEstabCaseDetailVO getBackendEstabCaseDetail(Integer estabCaseID){
         EstabCase estabCase = estabCaseR.findById(estabCaseID).orElseThrow();
-        Emp emp = empR.findById(estabCase.getEmpID()).orElseThrow();
+
         PlanOrd planOrd = planOrdR.findById(estabCase.getPlanOrdID()).orElseThrow();
         PickupTime pickupTime = pickupTimeR.findById(planOrd.getTimeID()).orElseThrow();
         City city = cityR.findByCityCode(planOrd.getCityCode());
         PickupWay pickupWay = pickupWayR.findById(planOrd.getWayID()).orElseThrow();
         Plan plan = planR.findById(planOrd.getPlanID()).orElseThrow();
         List<Complaint> complaints = complaintR.findByEstabCaseID(estabCaseID);
+        String empName="";
+        if(estabCase.getEmpID()!=null){
+            Emp emp = empR.findById(estabCase.getEmpID()).orElseThrow();
+            empName=emp.getEmpName();
+        }else{
+            empName= "暫無收取員";
+        }
 
         BackendEstabCaseDetailVO backendEstabCaseDetailVO = new BackendEstabCaseDetailVO(
-                emp.getEmpName(),
+                empName,
                 estabCaseID,
                 estabCase.getEstabCaseDate(),
                 pickupTime.getTimeRange(),
@@ -130,7 +138,8 @@ public class BackendEstabCaseService {
                 plan.getPlanPricePerCase(),
                 complaints,
                 estabCase.getEstabCaseEnd(),
-                estabCase.getEstabCasePic()
+                estabCase.getEstabCasePic(),
+                estabCase.getTakeStatus()
         );
 
 

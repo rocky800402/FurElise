@@ -25,10 +25,11 @@ public class BackendEstabCaseDetailVO {
     private List<Complaint> complaints;
     private Timestamp estabCaseEnd;
     private byte[] estabCasePic;
+    private Boolean takeStatus;
 
     public BackendEstabCaseDetailVO(){}
 
-    public BackendEstabCaseDetailVO(String empName, Integer estabCaseID, Date estabCaseDate, String timeRange, String contact, String contactTel, String cityName, String cityCode, String floor, String wayName, Integer estabCaseStatus, BigDecimal planPricePerCase, List<Complaint> complaints, Timestamp estabCaseEnd, byte[] estabCasePic) {
+    public BackendEstabCaseDetailVO(String empName, Integer estabCaseID, Date estabCaseDate, String timeRange, String contact, String contactTel, String cityName, String cityCode, String floor, String wayName, Integer estabCaseStatus, BigDecimal planPricePerCase, List<Complaint> complaints, Timestamp estabCaseEnd, byte[] estabCasePic, Boolean takeStatus) {
         this.empName = empName;
         this.estabCaseID = estabCaseID;
         this.estabCaseDate = estabCaseDate;
@@ -44,5 +45,6 @@ public class BackendEstabCaseDetailVO {
         this.complaints = complaints;
         this.estabCaseEnd = estabCaseEnd;
         this.estabCasePic = estabCasePic;
+        this.takeStatus = takeStatus;
     }
 }
