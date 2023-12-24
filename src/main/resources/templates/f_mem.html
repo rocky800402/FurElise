@@ -11,6 +11,19 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
 		<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
         <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+        <style>
+        .active {
+            background-color: lightgreen; /* 綠色背景 */
+            color: black; 
+            border: 1px solid lightgreen; /* 深綠色邊框 */
+        }
+
+        .suspended {
+            background-color: lightcoral; /* 紅色背景 */
+            color: black; 
+            border: 1px solid red; /* 深紅色邊框 */
+        }
+    </style>
     </head>
     
     
@@ -34,7 +47,7 @@
                             <th>會員密碼</th>
                             <th>註冊時間</th>
                             <th>修改時間</th>
-                            <th>是否停權</th>
+                            <th>狀態</th>
                             <th>編輯</th>
                         </tr>
                     </thead>
@@ -49,14 +62,16 @@
 			                <td th:text="${mem.memPass}"></td>
 			                <td th:text="${mem.memRegiDate}"></td>
 			                <td th:text="${mem.memLastModified}"></td>
-			                <td th:text="${mem.memIsSuspended}"></td>
+			                <td th:text="${mem.memIsSuspended}?'停權':'啟用'"></td>
 
 							<td>
-								<form method="post" th:action="@{/mem/getOneMem}">
-									<input type="hidden" name="memID" th:value="${mem.memID}">
-									<input class="sl_btn_chakan" type="submit" value="停權">
-								</form>
-							</td>
+					            <form method="post" th:action="@{/mem/update}">
+					                <button type="submit" class="sl_sp_badge" 
+					                        th:classappend="${mem.memIsSuspended} ? 'active':'suspended' "
+					                        th:text="${mem.memIsSuspended} ? '啟用' : '停權'"></button>
+					                <input type="hidden" name="memID" th:value="${mem.memID}">
+					            </form>
+					        </td>
 <!-- 							<td> -->
 <!-- 								<form method="post" th:action="@{/mem/delete}"> -->
 <!-- 									<input type="hidden" name="cityID" th:value="${city.cityID}" /> -->
@@ -106,7 +121,7 @@
                             <th>會員密碼</th>
                             <th>註冊時間</th>
                             <th>修改時間</th>
-                            <th>是否停權</th>
+                            <th>狀態</th>
                             <th>編輯</th>
                         </tr>
                     </tfoot>

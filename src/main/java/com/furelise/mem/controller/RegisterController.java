@@ -3,6 +3,8 @@ package com.furelise.mem.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,18 +80,17 @@ public class RegisterController {
         } else if (!name.trim().matches(nameReg)) {
             errMsgs.add(" 姓名格式有誤：僅能輸入中、英文字母與底線，且長度必需在2到15之間。");
         }
+        String birthStr = birth.replaceAll("/", "-");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthDate = LocalDate.parse(birthStr, formatter);
 
         // birth錯誤處理
-        Date birthDate = null;
-        long nowMillis = System.currentTimeMillis();
-        Date nowDate = new Date(nowMillis);
+        LocalDate nowDate = LocalDate.now();
         if (birth == null || (birth.trim().length()) == 0) {
             errMsgs.add(" 請選擇生日日期！");
         } else {
             // yyyy/mm/dd轉成yyyy-mm-dd，再從String轉成Date
-            String birthStr = birth.replaceAll("/", "-");
-            birthDate = Date.valueOf(birthStr);
-            if (birthDate.after(nowDate)) {
+            if (birthDate.isAfter(nowDate)) {
                 // 生日不可以選比今天晚的日期
                 errMsgs.add(" 生日輸入有誤：不可選擇晚於今日的日期。");
             }
