@@ -102,7 +102,12 @@
             border: 1px solid #ddd;
         }
 
-        /* 高亮顯示當前日期的格線顏色 */
+        /* 顯示當前日期的格線顏色 */
         .datepicker table tr td.today {
             border: 1px solid #337ab7;
+        }
+
+        /*按鈕間隔調整*/
+        .button-separator {
+            margin-right: 5px;
         }

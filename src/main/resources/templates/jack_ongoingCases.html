@@ -23,7 +23,7 @@
 
 
                 <div class="jack_container">
-                    <div class="jack_section">
+<!--                    <div class="jack_section">-->
                         <div class="jack_section_title" th:text="'案件編號: ' + ${empOngoingCase.estabCaseID}"></div>
                         <div class="jack_income" th:utext="'收入$' + ${empOngoingCase.planPricePerCase}"></div>
                         <table class="jack_case_info">
@@ -51,7 +51,7 @@
                             </div>
 
                         </table>
-                    </div>
+<!--                    </div>-->
                 </div>
 
 
@@ -99,7 +99,7 @@
 
                     <div class="modal-header mb_modal_header">
                         <div class="mb_modal_header_h5">
-                            <h5 class="modal-title mb_modal_title" id="exampleModalLabel" th:text="'案件編號: ' + ${empOngoingCase.estabCaseID}"></h5>
+                            <h5 class="modal-title mb_modal_title" id="estabCaseID" th:text="'案件編號: ' + ${empOngoingCase.estabCaseID}"></h5>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -118,7 +118,7 @@
                                     <label for="recipient-name" class="col-form-label mb_modal_label" th:text="'收取員 : '+ ${empOngoingCase.empName}"></label>
                                 </div>
                                 <div class="mb_modal_div">
-                                    <label for="recipient-name" class="col-form-label mb_modal_label" id="system-time">現在時間 : 2023/10/12 18:30</label>
+                                    <label for="recipient-name" class="col-form-label mb_modal_label" id="system-time"></label>
                                 </div>
 
                                 <div class="mb-3">
@@ -150,6 +150,59 @@
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/jack_ongoingCases.js}"></script>
 <script>
+    $(document).ready(function() {
+        $(".mb_estab_case_complaint_confirm_btn").click(function() {
+
+            var phoneNumber = $("#recipient-name").val();
+            var content = $("#message-text").val();
+            // console.log(phoneNumber);
+            // console.log(content);
+            // console.log("xxx");
+
+            // 案件編號: 190002
+            // 收取日期: 2023-12-04 時段 : 09:00-17:00
+            // 收取員ID
+            // 聯絡電話
+            // 內容
+
+            /* [[ ${} ]] */
+            var estabCaseID = /*[[${empOngoingCase.estabCaseID}]]*/ 'default';
+
+
+            var formData = {
+                estabCaseID: estabCaseID,
+                // empID: yourEmpIDValue,
+                comDetail: content,
+
+                comTel: phoneNumber,
+                estabCaseDate: $("#estabCaseDate").text(),
+                timeRange: $("#timeRange").text(),
+                empName: $("#empName").text(),
+
+                // 'estabCaseDate': $('.mb_modal_label[for="recipient-name"]').text().split(': ')[1],
+                // 'timeRange': $('.mb_modal_label[for="recipient-name"]').text().split(': ')[1],
+                // 'empName': $('.mb_modal_label[for="recipient-name"]').text().split(': ')[1],
+                // 'contactNumber': $('#recipient-name').val(),
+            };
+            console.log(formData);
+
+            // Ajax 請求
+            $.ajax({
+                type: "POST",
+                url: "/complaint",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function(response) {
+
+                    console.log(response);
+                },
+                error: function(error) {
+
+                    console.log(error);
+                }
+            });
+        });
+    });
     function SystemTime(){
         var currentTime = new Date();
         var hours = currentTime.getHours();

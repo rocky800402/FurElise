@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 //import com.furelise.emp.model.Emp;
 //import com.furelise.estabcase.model.EstabCase;
@@ -33,6 +34,7 @@ public class Complaint implements Serializable {
 	private Integer empID;
 	private Integer estabCaseID;
 	private String comDetail;
+	@Pattern(regexp = "^09\\d{2}-\\d{3}-\\d{3}$", message = "電話號碼格式錯誤")
 	private String comTel;
 	private Boolean comStatus;
 	private Timestamp comStart;

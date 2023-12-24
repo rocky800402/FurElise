@@ -38,11 +38,11 @@ public class EmpCaseManageService {
         return estabCase;
     }
 
-    public List<EmpCaseManageVO> getEmpEstabCase(Integer empID){
+    public List<EmpCaseManageVO> getEmpEstabCase(Integer empID, Integer estabCaseStatus){
         List<EmpCaseManageVO> listEc = new ArrayList<EmpCaseManageVO>();
 
 
-        List<EstabCase> estabCases = estabCaseRepository.findByEmpID(empID);
+        List<EstabCase> estabCases = estabCaseRepository.findByEmpIDAndEstabCaseStatus(empID, estabCaseStatus);
         for(EstabCase estabCase :estabCases){
             EmpCaseManageVO ecVO = new EmpCaseManageVO();
 
