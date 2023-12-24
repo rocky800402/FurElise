@@ -74,6 +74,7 @@ public class UpdateEmpController {
         }
 		
         // 工作區域錯誤處理
+
         if ("0".equals(workArea1)) {
         	// 沒有選第一順位工作區域
         	errMsgs.add(" 請至少選擇第一順位工作區域！");
