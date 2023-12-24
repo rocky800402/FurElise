@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>購物商城-生活必備</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/mallStyles.css}">
+</head>
+
+<body style="background-color: #fff;">
+	<div class="headerPage"></div>
+	<div style="display: flex;">
+		<aside class="sidebar">
+			<a th:href="@{/shopmall/}"><h2>購物商城</h2></a>
+			<ul th:each="productClass : ${pClassList}">
+				<li><a th:href="@{'/shopmall/' + ${productClass.pClassID}}"
+					th:text="${productClass.pClassName}"></a></li>
+			</ul>
+		</aside>
+		 <main class="content">
+            <!-- 使用flex布局 -->
+            <div th:each="product : ${productDetail}" th:if="${product.pID == #vars['pID']}" style="display: flex;">
+
+                <div><!-- 左側圖片區 -->
+                	<div class="yh_product-info">
+                    	<img class="yh_view_pic" th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}" alt="">
+                </div>
+
+                <div>
+                     <img class="yh_pri_pic" th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}" alt="">
+                    <img class="yh_pri_pic" th:src="@{/product/DBGifReader(pID=${product.pID}, image=2)}" alt=""> 
+                    <img class="yh_pri_pic" th:src="@{/product/DBGifReader(pID=${product.pID}, image=3)}" alt="">
+                </div>
+                </div>
+
+                <!-- 右側商品文字資訊 -->
+                <div class="yh_product-text" style="display: inline;">
+                	<p>商品名稱:</p><p class="yh_pname" th:text="${product.pName}"></p><br><br>
+                    <p style="display:inline;">商品類別:</p><p style="display: inline; margin:10px 20px;" class="yh_pClassName" th:text="${product.productClass.pClassName}"></p><br><br>
+                    <p style="display:inline;">商品編號:</p><p style="display:inline; margin:10px 20px;" class="yh_pid" th:text="${product.pID}"></p><br><br>
+                    
+
+                    <div class="price-and-cart">
+                        <p>商品售價:</p><p class="yh_price" style="display: inline; margin:10px 20px;" th:text="${product.pPrice}"></p><br>
+                        <a th:href="@{/shopcart.html}">
+                            <button class="btn btn-primary btn_addNext btn_off" type="submit" style="margin-left:120px; background-color: #9ac972; border: #9ac972;">加入購物車</button>
+                        </a>
+                    </div>
+                    
+                    
+                </div>
+                
+
+            </div>
+            <p>商品描述:</p><p style=" font-size:20px; " class="yh_detail" th:text="${product.pDetail}"></p><br>
+            
+        </main>
+	</div>
+
+	<div class="footerPage"></div>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script type="text/javascript">
+		$(".headerPage").load("/header.html");
+		$(".footerPage").load("/footer.html");
+		$(document).ready(function() {
+			var originalWidth = 40;
+			var originalHeight = 40;
+
+			$("#yh_shopcart").mouseenter(function() {
+				$(this).stop().animate({
+					width : '120px',
+					height : '120px'
+				}, 200);
+			});
+
+			$("#yh_shopcart").mouseleave(function() {
+				$(this).stop().animate({
+					width : originalWidth + 'px',
+					height : originalHeight + 'px'
+				}, 200, function() {
+					// 还原完成后执行的代码
+				});
+			});
+		});
+
+		const viewPic = document.querySelector('.yh_view_pic');
+		const pname = document.querySelector('.yh_pname');
+		const data = document.querySelector('.yh_data');
+		const price = document.querySelector('.yh_price');
+
+		const priPics = document.querySelectorAll('.yh_pri_pic');
+
+		priPics.forEach(function(pic) {
+			pic.addEventListener('click', function(e) {
+				const newSrc = e.target.getAttribute('src');
+				viewPic.setAttribute('src', newSrc);
+
+			});
+		});
+	</script>
+</body>
+
+</html>

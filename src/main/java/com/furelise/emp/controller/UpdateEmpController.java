@@ -74,10 +74,11 @@ public class UpdateEmpController {
         }
 		
         // 工作區域錯誤處理
-        if (workArea1.equals(null) ) {
+
+        if ("0".equals(workArea1)) {
         	// 沒有選第一順位工作區域
         	errMsgs.add(" 請至少選擇第一順位工作區域！");
-        } else if (workArea2.equals(null)  && workArea3.equals(null)) {
+        } else if ("0".equals(workArea2) && !"0".equals(workArea3)) {
         	// 沒有照順序選取工作順位，只選一和三
         	errMsgs.add("請按照順位順序選擇工作區域！");
         }

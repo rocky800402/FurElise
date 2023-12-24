@@ -34,15 +34,15 @@
 
 	<div style="display: flex;">
 		<aside class="sidebar" >
-   <a th:href="@{/shopmall/}"><h2>購物商城</h2></a>
+    <a th:href="@{/shopmall/}" ><h2>購物商城</h2></a>
     <ul th:each="productClass : ${pClassList}">
     	<li><a th:href="@{'/shopmall/' + ${productClass.pClassID}}" th:text="${productClass.pClassName}"></a></li>
 	</ul>
 </aside>
 		<main class="content">
-			<p style="color: #a5a5a5; font-size: 12px;">購物商城</p>
+			<p style="color: #a5a5a5; font-size: 12px;" th:text="${productClass.pClassName}"></p>
 
-	<div th:each="product : ${productList}" style="width: 15rem; margin: 2rem; display: inline-block;">
+	<div th:each="product : ${productList}" th:if="${product.productClass.pClassID == #vars['pClassID']}" style="width: 15rem; margin: 2rem; display: inline-block;">
     <div class="card">
         <div id="blob_holder1" style="display: flex; justify-content: center; align-items: center;">
             <img th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}" width="230px" height="200px" />
@@ -101,7 +101,6 @@
 			<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 			<script type="text/javascript">
 			 $(document).ready(function() {
-				 
 			        // 發送 Ajax 請求
 			        $.ajax({
 			            type: 'GET',

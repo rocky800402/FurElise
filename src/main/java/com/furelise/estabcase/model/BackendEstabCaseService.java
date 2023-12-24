@@ -2,7 +2,14 @@ package com.furelise.estabcase.model;
 
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
+import com.furelise.complaint.model.Complaint;
+import com.furelise.complaint.model.ComplaintRepository;
+import com.furelise.emp.model.Emp;
+import com.furelise.emp.model.EmpRepository;
+import com.furelise.pickuptime.model.PickupTime;
 import com.furelise.pickuptime.model.PickupTimeRepository;
+import com.furelise.pickupway.model.PickupWay;
+import com.furelise.pickupway.model.PickupWayRepository;
 import com.furelise.plan.model.Plan;
 import com.furelise.plan.model.PlanRepository;
 import com.furelise.planord.model.PlanOrd;
@@ -31,6 +38,12 @@ public class BackendEstabCaseService {
     CityRepository cityR;
     @Autowired
     PlanRepository planR;
+    @Autowired
+    EmpRepository empR;
+    @Autowired
+    PickupWayRepository pickupWayR;
+    @Autowired
+    ComplaintRepository complaintR;
 
     public List<BackendEstabCaseVO> getBackendEstabCaseTake(int page,int limit,Boolean takeStatus) {
         List<BackendEstabCaseVO> listB = new ArrayList<>();
@@ -70,6 +83,60 @@ public class BackendEstabCaseService {
 
         return listB;
     }
+    public List<BackendEstabCaseVO> getBackendEstabCaseStatus(int page,int limit,Boolean takeStatus) {
+        List<BackendEstabCaseVO> backendEstabCaseVOList=new ArrayList<>();
+        List<BackendEstabCaseVO> backendEstabCaseVOs=getBackendEstabCaseTake(page,limit,takeStatus);
+        for(BackendEstabCaseVO backendEstabCaseVO:backendEstabCaseVOs){
+            if(backendEstabCaseVO.getEstabCaseStatus()!=0){
+                backendEstabCaseVOList.add(backendEstabCaseVO);
+            }
+        }
+        return backendEstabCaseVOList;
+    }
 
+    public List<BackendEstabCaseVO> getBackendEstabCaseDispatch(int page,int limit,Boolean takeStatus) {
+        List<BackendEstabCaseVO> backendEstabCaseVOList=new ArrayList<>();
+        List<BackendEstabCaseVO> backendEstabCaseVOs=getBackendEstabCaseTake(page,limit,takeStatus);
+        for(BackendEstabCaseVO backendEstabCaseVO:backendEstabCaseVOs){
+            if(backendEstabCaseVO.getEstabCaseStatus()==0){
+                backendEstabCaseVOList.add(backendEstabCaseVO);
+            }
+        }
+        return backendEstabCaseVOList;
+    }
+
+    public BackendEstabCaseDetailVO getBackendEstabCaseDetail(Integer estabCaseID){
+        EstabCase estabCase = estabCaseR.findById(estabCaseID).orElseThrow();
+        Emp emp = empR.findById(estabCase.getEmpID()).orElseThrow();
+        PlanOrd planOrd = planOrdR.findById(estabCase.getPlanOrdID()).orElseThrow();
+        PickupTime pickupTime = pickupTimeR.findById(planOrd.getTimeID()).orElseThrow();
+        City city = cityR.findByCityCode(planOrd.getCityCode());
+        PickupWay pickupWay = pickupWayR.findById(planOrd.getWayID()).orElseThrow();
+        Plan plan = planR.findById(planOrd.getPlanID()).orElseThrow();
+        List<Complaint> complaints = complaintR.findByEstabCaseID(estabCaseID);
+
+        BackendEstabCaseDetailVO backendEstabCaseDetailVO = new BackendEstabCaseDetailVO(
+                emp.getEmpName(),
+                estabCaseID,
+                estabCase.getEstabCaseDate(),
+                pickupTime.getTimeRange(),
+                planOrd.getContact(),
+                planOrd.getContactTel(),
+                city.getCityName(),
+                city.getCityCode(),
+                planOrd.getFloor(),
+                pickupWay.getWayName(),
+                estabCase.getEstabCaseStatus(),
+                plan.getPlanPricePerCase(),
+                complaints,
+                estabCase.getEstabCaseEnd(),
+                estabCase.getEstabCasePic()
+        );
+
+
+
+
+        return backendEstabCaseDetailVO;
+    }
 
 }
