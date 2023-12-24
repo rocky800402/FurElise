@@ -1,6 +1,6 @@
 package com.furelise.emp.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.Date;
 
 import com.furelise.emp.model.Emp;
@@ -17,9 +17,9 @@ public class EmpVO {
     private Date empBirth;
     private String IDNumber;
     private boolean empLicense;
-    private Integer empArea1;
-    private Integer empArea2;
-    private Integer empArea3;
+    private String empArea1;
+    private String empArea2;
+    private String empArea3;
     private Integer timeID;
     private byte[] IDF;
     private byte[] IDB;
