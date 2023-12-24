@@ -2,6 +2,8 @@ package com.furelise.estabcase.empcasemanage;
 
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
+import com.furelise.emp.model.Emp;
+import com.furelise.emp.model.EmpRepository;
 import com.furelise.estabcase.model.EstabCase;
 import com.furelise.estabcase.model.EstabCaseRepository;
 import com.furelise.pickuptime.model.PickupTime;
@@ -32,6 +34,8 @@ public class EmpOngoingCaseService {
     PickupWayRepository pickupWayRepository;
     @Autowired
     PlanRepository planRepository;
+    @Autowired
+    EmpRepository empRepository;
     /*
     estabCase
     pickupTime
@@ -39,6 +43,7 @@ public class EmpOngoingCaseService {
     city
     pickupWay
     plan
+    emp
     */
 
     public EmpOngoingCaseVO getEmpOngoingCase(Integer estabCaseID){
@@ -50,6 +55,7 @@ public class EmpOngoingCaseService {
         City city = cityRepository.findByCityCode(planOrd.getCityCode());
         PickupWay pickupWay = pickupWayRepository.findById(planOrd.getWayID()).orElseThrow();
         Plan plan = planRepository.findById(planOrd.getPlanID()).orElseThrow();
+        Emp emp = empRepository.findById(estabCase.getEmpID()).orElseThrow();
 
         //欄位名稱 對應表格
         empOC.setEstabCaseID(estabCaseID);//案件編號 estabCase
@@ -61,8 +67,9 @@ public class EmpOngoingCaseService {
         empOC.setFloor(planOrd.getFloor());//街道樓層 planOrd
         empOC.setPickupStop(planOrd.getPickupStop());//擺放位置planOrd
         empOC.setCityName(city.getCityName());//地址 city
-        empOC.setPickupStop(pickupWay.getWayName());//收取方式 pickupWay
+        empOC.setWayName(pickupWay.getWayName());//收取方式 pickupWay
         empOC.setLiter(plan.getLiter());//垃圾量 plan
+        empOC.setEmpName(emp.getEmpName());//夥伴姓名 emp
 
         return empOC;
     }

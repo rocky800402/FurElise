@@ -1,0 +1,156 @@
+        /* 消除外邊距和內邊距 */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .img {
+            width: 100%;
+            position: relative;
+        }
+
+        /* 表格文字置中 */
+        .jack_case_info tr th,
+        .jack_case_info tr td {
+            text-align: center;
+            border-left: none;
+            border-right: none;
+        }
+
+        /* 頁面容器設置 */
+        .jack_container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .jack_section {
+            margin-bottom: 20px;
+        }
+
+        .jack_section_title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .jack_income {
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+
+
+
+        .jack_case_info {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+
+   
+
+        /*彈窗*/
+        /* .jack_report_issue_popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .jack_report_issue_popup label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .jack_report_issue_popup textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .jack_report_issue_popup button {
+            padding: 5px 10px;
+            background-color: #9ac972;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .jack_report-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .jack_report-item label {
+            margin-right: 10px;
+        } */
+
+        /* 按鈕樣式 */
+        .jack_button_accept,
+        .jack_button_reject,
+        .jack_button_return {
+            background-color: #9ac972;
+            color: black;
+            padding: 5px 16px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            float: right;
+            cursor: pointer;
+        }
+
+        .jack_button_reject,
+        .jack_button_return {
+            background-color: #FE9A9A;
+        }
+
+        /* 鼠標移動到按鈕產生的變化 */
+        .jack_button_accept:hover,
+        .jack_button_reject:hover {
+            background-color: #EDEDED;
+        }
+
+        .jack_information {
+            color: #FE9A9A;
+        }
+
+
+        /*上傳圖片*/
+        .jack_upload_container {
+            max-width: 400px;
+
+        }
+
+        .jack_upload_input {
+            display: none;
+        }
+
+        .jack_upload_label {
+            background-color: #9ac972;
+            color: black;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .jack_preview {
+            margin-top: 20px;
+            max-width: 100%;
+            display: none;
+            /* 初始化隱藏 */
+        }

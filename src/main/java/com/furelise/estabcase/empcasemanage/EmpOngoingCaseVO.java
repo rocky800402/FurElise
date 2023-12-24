@@ -19,6 +19,8 @@ public class EmpOngoingCaseVO {
     private String cityName;//地址 city
     private String wayName;//收取方式 pickupWay
     private Integer liter;//垃圾量 plan
+    private String empName;//夥伴姓名 emp
+    private byte[] estabCasePic;//回報照片 estabCase
 
 //    private Integer estabCaseStatus;
     /*
@@ -28,6 +30,7 @@ public class EmpOngoingCaseVO {
     city
     pickupWay
     plan
+    emp
     */
 
     public EmpOngoingCaseVO() {
