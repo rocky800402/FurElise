@@ -14,17 +14,15 @@ import com.furelise.plan.model.Plan;
 import com.furelise.plan.model.PlanRepository;
 import com.furelise.planord.model.PlanOrd;
 import com.furelise.planord.model.PlanOrdRepository;
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BackendEstabCaseService {
@@ -141,11 +139,15 @@ public class BackendEstabCaseService {
                 estabCase.getEstabCasePic(),
                 estabCase.getTakeStatus()
         );
-
-
-
-
         return backendEstabCaseDetailVO;
+    }
+
+    public EstabCase setEstabCaseReassign(BackendEstabCaseReassignDTO backendEstabCaseReassignDTO){
+        EstabCase estabCase = estabCaseR.findById(backendEstabCaseReassignDTO.getEstabCaseID()).orElseThrow();
+        estabCase.setEstabCaseDate(Date.valueOf(backendEstabCaseReassignDTO.getEstabCaseDate()));
+        estabCase.setTakeStatus(false);
+        estabCase.setEmpID(null);
+        return estabCaseR.save(estabCase);
     }
 
 }
