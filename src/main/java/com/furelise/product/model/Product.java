@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -39,12 +40,11 @@ public class Product implements Serializable{
 	@Column(name = "pName")
 	private String pName;
 	
-	@BigDecimalFormat
+	@BigDecimalFormat(message = "商品價格必須是有效的數字")
     @NotNull(message = "不可為空")
 	@Column(name = "pPrice")
 	private BigDecimal pPrice;
 	
-//	private Integer pClassID;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "pClassID", referencedColumnName = "pClassID")
@@ -56,6 +56,7 @@ public class Product implements Serializable{
 	}
 	
 	@NotNull
+	@Digits(integer = 5, fraction = 0, message = "請輸入數字")
 	@Column(name = "pStock")
 	private Integer pStock;
 
