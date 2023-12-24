@@ -1,7 +1,6 @@
 package com.furelise.estabcase.controller;
 
 import com.furelise.estabcase.empcasemanage.EmpCaseManageService;
-import com.furelise.estabcase.model.EmpCaseManageDTO;
 import com.furelise.estabcase.model.EstabCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

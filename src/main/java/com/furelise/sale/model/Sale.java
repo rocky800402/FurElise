@@ -40,14 +40,14 @@ public class Sale implements Serializable {
     @Column(name = "saleEnd")
     private LocalDate saleEnd;
 
-    @BigDecimalFormat
+    @BigDecimalFormat(message = "請填入數字")
     @NotNull(message = "不可為空")
 //	@Pattern(regexp = "^[0-9]$", message = "請填入數字")
 //	@NotBlank(message = "請勿空白")
     @Column(name = "disRequire")
     private BigDecimal disRequire;
 
-    @BigDecimalFormat
+    @BigDecimalFormat(message = "請填入數字")
     @NotNull(message = "不可為空")
 //	@Pattern(regexp = "^[0-9]$", message = "請填入數字")
 //	@NotBlank(message = "請勿空白")
