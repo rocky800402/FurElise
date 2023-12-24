@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物車</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/mallStyles.css}">
+</head>
+
+<body style="background-color: #fff;">
+  <header class="headerPage"></header>
+
+  <div style="display: flex ; align-items: center ; justify-content: center">
+    <main class="content" style="margin:0;">
+	
+
+<div class="card mb-3" th:each="entry : ${cart}">
+    <div class="row g-0">
+        <div class="col-md-4">
+<!--             <img th:src="@{/images/product_bag.jpg}" class="img-fluid rounded-start" alt="..." -->
+<!--                 width="200px" height="200px"> -->
+        </div>
+        <div class="col-md-8">
+            <div class="card-body" style="width: 500px;">
+                <h5 class="card-title" >黑色垃圾袋</h5>
+                <p class="card-text">
+                <input type="number" name="quantity" id="quantityInput" min="1" th:value="${entry.value}" style="width:50px; margin-bottom:20px; " />
+
+                <img th:src="@{/images/garbagecan.png}" style="width: 30px ; height: 30px; margin-left:120px;">
+                <p style="font-size: 15px; display: inline; margin-left: 20px; color: #a5a5a5;">單價 :</p>
+                <p style="display: inline; color: #a5a5a5;">100</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        
+
+        
+<!--         <hr> -->
+<!--         <button type="button" class="btn btn-primary" id="checkoutBtn" -->
+<!--           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; cursor: pointer;"> -->
+<!--           前往結帳 -->
+<!--         </button> -->
+<!--         <span style="margin-left : 490px ; color: #a5a5a5;"> -->
+         
+<!--         </span> -->
+
+    </main>
+  </div>
+
+  <footer class="footerPage"></footer>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+ <script type="text/javascript">
+		$(document).ready(function() {
+			$(".headerPage").load("/header.html");
+			$(".footerPage").load("/footer.html");
+		});
+	</script>
+
+</body>
+
+</html>

@@ -44,13 +44,19 @@
                 	<p>商品名稱:</p><p class="yh_pname" th:text="${product.pName}"></p><br><br>
                     <p style="display:inline;">商品類別:</p><p style="display: inline; margin:10px 20px;" class="yh_pClassName" th:text="${product.productClass.pClassName}"></p><br><br>
                     <p style="display:inline;">商品編號:</p><p style="display:inline; margin:10px 20px;" class="yh_pid" th:text="${product.pID}"></p><br><br>
-                    
+                    <p style="display:inline;">商品售價:</p><p class="yh_price" style="display: inline; margin:10px 20px;" th:text="${product.pPrice}"></p><br>
 
-                    <div class="price-and-cart">
-                        <p>商品售價:</p><p class="yh_price" style="display: inline; margin:10px 20px;" th:text="${product.pPrice}"></p><br>
-                        <a th:href="@{/shopcart.html}">
-                            <button class="btn btn-primary btn_addNext btn_off" type="submit" style="margin-left:120px; background-color: #9ac972; border: #9ac972;">加入購物車</button>
-                        </a>
+                    <div class="price-and-cart" style="margin-top:50px;">
+                       
+                      
+                       <form th:action="@{/shopmall/add/{pID}(pID=${product.pID})}" method="post">
+                            <div>
+                                <input type="number" name="quantity" id="quantityInput" min="1" value="1" style="width:50px; margin-bottom:20px;" /><br>
+                                <input type="hidden" name="memID" th:value="${memID}" />
+                                <input type="submit" class="btn btn-primary btn_addNext btn_off addToCartBtn" style="background-color: #9ac972; border: #9ac972" value="加入購物車" />
+                            </div>
+                        </form>
+                        
                     </div>
                     
                     
