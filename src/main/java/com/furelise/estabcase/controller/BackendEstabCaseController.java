@@ -1,5 +1,6 @@
 package com.furelise.estabcase.controller;
 
+import com.furelise.estabcase.model.BackendEstabCaseDetailVO;
 import com.furelise.estabcase.model.BackendEstabCaseService;
 import com.furelise.estabcase.model.BackendEstabCaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,22 @@ public class BackendEstabCaseController {
              @RequestParam(required = false ,defaultValue = "5") int limit){
         return backendEstabCaseService.getBackendEstabCaseTake(page,limit,takeStatus);
     }
+    @GetMapping("/status")
+    public List<BackendEstabCaseVO> getBackendEstabCaseStatus(
+            @RequestParam Boolean takeStatus,
+            @RequestParam(required = false ,defaultValue = "1") int page,
+            @RequestParam(required = false ,defaultValue = "5") int limit){
+        return backendEstabCaseService.getBackendEstabCaseStatus(page,limit,takeStatus);
+    }@GetMapping("/dispatch")
+    public List<BackendEstabCaseVO> getBackendEstabCaseDispatch(
+            @RequestParam(required = false ,defaultValue = "1") int page,
+            @RequestParam(required = false ,defaultValue = "5") int limit){
+        return backendEstabCaseService.getBackendEstabCaseDispatch(page,limit,true);
+    }
+    @GetMapping("/Detail/{estabCaseID}")
+    public BackendEstabCaseDetailVO getBackendEstabCaseDetail(
+            @PathVariable Integer estabCaseID){
+        return backendEstabCaseService.getBackendEstabCaseDetail(estabCaseID);
+    }
 }
+
