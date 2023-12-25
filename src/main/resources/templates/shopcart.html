@@ -2,65 +2,92 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>購物車</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
-  <link rel="stylesheet" th:href="@{/css/mallStyles.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>購物車</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/mallStyles.css}">
 </head>
 
 <body style="background-color: #fff;">
-  <header class="headerPage"></header>
+	<header class="headerPage"></header>
 
-  <div style="display: flex ; align-items: center ; justify-content: center">
-    <main class="content" style="margin:0;">
-	
+	<div style="display: flex; align-items: center; justify-content: center">
+		<main class="content" style="min-height: 1000px;">
 
-<div class="card mb-3" th:each="entry : ${cart}">
-    <div class="row g-0">
-        <div class="col-md-4">
-<!--             <img th:src="@{/images/product_bag.jpg}" class="img-fluid rounded-start" alt="..." -->
-<!--                 width="200px" height="200px"> -->
-        </div>
-        <div class="col-md-8">
-            <div class="card-body" style="width: 500px;">
-                <h5 class="card-title" >黑色垃圾袋</h5>
-                <p class="card-text">
-                <input type="number" name="quantity" id="quantityInput" min="1" th:value="${entry.value}" style="width:50px; margin-bottom:20px; " />
-
-                <img th:src="@{/images/garbagecan.png}" style="width: 30px ; height: 30px; margin-left:120px;">
-                <p style="font-size: 15px; display: inline; margin-left: 20px; color: #a5a5a5;">單價 :</p>
-                <p style="display: inline; color: #a5a5a5;">100</p>
+			<div class="card mb-3" th:each="product : ${cartEntrtSet}" style="width: 600px">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img th:src="@{/product/DBGifReader(pID=${product.key.pID}, image=1)}" alt="Product Image" class="img-fluid rounded-start" width="300px" height="300px">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body" style="width: 500px;">
+                            <h5 class="card-title" th:utext="${product.key.pName}">Product Name</h5>
+                            <p style="display:inline;">單價:</p><p style="display:inline-block; width: 140px;" class="card-title" th:utext="${product.key.pPrice}">Product Price</p>
+                            <p style="display:inline;">x</p><input type="number" name="quantity" id="quantityInput" min="1" th:value="${product.value}" style="width: 50px; margin-bottom: 20px;" />
+                            <p style="display:inline; margin-right:30px;">小計:</p><p style="display:inline;" id="totalPrice" th:utext="${product.key.pPrice}*${product.value}"></p>
+                            <form>
+                                <img th:src="@{/images/garbagecan.png}" style="width: 30px; height: 30px; margin-left: 120px;" type="button" id="deleteBtn" data-product-id="${product.key.pID}">
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
 
 
-        
 
-        
-<!--         <hr> -->
-<!--         <button type="button" class="btn btn-primary" id="checkoutBtn" -->
-<!--           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; cursor: pointer;"> -->
-<!--           前往結帳 -->
-<!--         </button> -->
-<!--         <span style="margin-left : 490px ; color: #a5a5a5;"> -->
-         
-<!--         </span> -->
 
-    </main>
-  </div>
+		</main>
+	</div>
+	<!--         <hr> -->
+	<!--         <button type="button" class="btn btn-primary" id="checkoutBtn" -->
+	<!--           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; cursor: pointer;"> -->
+	<!--           前往結帳 -->
+	<!--         </button> -->
+	<!--         <span style="margin-left : 490px ; color: #a5a5a5;"> -->
 
-  <footer class="footerPage"></footer>
-  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
- <script type="text/javascript">
-		$(document).ready(function() {
-			$(".headerPage").load("/header.html");
-			$(".footerPage").load("/footer.html");
-		});
+	<!--         </span> -->
+
+	<footer class="footerPage"></footer>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script type="text/javascript">
+	  $(document).ready(function () {
+          $(".headerPage").load("/header.html");
+          $(".footerPage").load("/footer.html");
+
+          // 取得所有數量輸入框
+          var quantityInputs = $("input[name='quantity']");
+
+          // 遍歷每個輸入框
+          quantityInputs.each(function () {
+              // 添加事件監聽器，當值更改時觸發
+              $(this).change(function () {
+                  // 取得當前輸入框的值和商品單價
+                  var quantity = parseInt($(this).val()) || 0; // 轉換為整數，如果無效，則設為0
+                  var productPriceText = $(this).closest(".card-body").find(".card-title").text(); // 取得商品單價的文本內容
+                  var productPrice = parseFloat(productPriceText.replace(/[^\d.-]/g, '')) || 0; // 將文本轉換為浮點數，如果無效，則設為0
+
+                  // 計算總價
+                  var totalPrice = productPrice * quantity +".00";
+
+                  // 更新顯示總價的元素
+                  $(this).closest(".card-body").find("#totalPrice").text(totalPrice || 0); // 如果總價無效，則設為0
+              });
+          });
+
+          // 刪除按鈕的點擊事件
+          $("img#deleteBtn").click(function () {
+              // 取得被點擊按鈕的data-product-id屬性值
+              var productId = $(this).data("product-id");
+
+              // 在這裡添加刪除商品的邏輯，可以通過Ajax請求向伺服器發送刪除請求等
+              console.log("刪除商品，ID：" + productId);
+          });
+      });
 	</script>
 
 </body>
