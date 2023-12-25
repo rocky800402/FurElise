@@ -37,6 +37,16 @@ public class EmpCaseManageService {
         }
         return estabCase;
     }
+    public EstabCase setNullForEmpID(Integer estabCaseID, Boolean takeStatus, Integer estabCaseStatus){
+        EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElseThrow(null);
+
+            estabCase.setEmpID(null);
+            estabCase.setTakeStatus(takeStatus);
+            estabCase.setEstabCaseStatus(estabCaseStatus);
+            estabCaseRepository.save(estabCase);
+
+        return estabCase;
+    }
 
     public List<EmpCaseManageVO> getEmpEstabCase(Integer empID, Integer estabCaseStatus){
         List<EmpCaseManageVO> listEc = new ArrayList<EmpCaseManageVO>();

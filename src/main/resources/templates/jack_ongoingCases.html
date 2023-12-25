@@ -33,6 +33,7 @@
                                 <li><strong>收取區間:</strong> <span th:utext="${empOngoingCase.timeRange}"></span></li>
                                 <li><strong>收取地址:</strong> <span th:utext="${empOngoingCase.cityCode + empOngoingCase.cityName + empOngoingCase.floor}"></span></li>
                                 <li><strong>收取方式:</strong> <span th:utext="${empOngoingCase.wayName}"></span></li>
+                                <li><strong>垃圾最大容量:</strong> <span th:utext="${empOngoingCase.liter + ' 公斤'}"></span></li>
                             </ul>
 
                             <div class="row">
@@ -45,7 +46,7 @@
                                 <div class="col-2">
                                     <button class="jack_button_reject"
                                             th:attr="data-action='reject', data-id=${empOngoingCase.estabCaseID}"
-                                            onclick="updateStatus('reject', this.getAttribute('data-id'))">拒絕訂單
+                                            onclick="showConfirmationDialog(this)">拒絕訂單
                                     </button>
                                 </div>
                             </div>
@@ -55,13 +56,13 @@
                 </div>
 
 
-                <div class="jack_container">
+<!--                <div class="jack_container">-->
 
-                </div>
+<!--                </div>-->
 
                 <div class="jack_container">
                     <div class="jack_section">
-                        <div class="jack_section_title">執行狀況回復</div>
+                        <div class="jack_section_title">執行狀況回覆</div>
                         <div class="jack_upload_container">
 
                             <!-- 圖片預覽 -->
@@ -72,8 +73,32 @@
 
                     <div class="row">
                         <div class="col-10">
-                            <label for="jack-upload" class="jack_button_accept">上傳照片</label>
-                            <input type="file" id="jack-upload" class="jack_upload_input" accept="image/*">
+
+<!--                            <div class="inner" style="text-align: center;">-->
+<!--                                <br>-->
+<!--                                <input type="text" id="estab-case-id" class="form-control mb-2" placeholder="190001" aria-label="id">-->
+<!--                                <div class="input-group mb-2">-->
+<!--                                    <input type="file" class="form-control" id="myFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">-->
+<!--                                    <button class="btn btn-outline-secondary" type="button" id="upload-btn">上傳照片</button>-->
+<!--                                </div>-->
+<!--                                <div id="kp" style="text-align: center;"></div>-->
+<!--                                            <img alt="kp-1" id="kp" src=""/>-->
+<!--                            </div>-->
+
+<!--                            <label for="jack-upload" class="jack_button_accept">上傳照片</label>-->
+<!--                            <input type="file" id="jack-upload" class="jack_upload_input" accept="image/*">-->
+
+<!--                            <input type="file" id="jack-upload" class="jack_upload_input" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*">-->
+<!--                            <button type="button" class="jack_button_accept" id="upload-btn">上傳照片</button>-->
+
+                            <form action="/uploadImage" method="post" enctype="multipart/form-data">
+                                <input type="file" name="file" accept="image/*">
+                                <button type="submit">上傳</button>
+                            </form>
+
+                            <h1>Uploaded Image</h1>
+
+                            <img th:src="@{'/showImage'}" alt="Uploaded Image" width="300">
                         </div>
                         <div class="col-2">
                             <button type="button" class="jack_button_return" data-toggle="modal" data-bs-target="#exampleModal2" onclick="SystemTime()">回報問題</button>
@@ -99,7 +124,7 @@
 
                     <div class="modal-header mb_modal_header">
                         <div class="mb_modal_header_h5">
-                            <h5 class="modal-title mb_modal_title" id="estabCaseID" th:text="'案件編號: ' + ${empOngoingCase.estabCaseID}"></h5>
+                            <h5 class="modal-title mb_modal_title" id="estabCaseID" th:text="'回報問題 案件編號: ' + ${empOngoingCase.estabCaseID}"></h5>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -150,59 +175,84 @@
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/jack_ongoingCases.js}"></script>
 <script>
-    $(document).ready(function() {
-        $(".mb_estab_case_complaint_confirm_btn").click(function() {
+    $("#upload-btn").click(()=>{
+        const idVal = $('#estabCaseID').val()
+        // if(!idVal){
+        //     alert('請輸入 id ')
+        //     return
+        // }
+        const files = $('#myFile').prop('files')
+        if(!files[0]){
+            alert('請上傳檔案')
+            return
+        }
+        var formData = new FormData();
+        formData.append('file', files[0]);
+        $.ajax({
+            url: `http://localhost:8080/estabcaseonging/${idVal}`,
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: (data) => {
+                $("#kp").html(
+                    `<div><h2>請投 1 號</h2></div>
+                        <div><img alt="kp-1" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
+                       `
+                )
+            },
+            error: (jqXHR, exception) => {
+                alert(jqXHR.responseJSON.message)
+            }
+        })
+    })
+    function showConfirmationDialog(button) {
+        var estabCaseID = button.getAttribute('data-id');
 
-            var phoneNumber = $("#recipient-name").val();
-            var content = $("#message-text").val();
-            // console.log(phoneNumber);
-            // console.log(content);
-            // console.log("xxx");
+        var isConfirmed = confirm("確定要拒絕訂單嗎？");
 
-            // 案件編號: 190002
-            // 收取日期: 2023-12-04 時段 : 09:00-17:00
-            // 收取員ID
-            // 聯絡電話
-            // 內容
+        if (isConfirmed) {
+            updateStatus('reject', estabCaseID);
+        } else {
+            alert("已取消");
+        }
+    }
+    function updateStatus(action, estabCaseID) {
+        console.log("asdsa");
+        var acceptButton = $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]');
+        var rejectButton = $('.jack_button_reject[data-action="reject"][data-id="' + estabCaseID + '"]');
 
-            /* [[ ${} ]] */
-            var estabCaseID = /*[[${empOngoingCase.estabCaseID}]]*/ 'default';
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/estabcase/updateCaseStatus',
+            data: {
+                action: action,
+                estabCaseID: estabCaseID
+            },
+            success: function(response) {
+                console.log('Update successful');
 
-
-            var formData = {
-                estabCaseID: estabCaseID,
-                // empID: yourEmpIDValue,
-                comDetail: content,
-
-                comTel: phoneNumber,
-                estabCaseDate: $("#estabCaseDate").text(),
-                timeRange: $("#timeRange").text(),
-                empName: $("#empName").text(),
-
-                // 'estabCaseDate': $('.mb_modal_label[for="recipient-name"]').text().split(': ')[1],
-                // 'timeRange': $('.mb_modal_label[for="recipient-name"]').text().split(': ')[1],
-                // 'empName': $('.mb_modal_label[for="recipient-name"]').text().split(': ')[1],
-                // 'contactNumber': $('#recipient-name').val(),
-            };
-            console.log(formData);
-
-            // Ajax 請求
-            $.ajax({
-                type: "POST",
-                url: "/complaint",
-                contentType: "application/json",
-                data: JSON.stringify(formData),
-                success: function(response) {
-
-                    console.log(response);
-                },
-                error: function(error) {
-
-                    console.log(error);
+                if (response) {
+                    if (action === 'accept') {
+                        acceptButton.text('已接單').prop('disabled', true);
+                        rejectButton.prop('disabled', true);
+                        console.log('Accept logic');
+                    } else if (action === 'reject') {
+                        rejectButton.text('已拒絕').prop('disabled', true);
+                        acceptButton.prop('disabled', true);
+                        console.log('Reject logic');
+                        history.go(-1);
+                    }
+                } else {
+                    console.log('Unexpected success response');
                 }
-            });
+            },
+            error: function(error) {
+                console.error('Update failed', error);
+            }
         });
-    });
+    }
     function SystemTime(){
         var currentTime = new Date();
         var hours = currentTime.getHours();
@@ -215,43 +265,6 @@
 
         var formattedTime = "現在時間 : " + hours + ":" + minutes + ":" + seconds;
         document.getElementById("system-time").innerText = formattedTime;
-    }
-    function updateStatus(action, estabCaseID) {
-
-        console.log("asdsa");
-        var acceptButton = $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]');
-        var rejectButton = $('.jack_button_reject[data-action="reject"][data-id="' + estabCaseID + '"]');
-        $.ajax({
-            type: 'POST',
-            url: '/updateCaseStatus',
-            data: {
-                action: action,
-                estabCaseID: estabCaseID
-            },
-            success: function (response) {
-
-                console.log('Update successful');
-
-                if (response) {
-                    if (action === 'accept') {
-                        acceptButton.text('已接單').prop('disabled', true);
-                        rejectButton.prop('disabled', true);
-                        console.log('Accept logic');
-
-                    } else if (action === 'reject') {
-
-                        rejectButton.text('已拒絕').prop('disabled', true);
-                        acceptButton.prop('disabled', true);
-                        console.log('Reject logic');
-                    }
-                } else {
-                    console.log('Unexpected success response');
-                }
-            },
-            error: function (error) {
-                console.error('Update failed', error);
-            }
-        });
     }
 </script>
 </body>
