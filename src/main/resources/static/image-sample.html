@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給愛麗絲</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/header.css">
+    <link rel="stylesheet" href="./css/homePage.css">
+    <link href="/images/Für_Elise.svg" rel="shortcut icon">
+
+</head>
+<body>
+    <div class="headerPage"></div>
+    <article id="profile" style="margin-bottom: 10px">
+        <div class="inner" style="text-align: center;">
+            <br>
+            <input type="text" id="estab-case-id" class="form-control mb-2" placeholder="190001" aria-label="id">
+            <div class="input-group mb-2">
+                <input type="file" class="form-control" id="myFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <button class="btn btn-outline-secondary" type="button" id="upload-btn">Upload</button>
+            </div>
+            <div id="kp" style="text-align: center;"></div>
+<!--            <img alt="kp-1" id="kp" src=""/>-->
+        </div>
+    </article>
+    <div class="footerPage"></div>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script>
+
+        $("#upload-btn").click(()=>{
+           const idVal = $('#estab-case-id').val()
+           if(!idVal){
+              alert('請輸入 id ')
+              return
+           }
+           const files = $('#myFile').prop('files')
+           if(!files[0]){
+              alert('請上傳檔案')
+              return
+           }
+           var formData = new FormData();
+           formData.append('file', files[0]);
+           $.ajax({
+               url: `/estab-case/image/${idVal}`,
+               type: 'post',
+               data: formData,
+               processData: false,
+               contentType: false,
+               dataType: "json",
+               success: (data) => {
+                   $("#kp").html(
+                       `<div><h2>請投 1 號</h2></div>
+                        <div><img alt="kp-1" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
+                       `
+                   )
+               },
+               error: (jqXHR, exception) => {
+                alert(jqXHR.responseJSON.message)
+               }
+            })
+        })
+
+<!--        $.ajax({-->
+<!--          url: "/estab-case/image/190001",-->
+<!--          type: "GET",-->
+<!--          xhrFields: {-->
+<!--              withCredentials: true-->
+<!--          },-->
+<!--          dataType: "json",-->
+<!--          success:  (data) => {-->
+<!--              $("#kp").attr('src',`data: image/jpeg;base64,${data.estabCasePic}`  )-->
+<!--          }-->
+<!--        })-->
+
+    </script>
+    <script>
+        $(".headerPage").load("header.html");
+        $(".footerPage").load("footer.html");
+    </script>
+</body>
+</html>

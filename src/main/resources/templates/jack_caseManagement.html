@@ -31,6 +31,9 @@
                 <main class="content">
                     <p class="jack_section_title">進行中案件</p>
                     <table id="example" class="display" style="width:100%">
+
+
+
                         <thead>
                         <tr>
                             <th>案件編號</th>
@@ -41,67 +44,69 @@
                             <th>是否棄單</th>
                         </tr>
                         </thead>
-                        <tbody id="inProgressCasesBody">
-                        <div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div>
-                        <br>
-                        <th:block th:each="unsendcase, stat : ${estabCase0}">
-                            <tr>
-                                <td th:text="${unsendcase.estabCaseID}"></td>
-                                <td th:utext="${unsendcase.estabCaseDate + '<br>' + unsendcase.timeRange}"></td>
-                                <td th:text="${unsendcase.cityName}"></td>
-                                <td><a class="jack_information">資訊</a></td>
-                                <td>
-                                    <span th:if="${unsendcase.estabCaseStatus == 0 and unsendcase.takeStatus == false}">待收取</span>
-                                    <span th:if="${unsendcase.estabCaseStatus == 0 and unsendcase.takeStatus == true}">執行中</span>
-                                    <span th:if="${unsendcase.estabCaseStatus == 1}">完成收取</span>
-                                </td>
-                                <td>
-                                    <button class="jack_button_accept"
-                                            th:attr="data-action='accept', data-id=${unsendcase.estabCaseID}"
-                                            onclick="updateStatus('accept', this.getAttribute('data-id'))">接單
-                                    </button>
-                                    <button class="jack_button_reject"
-                                            th:attr="data-action='reject', data-id=${unsendcase.estabCaseID}"
-                                            onclick="updateStatus('reject', this.getAttribute('data-id'))">拒單
-                                    </button>
-                                </td>
-                            </tr>
-                        </th:block>
-                        </tbody>
+                        <!--                        <tbody id="inProgressCasesBody">-->
+                        <!--                        <div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div>-->
+                        <!--                        <br>-->
+                        <!--                        <th:block th:each="unsendcase, stat : ${estabCase0}">-->
+                        <!--                            <tr>-->
+                        <!--                                <td th:text="${unsendcase.estabCaseID}"></td>-->
+                        <!--                                <td th:utext="${unsendcase.estabCaseDate + '<br>' + unsendcase.timeRange}"></td>-->
+                        <!--                                <td th:text="${unsendcase.cityName}"></td>-->
+                        <!--                                <td><a class="jack_information">資訊</a></td>-->
+                        <!--                                <td>-->
+                        <!--                                    <span th:if="${unsendcase.estabCaseStatus == 0 and unsendcase.takeStatus == false}">待收取</span>-->
+                        <!--                                    <span th:if="${unsendcase.estabCaseStatus == 0 and unsendcase.takeStatus == true}">執行中</span>-->
+                        <!--                                    <span th:if="${unsendcase.estabCaseStatus == 1}">完成收取</span>-->
+                        <!--                                </td>-->
+                        <!--                                <td>-->
+                        <!--                                    <button class="jack_button_accept"-->
+                        <!--                                            th:attr="data-action='accept', data-id=${unsendcase.estabCaseID}"-->
+                        <!--                                            onclick="updateStatus('accept', this.getAttribute('data-id'))">接單-->
+                        <!--                                    </button>-->
+                        <!--                                    <button class="jack_button_reject"-->
+                        <!--                                            th:attr="data-action='reject', data-id=${unsendcase.estabCaseID}"-->
+                        <!--                                            onclick="updateStatus('reject', this.getAttribute('data-id'))">拒單-->
+                        <!--                                    </button>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                        </th:block>-->
+                        <!--                        </tbody>-->
+
+
                     </table>
                 </main>
             </div>
 
 
-            <div class="jack_container">
-                <main class="content">
-                    <div class="jack_section_title">已完成案件</div>
-                    <table id="example1" class="display" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>案件編號</th>
-                            <th>收取時間</th>
-                            <th>地點</th>
-                            <th>收入</th>
-                            <th>案件資訊</th>
-                        </tr>
-                        </thead>
-                        <tbody id="completedCasesBody">
-                        <div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div>
-                        <br>
-                        <th:block th:each="completedcase, stat : ${estabCase1}">
-                            <tr>
-                                <td th:text="${completedcase.estabCaseID}"></td>
-                                <td th:text="${completedcase.estabCaseDate}"></td>
-                                <td th:text="${completedcase.cityName}"></td>
-                                <td th:text="${completedcase.planPricePerCase}"></td>
-                                <td><a class="jack_information">資訊</a></td>
-                            </tr>
-                        </th:block>
-                        </tbody>
-                    </table>
-                </main>
-            </div>
+                        <div class="jack_container">
+                            <main class="content">
+                                <div class="jack_section_title">已完成案件</div>
+                                <table id="example1" class="display" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>案件編號</th>
+                                        <th>收取時間</th>
+                                        <th>地點</th>
+                                        <th>收入</th>
+                                        <th>案件資訊</th>
+                                    </tr>
+            <!--                        </thead>-->
+            <!--                        <tbody id="completedCasesBody">-->
+            <!--                        <div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div>-->
+            <!--                        <br>-->
+            <!--                        <th:block th:each="completedcase, stat : ${estabCase1}">-->
+            <!--                            <tr>-->
+            <!--                                <td th:text="${completedcase.estabCaseID}"></td>-->
+            <!--                                <td th:text="${completedcase.estabCaseDate}"></td>-->
+            <!--                                <td th:text="${completedcase.cityName}"></td>-->
+            <!--                                <td th:text="${completedcase.planPricePerCase}"></td>-->
+            <!--                                <td><a class="jack_information">資訊</a></td>-->
+            <!--                            </tr>-->
+            <!--                        </th:block>-->
+            <!--                        </tbody>-->
+                                </table>
+                            </main>
+                        </div>
 
 
         </div>
@@ -115,47 +120,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script th:src="@{/js/jack_caseManagement.js}"></script>
 
+
 <script>
     $(".headerPage").load("/header.html");
     $(".footerPage").load("/footer.html");
-    $(".empSidebarPage").load("/empSidebar.html");//用empSidebar.html會跳到首頁 先加test以及改html檔名避免filter攔截
-    function updateStatus(action, estabCaseID) {
+    $(".empSidebarPage").load("/empSidebar.html");
 
-        var acceptButton = $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]');
-        var rejectButton = $('.jack_button_reject[data-action="reject"][data-id="' + estabCaseID + '"]');
-        $.ajax({
-            type: 'POST',
-            url: '/updateCaseStatus',
-            data: {
-                action: action,
-                estabCaseID: estabCaseID
-            },
-            success: function (response) {
-
-                console.log('Update successful');
-
-                if (response) {
-                    if (action === 'accept') {
-                        acceptButton.text('已接單').prop('disabled', true);
-                        rejectButton.prop('disabled', true);
-                        console.log('Accept logic');
-
-                    } else if (action === 'reject') {
-
-                        rejectButton.text('已拒單').prop('disabled', true);
-                        acceptButton.prop('disabled', true);
-                        console.log('Reject logic');
-                    }
-                } else {
-                    console.log('Unexpected success response');
-                }
-            },
-            error: function (error) {
-                console.error('Update failed', error);
-            }
-        });
-    }
 </script>
 </body>
+
 
 </html>

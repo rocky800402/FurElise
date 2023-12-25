@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>購物商城-生活必備</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/mallStyles.css}">
+</head>
+
+<body style="background-color: #fff;">
+
+
+	<header class="headerPage"></header>
+
+	<div style="display: flex;">
+		<aside class="sidebar">
+			<a th:href="@{/shopmall/}"><h2>購物商城</h2></a>
+			<ul th:each="productClass : ${pClassList}">
+				<li><a th:href="@{'/shopmall/' + ${productClass.pClassID}}"
+					th:text="${productClass.pClassName}"></a></li>
+			</ul>
+		</aside>
+		<main class="content">
+			<p style="color: #a5a5a5; font-size: 12px;">購物商城</p>
+
+			<div th:each="product : ${productList}"
+			th:if="${product.pStock > 0 and product.pStatus != false}"
+				style="width: 15rem; margin: 2rem; display: inline-block;">
+				<div class="card">
+					<div id="blob_holder1"
+						style="display: flex; justify-content: center; align-items: center;">
+						<img th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}"
+							width="230px" height="200px" />
+					</div>
+					<div class="card-body" style="text-align: center;">
+						<a th:href="@{/shopmall/getone/{pID}(pID=${product.pID})}"
+							style="color: black;">
+							<h5 class="card-title" th:text="${product.pName}"></h5>
+						</a>
+						<p style="display: inline-block;"
+							th:text="'$' + ${product.pPrice}"></p>
+						<br>
+
+						<form th:action="@{/shopmall/add/{pID}(pID=${product.pID})}" method="post">
+                            <div>
+                                <input type="number" name="quantity" id="quantityInput" min="1" value="1" style="width:50px; margin-bottom:20px;" /><br>
+                                <input type="hidden" name="memID" th:value="${memID}" />
+                                <input type="submit" class="btn btn-primary btn_addNext btn_off addToCartBtn" style="background-color: #9ac972; border: #9ac972" value="加入購物車" />
+                            </div>
+                        </form>
+
+					</div>
+				</div>
+			</div>
+
+		</main>
+	</div>
+
+
+
+
+
+	<footer class="footerPage"></footer>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".headerPage").load("/header.html");
+			$(".footerPage").load("/footer.html");
+
+// 			// 獲取當前登錄用戶的memID
+// 			var memID = $(this).data("data-mem-id");
+
+// 			// 按鈕點擊事件
+// 			$(".addToCartBtn").on("click", function() {
+// 				// 獲取產品ID
+// 				var pId = $(this).data("data-product-id");
+
+// 				// 獲取當前產品數量
+// 				var quantity = $(this).data("data-quantity");
+
+// 				// 設置memID
+// 				$(this).data("mem-id", memID);
+
+// 				// 發送 AJAX 請求
+// 				$.ajax({
+// 					type : "POST",
+// 					url : "/shopmall/add/" + pId,
+// 					data : {
+// 						memID : memID,
+// 						pID : pID,
+// 						quantity : quantity
+// 					},
+// 					success : function(response) {
+// 						// 處理成功的回應，例如刷新購物車數量顯示
+// 						alert("成功加入購物車！");
+// 					},
+// 					error : function(error) {
+// 						// 處理錯誤，例如顯示錯誤訊息
+// 						alert("加入購物車失敗：" + error.responseText);
+// 					}
+// 				});
+// 			});
+		});
+	</script>
+</body>
+
+</html>

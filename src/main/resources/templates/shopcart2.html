@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物車</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body style="background-color: #fff;">
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <img th:src="@{/images/Für_Elise.svg}" alt="Your Logo" width="500">
+      </div>
+      <nav class="navigation">
+        <ul>
+          <li><a href="#">方案介紹</a></li>
+          <li><a href="#">購物商城</a></li>
+          <li><a href="#">聯絡我們</a></li>
+          <li><a href="#">成為收取夥伴</a></li>
+          <li><a href="#"><img th:src="@{/images/shopping_cart.svg}" alt="shopping cart"></a></li>
+          <li><a href="#">登入/註冊(已登入狀態要改成會員中心)</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div style="display: flex; align-items: center; justify-content: center">
+    <main class="content">
+
+      <!-- Product cards using th:each loop -->
+      <div th:each="product : ${products}" class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img th:src="${product.image}" class="img-fluid rounded-start" alt="..." width="200px" height="200px">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body" style="width: 500px;">
+              <h5 class="card-title" th:text="${product.name}"></h5>
+              <p class="card-text"><small class="text-muted">商品數量</small></p>
+              <input placeholder="請輸入數量">
+              <img th:src="${product.garbageCan}" style="width: 30px ; height: 30px;">
+              <p style="font-size: 15px; display: inline; margin-left: 20px; color: #a5a5a5;">單價 :</p>
+              <p style="display: inline; color: #a5a5a5;" th:text="${product.price}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of product cards -->
+
+      <div>
+        <hr>
+        <button type="button" class="btn btn-primary" id="checkoutBtn"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; cursor: pointer;"
+          th:onclick="console.log('aaa');$('input').attr('readonly','readonly');">
+          前往結帳
+        </button>
+        <span style="margin-left: 490px; color: #a5a5a5;">
+          <!-- Additional content... -->
+        </span>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>網站導覽</h3>
+        <ul>
+          <li><a href="#">方案介紹</a></li>
+          <li><a href="#">購物商城</a></li>
+          <li><a href="#">聯絡我們</a></li>
+          <li><a href="#">成為收取夥伴</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>關注Für Elise</h3>
+        <a href="#"><img th:src="@{/images/entypo-social_fb-with-circle.svg}" alt="facebook Logo"></a>
+        <a href="#"><img th:src="@{/images/entypo-social_instagram-with-circle.svg}" alt="instagram Logo"></a>
+        <a href="#"><img th:src="@{/images/entypo-social_youtube-with-circle.svg}" alt="youtube Logo"></a>
+      </div>
+
+      <div class="footer-section">
+        <h3>聯繫我們</h3>
+        <p>
+          給愛麗絲有限公司<br>
+          統一編號：90355170<br>
+          信箱test101@elise.com.tw<br>
+          104台北市中山區南京東路三段219號5樓
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/jquery-3.7.1.min.js"></script>
+  <script>
+    $("#checkoutBtn").click(function () {
+      console.log("aaa");
+      $('input').attr("readonly", "readonly");
+    });
+  </script>
+
+</body>
+
+</html>

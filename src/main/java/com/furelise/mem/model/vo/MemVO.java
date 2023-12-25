@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class MemVO {
@@ -13,9 +15,9 @@ public class MemVO {
     private String memName;
     private String memMail;
     private String memTel;
-    private Date memBirth;
-    private Timestamp memRegiDate;
-    private Timestamp memLastModified;
+    private LocalDate memBirth;
+    private LocalDateTime memRegiDate;
+    private LocalDateTime memLastModified;
 
     public MemVO() {
     }

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für Elise-會員中心</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="./css/emp_sidebar.css" th:href="@{/css/emp_sidebar.css}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .hc_headerBox {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ececec;
+            border-top: 1px solid #ececec;
+            /* margin-bottom: 100px; */
+        }
+
+        .hc_headerText {
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 15px;
+            padding-top: 15px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        p {
+            margin: 10px 0 10px 0;
+        }
+
+        input {
+            width: 535px;
+        }
+
+        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+        .btn-primary {
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+        .hc_mem_saveBtn:hover {
+            background-color: rgba(26, 137, 26, 0.801);
+            border-color: rgba(26, 137, 26, 0.801);
+            color: white;
+        }
+        .hc_mem_saveBtn, .hc_mem_discardBtn {
+            width: 150px;
+            height: 50px;
+            margin-top: 30px;
+        }
+        .hc_mem_discardBtn {
+            background-color: #FE9A9A;
+            border-color: #FE9A9A;
+            margin-left: 400px;
+            margin-right: 10px;
+        }
+        .hc_mem_discardBtn:hover, .hc_mem_discardBtn:focus {
+            background-color: #f85252;
+            border-color: #f85252;
+        }
+
+        .emp_bankInfo {
+            height: 135px;
+            background-color: #fff;
+            margin: 40px 0 40px 0;
+            -webkit-box-shadow: 3px 3px 5px 5px #ddd;
+            -moz-box-shadow: 3px 3px 5px 5px #ddd;
+            box-shadow: 3px 3px 5px 5px #ddd;
+        }
+        
+        .emp_verified {
+            margin-left: 250px;
+            color: #fff;
+            text-align: center;
+            background-color: #9ac972;
+        }
+
+        .emp_unverified {
+            display: inline-block;
+            margin-left: 10px;
+            color: #fff;
+            text-align: center;
+            background-color: #FFC2A0;
+        }
+        
+        .emp_uploadBankInfo {
+            margin-top: 150px;
+        }
+        
+    
+    </style>
+</head>
+<body>
+    
+    <div class="headerPage"></div>
+    <div class="hc_headerBox">
+        <div class="hc_headerText">會員中心</div>
+    </div>
+    <div style="width: 100%; justify-content: center; display: flex;">
+
+        <div style="max-width: 1200px; display: flex;">
+            <div class="empSidebarPage"></div>
+            <!--  -->
+
+            <div style="width: 700px; padding: 20px; margin-left: 50px;">
+            <!-- 寫在這裡 -->
+            
+            	<div th:if="${successMsg != null}" id="successMsg">
+	        		<p th:text="${successMsg}" style="color:red; font-size: 16px;"></p>
+	        	</div>	
+	        	
+                <div class="emp_bankInfo" th:object="${emp}">
+                    <span style="display: inline-block; margin-top: 50px; margin-left: 30px; font-weight: bold;">我的薪轉戶</span>
+                    <span th:text="${emp.accountNo != null? emp.bankCode + ' ' + emp.accountNo : '（尚未設定薪轉戶）'}" style="display: inline-block; margin-top: 50px; margin-left: 180px; font-weight: bold;"></span>
+                </div>
+				<form action="/emp/bankinfo/upload" method="post" enctype="multipart/form-data">
+	                <div class="emp_uploadBankInfo">
+	                    <img alt="上傳檔案預覽" style="width: 400px;" class="picture">
+	                    <input type="file" name="emp_uploadBank" id="emp_uploadBank" style="display: none;"></input>
+	                    <label for="emp_uploadBank" class="btn btn-primary btn-lg hc_mem_saveBtn emp_uploadBank" style="width: 200px; margin-left: 100px;">
+	                        上傳存摺封面
+	                    </label>
+	                </div>
+                
+                
+	                <br><br>
+	                    
+	                <div class="emp_uploadBankInfo">
+	                    <p>金融機構代碼（共三碼）</p>
+	                    <input type="text" name="emp_bankCode" th:value="${temporaryEmp != null? temporaryEmp.bankCode : ''}" style="width: 300px;">
+	                    <p>帳號</p>
+	                    <input type="text" name="emp_accountNo" th:value="${temporaryEmp != null? temporaryEmp.accountNo : ''}">
+	                    
+	                    <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}" style=" margin-top: 30px;" id="bank_errMsgs">
+							<span style="color:red; font-size: 16px; margin-left: 40%;">請修正以下錯誤:</span>
+								<ul>
+									<li th:each="message : ${errMsgs}" style="color:red; font-size: 16px;  margin-left: 40%;" th:text="${message}"></li>
+								</ul>
+						</div>
+						
+	                    <button type="submit" class="btn btn-primary btn-lg hc_mem_discardBtn">設定薪轉戶</button>
+	                    <!--<button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn">新增薪轉戶</button>-->
+	                    <br><br>
+	                    
+	                </div>
+                </form>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    
+    
+   
+
+    <div class="footerPage"></div>
+    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+
+    <script>
+        function init(){
+            // emp_tag更改到帳戶設定
+            $("li").removeClass("emp_tag");
+            $("ul li:nth-child(7)").addClass("emp_tag");
+
+            // 預覽上傳存摺封面
+            var demo = document.getElementsByTagName('img')[0];
+
+            $("#emp_uploadBank").on("change", function(e){
+                // 清空
+                $('.picture').html('<img al t="上傳檔案預覽" style="width: 400px;" class="picture">');
+
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('.picture').attr('src', e.target.result);;
+                    }
+                    reader.readAsDataURL(file);
+                }
+                   
+            });
+            
+            
+         	// 滑動效果
+            var errMsgs = document.getElementById("bank_errMsgs");
+            if (errMsgs != null) {
+            	window.scrollTo({
+                    top: errMsgs.offsetTop, // 使用元素的上側位置
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            }
+
+        };
+
+
+        window.addEventListener("load", init);
+    </script>
+
+
+
+    <script>
+        $(".headerPage").load("/header.html");
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("/empSidebar.html");
+        </script>
+</body>
+</html>

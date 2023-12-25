@@ -60,27 +60,25 @@ public class TestController  {
 	@GetMapping()
 	public void test(){
 		//測試service新增
-//		shopCartService.addProduct(110004, 10, 1);
-//		shopCartService.addProduct(110004, 20, 2);
-//		shopCartService.addProduct(110004, 30, 3);
-//		shopCartService.addProduct(110004, 40, 4);
+//		shopCartService.addProduct(null, 10, 1);
+//		shopCartService.addProduct(null, 20, 2);
+//		shopCartService.addProduct(null, 30, 3);
+//		shopCartService.addProduct(null, 40, 4);
 		
 		//測試service修改
-//		shopCartService.updateQuantity(110004, 10, 1);
+//		shopCartService.updateQuantity(null, 10, 10);
 		
 		//測試service移除特定商品
-//		shopCartService.removeProduct(110004, 40);
+//		shopCartService.removeProduct(null, 40);
 		
 		//測試service清除整台購物車
 //		shopCartService.clearCart(110004);
 		
-		//未成功
 		//測試service取得該會員購物車內的所有商品
-//		shopCartService.getShopCartProducts(110004);
+//		shopCartService.getShopCartProducts(null);
 		
-		//未成功
 		//測試service取得購物車內特定商品的數量
-		shopCartService.getOneProduct(110004, 20);
+//		shopCartService.getOneProduct(null, 20);
 	}
 	
 

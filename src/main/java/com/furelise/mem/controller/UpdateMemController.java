@@ -1,6 +1,8 @@
 package com.furelise.mem.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class UpdateMemController {
 		
 		// 日期轉換: String to Date
 		String birth = req.getParameter("memBirth").replaceAll("/", "-");
-        Date birthDate = Date.valueOf(birth);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate birthDate = LocalDate.parse(birth, formatter);
 		
 //		String email = req.getParameter("memMail");
 		String newPass = req.getParameter("mem_pw_new");
@@ -87,7 +90,7 @@ public class UpdateMemController {
             errMsgs.add(" 請選擇生日日期！");
         } else {
             // yyyy/mm/dd轉成yyyy-mm-dd，再從String轉成Date
-            if (birthDate.after(nowDate)) {
+            if (birthDate.isAfter(birthDate)) {
                 // 生日不可以選比今天晚的日期
                 errMsgs.add(" 生日輸入有誤：不可選擇晚於今日的日期。");
             }
