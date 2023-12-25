@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.furelise.emp.model.Emp;
 
 @Controller
-@RequestMapping("/emp_home_alter")
+@RequestMapping("/emp/info")
 public class UpdateEmpController {
 
 	@Autowired
@@ -74,7 +74,6 @@ public class UpdateEmpController {
         }
 		
         // 工作區域錯誤處理
-
         if ("0".equals(workArea1)) {
         	// 沒有選第一順位工作區域
         	errMsgs.add(" 請至少選擇第一順位工作區域！");

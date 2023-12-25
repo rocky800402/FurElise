@@ -20,7 +20,7 @@ import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.service.MemService;
 
 @Controller
-@RequestMapping("/member_home_alter")
+@RequestMapping("/member/info")
 public class UpdateMemController {
 
 	@Autowired
@@ -84,13 +84,12 @@ public class UpdateMemController {
         }
         
         // birth錯誤處理
-        long nowMillis = System.currentTimeMillis();
-        Date nowDate = new Date(nowMillis);
+        LocalDate nowDate = LocalDate.now();
         if (birth == null || (birth.trim().length()) == 0) {
             errMsgs.add(" 請選擇生日日期！");
         } else {
             // yyyy/mm/dd轉成yyyy-mm-dd，再從String轉成Date
-            if (birthDate.isAfter(birthDate)) {
+            if (birthDate.isAfter(nowDate)) {
                 // 生日不可以選比今天晚的日期
                 errMsgs.add(" 生日輸入有誤：不可選擇晚於今日的日期。");
             }
