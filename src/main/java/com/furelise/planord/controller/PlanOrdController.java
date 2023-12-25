@@ -90,18 +90,12 @@ public class PlanOrdController {
 	public String planShop() {
 		return "planord_shop";
 	}
-	
-	//return view, not in use currently
-	@GetMapping("/cart")
-	public String planCart() {
-		return "planord_cart";
-	}
 
 	// create planName drop down menu
 	@GetMapping("/planname")
 	@ResponseBody
-	public List<Object[]> getAllPlanNames() {
-		return planOrdSvc.findDistinctPlanNamesPriceLiter();
+	public List<Plan> getAllPlanNames() {
+		return planOrdSvc.findByTimes();
 	}
 
 	// create timeRange drop down menu

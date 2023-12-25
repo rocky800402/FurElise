@@ -39,12 +39,8 @@ public class PlanOrdDTOCon {
 	}
 
 	// list data, for ajax using
-	
 	@GetMapping("/finding")
 	public List<PlanOrdDTO> getAllPlanOrds() {
 		return planOrdSvc.getPlanOrdInfo();
 	}
-
-	// update data, for ajax using
-
 }
