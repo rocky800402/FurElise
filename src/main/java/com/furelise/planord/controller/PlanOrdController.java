@@ -94,8 +94,8 @@ public class PlanOrdController {
 	// create planName drop down menu
 	@GetMapping("/planname")
 	@ResponseBody
-	public List<Object[]> getAllPlanNames() {
-		return planOrdSvc.findDistinctPlanNamesPriceLiter();
+	public List<Plan> getAllPlanNames() {
+		return planOrdSvc.findByTimes();
 	}
 
 	// create timeRange drop down menu

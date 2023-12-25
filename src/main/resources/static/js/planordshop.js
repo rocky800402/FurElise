@@ -12,7 +12,7 @@ function planName_selector() {
 			let list_html = "";
 			$.each(data, function(index, item) {
 				list_html += `
-                <option value="${item[0]}" data-price="${item[1]}">${item[0]}(${item[2]}公升)</option>
+                <option value="${item.planName}" data-price="${item.planPrice}">${item.planName}(${item.liter}公升)</option>
             `;
 			});
 			$("select[name='planName']").html(list_html);
@@ -27,7 +27,6 @@ function pickupTime_selector() {
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 			$.each(data, function(index, item) {
 				list_html += `
@@ -46,7 +45,6 @@ function period_selector() {
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 
 			$.each(data, function(index, item) {
@@ -67,7 +65,6 @@ function way_selector() {
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 
 			$.each(data, function(index, item) {
@@ -87,7 +84,6 @@ function city_selector() {
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 
 			$.each(data, function(index, item) {
@@ -109,13 +105,12 @@ function new_plan() {
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
 			let list_html = "";
-			console.log(data.length); //5
 			for (let i = 3; i < data.length; i++) {
 				list_html = `
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">
                                     <p class="sl_plan_name">${data[i][0]}</p>
-                                    <img src="/furelise/images/product.png" alt="" width="90%">
+                                    <img src="/images/product.png" alt="" width="90%">
                                     <p>介紹還沒想</p>
                                 </div>
                             </div>
@@ -149,7 +144,6 @@ $(document).on("click", "button#show_sale", function() {
 					contentType: "application/json",
 					dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 					success: function(data) {
-						// console.log(data)
 						if (data) {
 							$(".first select, input").prop('disabled', true); //選好的不可改
 

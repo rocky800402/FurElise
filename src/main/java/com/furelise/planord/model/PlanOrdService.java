@@ -222,8 +222,8 @@ public class PlanOrdService {
 	}
 
 	// 取得不重複方案名 + 1次的價格
-	public List<Object[]> findDistinctPlanNamesPriceLiter() {
-		return planDao.findDistinctPlanNamesPriceLiter();
+	public List<Plan> findByTimes() {
+		return planDao.findByTimes(1);
 	}
 
 	//for PlanOrdController drop down menu
