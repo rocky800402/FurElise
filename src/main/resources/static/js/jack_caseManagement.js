@@ -5,7 +5,7 @@ $(document).ready(function() {
         // "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]], //顯示筆數設定 預設為[10, 25, 50, 100] 用戶在下拉選單中看到的是第二個數組中的文本值，而實際上應用到表格的是第一個數組中對應的數字。
         // "pageLength": '5',// 預設為'10'，若需更改初始每頁顯示筆數，才需設定　
         "ajax": {
-            "url": "http://localhost:8080/estabcase/120001/0",           // 資料請求的網址
+            "url": "http://localhost:8080/estabcase/120001/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
             "data": {
@@ -23,7 +23,7 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return row.estabCaseDate + ' ' + row.timeRange;
+                    return row.estabCaseDate + '<br>' + row.timeRange;
                 }
             },
             {
@@ -36,15 +36,6 @@ $(document).ready(function() {
                 }
             },
             {
-                // data: 'estabCaseStatus',
-                // render: function (data, type, row) {
-                //     // 根据 estabCaseStatus 的值返回不同的顯示內容
-                //     if (data === 0) {
-                //         return '<span style="color: green;">未派送</span>';
-                //     } else if (data === 1) {
-                //         return '<span style="color: blue;">執行中</span>';
-                //     }
-                // }
                 data: null,
                 render: function (data, type, row) {
                     // 根据 estabCaseStatus 和 takeStatus 的值返回不同的显示内容
@@ -54,20 +45,31 @@ $(document).ready(function() {
                         } else if (row.takeStatus === true) {
                             return '<span style="color: blue;">執行中</span>';
                         }
-                    } else if (row.estabCaseStatus === 1) {
-                        // 如果 estabCaseStatus 为 1，可以返回相应的内容
-                        return '<span style="color: red;">其他状态</span>';
                     }
                 }
             },
             {
                 data: null,
                 render: function (data, type, row) {
-                    var buttonsHTML = '<button class="jack_button_accept update-status-button" data-action="accept" data-id="' + row.estabCaseID + '">接單</button>';
-                    buttonsHTML += ' <span class="button-separator"></span> ';
+                    var buttonsHTML = '';
+
+                    if (row.estabCaseStatus === 0) {
+                        if (row.takeStatus) {
+                            // 如果 estabCaseStatus 為 0 且 takeStatus 為 true，顯示已接單按钮
+                            buttonsHTML += '<button class="jack_button_accept update-status-button" data-action="accept" data-id="' + row.estabCaseID + '" disabled>已接</button>';
+                        } else {
+                            // 不然就顯示接單按钮
+                            buttonsHTML += '<button class="jack_button_accept update-status-button" data-action="accept" data-id="' + row.estabCaseID + '">接單</button>';
+                        }
+                        //按鈕間空格
+                        buttonsHTML += ' <span class="button-separator"></span> ';
+                    }
+                    // 拒單按鈕
                     buttonsHTML += '<button class="jack_button_reject update-status-button" data-action="reject" data-id="' + row.estabCaseID + '">拒單</button>';
+
                     return buttonsHTML;
                 }
+
 
             },
         ]
@@ -81,7 +83,7 @@ $(document).ready(function() {
         // "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]], //顯示筆數設定 預設為[10, 25, 50, 100] 用戶在下拉選單中看到的是第二個數組中的文本值，而實際上應用到表格的是第一個數組中對應的數字。
         // "pageLength": '5',// 預設為'10'，若需更改初始每頁顯示筆數，才需設定　
         "ajax": {
-            "url": "http://localhost:8080/estabcase/120001/1",           // 資料請求的網址
+            "url": "http://localhost:8080/estabcase/120001/1",           // 資料請求的網址 目前120001寫死 之後要用empID分類
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
             "data": {
@@ -125,6 +127,8 @@ $('#example').on('click', '.update-status-button', function () {
 });
 function updateStatus(action, estabCaseID) {
 
+    var table = $('#example').DataTable();
+
     console.log(action);
     console.log(estabCaseID);
     var acceptButton = $('.jack_button_accept.update-status-button[data-id="' + estabCaseID + '"]');
@@ -145,12 +149,14 @@ function updateStatus(action, estabCaseID) {
                     acceptButton.text('已接').prop('disabled', true);
                     rejectButton.prop('disabled', true);
                     console.log('Accept logic');
+                    table.ajax.reload();//重整table的資料
 
                 } else if (action === 'reject') {
 
                     rejectButton.text('已拒').prop('disabled', true);
                     acceptButton.prop('disabled', true);
                     console.log('Reject logic');
+                    table.ajax.reload();//重整table的資料
                 }
             } else {
                 console.log('Unexpected success response');
