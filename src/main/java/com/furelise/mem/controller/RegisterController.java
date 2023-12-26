@@ -64,7 +64,7 @@ public class RegisterController {
             errMsgs.add(" 電子信箱格式有誤，請修正！");
         } else if (memSvc.findByMemMail(email) != null) {
             // 該電子信箱(帳號)已有註冊紀錄
-            errMsgs.add(" 己有帳號使用此電子信箱，請選擇其他電子信箱。");
+            errMsgs.add(" 已有帳號使用此電子信箱，請選擇其他電子信箱。");
         }
 
         // name錯誤處理
@@ -80,16 +80,16 @@ public class RegisterController {
         } else if (!name.trim().matches(nameReg)) {
             errMsgs.add(" 姓名格式有誤：僅能輸入中、英文字母與底線，且長度必需在2到20之間。");
         }
-        String birthStr = birth.replaceAll("/", "-");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate birthDate = LocalDate.parse(birthStr, formatter);
 
         // birth錯誤處理
+        LocalDate birthDate = null;
         LocalDate nowDate = LocalDate.now();
         if (birth == null || (birth.trim().length()) == 0) {
             errMsgs.add(" 請選擇生日日期！");
         } else {
             // yyyy/mm/dd轉成yyyy-mm-dd，再從String轉成Date
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    		birthDate = LocalDate.parse(birth, formatter);
             if (birthDate.isAfter(nowDate)) {
                 // 生日不可以選比今天晚的日期
                 errMsgs.add(" 生日輸入有誤：不可選擇晚於今日的日期。");

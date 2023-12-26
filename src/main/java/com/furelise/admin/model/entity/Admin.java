@@ -1,4 +1,4 @@
-package com.furelise.admin.model;
+package com.furelise.admin.model.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
