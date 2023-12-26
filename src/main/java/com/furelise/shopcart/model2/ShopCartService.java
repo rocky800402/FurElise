@@ -1,8 +1,6 @@
 package com.furelise.shopcart.model2;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +127,7 @@ public class ShopCartService {
 //	} // getShopCartProducts
 
 	// 取得訪客購物車內的所有商品
-	public Map<Product, String> getGuestCartProducts2(String memID) {
+	public Map<Product, String> getCartProducts(String memID) {
 
 		String key;
 		if (memID.equals("guestCart:guest")) {

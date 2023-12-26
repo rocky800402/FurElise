@@ -1,7 +1,5 @@
 package com.furelise.shopcart.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.furelise.product.model.Product;
 import com.furelise.product.model.ProductService;
 import com.furelise.shopcart.model2.ShopCartService;
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 @Controller
 @RequestMapping("/shopcart")
@@ -33,7 +30,7 @@ public class ShopCartController {
 
 		if (memID == null) {
 			String guest = "guestCart:guest";
-			Map<Product, String> guestCart = scSvc.getGuestCartProducts2(guest);
+			Map<Product, String> guestCart = scSvc.getCartProducts(guest);
 
 			if (guestCart == null) {
 				return "empty-cart";
@@ -45,7 +42,7 @@ public class ShopCartController {
 			return "shopcart";
 		} else {
 			String mem = "mamCart:"+ memID;
-			Map<Product, String> memCart = scSvc.getGuestCartProducts2(mem);
+			Map<Product, String> memCart = scSvc.getCartProducts(mem);
 			
 			if (memCart == null) {
 				return "empty-cart";
