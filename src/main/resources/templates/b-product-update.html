@@ -329,6 +329,12 @@
 		    const blobHolderElement = document.querySelector('#' + targetId);
 
 		    if (filereader_support === true && acceptedTypes[file.type] === true) {
+		    	
+		    	if (file.size > 1048576) {
+                    alert("檔案大小不能超過 1 MB");
+                    blobHolderElement.innerHTML = ""; // 清空目標元素內容
+                    return;
+                }
 		        var reader = new FileReader();
 		        reader.onload = function (event) {
 		            var image = new Image();

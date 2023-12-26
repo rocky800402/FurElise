@@ -50,16 +50,12 @@
 								<input placeholder="必填" id="pName" name="pName" type="text" th:field="*{pName}" onclick="hideContent('pName.errors');" /> 
 								<span  th:if="${#fields.hasErrors('pName')}" th:errors="*{pName}" class="error" id="pName.errors"></span>
 								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
-<!-- 								<span th:if="${#fields.hasErrors('pName')}" th:errors="*{pName}" class="error" id="pName.errors"></span> -->
 							</div><br>
 
 							<div>
 								<label for="pPrice">商品價格:</label> <input placeholder="必填" id="pPrice" name="pPrice" type="text" th:field="*{pPrice}" onclick="hideContent('pPrice.errors');" /> 
 								<span  th:if="${#fields.hasErrors('pPrice')}" th:errors="*{pPrice}" class="error" id="pPrice.errors"></span>
 								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
-<!-- 									<span -->
-<!-- 									th:if="${#fields.hasErrors('pPrice')}" th:errors="*{pPrice}" -->
-<!-- 									class="error" id="pPrice.errors"></span> -->
 							</div><br>
 
 							<div>
@@ -190,10 +186,16 @@
 //	         	}, false);
 	        }
 	        function previewfile(file, targetId) {
-	        	const blobHolderElement = document.querySelector('#' + targetId);
+	        const blobHolderElement = document.querySelector('#' + targetId);
 	        	
 	        	
 	        	if (filereader_support === true && acceptedTypes[file.type] === true) {
+	        		
+	        		if (file.size > 1048576) {
+	                    alert("檔案大小不能超過 1 MB");
+	                    blobHolderElement.innerHTML = ""; // 清空目標元素內容
+	                    return;
+	                }
 	        		var reader = new FileReader();
 	        		reader.onload = function(event) {
 	        			var image = new Image();
@@ -201,6 +203,7 @@
 	        			image.width = 100;
 	        			image.height = 75;
 	        			image.border = 2;
+	        			
 	        			if (blobHolderElement.hasChildNodes()) {
 	        				blobHolderElement.removeChild(blobHolderElement.childNodes[0]);
 	        			}

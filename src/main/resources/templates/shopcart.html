@@ -21,6 +21,7 @@
 		style="display: flex; align-items: center; justify-content: center">
 		<main class="content" style="min-height: 1000px;">
 
+
 			<div class="card mb-3" th:each="product : ${cartEntrtSet}"
 				style="width: 600px">
 				<div class="row g-0">
@@ -62,9 +63,10 @@
 
 			寄送方式 
 			<select id="deliver" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;">
-				<option th:value="0" data-shipping-fee="120">黑貓宅急便</option>
-				<option th:value="1" data-shipping-fee="60">7-11取貨</option>
+			    <option th:value="0" data-shipping-fee="120" selected>黑貓宅急便</option>
+			    <option th:value="1" data-shipping-fee="60">7-11取貨</option>
 			</select> <br> 
+			
 			
 			請選擇縣市 
 			<select id="city" name="city" class="form-select form-select-sm">
@@ -99,7 +101,7 @@
 					<p style="display: inline-block" id="orderTotalAmount">111</p><br>
 					<p style="display: inline-block">優惠折抵:</p>
 					<p style="display: inline-block">111</p><br>
-					<p style="display: inline-block">運費: <span id="shippingFee">111</span></p><br>
+					<p style="display: inline-block">運費: <span id="shippingFee">120</span></p><br>
 					<p style="display: inline-block">付款金額:</p>
 					<p style="display: inline-block"></p>
 				</div>
@@ -133,6 +135,17 @@
 			console.log(memID);
 			$(".headerPage").load("/header.html");
 			$(".footerPage").load("/footer.html");
+			
+			 $('#deliver').change(function() {
+		            // 获取当前选项的文本并更新显示
+		            $('#selectedOption').text($('#deliver option:selected').text());
+
+		            // 获取当前选项的数据属性值（运费）
+		            var shippingFee = $('option:selected', this).data('shipping-fee');
+
+		            // 更新显示运费的<span>元素的内容
+		            $('#shippingFee').text(shippingFee);
+		        });
 
 			// 取得所有數量輸入框
 			var quantityInputs = $("input[name='quantity']");
@@ -253,13 +266,17 @@
 						recalculateOrderTotal();
 					});
 				});
-				$("#deliver").change(function() {
-			        // 取得選擇的運費
-			        var shippingFee = $(this).find("option:selected").data("shipping-fee");
+				
+				 $('#deliver').change(function() {
+			            // 获取当前选项的文本并更新显示
+			            $('#selectedOption').text($('#deliver option:selected').text());
 
-			        // 更新顯示運費的元素
-			        $("#shippingFee").text(shippingFee);
-			    });
+			            // 获取当前选项的数据属性值（运费）
+			            var shippingFee = $('option:selected', this).data('shipping-fee');
+
+			            // 更新显示运费的<span>元素的内容
+			            $('#shippingFee').text(shippingFee);
+			        });
 				
 
 

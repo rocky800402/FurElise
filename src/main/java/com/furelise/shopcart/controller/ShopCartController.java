@@ -102,11 +102,11 @@ public class ShopCartController {
 
 	}
 
-//	@PostMapping("/update")
-//	public String updateCart(@RequestParam Integer memID, @RequestParam Integer pID, @RequestParam Integer quantity) {
-//		scSvc.updateQuantity(memID, pID, quantity);
-//		return "redirect:/shopcart/";
-//	}
+	@PostMapping("/update")
+	public String updateCart(@RequestParam Integer memID, @RequestParam Integer pID, @RequestParam Integer quantity) {
+		scSvc.updateQuantity(memID, pID, quantity);
+		return "redirect:/shopcart/";
+	}
 
 //	@PostMapping("/clear")
 //	public String clearCart(@RequestParam Integer memID) {
