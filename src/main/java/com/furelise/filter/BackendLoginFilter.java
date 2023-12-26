@@ -18,7 +18,7 @@ import java.util.List;
 public class BackendLoginFilter extends OncePerRequestFilter {
 
     // 定義需要進行過濾的路徑清單
-    private final List<String> pathsToFilter = Arrays.asList("/backend", "/otherPath");
+    private final List<String> pathsToFilter = Arrays.asList(/*"/backend", */"/otherPath");
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)

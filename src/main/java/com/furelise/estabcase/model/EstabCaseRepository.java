@@ -37,4 +37,7 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
     List<EstabCase> findByEmpID(Integer empID);
 
 	Page<EstabCase> findAllByTakeStatus(boolean takeStatus, Pageable pageable);
+
+    @Query("SELECT e FROM EstabCase e WHERE e.estabCaseDate >= CURRENT_DATE AND e.estabCaseDate <= CURRENT_DATE + 2 AND e.takeStatus = 0")
+    List<EstabCase> findEstabCasesWithinLastTwoDaysAndTakeStatusZero();
 }
