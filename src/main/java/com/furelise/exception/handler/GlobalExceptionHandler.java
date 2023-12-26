@@ -49,6 +49,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public ErrorMessageVO handleUnauthorizedException(UnauthorizedException e) {
+        e.printStackTrace();
         return new ErrorMessageVO(e.getMessage());
     }
 
