@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sidebar</title>
-    <link rel="stylesheet" type="text/css" href="/furelise/css/backend_sidebar.css}">
-    <link rel="stylesheet" type="text/css" href="/furelise/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="/furelise/css/backend_sidebar.css">
 
 
 </head>
@@ -26,6 +25,8 @@
                 <li><a href="#">會員管理</a></li>
                 <hr  class="backend_sidebar_line">
                 <li><a href="#">夥伴管理</a></li>
+                <hr  class="backend_sidebar_line">
+                <li><a href="#">審核管理</a></li>
                 <hr class="backend_sidebar_line">
                 <li><a href="#">商品管理</a></li>
                 <hr class="backend_sidebar_line">
@@ -42,10 +43,32 @@
                 <li><a href="#">優惠管理</a></li>
                 <hr class="backend_sidebar_line">
                 <li><a href="#">申訴管理</a></li>
+                <hr class="backend_sidebar_line">
+                <li><a href="#" id="admin_logout">登出</a></li>
             </ul>
         </div>
     </aside>
 
+
+	<script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="/js/constant.js" th:src="@{/js/constant.js}"></script>
+	<script>
+		$("#admin_logout").on("click", function(e){
+			e.preventDefault();
+            var result = confirm("確定要登出嗎？");
+            if (result == true) {
+				$.ajax({
+					url: `${API_PATH}/auth/logout/admin`,
+					type: "POST",
+					success: function(e) {
+						console.log("logout success");
+						window.location.href=`${APP_BASE_URL}/adminlogin`;
+					}
+				});
+            }
+		});
+	</script>
+	
 </body>
 
 

@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -102,16 +104,15 @@ public class BecomeEmpController {
         }
         
         // birth錯誤處理
-        Date birthDate = null;
-        long nowMillis = System.currentTimeMillis();
-        Date nowDate = new Date(nowMillis);
+        LocalDate birthDate = null;
+        LocalDate nowDate = LocalDate.now();
         if (birth == null || (birth.trim().length()) == 0) {
             errMsgs.add(" 請選擇生日日期！");
         } else {
             // yyyy/mm/dd轉成yyyy-mm-dd，再從String轉成Date
-            String birthStr = birth.replaceAll("/", "-");
-            birthDate = Date.valueOf(birthStr);
-            if (birthDate.after(nowDate)) {
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    		birthDate = LocalDate.parse(birth, formatter);
+            if (birthDate.isAfter(nowDate)) {
                 // 生日不可以選比今天晚的日期
                 errMsgs.add(" 生日輸入有誤：不可選擇晚於今日的日期。");
             }

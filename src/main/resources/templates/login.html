@@ -291,15 +291,15 @@
             <!-- <p>使用者名稱</p>
             <input type="text" name="rUsername"> -->
             <p>電子信箱</p>
-            <input type="email" name="rEmail">
+            <input type="email" name="rEmail" th:value="${newMem != null? newMem.memMail : ''}">
             <p>姓名</p>
-            <input type="text" name="rName">
+            <input type="text" name="rName" th:value="${newMem != null? newMem.memName : ''}">
             <p>生日</p>
-            <input type="date" name="rBirth">
+            <input type="date" name="rBirth" th:value="${newMem != null? newMem.memBirth : ''}">
             <p>電話</p>
-            <input type="text" name="rTel" placeholder="僅輸入數字即可，例：0227120589">
+            <input type="text" name="rTel" th:value="${newMem != null? newMem.memTel : ''}" placeholder="僅輸入數字即可，例：0227120589">
             <p>密碼</p>
-            <input type="password" class="hc_register_inputHalf" name="rPassword">
+            <input type="password" th:value="${newMem != null? newMem.memPass : ''}" class="hc_register_inputHalf" name="rPassword">
             <p>確認密碼</p>
             <input type="password" class="hc_register_inputHalf" name="rConfirmPassword">
 

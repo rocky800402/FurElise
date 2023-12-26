@@ -7,9 +7,7 @@ public class EmpService {
 	
 	private EmpDAO dao;
 	
-	public EmpService() {
-		dao = new EmpDAOImpl();
-	}
+
 	
 	
 	// 故意去掉圖片

@@ -23,6 +23,18 @@
             color: black; 
             border: 1px solid red; /* 深紅色邊框 */
         }
+        
+        .suspended-status {
+    		background-color: lightcoral; /* 紅色背景 */
+    		color: black;
+   			border: 1px solid red; /* 深紅色邊框 */
+		}
+
+		.active-status {
+		    background-color: lightgreen; /* 綠色背景 */
+		    color: black;
+		    border: 1px solid lightgreen; /* 深綠色邊框 */
+		}
     </style>
     </head>
     
@@ -62,13 +74,15 @@
 			                <td th:text="${mem.memPass}"></td>
 			                <td th:text="${mem.memRegiDate}"></td>
 			                <td th:text="${mem.memLastModified}"></td>
-			                <td th:text="${mem.memIsSuspended}?'停權':'啟用'"></td>
+			                <td th:text="${mem.memIsSuspended}?'停權':'啟用'"
+			                th:class="${mem.memIsSuspended} ? 'suspended-status' : 'active-status'"></td>
 
 							<td>
 					            <form method="post" th:action="@{/mem/update}">
-					                <button type="submit" class="sl_sp_badge" 
-					                        th:classappend="${mem.memIsSuspended} ? 'active':'suspended' "
-					                        th:text="${mem.memIsSuspended} ? '啟用' : '停權'"></button>
+<!-- 					                <button type="submit" class="sl_sp_badge"  -->
+<!-- 					                        th:classappend="${mem.memIsSuspended} ? 'active':'suspended' " -->
+<!-- 					                        th:text="${mem.memIsSuspended} ? '啟用' : '停權'"></button> -->
+									<button>編輯狀態</button>
 					                <input type="hidden" name="memID" th:value="${mem.memID}">
 					            </form>
 					        </td>
@@ -140,7 +154,7 @@
             new DataTable('#example');
         </script>
         <script>
-            $(".backendSidebarPage").load("backendSidebar.html");
+            $(".backendSidebarPage").load("/backendSidebar.html");
          </script>
     </body>
     

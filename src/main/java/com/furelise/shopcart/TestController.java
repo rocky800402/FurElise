@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.furelise.admin.model.Admin;
-import com.furelise.admin.model.AdminRepository;
+
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
 import com.furelise.complaint.model.Complaint;

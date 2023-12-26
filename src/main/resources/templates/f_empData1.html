@@ -7,8 +7,34 @@
         <title>夥伴查詢頁面</title>
         <link rel="stylesheet" type="text/css"
 		th:href="@{/css/bootstrap.min.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/backend_sidebar.css}">
         <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
         <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+        <style>
+        .active {
+            background-color: lightgreen; /* 綠色背景 */
+            color: black; 
+            border: 1px solid lightgreen; /* 深綠色邊框 */
+        }
+
+        .suspended {
+            background-color: lightcoral; /* 紅色背景 */
+            color: black; 
+            border: 1px solid red; /* 深紅色邊框 */
+        }
+        
+        .active-status {
+		    background-color: lightgreen; /* 綠色背景 */
+		    color: black;
+		    border: 1px solid lightgreen; /* 深綠色邊框 */
+		}
+
+		.suspended-status {
+		    background-color: lightcoral; /* 紅色背景 */
+		    color: black;
+		    border: 1px solid red; /* 深紅色邊框 */
+		}
+    </style>
     </head>
     
     
@@ -30,43 +56,34 @@
                             <th>電話</th>
                             <th>生日</th>
                             <th>電子信箱</th>
-                            <th>查看詳情</th>
+                            <th>狀態</th>
+                            <th>編輯</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <th:block th:each = "emp : ${ empList }">
                         <tr>
-                            <td>E0001</td>
-                            <td>王曉明</td>
-                            <td>09:00-17:30</td>
-                            <td>0912-345678</td>
-                            <td>1997/11/22</td>
-                            <td>edinburgh@gmail.com</td>
-                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
-                                        style="background-color: #9ac972">查看詳情</span></a></td>
-                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+                            <td th:text="${emp.empID}"></td>
+                            <td th:text="${emp.empName}"></td>
+                            <td th:text="${emp.timeID}"></td>
+                            <td th:text="${emp.empTel}"></td>
+                            <td th:text="${emp.empBirth}"></td>
+                            <td th:text="${emp.empMail}"></td>
+                            <td th:text="${emp.empIsSuspended}?'停權':'啟用'"
+                            th:class="${emp.empIsSuspended} ? 'suspended-status' : 'active-status'"></td>
+                            
+                            <td>
+					            <form method="post" th:action="@{/emp/update}">
+<!-- 					                <button type="submit" class="sl_sp_badge"  -->
+<!-- 					                        th:classappend="${emp.empIsSuspended} ? 'active':'suspended' " -->
+<!-- 					                        th:text="${emp.empIsSuspended} ? '啟用' : '停權'"></button> -->
+									<button>編輯狀態</button>
+					                <input type="hidden" name="empID" th:value="${emp.empID}">
+					            </form>
+					        </td>
                         </tr>
-                        <tr>
-                            <td>E0002</td>
-                            <td>王忠明</td>
-                            <td>19:00-21:00</td>
-                            <td>0988-123456</td>
-                            <td>1993/09/22</td>
-                            <td>tokyo@gmail.com</td>
-                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
-                                        style="background-color: #9ac972">查看詳情</span></a></td>
-                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
-                        </tr>
-                        <tr>
-                            <td>E0003</td>
-                            <td>王大明</td>
-                            <td>21:00-10:30</td>
-                            <td>0939-123456</td>
-                            <td>2000/10/22</td>
-                            <td>osaka@gmail.com</td>
-                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
-                                        style="background-color: #9ac972">查看詳情</span></a></td>
-                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
-                        </tr>
+                    </th:block>
+                        
                     </tbody>
                     <tfoot>
                         <tr>
@@ -76,13 +93,15 @@
                             <th>電話</th>
                             <th>生日</th>
                             <th>電子信箱</th>
-                            <th>查看詳情</th>
+                            <th>狀態</th>
+                            <th>編輯</th>
                         </tr>
                     </tfoot>
                 </table>
-            </main>
+            </main>            
         </div>
     
+<!--     	<div th:insert="f_empData2 :: yourFragment"></div> -->
     
         <div class="footerPage"></div>
     
@@ -94,7 +113,7 @@
             new DataTable('#example');
         </script>
         <script>
-            $(".backendSidebarPage").load("backendSidebar.html");
+            $(".backendSidebarPage").load("/backendSidebar.html");
          </script>
     </body>
     

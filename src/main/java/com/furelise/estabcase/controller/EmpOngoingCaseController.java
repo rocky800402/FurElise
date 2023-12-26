@@ -41,21 +41,21 @@ public class EmpOngoingCaseController {
 
         return "jack_ongoingCases";
     }
-    @GetMapping("/showImage")
-    public String showImage(@PathVariable(name = "estabCaseID")Integer estabCaseID,Model model) {
-        // Logic to retrieve image from the database
-        EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElse(null);
-        model.addAttribute("image", estabCase != null ? estabCase.getEstabCasePic() : null);
-        return "jack_ongoingCases";
-    }
-
-    @PostMapping("/uploadImage")
-    public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-        EstabCase estabCase = new EstabCase();
-        estabCase.setEstabCasePic(file.getBytes());
-        estabCaseRepository.save(estabCase);
-        return "redirect:/showImage";
-    }
+//    @GetMapping("/showImage")
+//    public String showImage(@PathVariable(name = "estabCaseID")Integer estabCaseID,Model model) {
+//        // Logic to retrieve image from the database
+//        EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElse(null);
+//        model.addAttribute("image", estabCase != null ? estabCase.getEstabCasePic() : null);
+//        return "jack_ongoingCases";
+//    }
+//
+//    @PostMapping("/uploadImage")
+//    public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+//        EstabCase estabCase = new EstabCase();
+//        estabCase.setEstabCasePic(file.getBytes());
+//        estabCaseRepository.save(estabCase);
+//        return "redirect:/showImage";
+//    }
 
 //    @PostMapping("insert")
 //    public String insert(@Valid EstabCase estabCase, BindingResult result, ModelMap model,
