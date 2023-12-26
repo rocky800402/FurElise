@@ -15,10 +15,15 @@ public class BackEndEmpService {
 	EmpRepository dao;
 	
 	public Emp updateEmp(Emp emp) {
-		return dao.save(emp);
+		dao.save(emp);
+		return emp;
 	}
 	
-	public List<Emp> getAllEmp(){
+	public Emp getOneEmp(Integer empID) {
+		return dao.getReferenceById(empID);
+	}
+	
+	public java.util.List<Emp> getAllEmp(){
 		return dao.findAll();
 	}
 
