@@ -20,6 +20,18 @@ public class EmpCaseManageController {
     @Autowired
     private EmpCaseManageService empCaseManageService;
 
+    //上線環境用
+//    @GetMapping("/")
+//    public String backEndEstabcase(@RequestParam(name = "empID", required = false) Integer empID, ModelMap model) {
+//        // 目前前端頁面用的json請求(EstabCaseManagerRESTCon)是寫死的 只會查120001
+//        model.addAttribute("empID", empID);
+//        if(empID != null){
+//            return "jack_caseManagement";
+//        }else {
+//            return "login";
+//        }
+//    }
+
     @GetMapping("/")
     public String backEndEstabcase(){
         return "jack_caseManagement";
