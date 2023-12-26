@@ -35,7 +35,7 @@ public class PlanOrdDTOCon {
 			Integer memID = 110003;
 			return planOrdSvc.addPlanOrd(dto, memID); //回傳新增的方案訂單物件
 //		} else 
-//			return null;
+//			return "login";
 	}
 
 	// list data, for ajax using

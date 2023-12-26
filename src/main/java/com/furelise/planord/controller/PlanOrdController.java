@@ -139,7 +139,7 @@ public class PlanOrdController {
 			return planOrdSvc.verifyPlanOrdPurchase(memID, planStart) ;
 			// true:可以訂 false:不可以訂
 //		} else
-//			return false;		
+//			return "login";		
 	}
 
 //	// 暫不做修改功能
