@@ -2,8 +2,10 @@ package com.furelise.estabcase.controller;
 
 import java.util.List;
 
+import com.furelise.estabcase.model.EstabCaseRepository;
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
+import com.furelise.schedulings.DispatchService;
 import com.furelise.vacation.model.entity.Vacation;
 import com.furelise.vacation.repository.VacationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.furelise.admin.model.Admin;
-import com.furelise.admin.model.AdminRepository;
+
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
 import com.furelise.complaint.model.Complaint;
@@ -57,12 +58,13 @@ public class EstabCaseController  {
 	
 	@Autowired
 	private EstabCaseService estabCaseService;
+	@Autowired
+	private EstabCaseRepository estabCaseRepository;
 	
 	@Autowired
 	private OrdDetailRepository ordDetailRepository;
 	
-	@Autowired
-	private AdminRepository adminRepository;
+
 	
 	@Autowired
 	private CityRepository cityRepository;
@@ -114,6 +116,9 @@ public class EstabCaseController  {
 	
 	@Autowired
 	private VacationRepository vacationRepository;
+
+	@Autowired
+	private DispatchService DispatchService;
 	
 	
 	@GetMapping("/{id}")
@@ -130,14 +135,7 @@ public class EstabCaseController  {
 		
 	}
 	
-	@GetMapping("/admin")
-	public List<Admin> getAllAdmins(){
-		
-		List<Admin> adminsList = adminRepository.findAll();
-		System.out.println(adminsList);
-		return adminsList;
-		
-	}
+
 	
 	
 	@GetMapping("/city")
@@ -316,6 +314,12 @@ public class EstabCaseController  {
 		System.out.println(vacationList);
 		return vacationList;
 		
+	}
+
+
+	@GetMapping("/get-date")
+	public  void getDate(){
+		DispatchService.getEstabCaseDate();
 	}
 	
 	
