@@ -57,11 +57,11 @@ public class OrdService {
 		
 
 		// 創建訂單明細OrdDetail
-		Map<String,String> shopCartItems = scSvc.getShopCartProducts(req.getMemID());
+		Map<Product,String> shopCartItems = scSvc.getCartProducts(req.getMemID().toString());
 		List<OrdDetail> ordDetails = new ArrayList<>();
 
-		for (Map.Entry<String, String> entry : shopCartItems.entrySet()) {
-		    String pID = entry.getKey();
+		for (Map.Entry<Product, String> entry : shopCartItems.entrySet()) {
+		    String pID = entry.getKey().getPID().toString();
 		    String quantityString = entry.getValue();
 
 		    // 轉換數量字串為整數
