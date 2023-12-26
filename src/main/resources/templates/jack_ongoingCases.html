@@ -55,18 +55,25 @@
 <!--                    </div>-->
                 </div>
 
-
-<!--                <div class="jack_container">-->
-
-<!--                </div>-->
-
                 <div class="jack_container">
                     <div class="jack_section">
                         <div class="jack_section_title">執行狀況回覆</div>
                         <div class="jack_upload_container">
 
                             <!-- 圖片預覽 -->
-                            <img id="jack-preview" class="jack_preview" alt="預覽圖片">
+<!--                            <img id="jack-preview" class="jack_preview" alt="預覽圖片">-->
+                            <article id="profile" style="margin-bottom: 10px">
+                                <div class="inner" style="text-align: center;">
+                                    <br>
+                                    <div class="input-group mb-2">
+                                        <input type="file" class="form-control" id="myFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                        <button class="btn btn-outline-secondary" type="button" id="upload-btn">上傳執行結果</button>
+                                    </div>
+                                    <div id="jack-preview" style="text-align: center;"></div>
+                                    <!--            <img alt="kp-1" id="kp" src=""/>-->
+                                </div>
+                            </article>
+
 
                         </div>
                     </div>
@@ -74,31 +81,14 @@
                     <div class="row">
                         <div class="col-10">
 
-<!--                            <div class="inner" style="text-align: center;">-->
-<!--                                <br>-->
-<!--                                <input type="text" id="estab-case-id" class="form-control mb-2" placeholder="190001" aria-label="id">-->
-<!--                                <div class="input-group mb-2">-->
-<!--                                    <input type="file" class="form-control" id="myFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">-->
-<!--                                    <button class="btn btn-outline-secondary" type="button" id="upload-btn">上傳照片</button>-->
-<!--                                </div>-->
-<!--                                <div id="kp" style="text-align: center;"></div>-->
-<!--                                            <img alt="kp-1" id="kp" src=""/>-->
-<!--                            </div>-->
+<!--                            <form action="/uploadImage" method="post" enctype="multipart/form-data">-->
+<!--                                <input type="file" name="file" accept="image/*">-->
+<!--                                <button type="submit">上傳</button>-->
+<!--                            </form>-->
 
-<!--                            <label for="jack-upload" class="jack_button_accept">上傳照片</label>-->
-<!--                            <input type="file" id="jack-upload" class="jack_upload_input" accept="image/*">-->
+<!--                            <h1>Uploaded Image</h1>-->
 
-<!--                            <input type="file" id="jack-upload" class="jack_upload_input" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*">-->
-<!--                            <button type="button" class="jack_button_accept" id="upload-btn">上傳照片</button>-->
-
-                            <form action="/uploadImage" method="post" enctype="multipart/form-data">
-                                <input type="file" name="file" accept="image/*">
-                                <button type="submit">上傳</button>
-                            </form>
-
-                            <h1>Uploaded Image</h1>
-
-                            <img th:src="@{'/showImage'}" alt="Uploaded Image" width="300">
+<!--                            <img th:src="@{'/showImage'}" alt="Uploaded Image" width="300">-->
                         </div>
                         <div class="col-2">
                             <button type="button" class="jack_button_return" data-toggle="modal" data-bs-target="#exampleModal2" onclick="SystemTime()">回報問題</button>
@@ -176,11 +166,7 @@
     <script th:src="@{/js/jack_ongoingCases.js}"></script>
 <script>
     $("#upload-btn").click(()=>{
-        const idVal = $('#estabCaseID').val()
-        // if(!idVal){
-        //     alert('請輸入 id ')
-        //     return
-        // }
+        const estabCaseID = '[[${empOngoingCase.estabCaseID}]]';
         const files = $('#myFile').prop('files')
         if(!files[0]){
             alert('請上傳檔案')
@@ -189,16 +175,16 @@
         var formData = new FormData();
         formData.append('file', files[0]);
         $.ajax({
-            url: `http://localhost:8080/estabcaseonging/${idVal}`,
+            url: `/estabcaseongo/` + estabCaseID,
             type: 'post',
             data: formData,
             processData: false,
             contentType: false,
             dataType: "json",
             success: (data) => {
-                $("#kp").html(
-                    `<div><h2>請投 1 號</h2></div>
-                        <div><img alt="kp-1" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
+                $("#jack-preview").html(
+                    `
+                        <div><img alt="preview" style="max-width: 100%; max-height: 100%;" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
                        `
                 )
             },
@@ -253,6 +239,7 @@
             }
         });
     }
+    //抓取用戶端的時間，只顯示而不存入資料庫，資料庫那邊另外抓時間存
     function SystemTime(){
         var currentTime = new Date();
         var hours = currentTime.getHours();
