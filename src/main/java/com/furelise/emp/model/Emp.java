@@ -27,6 +27,7 @@ import lombok.Data;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 public class Emp implements Serializable{
+	private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,7 +96,7 @@ public class Emp implements Serializable{
     private Integer empStatus = 2;
 
     @Column(name = "empIsSuspended", columnDefinition = "BIT(1) DEFAULT 0")
-    private boolean empIsSuspended = false;
+    private Boolean empIsSuspended = false;
 
 //    @ManyToOne
 //    @JoinColumn(name = "timeID", referencedColumnName = "timeID", insertable = false, updatable = false)

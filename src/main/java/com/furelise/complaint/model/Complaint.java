@@ -2,16 +2,20 @@ package com.furelise.complaint.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 //import com.furelise.emp.model.Emp;
 //import com.furelise.estabcase.model.EstabCase;
@@ -23,8 +27,11 @@ import lombok.Data;
 
 @Entity
 @Table(name = "complaint")
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public class Complaint implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "complaintID")
@@ -34,7 +41,10 @@ public class Complaint implements Serializable {
 	private Integer estabCaseID;
 	private String comDetail;
 	private String comTel;
-	private Boolean comStatus;
+	
+	@Column(name = "comStatus", columnDefinition = "BIT(1) DEFAULT 0")
+	private Boolean comStatus = false;
+	
 	private Timestamp comStart;
 	private Timestamp comEnd;
 //	@ManyToOne
