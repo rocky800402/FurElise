@@ -96,7 +96,7 @@
                 <p>身分證</p>
                 <input type="text" th:field="*{IDNumber}" name="emp_idNo" disabled="disabled">
                 <p>出生年月日</p>
-                <input type="date" th:field="*{empBirth}" name="emp_birth" disabled="disabled">
+                <input type="date" th:value="${emp.empBirth}" name="emp_birth" disabled="disabled">
                 <p>電子郵件</p>
                 <input type="email" th:field="*{empMail}" name="emp_email" disabled="disabled"><br>
                 <p>工作時段</p>
