@@ -36,10 +36,13 @@
               return
            }
            const files = $('#myFile').prop('files')
+
            if(!files[0]){
+
               alert('請上傳檔案')
               return
            }
+           console.log(files[0]);
            var formData = new FormData();
            formData.append('file', files[0]);
            $.ajax({
