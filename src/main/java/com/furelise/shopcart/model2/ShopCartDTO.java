@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class ShopCartVO {
+public class ShopCartDTO{
 
 	
 	private Integer pID;

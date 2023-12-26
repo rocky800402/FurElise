@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -72,12 +73,15 @@ public class Product implements Serializable{
 	private String pDetail;
 
 	@ValidByteArray(message= "請至少上傳一張照片")
+	@Size(max = 1048576, message = "檔案大小不能超過 1 MB")
 	@Column(name = "pImage1", columnDefinition = "longblob")
 	private byte[] pImage1;
 
+	@Size(max = 1048576, message = "檔案大小不能超過 1 MB")
 	@Column(name = "pImage2", columnDefinition = "longblob")
 	private byte[] pImage2;
 
+	@Size(max = 1048576, message = "檔案大小不能超過 1 MB")
 	@Column(name = "pImage3", columnDefinition = "longblob")
 	private byte[] pImage3;
 	

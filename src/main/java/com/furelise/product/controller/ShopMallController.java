@@ -76,7 +76,9 @@ public class ShopMallController {
 	
 	@PostMapping("/add/{pID}")
 	public String addToCart(@RequestParam(required = false) Integer memID, @PathVariable Integer pID, @RequestParam Integer quantity) {
-	    scSvc.addProduct(memID, pID, quantity);
+
+		memID = 110001;
+		scSvc.addProduct(memID, pID, quantity);
 	    return "redirect:/shopmall/";
 	}
 }

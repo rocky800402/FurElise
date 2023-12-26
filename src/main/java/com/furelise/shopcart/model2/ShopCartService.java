@@ -24,14 +24,19 @@ public class ShopCartService {
 
 	@Autowired
 	ProductService pSvc;
-
+	
+	
+	
+	
 	// 獲取會員編號,若沒有會員編號則紀錄為訪客購物車
 	private String getCartKey(Integer memID) {
+
 		if (memID == null) {
 			// 如果memID為null，返回一個特定的字串，表示訪客購物車
 			return "guestCart:guest";
 		} else {
 			// 否則，返回正常的購物車key
+			memID = 110001;
 			return "memCart:" + Integer.toString(memID);
 		}
 	}
@@ -83,6 +88,7 @@ public class ShopCartService {
 
 	// 移除購物車內的特定商品
 	public void removeProduct(Integer memID, Integer pID) {
+		memID = 110001;
 		try {
 			String key = getCartKey(memID);
 
@@ -109,26 +115,11 @@ public class ShopCartService {
 		}
 	}
 
-	// 原始的取得該會員購物車內的所有商品
-//	public Map<Product, String> getShopCartProducts(String memID) {
-//
-//		String key = getCartKey(Integer.valueOf(memID));
-//		String key = getCartKey(null);
-//		// 使用 HashOperations 進行操作
-//		HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
-//		Map<String, String> map = hashOps.entries(key);
-//		Map<Product, String> map2 = new HashMap<Product, String>();
-//		for (String thePID : map.keySet()) {
-//			Product product = pSvc.getProductById(Integer.valueOf(thePID));
-//			map2.put(product, map.get(thePID));
-//		}
-//		return map2;
-//
-//	} // getShopCartProducts
-
 	// 取得訪客購物車內的所有商品
 	public Map<Product, String> getCartProducts(String memID) {
-
+//		System.out.println("=========================");
+//		System.out.println(memID);
+//		System.out.println("=========================");
 		String key;
 		if (memID.equals("guestCart:guest")) {
 			// 在這裡實現訪客購物車的邏輯
@@ -144,7 +135,9 @@ public class ShopCartService {
 			return map2;
 		} else {
 			// 會員的購物車
+			
 			key = getCartKey(Integer.valueOf(memID));
+	
 			// 使用 HashOperations 進行操作
 			HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
 			Map<String, String> map = hashOps.entries(key);

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>購物商城-生活必備</title>
+<title>購物商城</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
@@ -72,6 +72,22 @@
 		$(document).ready(function() {
 			$(".headerPage").load("/header.html");
 			$(".footerPage").load("/footer.html");
+			$(".addToCartBtn").click(function (event) {
+		            
+		            event.preventDefault();
+
+		            var form = $(this).closest("form");
+
+		            $.ajax({
+		                type: form.attr("method"),
+		                url: form.attr("action"),
+		                data: form.serialize(),
+		                success: function (response) {
+		                    
+		                    alert("商品成功添加到购物车！");
+		                }
+		            });
+		        });
 		});
 	</script>
 </body>

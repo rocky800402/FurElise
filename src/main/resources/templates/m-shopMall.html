@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>購物商城-生活必備</title>
+<title>購物商城</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
@@ -71,40 +71,22 @@
 		$(document).ready(function() {
 			$(".headerPage").load("/header.html");
 			$(".footerPage").load("/footer.html");
+			$(".addToCartBtn").click(function (event) {
+	            
+	            event.preventDefault();
 
-// 			// 獲取當前登錄用戶的memID
-// 			var memID = $(this).data("data-mem-id");
+	            var form = $(this).closest("form");
 
-// 			// 按鈕點擊事件
-// 			$(".addToCartBtn").on("click", function() {
-// 				// 獲取產品ID
-// 				var pId = $(this).data("data-product-id");
-
-// 				// 獲取當前產品數量
-// 				var quantity = $(this).data("data-quantity");
-
-// 				// 設置memID
-// 				$(this).data("mem-id", memID);
-
-// 				// 發送 AJAX 請求
-// 				$.ajax({
-// 					type : "POST",
-// 					url : "/shopmall/add/" + pId,
-// 					data : {
-// 						memID : memID,
-// 						pID : pID,
-// 						quantity : quantity
-// 					},
-// 					success : function(response) {
-// 						// 處理成功的回應，例如刷新購物車數量顯示
-// 						alert("成功加入購物車！");
-// 					},
-// 					error : function(error) {
-// 						// 處理錯誤，例如顯示錯誤訊息
-// 						alert("加入購物車失敗：" + error.responseText);
-// 					}
-// 				});
-// 			});
+	            $.ajax({
+	                type: form.attr("method"),
+	                url: form.attr("action"),
+	                data: form.serialize(),
+	                success: function (response) {
+	                    
+	                    alert("商品成功添加到购物车！");
+	                }
+	            });
+	        });
 		});
 	</script>
 </body>

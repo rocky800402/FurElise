@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,10 @@ public class ProductBackenController {
 	@PostMapping("/add")
 	public String productSubmit(@Valid Product product, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
+	        System.out.println("Validation errors:");
+	        for (ObjectError error : result.getAllErrors()) {
+	            System.out.println(error);
+	        }
 			return "b-product-add";
 		} else {
 			boolean isPass = pSvc.addProduct(product);
@@ -74,7 +79,8 @@ public class ProductBackenController {
 			@RequestParam("pImage1") MultipartFile[] pImage1, @RequestParam("pImage2") MultipartFile[] pImage2,
 			@RequestParam("pImage3") MultipartFile[] pImage3) throws IOException {
 		// 去除BindingResult中upFiles欄位的FieldError紀錄
-		List<FieldError> errorsListToKeep = result.getFieldErrors().stream().filter(fieldname -> !fieldname.getField().equals("pImage1")).collect(Collectors.toList());
+		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
+				.filter(fieldname -> !fieldname.getField().equals("pImage1")).collect(Collectors.toList());
 		result = new BeanPropertyBindingResult(product, "product");
 		for (FieldError fieldError : errorsListToKeep) {
 			result.addError(fieldError);
