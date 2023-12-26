@@ -70,6 +70,7 @@ public class EmpOngoingCaseService {
         empOC.setWayName(pickupWay.getWayName());//收取方式 pickupWay
         empOC.setLiter(plan.getLiter());//垃圾量 plan
         empOC.setEmpName(emp.getEmpName());//夥伴姓名 emp
+        empOC.setEmpID(emp.getEmpID());//夥伴ID emp
 
         return empOC;
     }

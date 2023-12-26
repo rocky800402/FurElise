@@ -34,7 +34,7 @@ public class Complaint implements Serializable {
 	private Integer empID;
 	private Integer estabCaseID;
 	private String comDetail;
-	@Pattern(regexp = "^09\\d{2}-\\d{3}-\\d{3}$", message = "電話號碼格式錯誤")
+//	@Pattern(regexp = "^09\\d{2}-\\d{3}-\\d{3}$", message = "電話號碼格式錯誤")
 	private String comTel;
 	private Boolean comStatus;
 	private Timestamp comStart;
