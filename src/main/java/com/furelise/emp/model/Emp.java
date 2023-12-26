@@ -2,6 +2,8 @@ package com.furelise.emp.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -44,7 +46,7 @@ public class Emp implements Serializable{
     private String empTel;
 
     @Column(name = "empBirth")
-    private Date empBirth;
+    private LocalDate empBirth;
 
     @Column(name = "empPass")
     private String empPass;
@@ -90,7 +92,7 @@ public class Emp implements Serializable{
 
     @CreatedDate()
     @Column(name = "empRegiDate")
-    private Timestamp empRegiDate;
+    private LocalDateTime empRegiDate;
 
     @Column(name = "empStatus", columnDefinition = "INT DEFAULT 2")
     private Integer empStatus = 2;
