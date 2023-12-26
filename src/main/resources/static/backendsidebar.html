@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sidebar</title>
-    <link rel="stylesheet" type="text/css" href="/furelise/css/backend_sidebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/backend_sidebar.css">
 
 
 </head>
@@ -14,7 +14,7 @@
 <body>
      
     <aside class="sidebar">
-        <img class="backend_sidebar_logo" src="/furelise/images/fuer_elise.svg" alt="">
+        <img class="backend_sidebar_logo" src="/images/fuer_elise.svg" alt="">
         <hr>
         <h2>Für Elise
         </h2>
@@ -50,8 +50,8 @@
     </aside>
 
 
-	<script src="./js/jquery-3.7.1.min.js"></script>
-    <script src="/js/constant.js" th:src="@{/js/constant.js}"></script>
+	<script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/constant.js"></script>
 	<script>
 		$("#admin_logout").on("click", function(e){
 			e.preventDefault();
@@ -62,7 +62,7 @@
 					type: "POST",
 					success: function(e) {
 						console.log("logout success");
-						window.location.href=`${APP_BASE_URL}/adminlogin`;
+						window.location.href=`${APP_BASE_URL}/adminlogout`;
 					}
 				});
             }
