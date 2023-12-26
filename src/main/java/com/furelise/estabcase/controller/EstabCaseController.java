@@ -5,7 +5,7 @@ import java.util.List;
 import com.furelise.estabcase.model.EstabCaseRepository;
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
-import com.furelise.schedulings.DispatchService;
+//import com.furelise.schedulings.DispatchService;
 import com.furelise.vacation.model.entity.Vacation;
 import com.furelise.vacation.repository.VacationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +118,7 @@ public class EstabCaseController  {
 	private VacationRepository vacationRepository;
 
 	@Autowired
-	private DispatchService DispatchService;
+//	private DispatchService DispatchService;
 	
 	
 	@GetMapping("/{id}")
@@ -319,7 +319,7 @@ public class EstabCaseController  {
 
 	@GetMapping("/get-date")
 	public  void getDate(){
-		DispatchService.getEstabCaseDate();
+//		DispatchService.getEstabCaseDate();
 	}
 	
 	
