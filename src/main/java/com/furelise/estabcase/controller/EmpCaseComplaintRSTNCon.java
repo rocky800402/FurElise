@@ -32,6 +32,7 @@ public class EmpCaseComplaintRSTNCon {
 
         // 把comStartTime 存入 complaint 中的 comStart
         complaint.setComStart(comStartTime);
+        complaint.setComEnd(null);
         complaintService.updateComplaint(complaint);
     }
     @PostMapping("/updateCaseStatus")

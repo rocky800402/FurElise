@@ -12,163 +12,199 @@
 </head>
 
 <body>
-    <div class="headerPage"></div>
+<div class="headerPage"></div>
 
 
-    <div style="width: 100%; display: flex; justify-content: center;">
-        <div style="max-width: 1200px; display: flex;">
-            <div class="empSidebarPage"></div>
-            <!-- empsidebar -->
-            <div style="width: 950PX; padding: 10px;">
+<div style="width: 100%; display: flex; justify-content: center;">
+    <div style="max-width: 1200px; display: flex;">
+        <div class="empSidebarPage"></div>
+        <!-- empsidebar -->
+        <div style="width: 950PX; padding: 10px;">
 
 
-                <div class="jack_container">
-<!--                    <div class="jack_section">-->
-                        <div class="jack_section_title" th:text="'案件編號: ' + ${empOngoingCase.estabCaseID}"></div>
-                        <div class="jack_income" th:utext="'收入$' + ${empOngoingCase.planPricePerCase}"></div>
-                        <table class="jack_case_info">
+            <div class="jack_container">
+                <!--                    <div class="jack_section">-->
+                <div class="jack_section_title" th:text="'案件編號: ' + ${empOngoingCase.estabCaseID}"></div>
+                <div class="jack_income" th:utext="'收入$' + ${empOngoingCase.planPricePerCase}"></div>
+                <table class="jack_case_info">
 
-                            <ul class="jack_info_list">
-                                <li><strong>收取日期:</strong> <span th:utext="${empOngoingCase.estabCaseDate}"></span></li>
-                                <li><strong>收取區間:</strong> <span th:utext="${empOngoingCase.timeRange}"></span></li>
-                                <li><strong>收取地址:</strong> <span th:utext="${empOngoingCase.cityCode + empOngoingCase.cityName + empOngoingCase.floor}"></span></li>
-                                <li><strong>收取方式:</strong> <span th:utext="${empOngoingCase.wayName}"></span></li>
-                                <li><strong>垃圾最大容量:</strong> <span th:utext="${empOngoingCase.liter + ' 公斤'}"></span></li>
-                            </ul>
-
-                            <div class="row">
-                                <div class="col-10">
-                                    <button class="jack_button_accept"
-                                            th:attr="data-action='accept', data-id=${empOngoingCase.estabCaseID}"
-                                            onclick="updateStatus('accept', this.getAttribute('data-id'))">接受訂單
-                                    </button>
-                                </div>
-                                <div class="col-2">
-                                    <button class="jack_button_reject"
-                                            th:attr="data-action='reject', data-id=${empOngoingCase.estabCaseID}"
-                                            onclick="showConfirmationDialog(this)">拒絕訂單
-                                    </button>
-                                </div>
-                            </div>
-
-                        </table>
-<!--                    </div>-->
-                </div>
-
-                <div class="jack_container">
-                    <div class="jack_section">
-                        <div class="jack_section_title">執行狀況回覆</div>
-                        <div class="jack_upload_container">
-
-                            <!-- 圖片預覽 -->
-<!--                            <img id="jack-preview" class="jack_preview" alt="預覽圖片">-->
-                            <article id="profile" style="margin-bottom: 10px">
-                                <div class="inner" style="text-align: center;">
-                                    <br>
-                                    <div class="input-group mb-2">
-                                        <input type="file" class="form-control" id="myFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                        <button class="btn btn-outline-secondary" type="button" id="upload-btn">上傳執行結果</button>
-                                    </div>
-                                    <div id="jack-preview" style="text-align: center;"></div>
-                                    <!--            <img alt="kp-1" id="kp" src=""/>-->
-                                </div>
-                            </article>
-
-
-                        </div>
-                    </div>
+                    <ul class="jack_info_list">
+                        <li><strong>收取日期:</strong> <span th:utext="${empOngoingCase.estabCaseDate}"></span></li>
+                        <li><strong>收取區間:</strong> <span th:utext="${empOngoingCase.timeRange}"></span></li>
+                        <li><strong>收取地址:</strong> <span
+                                th:utext="${empOngoingCase.cityCode + empOngoingCase.cityName + empOngoingCase.floor}"></span>
+                        </li>
+                        <li><strong>收取方式:</strong> <span th:utext="${empOngoingCase.wayName}"></span></li>
+                        <li><strong>垃圾最大容量:</strong> <span th:utext="${empOngoingCase.liter + ' 公斤'}"></span>
+                        </li>
+                    </ul>
 
                     <div class="row">
                         <div class="col-10">
-
-<!--                            <form action="/uploadImage" method="post" enctype="multipart/form-data">-->
-<!--                                <input type="file" name="file" accept="image/*">-->
-<!--                                <button type="submit">上傳</button>-->
-<!--                            </form>-->
-
-<!--                            <h1>Uploaded Image</h1>-->
-
-<!--                            <img th:src="@{'/showImage'}" alt="Uploaded Image" width="300">-->
+                            <button class="jack_button_accept"
+                                    th:attr="data-action='accept', data-id=${empOngoingCase.estabCaseID}"
+                                    onclick="updateStatus('accept', this.getAttribute('data-id'))">接受訂單
+                            </button>
                         </div>
                         <div class="col-2">
-                            <button type="button" class="jack_button_return" data-toggle="modal" data-bs-target="#exampleModal2" onclick="SystemTime()">回報問題</button>
-                            <!-- <button class="jack_button_reject" onclick="showReportIssuePopup()">回報問題</button> -->
-                        </div>
-                        <div class="col-12">
-                            <button class="jack_button_accept">完成收取</button>
+                            <button class="jack_button_reject"
+                                    th:attr="data-action='reject', data-id=${empOngoingCase.estabCaseID}"
+                                    onclick="showConfirmationDialog(this)">拒絕訂單
+                            </button>
                         </div>
                     </div>
 
+                </table>
+                <!--                    </div>-->
+            </div>
+
+            <div class="jack_container">
+                <div class="jack_section">
+                    <div class="jack_section_title">執行狀況回覆</div>
+                    <div class="jack_upload_container">
+
+                        <!-- 圖片預覽 -->
+                        <!--                            <img id="jack-preview" class="jack_preview" alt="預覽圖片">-->
+                        <article id="profile" style="margin-bottom: 10px">
+                            <div class="inner" style="text-align: center;">
+                                <br>
+                                <div class="input-group mb-2">
+                                    <input type="file" class="form-control" id="myFile"
+                                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <button class="btn btn-outline-secondary" type="button" id="upload-btn">
+                                        上傳執行結果
+                                    </button>
+                                </div>
+                                <div id="jack-preview" style="text-align: center;"></div>
+                                <!--            <img alt="kp-1" id="kp" src=""/>-->
+                            </div>
+                        </article>
+
+
+                    </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-10">
+                        <button type="button" class="jack_button_return" data-toggle="modal"
+                                data-bs-target="#exampleModal2" onclick="SystemTime()">回報問題
+                        </button>
+                        <!-- <button class="jack_button_reject" onclick="showReportIssuePopup()">回報問題</button> -->
+                    </div>
+                    <div class="col-2">
+                        <button class="jack_button_accept">完成收取</button>
+                    </div>
+                </div>
+
+            </div>
 
 
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade " id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+
+            <div class="modal-header mb_modal_header">
+                <div class="mb_modal_header_h5">
+                    <h5 class="modal-title mb_modal_title" id="estabCaseID"
+                        th:text="'回報問題 案件編號: ' + ${empOngoingCase.estabCaseID}"></h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body mb_modal_body">
+                <form>
+                    <div class="mb-3 mb_modal_body_div">
+                        <div class="mb_modal_div">
+                            <!-- 方案及商品基本資料 -->
+                            <label for="recipient-name" class="col-form-label mb_modal_label"
+                                   th:text="'收取日期: '+ ${empOngoingCase.estabCaseDate}"></label>
+                        </div>
+                        <div class="mb_modal_div">
+                            <label for="recipient-name" class="col-form-label mb_modal_label"
+                                   th:text="'時段 : '+ ${empOngoingCase.timeRange}"></label>
+                        </div>
+                        <div class="mb_modal_div">
+                            <label for="recipient-name" class="col-form-label mb_modal_label"
+                                   th:text="'收取員 : '+ ${empOngoingCase.empName}"></label>
+                        </div>
+                        <div class="mb_modal_div">
+                            <label for="recipient-name" class="col-form-label mb_modal_label" id="system-time"></label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">聯絡電話 : </label>
+                            <input type="text" class="form-control" id="recipient-name">
+                            <!--                                           pattern="^09\d{2}-\d{3}-\d{3}$" title="請輸入正確格式的電話號碼 (e.g., 09xx-xxx-xxx)" required-->
+                        </div>
+                    </div>
+                    <div class="mb-3 ">
+                        <label for="message-text" class="col-form-label">內容</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer mb_estab_case_level_modal_footer">
+                <button type="button" class="btn btn-secondary mb_estab_case_complaint_cancel_btn"
+                        data-bs-dismiss="modal">取消
+                </button>
+                <button type="button" class="btn btn-primary mb_estab_case_complaint_confirm_btn"
+                        onclick="submitComplaint()">送出
+                </button>
             </div>
 
         </div>
     </div>
-
-        <div class="modal fade " id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content ">
-
-                    <div class="modal-header mb_modal_header">
-                        <div class="mb_modal_header_h5">
-                            <h5 class="modal-title mb_modal_title" id="estabCaseID" th:text="'回報問題 案件編號: ' + ${empOngoingCase.estabCaseID}"></h5>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body mb_modal_body">
-                        <form>
-                            <div class="mb-3 mb_modal_body_div" >
-                                <div class="mb_modal_div">
-                                    <!-- 方案及商品基本資料 -->
-                                    <label for="recipient-name" class="col-form-label mb_modal_label" th:text="'收取日期: '+ ${empOngoingCase.estabCaseDate}"></label>
-                                </div>
-                                <div class="mb_modal_div">
-                                    <label for="recipient-name" class="col-form-label mb_modal_label" th:text="'時段 : '+ ${empOngoingCase.timeRange}"></label>
-                                </div>
-                                <div class="mb_modal_div">
-                                    <label for="recipient-name" class="col-form-label mb_modal_label" th:text="'收取員 : '+ ${empOngoingCase.empName}"></label>
-                                </div>
-                                <div class="mb_modal_div">
-                                    <label for="recipient-name" class="col-form-label mb_modal_label" id="system-time"></label>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">聯絡電話 : </label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                            </div>
-                            <div class="mb-3 ">
-                                <label for="message-text" class="col-form-label">內容</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer mb_estab_case_level_modal_footer">
-                        <button type="button" class="btn btn-secondary mb_estab_case_complaint_cancel_btn" data-bs-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary mb_estab_case_complaint_confirm_btn">送出</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+</div>
 
 
-
-
-    <div class="footerPage"></div>
-    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/js/jack_ongoingCases.js}"></script>
+<div class="footerPage"></div>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/jack_ongoingCases.js}"></script>
 <script>
-    $("#upload-btn").click(()=>{
+    // JavaScript 部分
+    function submitComplaint() {
+        // 取需要的資料
+        var comTelNumber = document.getElementById('recipient-name').value;
+        var content = document.getElementById('message-text').value;
+
+        console.log("fun有效");
+        // JSON
+        var complaintData = {
+            memID: null,//會員ID怎抓 何時為空
+            empID: [[${empOngoingCase.empID}]],//資料是連動的
+            estabCaseID: [[${empOngoingCase.estabCaseID}]], //estabCaseDate,
+            comDetail: content,
+            comTel: comTelNumber,
+            comStatus: false,
+        };
+
+        // 发送给后端
+        $.ajax({
+            type: "POST",
+            url: "/estabcaseonging/complaint",
+            contentType: "application/json",
+            data: JSON.stringify(complaintData),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        $('#exampleModal2').modal('hide');
+    }
+
+    $("#upload-btn").click(() => {
         const estabCaseID = '[[${empOngoingCase.estabCaseID}]]';
         const files = $('#myFile').prop('files')
-        if(!files[0]){
+        if (!files[0]) {
             alert('請上傳檔案')
             return
         }
@@ -193,6 +229,7 @@
             }
         })
     })
+
     function showConfirmationDialog(button) {
         var estabCaseID = button.getAttribute('data-id');
 
@@ -204,8 +241,9 @@
             alert("已取消");
         }
     }
+
     function updateStatus(action, estabCaseID) {
-        console.log("asdsa");
+        console.log("updateStatus有執行");
         var acceptButton = $('.jack_button_accept[data-action="accept"][data-id="' + estabCaseID + '"]');
         var rejectButton = $('.jack_button_reject[data-action="reject"][data-id="' + estabCaseID + '"]');
 
@@ -216,7 +254,7 @@
                 action: action,
                 estabCaseID: estabCaseID
             },
-            success: function(response) {
+            success: function (response) {
                 console.log('Update successful');
 
                 if (response) {
@@ -234,13 +272,14 @@
                     console.log('Unexpected success response');
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.error('Update failed', error);
             }
         });
     }
+
     //抓取用戶端的時間，只顯示而不存入資料庫，資料庫那邊另外抓時間存
-    function SystemTime(){
+    function SystemTime() {
         var currentTime = new Date();
         var hours = currentTime.getHours();
         var minutes = currentTime.getMinutes();
