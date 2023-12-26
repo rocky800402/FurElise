@@ -2,6 +2,8 @@ package com.furelise.emp.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class EmpService {
 	
@@ -11,9 +13,9 @@ public class EmpService {
 	
 	
 	// 故意去掉圖片
-	public Emp addEmp(String empName,String empMail,String empTel,Date empBirth,String empPass,String IDNumber,
+	public Emp addEmp(String empName,String empMail,String empTel,LocalDate empBirth,String empPass,String IDNumber,
 			Boolean empLicense,String empArea1,String empArea2,String empArea3,Integer timeID,
-			String bankCode,String accountNo,Integer workSum,java.sql.Timestamp empRegiDate,Integer empStatus,Boolean empIsSuspended) {
+			String bankCode,String accountNo,Integer workSum,LocalDateTime empRegiDate,Integer empStatus,Boolean empIsSuspended) {
 		
 		Emp emp = new Emp();
 		
@@ -47,7 +49,7 @@ public class EmpService {
 	}
 	
 	// 故意去掉圖片
-	public Emp update(Integer empID,String empName,String empMail,String empTel,Date empBirth,String empPass,String IDNumber,
+	public Emp update(Integer empID,String empName,String empMail,String empTel,LocalDate empBirth,String empPass,String IDNumber,
 			Boolean empLicense,String empArea1,String empArea2,String empArea3,Integer timeID,
 			String bankCode,String accountNo,Integer workSum,Integer empStatus) {
 		
