@@ -209,19 +209,12 @@
 					</div>
 					<br>
 
-
 					<div>
-						<label for="pImage1">照片:</label> <input id="pImage1"
-							name="pImage1" type="file" th:field="*{pImage1}"
-							onchange="previewImage(this, 'blob_holder1')" multiple="multiple" />
-						<span th:if="${#fields.hasErrors('pImage1')}"
-							th:errors="*{pImage1}" class="error" id="pImage1.errors"></span>
+						<label for="pImage1">照片:</label> 
+						<input id="pImage1" name="pImage1" type="file" th:field="*{pImage1}" onchange="previewImage(this, 'blob_holder1')" multiple="multiple" />
+						<span th:if="${#fields.hasErrors('pImage1')}" th:errors="*{pImage1}" class="error" id="pImage1.errors"></span>
 						<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
-						<div id="blob_holder1">
-							<img
-								th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}"
-								width="100px">
-						</div>
+						<div id="blob_holder1"><img th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}" width="100px"></div>
 					</div>
 					<br>
 

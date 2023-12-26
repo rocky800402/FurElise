@@ -1,5 +1,7 @@
 package com.furelise.shopcart.model2;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.furelise.product.model.Product;
+import com.furelise.product.model.ProductRepository;
+import com.furelise.product.model.ProductService;
 import com.google.gson.Gson;
 
 @Service
@@ -16,38 +21,42 @@ public class ShopCartService {
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 
-	
-	// 獲取會員編號,若沒有會員編號則紀錄為訪客
-		private String getCartKey(Integer memID) {
-			if (memID == null) {
-		        // 如果memID為null，返回一個特定的字串，表示訪客購物車
-		        return "guestCart:guest";
-		    } else {
-		        // 否則，返回正常的購物車key
-		        return "memCart:" + Integer.toString(memID);
-		    }
+	@Autowired
+	ProductRepository productR;
+
+	@Autowired
+	ProductService pSvc;
+
+	// 獲取會員編號,若沒有會員編號則紀錄為訪客購物車
+	private String getCartKey(Integer memID) {
+		if (memID == null) {
+			// 如果memID為null，返回一個特定的字串，表示訪客購物車
+			return "guestCart:guest";
+		} else {
+			// 否則，返回正常的購物車key
+			return "memCart:" + Integer.toString(memID);
 		}
+	}
 
-		// 將商品新增至購物車
-		public void addProduct(Integer memID, Integer pID, Integer quantity) {
-			try {
+	// 將商品新增至購物車
+	public void addProduct(Integer memID, Integer pID, Integer quantity) {
+		try {
 
-				String key = getCartKey(memID);
-				// 使用 HashOperations 進行操作
-				HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
-				if (hashOps.hasKey(key, Integer.toString(pID))) {
-		            // 如果存在，獲取現有數量，並增加
-		            String existingQuantity = hashOps.get(key, Integer.toString(pID));
-		            int newQuantity = Integer.parseInt(existingQuantity) + quantity;
-		            hashOps.put(key, Integer.toString(pID), Integer.toString(newQuantity));
-		        } else {
+			String key = getCartKey(memID);
+			// 使用 HashOperations 進行操作
+			HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+			if (hashOps.hasKey(key, Integer.toString(pID))) {
+				// 如果存在，獲取現有數量，並增加
+				String existingQuantity = hashOps.get(key, Integer.toString(pID));
+				int newQuantity = Integer.parseInt(existingQuantity) + quantity;
+				hashOps.put(key, Integer.toString(pID), Integer.toString(newQuantity));
+			} else {
 				hashOps.put(key, Integer.toString(pID), Integer.toString(quantity));
-		        }
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-		} // addProduct
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	} // addProduct
 
 	// 修改購物車內特定商品的數量
 	public void updateQuantity(Integer memID, Integer pID, Integer quantity) {
@@ -103,38 +112,53 @@ public class ShopCartService {
 	}
 
 	// 原始的取得該會員購物車內的所有商品
-	public Map<String, String> getShopCartProducts(Integer memID) {
-		try {
-			String key = getCartKey(memID);
+//	public Map<Product, String> getShopCartProducts(String memID) {
+//
+//		String key = getCartKey(Integer.valueOf(memID));
+//		String key = getCartKey(null);
+//		// 使用 HashOperations 進行操作
+//		HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+//		Map<String, String> map = hashOps.entries(key);
+//		Map<Product, String> map2 = new HashMap<Product, String>();
+//		for (String thePID : map.keySet()) {
+//			Product product = pSvc.getProductById(Integer.valueOf(thePID));
+//			map2.put(product, map.get(thePID));
+//		}
+//		return map2;
+//
+//	} // getShopCartProducts
 
+	// 取得訪客購物車內的所有商品
+	public Map<Product, String> getGuestCartProducts2(String memID) {
+
+		String key;
+		if (memID.equals("guestCart:guest")) {
+			// 在這裡實現訪客購物車的邏輯
+			key = getCartKey(null);
 			// 使用 HashOperations 進行操作
 			HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+			Map<String, String> map = hashOps.entries(key);
+			Map<Product, String> map2 = new HashMap<Product, String>();
+			for (String thePID : map.keySet()) {
+				Product product = pSvc.getProductById(Integer.valueOf(thePID));
+				map2.put(product, map.get(thePID));
+			}
+			return map2;
+		} else {
+			// 會員的購物車
+			key = getCartKey(Integer.valueOf(memID));
+			// 使用 HashOperations 進行操作
+			HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+			Map<String, String> map = hashOps.entries(key);
+			Map<Product, String> map2 = new HashMap<Product, String>();
+			for (String thePID : map.keySet()) {
+				Product product = pSvc.getProductById(Integer.valueOf(thePID));
+				map2.put(product, map.get(thePID));
+			}
 
-			// 印出來看
-			System.out.println(hashOps.entries(key));// null
-
-			// 從 Redis 中取得該會員購物車內的所有商品
-			return hashOps.entries(key);
-		} catch (Exception e) {
-			e.printStackTrace();
+			return map2;
 		}
-		return null;
-
-	} // getShopCartProducts
-	
-	
-	// 取得訪客購物車內的所有商品
-    public Map<String, String> getGuestCartProducts(String memID) {
-        // 在這裡實現訪客購物車的邏輯
-    	String key = getCartKey(null);
-    	// 使用 HashOperations 進行操作
-    	HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
-       
-        return hashOps.entries(key);
-    }//getGuestCartProducts()
-	
-	
-	
+	}
 
 	// 取得購物車內特定商品的數量
 	public String getOneProduct(Integer memID, Integer pID) {
@@ -155,9 +179,6 @@ public class ShopCartService {
 		return null;
 	} // getOneProduct
 
-	
-	
-
 	private ShopCart deserialize(String serializedItem) {
 		Gson gson = new Gson();
 		try {
@@ -174,7 +195,5 @@ public class ShopCartService {
 			return null;
 		}
 	} // deserialize
-
-	
 
 }// ShopCartService

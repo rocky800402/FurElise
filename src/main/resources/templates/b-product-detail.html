@@ -174,62 +174,7 @@
 
 	<script>
 		$(".backendSidebarPage").load("/backendSidebar.html");
-		//照片上傳-預覽用1
-		var filereader_support = typeof FileReader != 'undefined';
-		if (!filereader_support) {
-			alert("No FileReader support");
-		}
-		acceptedTypes = {
-			'image/png' : true,
-			'image/jpeg' : true,
-			'image/gif' : true
-		};
-		function previewImage(inputElement, targetId) {
-			// 		 	var upfile1 = document.getElementById("pImage1");
-
-			// 		 	upfile1.addEventListener("change", function(event) {
-			var files = inputElement.files;
-			for (var i = 0; i < files.length; i++) {
-				previewfile(files[i], targetId)
-			}
-			// 		 	}, false);
-		}
-		function previewfile(file, targetId) {
-			const blobHolderElement = document.querySelector('#' + targetId);
-
-			if (filereader_support === true
-					&& acceptedTypes[file.type] === true) {
-				var reader = new FileReader();
-				reader.onload = function(event) {
-					var image = new Image();
-					image.src = event.target.result;
-					image.width = 100;
-					image.height = 75;
-					image.border = 2;
-					if (blobHolderElement.hasChildNodes()) {
-						blobHolderElement
-								.removeChild(blobHolderElement.childNodes[0]);
-					}
-					blobHolderElement.appendChild(image);
-				};
-				reader.readAsDataURL(file);
-				document.getElementById('submit').disabled = false;
-			} else {
-				blobHolderElement.innerHTML = "<div  style='text-align: left;'>"
-						+ "● filename: "
-						+ file.name
-						+ "<br>"
-						+ "● ContentTyp: "
-						+ file.type
-						+ "<br>"
-						+ "● size: "
-						+ file.size
-						+ "bytes"
-						+ "<br>"
-						+ "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
-				document.getElementById('submit').disabled = true;
-			}
-		}
+		
 	</script>
 </body>
 
