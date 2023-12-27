@@ -9,9 +9,16 @@
 	th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/mallStyles.css}">
-<script
-	th:src="'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'"></script>
+<!-- <script th:src="'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'"></script> -->
 
+<style type="text/css">
+.form-select{
+width: 600px;
+}
+.mb-3{
+width: 600px;
+}
+</style>
 </head>
 
 <body style="background-color: #fff;">
@@ -20,6 +27,7 @@
 	<div
 		style="display: flex; align-items: center; justify-content: center">
 		<main class="content" style="min-height: 1000px;">
+
 
 			<div class="card mb-3" th:each="product : ${cartEntrtSet}"
 				style="width: 600px">
@@ -32,28 +40,23 @@
 					</div>
 					<div class="col-md-8">
 						<div class="card-body" style="width: 500px;">
-							<a th:href="@{/shopmall/getone/{pID}(pID=${product.key.pID})}"
-								style="color: black;">
-								<h5 class="card-title" th:utext="${product.key.pName}"
-									style="margin-top: 20px;">Product Name</h5>
+							<a th:href="@{/shopmall/getone/{pID}(pID=${product.key.pID})}" style="color: black;">
+								<h5 class="card-title" th:utext="${product.key.pName}" style="margin-top: 20px;">Product Name</h5>
 							</a>
 							<p style="display: inline;">單價:</p>
-							<p style="display: inline-block; width: 60px;" class="card-title"
-								th:utext="${product.key.pPrice}">Product Price</p>
+							<p style="display: inline-block; width: 60px;" class="card-title" th:utext="${product.key.pPrice}">Product Price</p>
 							<p style="display: inline;">x</p>
-							<input type="number" name="quantity" id="quantityInput" min="1"
-								th:value="${product.value}"
-								style="width: 50px; margin-bottom: 20px;" />
+							<form method="post" th:action="@{/shopcart/update}" th:id="'updateForm' + ${product.key.pID}" style="display: inline;">
+    <input type="hidden" name="memID" th:value="110001" />
+    <input type="hidden" name="pID" th:value="${product.key.pID}" />
+    <input type="number" name="quantity" min="1" th:value="${product.value}" style="width: 50px; margin-bottom: 20px;" oninput="updateQuantity(this)" />
+</form>
+
 							<p style="display: inline; margin-right: 30px;">小計:</p>
-							<p style="display: inline-block; width: 60px;" id="totalPrice"
-								th:utext="${product.key.pPrice}*${product.value}"></p>
-							<form method="post" th:action="@{/shopcart/remove}"
-								style="display: inline;">
-								<img th:src="@{/images/garbagecan.png}"
-									style="width: 30px; height: 30px; margin-left: 20px;"
-									type="button" class="deleteBtn"
-									data-product-id="${product.key.pID}"> <input
-									type="hidden" name="pID" th:value="${product.key.pID}" />
+							<p style="display: inline-block; width: 60px;" id="totalPrice" th:utext="${product.key.pPrice}*${product.value}"></p>
+							<form method="post" th:action="@{/shopcart/remove}" style="display: inline;">
+								<img th:src="@{/images/garbagecan.png}" style="width: 30px; height: 30px; margin-left: 20px;" type="button" class="deleteBtn" data-product-id="${product.key.pID}"> 
+								<input type="hidden" name="pID" th:value="${product.key.pID}" />
 							</form>
 						</div>
 					</div>
@@ -62,44 +65,52 @@
 
 			寄送方式 
 			<select id="deliver" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;">
-				<option th:value="0" data-shipping-fee="120">黑貓宅急便</option>
-				<option th:value="1" data-shipping-fee="60">7-11取貨</option>
+			    <option th:value="0" data-shipping-fee="120" selected>黑貓宅急便</option>
+			    <option th:value="1" data-shipping-fee="60">7-11取貨</option>
 			</select> <br> 
 			
-			請選擇縣市 
-			<select id="city" name="city" class="form-select form-select-sm">
-				<option value="">請選擇</option>
-			</select> <br> 
-			請選擇鄉鎮 
-			<select id="area" name="area" style="display: none; margin-bottom:20px;" class="form-select form-select-sm">
-				<option value="">請選擇</option>
-			</select>
-		
+			
+<!-- 			請選擇縣市  -->
+<!-- 			<select id="city" name="city" class="form-select form-select-sm"> -->
+<!-- 				<option value="">請選擇</option> -->
+<!-- 			</select> <br>  -->
+<!-- 			請選擇鄉鎮  -->
+<!-- 			<br> -->
+<!-- 			<select id="area" name="area" style="display: none; margin-bottom:20px;" class="form-select form-select-sm"> -->
+<!-- 				<option value="">請選擇</option> -->
+<!-- 			</select> -->
+			
+			<div id="twzipcode"></div>
+			
 			<br> 
 			詳細地址
-			<div class="input-group mb-3">
+			<div class="input-group mb-3 ">
 				<input id="floor" placeholder="必填" type="text" size="40%" required class="form-select form-select-sm" style="margin-top:20px;">
 			</div>
 
-			付款方式 <select id="payment" class="form-select form-select-sm"
-				aria-label=".form-select-sm example" style="border:1px solid #ced4da; width:100% ; margin-bottom: 20px" >
+			付款方式 
+			<select id="payment" class="form-select form-select-sm" aria-label=".form-select-sm example"   >
 				<option th:value="0">信用卡</option>
 			</select>
 			<br>
 			<hr>
 			
 			<div style="display:flex;">
-				<div>
-					<p>優惠代碼:</p>
-					<input tyle="display: inline-block">
-					<button class="btn btn-primary" style="background-color: #9ac972; border: #9ac972;">使用優惠代碼</button>
-				</div>
-				<div style="margin-left:200px;">	
+			    <div>
+			        <p>優惠代碼:</p>
+			        <input id="couponInput" type="text" style="display: inline-block">
+			        <button id="applyCouponBtn" class="btn btn-primary" style="background-color: #9ac972; border: #9ac972;">使用優惠代碼</button>
+			    	<div id="errorContainer"></div>
+			    </div>
+			
+			
+			
+				<div style="margin-left:150px;">	
 					<p style="display: inline-block">金額小計:</p>
 					<p style="display: inline-block" id="orderTotalAmount">111</p><br>
 					<p style="display: inline-block">優惠折抵:</p>
-					<p style="display: inline-block">111</p><br>
-					<p style="display: inline-block">運費: <span id="shippingFee">111</span></p><br>
+					<p style="display: inline-block" id="resultElement">111</p><br>
+					<p style="display: inline-block">運費: <span id="shippingFee">120</span></p><br>
 					<p style="display: inline-block">付款金額:</p>
 					<p style="display: inline-block"></p>
 				</div>
@@ -123,16 +134,32 @@
 
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js}"></script>
+
 	<script type="text/javascript">
+
 		$(document).ready(function() {
 			var memID = localStorage.getItem('memID');
+			console.log(memID);
+			$("#twzipcode").twzipcode();
 
 			// 或者從 Session Storage 中獲取
 			// var memID = sessionStorage.getItem('memID');
 
-			console.log(memID);
 			$(".headerPage").load("/header.html");
 			$(".footerPage").load("/footer.html");
+			
+			
+			 $('#deliver').change(function() {
+		            // 获取当前选项的文本并更新显示
+		            $('#selectedOption').text($('#deliver option:selected').text());
+
+		            // 获取当前选项的数据属性值（运费）
+		            var shippingFee = $('option:selected', this).data('shipping-fee');
+
+		            // 更新显示运费的<span>元素的内容
+		            $('#shippingFee').text(shippingFee);
+		        });
 
 			// 取得所有數量輸入框
 			var quantityInputs = $("input[name='quantity']");
@@ -169,38 +196,38 @@
 			
 			<!-- ------------------------------		縣市鄉鎮選單  ------------------------------------------->
 
-				//地址選單
-				//縣市
-				$.ajax({url : 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
-						type : "get",
-						dataType : "json",
-						success : function(data) {
-									$.each(data,function(key, value) {
-										$('#city').append('<option value="'+key+'">'+ data[key].CityName+ '</option>')
-									})
-								},
-						error : function(data) {alert("fail");
-										}
-				});
+// 				//地址選單
+// 				//縣市
+// 				$.ajax({url : 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+// 						type : "get",
+// 						dataType : "json",
+// 						success : function(data) {
+// 									$.each(data,function(key, value) {
+// 										$('#city').append('<option value="'+key+'">'+ data[key].CityName+ '</option>')
+// 									})
+// 								},
+// 						error : function(data) {alert("fail");
+// 										}
+// 				});
 
-				//鄉鎮
-				$("#city").change(function() {
-						cityvalue = $("#city").val(); //取值
-						$("#area").empty(); //清空上次的值
-						$("#area").css("display","inline"); //顯現
-						$.ajax({
-							url : 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
-							type : "get",
-							dataType : "json",
-							success : function(data) {
-								eachval = data[cityvalue].AreaList; //鄉鎮
-								$.each(eachval,function(key,value) {
-									$('#area').append('<option value="'+key+'">'+ eachval[key].AreaName+ '</option>')
-								});
-							},
-							error : function() {alert("fail");}
-						});
-											});
+// 				//鄉鎮
+// 				$("#city").change(function() {
+// 						cityvalue = $("#city").val(); //取值
+// 						$("#area").empty(); //清空上次的值
+// 						$("#area").css("display","inline"); //顯現
+// 						$.ajax({
+// 							url : 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+// 							type : "get",
+// 							dataType : "json",
+// 							success : function(data) {
+// 								eachval = data[cityvalue].AreaList; //鄉鎮
+// 								$.each(eachval,function(key,value) {
+// 									$('#area').append('<option value="'+key+'">'+ eachval[key].AreaName+ '</option>')
+// 								});
+// 							},
+// 							error : function() {alert("fail");}
+// 						});
+// 											});
 				
 
 
@@ -253,17 +280,90 @@
 						recalculateOrderTotal();
 					});
 				});
-				$("#deliver").change(function() {
-			        // 取得選擇的運費
-			        var shippingFee = $(this).find("option:selected").data("shipping-fee");
+				
+				 $('#deliver').change(function() {
+			            
+			            $('#selectedOption').text($('#deliver option:selected').text());
 
-			        // 更新顯示運費的元素
-			        $("#shippingFee").text(shippingFee);
-			    });
+			            var shippingFee = $('option:selected', this).data('shipping-fee');
+
+			            $('#shippingFee').text(shippingFee);
+			        });
 				
 
 
 	});
+		function updateQuantity(inputElement) {
+		    // 找到父元素
+		    var form = inputElement.closest('form');
+		    
+		    // 提交相對應的表單
+		    if (form) {
+		        form.submit();
+		    }
+		}
+		document.getElementById('applyCouponBtn').addEventListener('click', function () {
+		    console.log("coupon");
+
+		    // 取得優惠代碼輸入框的值
+		    var coupon = document.getElementById('couponInput').value;
+
+		    // 取得金額小計的元素
+		    var orderTotalAmountElement = document.getElementById('orderTotalAmount');
+
+		    // 建立 SaleDTO 物件
+		    var saleDTO = {
+		        coupon: coupon,
+		        total: orderTotalAmountElement.textContent.trim()  // 獲取金額小計的內容
+		    };
+
+		    // 獲取顯示結果的元素
+		    var resultElement = document.getElementById('resultElement');
+
+		    // 清空之前的內容
+		    resultElement.textContent = '';
+
+		    // 獲取錯誤容器的元素
+		    var errorContainer = document.getElementById('errorContainer');
+
+		    // 清空之前的錯誤內容
+		    errorContainer.textContent = '';
+
+		    // 使用 fetch 向後端 API 發送 POST 請求
+		    fetch('http://localhost:8080/sale/coupon', {
+		        method: 'POST',
+		        headers: {
+		            'Content-Type': 'application/json'
+		        },
+		        body: JSON.stringify(saleDTO)
+		    })
+		    .then(response => response.json())
+		    .then(data => {
+		        // 在這裡處理後端返回的結果，例如更新頁面上的優惠資訊
+		        console.log(data);
+
+		        // 判斷返回的數據中是否包含 result 鍵
+		        if (data.result) {
+		            // 如果有 result，則顯示在對應元素上
+		            resultElement.textContent = data.result;
+		        } else if (data.error) {
+		            // 如果有 error，則顯示在錯誤容器上
+		            errorContainer.textContent = '錯誤: ' + data.error;
+		        }
+		    })
+		    .catch(error => {
+		        // 在這裡處理錯誤
+		        console.error('Error:', error);
+
+		        // 如果發生錯誤，也顯示在錯誤容器中
+		        errorContainer.textContent = '未知錯誤';
+		    });
+		});
+
+
+		
+
+
 		
 	</script>
 
