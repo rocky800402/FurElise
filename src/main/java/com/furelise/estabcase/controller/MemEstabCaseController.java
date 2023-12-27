@@ -5,6 +5,7 @@ import com.furelise.complaint.model.Complaint;
 import com.furelise.estabcase.model.*;
 
 import com.furelise.mem.model.entity.Mem;
+import com.furelise.mem.service.AuthService;
 import com.furelise.planord.model.PlanOrd;
 import com.furelise.planord.model.PlanOrdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MemEstabCaseController {
 	@Autowired
 	private EstabCaseService estabCaseService;
-
+	@Autowired
+	private AuthService authService;
 	@Autowired
 	private PlanOrdRepository planOrdRepository;
 
@@ -26,7 +28,7 @@ public class MemEstabCaseController {
 	public MemEstabCaseVO getAllMemEstabCase( HttpServletRequest req){
 //		System.out.println(req);
 //		System.out.println(req.getSession());
-		Mem mem = (Mem) req.getSession().getAttribute("mem");
+		Mem mem = authService.validateMem(req);
 //		System.out.println("mem");
 //		System.out.println(mem);
 		PlanOrd planOrd = planOrdRepository.findByMemIDAndPlanStatusID(mem.getMemID(), 210001);
@@ -51,7 +53,7 @@ public class MemEstabCaseController {
 	@PostMapping()
 	public Complaint addMemcomplaint(
 			@Validated @RequestBody MemEstabCaseComDTO memEstabCaseComDTO,HttpServletRequest req){
-		Mem mem = (Mem) req.getSession().getAttribute("mem");
+		Mem mem = authService.validateMem(req);
 		return estabCaseService.addcomplaint(memEstabCaseComDTO,mem.getMemID());
 	}
 

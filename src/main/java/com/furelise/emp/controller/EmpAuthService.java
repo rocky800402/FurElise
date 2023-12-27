@@ -8,6 +8,9 @@ import com.furelise.emp.model.Emp;
 import com.furelise.emp.model.EmpRepository;
 import com.furelise.exception.UnauthorizedException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Service
 public class EmpAuthService {
 
@@ -34,7 +37,7 @@ public class EmpAuthService {
 	}
 	
 	
-	public Emp verify(EmpLoginDTO dto) {
+	public Emp verify(EmpLoginDTO dto, HttpServletRequest req) {
 		Emp emp = this.findByEmpMail(dto.getEmail());
 		// 判斷有無emp存在，或已被停權，或密碼輸入錯誤，或帳號尚未審核通過
 		if (emp == null 
@@ -44,6 +47,8 @@ public class EmpAuthService {
 		} else if (emp.getEmpStatus() != 1) {
 			throw new UnauthorizedException("The account hasn't been approved");
 		}
+		HttpSession session = req.getSession();
+		session.setAttribute("emp", emp);
 		return emp;
 	}
 	
