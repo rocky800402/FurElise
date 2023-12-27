@@ -1,22 +1,13 @@
 package com.furelise.estabcase.controller;
 
 import com.furelise.estabcase.empcasemanage.EmpCaseManageService;
-import com.furelise.estabcase.empcasemanage.EmpCaseManageVO;
-import com.furelise.estabcase.model.EstabCase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/estabcasemanage")
-public class EmpCaseManageController {
+public class EstabCaseManageController {
     @Autowired
     private EmpCaseManageService empCaseManageService;
 
