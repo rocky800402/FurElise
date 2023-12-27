@@ -6,11 +6,14 @@ import com.furelise.orddetail.model.OrdDetail;
 import com.furelise.orddetail.model.OrdDetailRepository;
 import com.furelise.product.model.Product;
 import com.furelise.product.model.ProductRepository;
+import com.furelise.sale.model.Sale;
+import com.furelise.sale.model.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MemOrdService {
@@ -20,60 +23,35 @@ public class MemOrdService {
     OrdDetailRepository ordDetailR;
     @Autowired
     ProductRepository productR;
-
     @Autowired
     CityRepository cityR;
+    @Autowired
+    SaleRepository saleRepository;
 
-
-    public List<MemOrdDetailBO> getMemOrdDetailBO(Integer memID) {
-
-        List<Ord> ords = ordR.findByMemID(memID);
-
-        List<MemOrdDetailBO> memOrdDetailBOs = null;
-        for (Ord ord : ords) {
-            List<OrdDetail> ordDetails = ordDetailR.findByOrdID(ord.getOrdID());
-            memOrdDetailBOs = new ArrayList<>();
-            for (OrdDetail ordDetail : ordDetails) {
-                MemOrdDetailBO memOrdDetailBO = new MemOrdDetailBO();
-                Product product = productR.findById(ordDetail.getPID()).orElseThrow();
-
-                memOrdDetailBO.setPName(product.getPName());
-                memOrdDetailBO.setPPrice(product.getPPrice());
-                memOrdDetailBO.setDetaQty(ordDetail.getDetaQty());
-                memOrdDetailBO.setLevel(ordDetail.getLevel());
-                memOrdDetailBO.setFeedback(ordDetail.getFeedback());
-                memOrdDetailBO.setFbTime(ordDetail.getFbTime());
-
-                memOrdDetailBOs.add(memOrdDetailBO);
-            }
-
-        }
-        return memOrdDetailBOs;
+    public List<MemOrdDetailBO> getMemOrdDetailBO(Ord ord) {
+        List<OrdDetail> ordDetails = ordDetailR.findByOrdID(ord.getOrdID());
+        return ordDetails.stream().map((ordDetail) -> {
+            Product product = productR.findById(ordDetail.getPID()).orElseThrow();
+            return new MemOrdDetailBO(product, ordDetail);
+        }).toList();
     }
 
-    public List<MemOrdVO> getMemOrdVO(Integer memID) {
-        List<MemOrdVO> memOrdVOs = new ArrayList<>();
+    public List<MemOrdVO> getMemOrdList(Integer memID) {
         List<Ord> ords = ordR.findByMemID(memID);
-        for (Ord ord : ords) {
-            City city = cityR.findByCityCode(ord.getCityCode());
-            MemOrdVO memOrdVO =new MemOrdVO();
-            memOrdVO.setOrdID(ord.getOrdID());
-            memOrdVO.setCityCode(ord.getCityCode());
-            memOrdVO.setCityName(city.getCityName());
-            memOrdVO.setAddress(ord.getAddress());
-            memOrdVO.setPayment(ord.getPayment());
-            memOrdVO.setDeliver(ord.getDeliver());
-            memOrdVO.setOrdDate(ord.getOrdDate());
-            memOrdVO.setDeliverDate(ord.getDeliverDate());
-            memOrdVO.setSum(ord.getSum());
-            memOrdVO.setShipping(ord.getShipping());
-            memOrdVO.setSaleID(ord.getSaleID());
-            memOrdVO.setTotal(ord.getTotal());
-            memOrdVO.setMemOrdDetailBOs(getMemOrdDetailBO(memID));
+        return ords.stream().map(this::getMemOrdVO).toList();
+    }
 
-            memOrdVOs.add(memOrdVO);
-        }
-        return memOrdVOs;
+    // TODO: 跪著的人請看這
+    public MemOrdVO getMemOrdById(Integer ordID) {
+        Ord ord = ordR.findById(ordID).orElseThrow();
+        return this.getMemOrdVO(ord);
+    }
+
+    private MemOrdVO getMemOrdVO(Ord ord) {
+        City city = cityR.findByCityCode(ord.getCityCode());
+        List<MemOrdDetailBO> memOrdDetailBOList = getMemOrdDetailBO(ord);
+        Sale sale = Objects.isNull(ord.getSaleID()) ? null : saleRepository.findById(ord.getSaleID()).orElse(null);
+        return new MemOrdVO(city, ord, memOrdDetailBOList, sale);
     }
 
 }

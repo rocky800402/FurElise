@@ -1,6 +1,7 @@
 package com.furelise.ord.controller;
 
 import com.furelise.mem.model.entity.Mem;
+import com.furelise.mem.service.AuthService;
 import com.furelise.ord.model.MemOrdService;
 import com.furelise.ord.model.MemOrdVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/mem-ord")
 public class MemOrdController {
+
     @Autowired
     private MemOrdService memOrdService;
+    @Autowired
+    private AuthService authService;
 
     @GetMapping
-    public List<MemOrdVO> getMemOrdVO( HttpServletRequest req){
-        Mem mem = (Mem) req.getSession().getAttribute("mem");
-        return memOrdService.getMemOrdVO(mem.getMemID());
+    public List<MemOrdVO> getMemOrdVO(HttpServletRequest req){
+        Mem mem = authService.validateMem(req);
+        return memOrdService.getMemOrdList(mem.getMemID());
     }
 }
