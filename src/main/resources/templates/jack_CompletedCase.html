@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 案件管理-已完成案件資訊 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員中心-方案管理</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/emp_sidebar.css}">
+    <style>
+        /* 消除外邊距和內邊距 */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .img {
+            width: 100%;
+            position: relative;
+        }
+
+        /* 表格文字置中 */
+        .jack_case_info tr th,
+        .jack_case_info tr td {
+            text-align: center;
+            border-left: none;
+            border-right: none;
+        }
+
+        /* 頁面容器設置 */
+        .jack_container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .jack_section {
+            margin-bottom: 20px;
+        }
+
+        .jack_section_title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .jack_income {
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .jack_case_info {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="headerPage"></div>
+
+
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <div style="max-width: 1200px; display: flex;">
+            <div class="empSidebarPage"></div>
+            <!-- empsidebar -->
+            <div style="width: 950PX; padding: 10px;">
+
+
+                <div class="jack_container">
+                    <div class="jack_section">
+                        <div class="jack_section_title" th:text="'案件編號: ' + ${CompletedCase.estabCaseID}"></div>
+                        <div class="jack_income" th:utext="'收入$' + ${CompletedCase.planPricePerCase}"></div>
+                        <table class="jack_case_info">
+
+                            <ul class="jack_info_list">
+                                <li><strong>收取日期:</strong> <span th:utext="${CompletedCase.estabCaseDate}"></span></li>
+                                <li><strong>收取區間:</strong> <span th:utext="${CompletedCase.timeRange}"></span></li>
+                                <li><strong>收取地址:</strong> <span
+                                        th:utext="${CompletedCase.cityCode + CompletedCase.cityName + CompletedCase.floor}"></span>
+                                </li>
+                                <img th:src="'data:image/png;base64,' + ${image}" style="max-width: 50%; max-height: 50%;" alt="圖片描述">
+                            </ul>
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="footerPage"></div>
+
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script>
+        $(".headerPage").load("/header.html");
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("/empSidebar.html");
+    </script>
+</body>
+
+</html>
