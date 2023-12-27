@@ -9,7 +9,6 @@ import com.furelise.emp.model.EmpVO;
 import com.furelise.emp.controller.EmpAuthService;
 import com.furelise.mem.model.dto.MemLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +21,7 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
     @Autowired
     private EmpAuthService empAuthService;
     
@@ -37,17 +37,19 @@ public class AuthController {
     
     @PostMapping("/login/mem")
     public MemVO memLogin(@RequestBody @Validated MemLoginDTO dto, HttpServletRequest req) {
-        Mem mem = this.authService.verify(dto);
-        HttpSession session = req.getSession();
-        session.setAttribute("mem", mem);
+        Mem mem = this.authService.verify(dto, req);
+        return new MemVO(mem);
+    }
+
+    @GetMapping("/mem/me")
+    public MemVO memMe(HttpServletRequest req) {
+        Mem mem = authService.validateMem(req);
         return new MemVO(mem);
     }
 
     @PostMapping("/login/emp")
     public EmpVO empLogin(@RequestBody @Validated EmpLoginDTO dto, HttpServletRequest req) {
-        Emp emp = this.empAuthService.verify(dto);
-        HttpSession session = req.getSession();
-        session.setAttribute("emp", emp);
+        Emp emp = this.empAuthService.verify(dto, req);
         return new EmpVO(emp);
     }
     

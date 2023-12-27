@@ -31,14 +31,4 @@ public class EmpCaseManageVO {
 
     public EmpCaseManageVO() {
     }
-
-    public EmpCaseManageVO(Integer estabCaseID, Date estabCaseDate, String timeRange, BigDecimal planPricePerCase, String cityName, Boolean takeStatus, Integer estabCaseStatus) {
-        this.estabCaseID = estabCaseID;
-        this.estabCaseDate = estabCaseDate;
-        this.timeRange = timeRange;
-        this.planPricePerCase = planPricePerCase;
-        this.cityName = cityName;
-        this.takeStatus = takeStatus;
-        this.estabCaseStatus = estabCaseStatus;
-    }
 }
