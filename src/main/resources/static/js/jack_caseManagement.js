@@ -6,6 +6,7 @@ $(document).ready(function() {
         // "pageLength": '5',// 預設為'10'，若需更改初始每頁顯示筆數，才需設定　
         "ajax": {
             "url": "http://localhost:8080/estabcase/120001/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
+            // "url": "http://localhost:8080/estabcase/" + empID + "/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
             "data": {
@@ -13,7 +14,6 @@ $(document).ready(function() {
                 'page': 1,
                 'empID': 120001,
                 'estabCaseStatus': 1
-
             }
         },
         columns: [
@@ -32,8 +32,36 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="jack_information">資訊</button>';
+                    // 取得動態的 estabCaseID
+                    var estabCaseID = row.estabCaseID;
+
+                    // 創建一個新的 form 元素
+                    var form = document.createElement('form');
+                    form.className = 'btn-case-info';
+                    form.action = '/estabcaseonging/details';  // 替換為你的實際目標路徑
+                    form.method = 'post';
+
+                    // 創建一個新的 input 元素
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'estabCaseID';
+                    input.value = estabCaseID;
+
+                    // 在表單中添加 input 元素
+                    form.appendChild(input);
+
+                    // 創建一個新的 button 元素
+                    var button = document.createElement('button');
+                    button.type = 'submit';
+                    button.textContent = '資訊';
+
+                    // 在表單中添加 button 元素
+                    form.appendChild(button);
+
+                    // 返回表單的 HTML
+                    return form.outerHTML;
                 }
+
             },
             {
                 data: null,
@@ -110,8 +138,87 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn-case-info">資訊</button>';
+                    // 取得動態的 estabCaseID
+                    var estabCaseID = row.estabCaseID;
+
+                    // 創建一個新的 form 元素
+                    var form = document.createElement('form');
+                    form.className = 'btn-case-info';
+                    form.action = '/completed/' + estabCaseID;  // 使用GET方式，將estabCaseID添加到URL中
+                    form.method = 'get';  // 使用GET方式
+
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();  // 防止實際提交表單
+
+                        // 使用JavaScript來執行GET請求，將estabCaseID添加到URL中
+                        window.location.href = '/completed/' + estabCaseID;
+                    });
+
+                    // 創建一個新的 button 元素
+                    var button = document.createElement('button');
+                    button.type = 'submit';
+                    button.textContent = '詳細';
+
+                    // 在表單中添加 button 元素
+                    form.appendChild(button);
+
+                    // 返回表單的 HTML
+                    return form.outerHTML;
                 }
+
+                // data: null,
+                // render: function (data, type, row) {
+                //     // 取得動態的 estabCaseID
+                //     var estabCaseID = row.estabCaseID;
+                //
+                //     // 創建一個新的 form 元素
+                //     var form = document.createElement('form');
+                //     form.className = 'btn-case-info';
+                //     form.action = '/estabcaseonging/details';  // 替換為你的實際目標路徑
+                //     form.method = 'post';
+                //
+                //     // 創建一個新的 input 元素
+                //     var input = document.createElement('input');
+                //     input.type = 'hidden';
+                //     input.name = 'estabCaseID';
+                //     input.value = estabCaseID;
+                //
+                //     // 在表單中添加 input 元素
+                //     form.appendChild(input);
+                //
+                //     // 創建一個新的 button 元素
+                //     var button = document.createElement('button');
+                //     button.type = 'submit';
+                //     button.textContent = '資訊';
+                //
+                //     // 在表單中添加 button 元素
+                //     form.appendChild(button);
+                //
+                //     // 返回表單的 HTML
+                //     return form.outerHTML;
+                // }
+
+                // render: function (data, type, row) {
+                //     // 取得動態的 estabCaseID
+                //     var estabCaseID = row.estabCaseID;
+                //
+                //     var formHTML = '<form class="btn-case-info" action="/estabcaseonging/' + estabCaseID + '" method="post">\n' +
+                //         '    <button type="submit">資訊</button>\n' +
+                //         '</form>\n';
+                //
+                //     return formHTML;
+                // }
+
+                // render: function (data, type, row) {
+                //     // 取得動態的 estabCaseID
+                //     var estabCaseID = row.estabCaseID;
+                //
+                //     var formHTML = '<form class="btn-case-info" action="/estabcaseonging/test' + '" method="post">\n' +
+                //         '    <button type="submit">資訊</button>\n' +
+                //         '</form>\n';
+                //
+                //     return formHTML;
+                // }
             },
         ]
     });

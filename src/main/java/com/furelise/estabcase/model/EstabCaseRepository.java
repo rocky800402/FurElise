@@ -34,7 +34,18 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
             Integer empID,
             Integer estabCaseStatus
     );
+
     List<EstabCase> findByEmpID(Integer empID);
 
-	Page<EstabCase> findAllByTakeStatus(boolean takeStatus, Pageable pageable);
+    Page<EstabCase> findAllByTakeStatus(boolean takeStatus, Pageable pageable);
+
+    List<EstabCase> findByEmpIDAndEstabCaseStatusOrderByEstabCaseEndDesc(Integer empID, Integer estabCaseStatus);
+
+    Integer countByEmpIDAndEstabCaseStatus(Integer empID, Integer estabCaseStatus);
+
+    @Query("SELECT SUM(e.planPricePerCase) FROM EstabCase e WHERE e.empID = :empID AND e.estabCaseStatus = :estabCaseStatus")
+    Double sumPlanPricePerCaseByEmpIDAndStatus(@Param("empID") Integer empID, @Param("estabCaseStatus") Integer estabCaseStatus);
+
+    @Query("SELECT e FROM EstabCase e WHERE MONTH(e.estabCaseEnd) = :month AND YEAR(e.estabCaseEnd) = :year")
+    List<EstabCase> findByMonthAndYear(@Param("month") Date month, @Param("year") Date year);
 }
