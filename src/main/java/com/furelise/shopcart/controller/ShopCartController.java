@@ -113,7 +113,6 @@ public class ShopCartController {
 			return "redirect:/login";
 		}
 		return "redirect:/shopcart-checkout";
-
 	}
 
 	@PostMapping("/update")
