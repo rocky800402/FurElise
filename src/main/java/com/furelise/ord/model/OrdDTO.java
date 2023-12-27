@@ -10,11 +10,9 @@ import lombok.Data;
 public class OrdDTO {
 	
 	//結帳
-	private String pName;
-	private byte[] pImage1;
+	private Integer pID;
 	private Integer quantity;
 	private Integer memID;
-	private BigDecimal pPrice;
 	private Integer payment;
 	private Timestamp ordDate;
 	private Integer deliver;
@@ -27,7 +25,6 @@ public class OrdDTO {
 	
 	//查看訂單
 	private Integer ordID;
-	private Integer pID;
 	private Date deliverDate;
 	private Integer ordStatus;
 	private Date arrival;

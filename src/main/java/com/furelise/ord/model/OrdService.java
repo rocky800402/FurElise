@@ -45,12 +45,12 @@ public class OrdService {
 		ord.setPayment(req.getPayment());
 		ord.setDeliver(req.getDeliver());
 		ord.setAddress(req.getAddress());
-		ord.setCityCode(req.getCityCode());
+		ord.setCityCode(req.getCityCode()); 
 		ord.setDeliverDate(null); //出貨時間初始為null
-		ord.setSum(req.getSum());
+		ord.setSum(req.getSum()); 
 		ord.setShipping(req.getShipping());
 		ord.setTotal(totalAmount);
-		ord.setSaleID(saleDao.getSaleByCoupon(null).getSaleID());
+		ord.setSaleID(saleDao.getSaleByCoupon(req.getCoupon()).getSaleID());
 		ord.setOrdStatus(0); // 預設都為0(處理中)
 		ord.setArrival(null); //送達時間初始為null
 
@@ -85,19 +85,28 @@ public class OrdService {
 	    }
 
 	    ord.setOrdDetails(ordDetails);
-
+	    
 	    dao.save(ord);
 
 	    return ord;
 	}
 
 	//
-	public Ord updateOrd(Integer ordID, Timestamp ordDate, Integer memID, Integer payment, Integer deliver,
-			String address, String cityCode, Date deliverDate, BigDecimal sum, BigDecimal shipping, BigDecimal total,
-			Integer saleID, Integer ordStatus, Date arrival) {
+	public Ord updateOrd(Integer ordID,Integer ordStatus) {
+		Ord ord = new Ord();
+		ord.setOrdStatus(ordStatus);
+		dao.save(ord);
+		return ord;
 
-		return null;
-
+	}
+	
+	public List<Ord> getAllOrds(){
+		
+		return dao.findAll();
+	}
+	
+	public List<Ord> getByStatus(Integer ordStatus){
+		return dao.findByOrdStatus(ordStatus);
 	}
 
 

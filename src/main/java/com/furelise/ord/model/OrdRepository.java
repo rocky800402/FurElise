@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrdRepository extends JpaRepository<Ord, Integer>{
-	List<Ord> findByMemID(Integer memID);
+	List<Ord> findByMemID(Integer memID); 
+	List<Ord> findByOrdStatus(Integer ordStatus);
 }
