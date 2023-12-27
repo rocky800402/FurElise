@@ -68,7 +68,7 @@ public class TestController  {
 //		shopCartService.updateQuantity(null, 10, 10);
 		
 		//測試service移除特定商品
-//		shopCartService.removeProduct(null, 40);
+//		shopCartService.removeProduct(110001, 140008);
 		
 		//測試service清除整台購物車
 //		shopCartService.clearCart(110004);
