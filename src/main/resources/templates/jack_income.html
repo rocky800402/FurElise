@@ -75,6 +75,21 @@
                 </div>
             </div>
 
+            <div class="container">
+                <label for="year">年份:</label>
+                <select id="year">
+                    <!-- 年份選項 -->
+                    <!-- 修改範圍，這裡的例子是 2023 到 2013 -->
+                </select>
+                <label for="month">月份:</label>
+                <select id="month">
+                    <!-- 月份選項 -->
+                    <!-- 1 到 12 -->
+                </select>
+                <!-- 按鈕觸發 JavaScript 函數 -->
+                <button onclick="submitData()">查詢</button>
+            </div>
+
 
 
         </div>
@@ -92,23 +107,54 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
+    var yearSelect = document.getElementById("year");
+    var monthSelect = document.getElementById("month");
 
-    function getData() {
-        const year = document.getElementById('year').value;
-        const month = document.getElementById('month').value;
+    var currentYear = new Date().getFullYear();
 
-        fetch(`/income/byMonth/${year}/${month}`)
-            .then(response => response.json())
-            .then(data => {
-                // 处理数据
-                updateBarChart(data);
-                updateDataTable(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+    for (var i = currentYear; i >= currentYear - 10; i--) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        yearSelect.add(option);
     }
 
+    for (var j = 1; j <= 12; j++) {
+        var option = document.createElement("option");
+        option.value = j;
+        option.text = j;
+        monthSelect.add(option);
+    }
+
+    function submitData() {
+        // 獲取選擇的年份和月份
+        var selectedYear = yearSelect.value;
+        var selectedMonth = monthSelect.value;
+
+        console.log(selectedYear);
+        console.log(selectedMonth);
+
+        // 這裡可以使用 Ajax 或其他方式將數據傳送給後端
+        // 例如，使用 fetch 函數：
+        fetch('/income/byMonth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                year: parseInt(selectedYear, 10),
+                month: parseInt(selectedMonth, 10),
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 這裡處理後端返回的數據
+                console.log('後端返回的數據:', data);
+            })
+            .catch((error) => {
+                console.error('錯誤:', error);
+            });
+    }
 
     // const empID = ;
     // fetch('/income/mappingInf?empID=${empID}&estabCaseStatus=3')
@@ -226,52 +272,6 @@
                 }
             }
         });
-
-        //日歷中文化
-        $.fn.datepicker.dates['zh-CN'] = {
-            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-            daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-            daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
-            months: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-            monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-            today: "今日",
-            suffix: [],
-            meridiem: []
-        };
-        // Initialize Datepicker
-        $('#datepickerButton').datepicker({
-            language: 'zh-CN',
-            format: 'yyyy/mm', // 設定日期格式
-            minViewMode: 'months',// 限制選擇到月份
-            autoclose: true, // 選擇日期後自動關閉
-            orientation: 'bottom',
-        });
-
-        // 預設顯示日期
-        var defaultDate = new Date();
-        var formattedDefaultDate = formatDate(defaultDate);
-        $('#datepickerButton').text(formattedDefaultDate);
-        $('#dateInfo').text(formattedDefaultDate);
-        $('#dateInfo1').text(formattedDefaultDate);
-
-        // 監聽日期變更事件，更新按鈕文字
-        $('#datepickerButton').datepicker().on('changeDate', function (e) {
-            var selectedDate = e.format();
-            $('#datepickerButton').text(selectedDate);
-            $('#dateInfo').text(selectedDate);
-            $('#dateInfo1').text(selectedDate);
-        });
-
-        // 格式化日期為指定格式
-        function formatDate(date) {
-            var mm = date.getMonth() + 1; // 一月是 0!
-            var yyyy = date.getFullYear();
-
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            return yyyy + '/' + mm;
-        }
 
     });
 </script>

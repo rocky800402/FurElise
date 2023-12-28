@@ -42,8 +42,16 @@ public class EmpIncomeRSTNCon {
         return ResponseEntity.ok(mappingInf);
     }
 
-    @GetMapping("/byMonth/{year}/{month}")
-    public List<EstabCase> getEstabCasesByMonth(@PathVariable int year, @PathVariable int month) {
+//    @PostMapping("/byMonth")
+//    public List<EstabCase> getEstabCasesByMonth(@RequestParam int year, @RequestParam int month) {
+//        return empIncomeServer.getEstabCasesByMonth(year, month);
+//    }
+    @PostMapping("/byMonth")
+    public List<EstabCase> getEstabCasesByMonth(@RequestBody Map<String, Integer> params) {
+
+        int year = params.get("year");
+        int month = params.get("month");
+
         return empIncomeServer.getEstabCasesByMonth(year, month);
     }
 }
