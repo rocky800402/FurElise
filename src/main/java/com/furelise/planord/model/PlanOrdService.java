@@ -125,14 +125,14 @@ public class PlanOrdService {
 			total = p.getTotal();
 			planStatus = getPlanStatus(p.getPlanStatusID());
 
-			PlanOrdDTO info = new PlanOrdDTO();
-			info.setPlanOrdID(planOrdId);
-			info.setMemName(memName);
-			info.setPlanName(planName);
-			info.setPlanStart(planStart);
-			info.setPlanEnd(planEnd);
-			info.setTotal(total);
-			info.setPlanStatus(planStatus);
+			PlanOrdDTO info = new PlanOrdDTO(planOrdId, memName, planName, planStart, planEnd, total, planStatus);
+//			info.setPlanOrdID(planOrdId);
+//			info.setMemName(memName);
+//			info.setPlanName(planName);
+//			info.setPlanStart(planStart);
+//			info.setPlanEnd(planEnd);
+//			info.setTotal(total);
+//			info.setPlanStatus(planStatus);
 
 			infoList.add(info);
 		}

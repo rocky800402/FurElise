@@ -35,5 +35,15 @@ public class PlanOrdDTO {
 	private Date planEnd;
 	private BigDecimal total;
 	private String planStatus;
-
+	
+	public PlanOrdDTO(Integer planOrdID, String memName, String planName, 
+					  Date planStart, Date planEnd, BigDecimal total, String planStatus) {
+		this.planOrdID = planOrdID;
+		this.memName = memName;
+		this.planName = planName;
+		this.planStart = planStart;
+		this.planEnd = planEnd;
+		this.total = total;
+		this.planStatus = planStatus;		
+	}
 }
