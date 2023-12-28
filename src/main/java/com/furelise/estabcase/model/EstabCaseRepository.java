@@ -1,5 +1,6 @@
 package com.furelise.estabcase.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.sql.Timestamp;
 import javax.transaction.Transactional;
 
@@ -49,4 +51,20 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
     @Query("SELECT e FROM EstabCase e WHERE e.estabCaseEnd >= :startTimestamp AND e.estabCaseEnd <= :endTimestamp")
     List<EstabCase> findByEstabCaseEndBetween(@Param("startTimestamp") Timestamp startTimestamp, @Param("endTimestamp") Timestamp endTimestamp);
 
+    @Query("SELECT e FROM EstabCase e WHERE e.estabCaseEnd >= :startTimestamp AND e.estabCaseEnd <= :endTimestamp AND e.estabCaseStatus = 1 AND e.takeStatus IS TRUE")
+    List<EstabCase> findByEstabCaseEndBetweenAndStatus(@Param("startTimestamp") Timestamp startTimestamp, @Param("endTimestamp") Timestamp endTimestamp);//查詢當月的已完成案件
+
+    @Query("SELECT SUM(e.planPricePerCase) " +
+            "FROM EstabCase e " +
+            "WHERE e.estabCaseEnd >= :startTimestamp " +
+            "AND e.estabCaseEnd <= :endTimestamp " +
+            "AND e.estabCaseStatus = 1 " +
+            "AND e.takeStatus IS TRUE " +
+            "AND e.empID = :empID")
+    BigDecimal findTotalPlanPriceByEmpIDAndStatus(
+            @Param("startTimestamp") Timestamp startTimestamp,
+            @Param("endTimestamp") Timestamp endTimestamp,
+            @Param("empID") Integer empID);
+
+    Integer findEmpIDByEstabCaseID(Integer estabCaseID);
 }

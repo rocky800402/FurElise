@@ -5,6 +5,7 @@ import com.furelise.estabcase.model.EstabCaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -27,17 +28,35 @@ public class EmpIncomeServer {
         return estabCase;
     }
 
-    public Map<String, Object> getTotalInf(Integer empID, Integer estabCaseStatus) {
+//    public Map<String, Object> getTotalInf(Integer empID, Integer estabCaseStatus) {
+//
+//        Integer totalCount = estabCaseRepository.countByEmpIDAndEstabCaseStatus(empID, estabCaseStatus);
+//        Double totalIncome = estabCaseRepository.sumPlanPricePerCaseByEmpIDAndStatus(empID, estabCaseStatus);
+//
+//
+//        //把數據寫入map
+//        Map<String, Object> mappingInf = new HashMap<>();
+//        mappingInf.put("totalCount", totalCount);
+//        mappingInf.put("totalIncome", totalIncome);
+//
+//
+//        return mappingInf;
+//    }
 
-        Integer totalCount = estabCaseRepository.countByEmpIDAndEstabCaseStatus(empID, estabCaseStatus);
-        Double totalIncome = estabCaseRepository.sumPlanPricePerCaseByEmpIDAndStatus(empID, estabCaseStatus);
+    public Map<String, Object> getTotalInf(Integer empID, int year, int month) {
 
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        Timestamp startTimestamp = Timestamp.valueOf(startOfMonth.atStartOfDay());
+
+        // 設定月份的最後一秒 23:59:59
+        LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
+        Timestamp endTimestamp = Timestamp.valueOf(endOfMonth.atTime(23, 59, 59));
+
+        BigDecimal totalPlanPrice = estabCaseRepository.findTotalPlanPriceByEmpIDAndStatus(startTimestamp, endTimestamp, empID);
 
         //把數據寫入map
         Map<String, Object> mappingInf = new HashMap<>();
-        mappingInf.put("totalCount", totalCount);
-        mappingInf.put("totalIncome", totalIncome);
-
+        mappingInf.put("totalPlanPrice", totalPlanPrice);
 
         return mappingInf;
     }
@@ -65,6 +84,6 @@ public class EmpIncomeServer {
         LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
         Timestamp endTimestamp = Timestamp.valueOf(endOfMonth.atTime(23, 59, 59));
 
-        return estabCaseRepository.findByEstabCaseEndBetween(startTimestamp, endTimestamp);
+        return estabCaseRepository.findByEstabCaseEndBetweenAndStatus(startTimestamp, endTimestamp);
     }
 }

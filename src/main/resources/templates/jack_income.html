@@ -46,12 +46,25 @@
             <div class="jack_container">
                 <div class="container mt-5">
                     <div class="d-flex justify-content-between">
-                        <h2>
-                            <button type="button" class="btn btn-primary" id="datepickerButton" onclick="getData()">選擇日期</button>
-                        </h2>
+
+                        <div class="container">
+                            <label for="year">年份:</label>
+                            <select id="year">
+                                <!-- 年份選項 -->
+                                <!-- 修改範圍，這裡的例子是 2023 到 2013 -->
+                            </select>
+                            <label for="month">月份:</label>
+                            <select id="month">
+                                <!-- 月份選項 -->
+                                <!-- 1 到 12 -->
+                            </select>
+                            <!-- 按鈕觸發 JavaScript 函數 -->
+                            <button onclick="submitData()">查詢</button>
+                        </div>
+
                         <div id="total">
-<!--                            <p>完成件數: </p>-->
-<!--                            <p>本期收入: </p>-->
+                            <!--                            <p>完成件數: </p>-->
+                            <!--                            <p>本期收入: </p>-->
                         </div>
                     </div>
                     <table id="example" class="display" style="width:100%">
@@ -74,22 +87,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="container">
-                <label for="year">年份:</label>
-                <select id="year">
-                    <!-- 年份選項 -->
-                    <!-- 修改範圍，這裡的例子是 2023 到 2013 -->
-                </select>
-                <label for="month">月份:</label>
-                <select id="month">
-                    <!-- 月份選項 -->
-                    <!-- 1 到 12 -->
-                </select>
-                <!-- 按鈕觸發 JavaScript 函數 -->
-                <button onclick="submitData()">查詢</button>
-            </div>
-
 
 
         </div>
@@ -134,8 +131,7 @@
         console.log(selectedYear);
         console.log(selectedMonth);
 
-        // 這裡可以使用 Ajax 或其他方式將數據傳送給後端
-        // 例如，使用 fetch 函數：
+        // 使用 fetch 函數：
         fetch('/income/byMonth', {
             method: 'POST',
             headers: {
@@ -150,31 +146,76 @@
             .then(data => {
                 // 這裡處理後端返回的數據
                 console.log('後端返回的數據:', data);
+
+                // data.forEach(item => {
+                //     item.estabCaseEnd = new Date(item.estabCaseEnd);
+                // });
+
+                $('#example').DataTable().clear();
+
+                // 加新的數據到 DataTable
+                $('#example').DataTable().rows.add(data);
+
+                // 刷新 DataTable
+                $('#example').DataTable().draw();
             })
             .catch((error) => {
                 console.error('錯誤:', error);
             });
+
+        const requestData = {
+            empID: 120001,
+            year: selectedYear,
+            month: selectedMonth
+        };
+
+        // 發送 POST 請求
+        fetch('/income/mappingInf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 在這裡處理後端返回的數據
+                console.log('後端返回的數據:', data);
+                // 顯示後端統計數據
+                document.getElementById('mappingInf').innerHTML = `
+                    <span>本期收入: ${data.totalPlanPrice}</span>
+                `;
+                document.getElementById('total').innerHTML = `
+                    <span>本期收入: ${data.totalPlanPrice}</span>
+                `;
+
+                // 可以進一步處理 data，例如更新前端頁面上的內容
+            })
+            .catch((error) => {
+                console.error('錯誤:', error);
+            });
+
+        // const empID = ;
+        // fetch('/income/mappingInf?empID=${empID}&estabCaseStatus=3')
+
+        // fetch('/income/mappingInf?empID=120001&estabCaseStatus=1')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // 顯示後端統計數據
+        //         document.getElementById('mappingInf').innerHTML = `
+        //             <span>完成件數: ${data.totalCount}</span>
+        //             <span>本期收入: ${data.totalIncome}</span>
+        //         `;
+        //         document.getElementById('total').innerHTML = `
+        //             <span>完成件數: ${data.totalCount}</span>
+        //             <span>本期收入: ${data.totalIncome}</span>
+        //         `;
+        //     })
+        //     .catch(error => console.error('Error fetching mappingInf:', error));
     }
 
-    // const empID = ;
-    // fetch('/income/mappingInf?empID=${empID}&estabCaseStatus=3')
-    fetch('/income/mappingInf?empID=120001&estabCaseStatus=3')
-        .then(response => response.json())
-        .then(data => {
-            // 顯示後端統計數據
-            document.getElementById('mappingInf').innerHTML = `
-                    <span>完成件數: ${data.totalCount}</span>
-                    <span>本期收入: ${data.totalIncome}</span>
-                `;
-            document.getElementById('total').innerHTML = `
-                    <span>完成件數: ${data.totalCount}</span>
-                    <span>本期收入: ${data.totalIncome}</span>
-                `;
-        })
-        .catch(error => console.error('Error fetching mappingInf:', error));
 
     $(document).ready(function () {
-
 
 
         $('#example').DataTable({
@@ -224,18 +265,18 @@
         // var incomes = [500, 800, 1200, 950, 1100, 750, 900, 1300, 1000, 850, 1050, 1150];
 
         var monthlyData = {
-            "一月":1,
-            "二月":2,
-            "三月":3,
-            "四月":4,
-            "五月":5,
-            "六月":6,
-            "七月":7,
-            "八月":8,
-            "九月":9,
-            "十月":10,
-            "十一月":11,
-            "十二月":12
+            "一月": 1,
+            "二月": 2,
+            "三月": 3,
+            "四月": 4,
+            "五月": 5,
+            "六月": 6,
+            "七月": 7,
+            "八月": 8,
+            "九月": 9,
+            "十月": 10,
+            "十一月": 11,
+            "十二月": 12
         };
 
         // 使用Chart.js製作長條圖

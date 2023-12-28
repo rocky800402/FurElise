@@ -32,12 +32,26 @@ public class EmpIncomeRSTNCon {
     }
 
     //統計案件數與收入API
-    @GetMapping("/mappingInf")
+//    @GetMapping("/mappingInf")
+//    public ResponseEntity<Map<String, Object>> getMappingInf(
+//            @RequestParam Integer empID,
+//            @RequestParam Integer estabCaseStatus) {
+//
+//        Map<String, Object> mappingInf = empIncomeServer.getTotalInf(empID, estabCaseStatus);
+//
+//        return ResponseEntity.ok(mappingInf);
+//    }
+
+    //統計案件數與收入API
+    @PostMapping("/mappingInf")
     public ResponseEntity<Map<String, Object>> getMappingInf(
             @RequestParam Integer empID,
-            @RequestParam Integer estabCaseStatus) {
+            @RequestBody Map<String, Integer> params) {
 
-        Map<String, Object> mappingInf = empIncomeServer.getTotalInf(empID, estabCaseStatus);
+        int year = params.get("year");
+        int month = params.get("month");
+
+        Map<String, Object> mappingInf = empIncomeServer.getTotalInf(year, month, empID);
 
         return ResponseEntity.ok(mappingInf);
     }
@@ -47,7 +61,7 @@ public class EmpIncomeRSTNCon {
 //        return empIncomeServer.getEstabCasesByMonth(year, month);
 //    }
     @PostMapping("/byMonth")
-    public List<EstabCase> getEstabCasesByMonth(@RequestBody Map<String, Integer> params) {
+    public List<EstabCase> EstabCasesByMonthAndStatus(@RequestBody Map<String, Integer> params) {
 
         int year = params.get("year");
         int month = params.get("month");
