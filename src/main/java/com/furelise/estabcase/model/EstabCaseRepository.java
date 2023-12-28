@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
+import java.sql.Timestamp;
 import javax.transaction.Transactional;
 
 
@@ -46,6 +46,7 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
     @Query("SELECT SUM(e.planPricePerCase) FROM EstabCase e WHERE e.empID = :empID AND e.estabCaseStatus = :estabCaseStatus")
     Double sumPlanPricePerCaseByEmpIDAndStatus(@Param("empID") Integer empID, @Param("estabCaseStatus") Integer estabCaseStatus);
 
-    @Query("SELECT e FROM EstabCase e WHERE MONTH(e.estabCaseEnd) = :month AND YEAR(e.estabCaseEnd) = :year")
-    List<EstabCase> findByMonthAndYear(@Param("month") Date month, @Param("year") Date year);
+    @Query("SELECT e FROM EstabCase e WHERE e.estabCaseEnd >= :startTimestamp AND e.estabCaseEnd <= :endTimestamp")
+    List<EstabCase> findByEstabCaseEndBetween(@Param("startTimestamp") Timestamp startTimestamp, @Param("endTimestamp") Timestamp endTimestamp);
+
 }

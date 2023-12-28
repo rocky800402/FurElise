@@ -4,6 +4,12 @@ import com.furelise.estabcase.model.EstabCase;
 import com.furelise.estabcase.model.EstabCaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -36,17 +42,29 @@ public class EmpIncomeServer {
         return mappingInf;
     }
 
+//    public List<EstabCase> getEstabCasesByMonth(LocalDate year, LocalDate month) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(year, month - 1, 1, 0, 0, 0); // 設定月份的第一天 00:00:00
+//        LocalDate startOfMonth = new LocalDate(calendar.getTimeInMillis());
+//
+//
+//        calendar.add(Calendar.MONTH, 1);
+//        calendar.add(Calendar.SECOND, -1); // 設定月分的最後一秒 23:59:59
+//        LocalDate endOfMonth = new LocalDate(calendar.getTimeInMillis());
+//
+//
+//        return estabCaseRepository.findByEstabCaseEndMonthAndEstabCaseEndYear(startOfMonth, endOfMonth);
+//    }
+
     public List<EstabCase> getEstabCasesByMonth(int year, int month) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, 1, 0, 0, 0); // 設定月份的第一天 00:00:00
-        java.sql.Date startOfMonth = new java.sql.Date(calendar.getTimeInMillis());
+        // 設定月份的第一天 00:00:00
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        Timestamp startTimestamp = Timestamp.valueOf(startOfMonth.atStartOfDay());
 
+        // 設定月份的最後一秒 23:59:59
+        LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
+        Timestamp endTimestamp = Timestamp.valueOf(endOfMonth.atTime(23, 59, 59));
 
-        calendar.add(Calendar.MONTH, 1);
-        calendar.add(Calendar.SECOND, -1); // 設定月分的最後一秒 23:59:59
-        java.sql.Date endOfMonth = new java.sql.Date(calendar.getTimeInMillis());
-
-
-        return estabCaseRepository.findByMonthAndYear(startOfMonth, endOfMonth);
+        return estabCaseRepository.findByEstabCaseEndBetween(startTimestamp, endTimestamp);
     }
 }
