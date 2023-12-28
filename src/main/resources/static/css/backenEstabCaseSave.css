@@ -1,0 +1,59 @@
+.mb_div_left,.mb_div_right{
+    display: inline-block;
+
+}
+.mb_div_left{
+    width: 40%;
+}
+.mb_div_right{
+    width: 40%;
+    vertical-align: top;
+    margin-left: 10%;
+}
+
+.mb_feedback_mem,.mb_feedback_emp{
+    height: 150px;
+}
+
+#estabCasePic{
+    width: 100%;
+    height: 250px;
+    border: 1px solid gray;
+}
+.form-group {
+    margin-bottom: 10px;
+}
+
+img {  
+    max-height: 100%;  
+    max-width: 100%; 
+    width: auto;
+    height: auto;
+    position: relative;   
+    margin: auto;
+}
+
+.mb_btn_01{
+    color: white;
+    background-color: #A7D87D;
+    display: inline-block;
+}
+
+.mb_btn_02{
+    color: white;
+    background-color: #FE9A9A;
+    display: inline-block;
+}
+
+.mb_btn_03{
+    margin-top: 10xp;
+
+}
+
+#datepicker{
+    margin:0px 0px 10px 0px; 
+}
+
+.mb_off{
+    display: none;
+}
