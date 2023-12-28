@@ -40,9 +40,17 @@ public class SaleService {
 		return dao.findAll();
 	}
 
-	public Sale getSaleByCoupon(String coupon) {
-
-		return dao.findSaleByCoupon(coupon);
+	public Sale getSaleByCoupon(String coupon) { 
+		if(coupon == null || coupon.isBlank()||coupon.isEmpty()) {
+			coupon = "sale000";
+			
+			
+			return dao.findSaleByCoupon(coupon);
+		} else {
+			
+			return dao.findSaleByCoupon(coupon);
+		}
+		
 
 	}
 

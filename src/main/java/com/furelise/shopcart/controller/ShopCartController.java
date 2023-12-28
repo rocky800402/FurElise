@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.furelise.city.model.CityService;
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.ord.model.Ord;
 import com.furelise.ord.model.OrdDTO;
@@ -35,6 +36,9 @@ public class ShopCartController {
 	
 	@Autowired
 	OrdService oSvc; 
+	
+	@Autowired
+	CityService cSvc;
 
 	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
 	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req) {
@@ -51,8 +55,10 @@ public class ShopCartController {
 			} else { //有建立過訪客購物車且裡面有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
+				model.addAttribute("cityList", cSvc.getAllCity());
 			}
 		} else { //已登入的會員
+			
 			String key = "memCart:" + mem.getMemID();
 			Map<Product, String> memCart = scSvc.getCartProducts(key);
 			if (memCart == null || memCart.isEmpty()) { //購物車為空
@@ -60,6 +66,7 @@ public class ShopCartController {
 			} else { //購物車內有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = memCart.entrySet();
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
+				model.addAttribute("cityList", cSvc.getAllCity());
 			}
 		}
 
@@ -95,8 +102,9 @@ public class ShopCartController {
 		if (mem == null) {
 	        return "redirect:/test-mem-ord";
 	    } else {
+	    	
 	    	 if ("submitCheckout".equals(checkoutBtn)) {
-	    		 oSvc.createOrder(ordDTO, model);
+	    		 oSvc.createOrder(ordDTO, model, req);
 	    	
 		        // 清空購物車
 		        scSvc.clearCart(mem.getMemID());

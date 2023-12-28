@@ -7,14 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import java.time.LocalDate;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
+import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.repository.MemRepository;
 import com.furelise.orddetail.model.OrdDetail;
 import com.furelise.orddetail.model.OrdDetailRepository;
@@ -37,80 +39,89 @@ public class OrdService {
 	MemRepository memDao;
 
 	@Autowired
-	SaleService sDao;
+	SaleService sSvc;
 
 	@Autowired
 	ShopCartService scSvc;
-	
+
 	@Autowired
-    OrdDetailRepository odR;
-	
-    @Autowired
-    ProductRepository pR;
-    @Autowired
-    ProductService pSvc;
-    
-    @Autowired
-    CityRepository cR;
+	OrdDetailRepository odR;
+
+	@Autowired
+	ProductRepository pR;
+	@Autowired
+	ProductService pSvc;
+
+	@Autowired
+	CityRepository cR;
 
 	// 創建訂單 用OrdDTO抓
-	public Ord createOrder(OrdDTO req, Model model) {
-
+	public Ord createOrder(@ModelAttribute("ordDTO")OrdDTO ordDto, Model model,HttpServletRequest req) {
+		Mem mem = (Mem)req.getSession().getAttribute("mem");
+		
+		String coupon = ordDto.getCoupon();
+		if (coupon != null) {
+			coupon = ordDto.getCoupon(); // 如果 sale 不為 null，保持 coupon 不變
+		} else {
+			coupon = "sale000";
+		}
+		
 		Ord ord = new Ord();
 
 		ord.setOrdDate(new Timestamp(System.currentTimeMillis()));
-		ord.setMemID(req.getMemID());
-		ord.setPayment(req.getPayment());
-		ord.setDeliver(req.getDeliver());
-		ord.setAddress(req.getAddress());
-		ord.setCityCode(req.getCityCode()); 
-		ord.setDeliverDate(null); //出貨時間初始為null
-		ord.setSum(req.getSum()); 
-		ord.setShipping(req.getShipping());
-		ord.setTotal(req.getTotal());
-		ord.setSaleID(sDao.getSaleByCoupon(req.getCoupon()).getSaleID());
+		ord.setMemID(mem.getMemID());
+		ord.setPayment(ordDto.getPayment()); //
+		ord.setDeliver(ordDto.getDeliver()); // 
+		ord.setAddress(ordDto.getAddress()); //
+		ord.setCityCode(ordDto.getCityCode());
+		ord.setDeliverDate(null); // 出貨時間初始為null
+		ord.setSum(ordDto.getSum());
+		ord.setShipping(ordDto.getShipping());
+		ord.setTotal(ordDto.getTotal());
+		ord.setSaleID(sSvc.getSaleByCoupon(coupon).getSaleID());
 		ord.setOrdStatus(0); // 預設都為0(處理中)
-		ord.setArrival(null); //送達時間初始為null
-
-		
+		ord.setArrival(null); // 送達時間初始為null
 
 		// 創建訂單明細OrdDetail
-		Map<Product,String> shopCartItems = scSvc.getCartProducts(req.getMemID().toString());
+		
+		Map<Product, String> shopCartItems = scSvc.getCartProducts(mem.getMemID().toString());
+		
 		List<OrdDetail> ordDetails = new ArrayList<>();
 
 		for (Map.Entry<Product, String> entry : shopCartItems.entrySet()) {
-		    String pID = entry.getKey().getPID().toString();
-		    String quantityString = entry.getValue();
+			String pID = entry.getKey().getPID().toString();
+			String quantityString = entry.getValue();
 
-		    // 轉換數量字串為整數
-		    int quantity = Integer.parseInt(quantityString);
+			// 轉換數量字串為整數
+			int quantity = Integer.parseInt(quantityString);
 
-		    // 設置 OrdDetail 的相關屬性
-		    OrdDetail ordDetail = new OrdDetail();
+			// 設置 OrdDetail 的相關屬性
+			OrdDetail ordDetail = new OrdDetail();
 
-		    // 這裡將 ordDetail 的 ordID 設置為 ord 的 ID
-		    ordDetail.setOrdID(ord.getOrdID());
+			// 這裡將 ordDetail 的 ordID 設置為 ord 的 ID
+			ordDetail.setOrdID(ord.getOrdID());
 
-		    // pID 應該是由 shopCartItems 中取得
-		    ordDetail.setPID(Integer.parseInt(pID));
+			// pID 應該是由 shopCartItems 中取得
+			ordDetail.setPID(Integer.parseInt(pID));
 
-		    ordDetail.setDetaQty(quantity);
-		    ordDetail.setFeedback(null); // 訂單明細創建初始時評價為 null
-		    ordDetail.setLevel(null); // 訂單明細創建初始時評價等級為 null
-		    ordDetail.setFbTime(null); // 訂單明細創建初始時評價內容為 null
+			ordDetail.setDetaQty(quantity);
+			ordDetail.setFeedback(null); // 訂單明細創建初始時評價為 null
+			ordDetail.setLevel(null); // 訂單明細創建初始時評價等級為 null
+			ordDetail.setFbTime(null); // 訂單明細創建初始時評價內容為 null
 
-		    ordDetails.add(ordDetail);
-	    }
+			ordDetails.add(ordDetail);
+		}
 
-	    ord.setOrdDetails(ordDetails);
-	    
-	    dao.save(ord);
+		ord.setOrdDetails(ordDetails);
+		
+		dao.save(ord);
 
-	    return ord;
-	}
+		return ord;
+
+	} // createOrder
 
 	//
-	public Ord updateOrd(Integer ordID,  Integer ordStatus) {
+	public Ord updateOrd(Integer ordID, Integer ordStatus) {
 		Ord ord = dao.findById(ordID).orElse(null);
 		ord.setOrdStatus(ordStatus);
 		ord.setDeliverDate(new Date(System.currentTimeMillis()));
@@ -118,34 +129,34 @@ public class OrdService {
 		return ord;
 
 	}
-	
-	public List<Ord> getAllOrds(){
+
+	public List<Ord> getAllOrds() {
 		return dao.findAll();
 	}
-	
+
 	public OrdVO getOrdById(Integer ordID) {
-		Ord ord =  dao.findById(ordID).orElseThrow();
+		Ord ord = dao.findById(ordID).orElseThrow();
 		return this.getOrdVO(ord);
 	}
-	
-	public List<Ord> getByStatus(Integer ordStatus){
+
+	public List<Ord> getByStatus(Integer ordStatus) {
 		return dao.findByOrdStatus(ordStatus);
 	}
-	
+
 	private OrdVO getOrdVO(Ord ord) {
 		City city = cR.findByCityCode(ord.getCityCode());
-        List<OrdDetailBO> ordDetailBOList = getOrdDetailBO(ord);
-        Sale sale = Objects.isNull(ord.getSaleID()) ? null : sDao.getOneSale(ord.getSaleID());
-        return new OrdVO(city, ord, ordDetailBOList, sale);
+		List<OrdDetailBO> ordDetailBOList = getOrdDetailBO(ord);
+		Sale sale = Objects.isNull(ord.getSaleID()) ? null : sSvc.getOneSale(ord.getSaleID());
+		return new OrdVO(city, ord, ordDetailBOList, sale);
 	}
-	
+
 	public List<OrdDetailBO> getOrdDetailBO(Ord ord) {
-        List<OrdDetail> ordDetails = odR.findByOrdID(ord.getOrdID());
-        return ordDetails.stream().map((ordDetail) -> {
-            Product product = pSvc.getProductById(ordDetail.getPID());
-            return new OrdDetailBO(product, ordDetail);
-        }).toList();
-    }
+		List<OrdDetail> ordDetails = odR.findByOrdID(ord.getOrdID());
+		return ordDetails.stream().map((ordDetail) -> {
+			Product product = pSvc.getProductById(ordDetail.getPID());
+			return new OrdDetailBO(product, ordDetail);
+		}).toList();
+	}
 
 	// 創建訂單 從購物車直接抓
 //	public Ord createOrder(Map<String, String> shopCartItems, BigDecimal totalAmount) {
@@ -203,6 +214,5 @@ public class OrdService {
 //		}
 //		return ordDetails;
 //	}
-
 
 }

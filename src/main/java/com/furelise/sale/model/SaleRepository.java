@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface SaleRepository extends JpaRepository<Sale, Integer>{
 boolean existsByCoupon(String coupon);
 	
-	@Query("SELECT saleID FROM Sale WHERE coupon = :coupon")
+	@Query("SELECT s FROM Sale s WHERE s.coupon = :coupon")
 	Sale findSaleByCoupon(@Param(value = "coupon")String coupon);
 
 	@Query("SELECT disRequire FROM Sale WHERE coupon = :coupon")

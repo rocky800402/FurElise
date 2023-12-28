@@ -33,7 +33,6 @@ public class ShopCartService {
 			return "guestCart:guest";
 		} else {
 			// 否則，返回正常的購物車key
-			memID = 110001;
 			return "memCart:" + Integer.toString(memID);
 		}
 	}
