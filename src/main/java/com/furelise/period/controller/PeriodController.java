@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.furelise.period.model.*;
@@ -17,7 +18,7 @@ public class PeriodController {
 	PeriodService periodSvc;
 	
 	// return view
-	@GetMapping("/")
+	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
 	public String periodList() {
 		return "period_list";
 	}

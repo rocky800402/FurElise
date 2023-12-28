@@ -39,7 +39,7 @@
             if (result == true) {
 				$.ajax({
 					url: `${API_PATH}/auth/logout/emp`,
-					type: "POST",
+					type: "GET",
 					success: function(e) {
 						console.log("logout success");
 						window.location.href=`${API_BASE_URL}/login`;

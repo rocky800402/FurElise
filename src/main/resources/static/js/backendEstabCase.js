@@ -49,7 +49,7 @@ $(document).ready(function() {
                 data: 'estabCaseID',
                 "render":function(data) {
                     
-                    return `<a href="/backenEstabCaseSave.html?estabCaseID=${data}" class="btn btn-outline-success mb_estabCase_Class" style="color:#ffffff ; background-color:#A7D87D ; border-color: #A7D87D; margin: 0; text-decoration:none;" >詳情</a>`;
+                    return `<a href="/backendEstabCaseSave.html?estabCaseID=${data}" class="btn btn-outline-success mb_estabCase_Class" style="color:#ffffff ; background-color:#A7D87D ; border-color: #A7D87D; margin: 0; text-decoration:none;" >詳情</a>`;
                 
             }
             
@@ -106,7 +106,7 @@ $(document).ready(function() {
                 data: 'estabCaseID',
                 "render":function(data) {
                     
-                    return `<a href="/backenEstabCaseSave.html?estabCaseID=${data}" class="btn btn-outline-success mb_estabCase_Class" style="color:#ffffff ; background-color:#A7D87D ; border-color: #A7D87D; margin: 0; text-decoration:none;" >詳情</a>`;
+                    return `<a href="/backendEstabCaseSave.html?estabCaseID=${data}" class="btn btn-outline-success mb_estabCase_Class" style="color:#ffffff ; background-color:#A7D87D ; border-color: #A7D87D; margin: 0; text-decoration:none;" >詳情</a>`;
                 
             }
             
@@ -166,7 +166,7 @@ $(document).ready(function() {
                 data: 'estabCaseID',
                 "render":function(data) {
                     
-                    return `<a href="/backenEstabCaseSave.html?estabCaseID=${data}" class="btn btn-outline-success mb_estabCase_Class" style="color:#ffffff ; background-color:#A7D87D ; border-color: #A7D87D; margin: 0; text-decoration:none;" >詳情</a>`;
+                    return `<a href="/backendEstabCaseSave.html?estabCaseID=${data}" class="btn btn-outline-success mb_estabCase_Class" style="color:#ffffff ; background-color:#A7D87D ; border-color: #A7D87D; margin: 0; text-decoration:none;" >詳情</a>`;
                 
             }
             
