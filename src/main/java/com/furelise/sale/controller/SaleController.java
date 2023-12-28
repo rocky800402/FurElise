@@ -72,11 +72,10 @@ public class SaleController {
     	}
     }
 
-    @PostMapping("/getone")
+    @GetMapping("/getone")
     public String getOne(@RequestParam Integer saleID, Model model) {
         Sale sale = saleSvc.getOneSale(saleID);
         model.addAttribute("sale", sale);
-        System.out.print(sale);
         return "b-sale-update";
     }
 
