@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+  <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+  <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/backen_ord_detail.css}">
+ 
+</head>
+
+
+<body>
+	<div class="container">
+	    <div style="display: flex;">
+			<div class="backendSidebarPage"></div>
+				<main class="content">
+					<form th:action="getone" th:object="${ordVO}" method="get">
+					    <!-- 隱藏域，用於傳遞 ordID -->
+					    <input type="hidden" th:field="*{ordID}" />
+							<div class="input-group mb-3">
+						        <div class="yh_ord">
+						            <!-- 遍歷 ordDetailBOs 列表 -->
+						            <div th:each="ordDetail, iterStat : ${ordVO.ordDetailBOs}" class="ord_product">
+						                <img class="ord_detail_pic" th:src="@{/product/DBGifReader(pID=${ordDetailBOs[__${iterStat.index}__].pID},image=1)}">
+						                <div class="ord_detail_text">
+						                    <p th:field="*{ordDetailBOs[__${iterStat.index}__].pName}" th:text="${ordDetailBOs[__${iterStat.index}__].pName}">14公升垃圾袋</p>
+						                    <p style="display: inline-block;">x</p>
+						                    <p style="display: inline-block;" th:field="*{ordDetailBOs[__${iterStat.index}__].detaQty}" th:utext="*{ordDetailBOs[__${iterStat.index}__].detaQty}"></p>
+						                </div>
+						                <p class="yh_p_price" style="display: inline-block;" th:text="${ordDetail.pPrice * ordDetailBOs[__${iterStat.index}__].detaQty}">$100</p>
+						            </div>
+						            <!-- 顯示訂單詳細資訊 -->
+						            <div class="ord_status" style="display: inline-block;">
+						                <div class="ordno">
+						                    <p>訂單編號:</p><p th:text="${ordVO.ordID}"></p><br>
+						                    <p>配送地址:</p><p th:text="${ordVO.address}"></p><br>
+						                    <p>付款方式:</p><p th:text="${ordVO.payment}"></p><br>
+						                    <p>寄送方式:</p><p th:text="${ordVO.deliver}"></p><br>
+						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd')}"></p><br>
+						                    <p>出貨時間:</p><p></p><br> <!-- th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd HH:mm:ss')}" -->
+						                </div>
+						            </div>
+						            <!-- 顯示訂單總金額等資訊 -->
+						            <div class="ord_total" style="display: inline-block;">
+						                <p class="total_text">小計:</p><p class="total_price" th:text="${ordVO.sum}">150</p>
+						                <hr style="margin: 0 0 0 0;">
+						                <p class="total_text">運費:</p><p class="total_price" th:text="${ordVO.shipping}">150</p>
+						                <hr style="margin: 0 0 0 0;">
+						                <p class="total_text">折扣:</p><p class="total_price" th:text="${ordVO.couponDis}">150</p>
+						                <hr style="margin: 0 0 0 0;">
+						                <p class="total_text">訂單金額:</p><p class="total_price" th:text="${ordVO.total}">150</p>
+						            </div>
+						        	<!-- 顯示訂單狀態下拉選單 --><p style="display:inline-block;">訂單狀態</p>
+						            <select th:field="*{ordStatus}" style="display:inline-block;" disabled>
+									    <option th:value="0" th:selected="${ordVO.ordStatus == 0}" th:text="處理中"></option>
+									    <option th:value="1" th:selected="${ordVO.ordStatus == 1}" th:text="已寄出"></option>
+									    <option th:value="2" th:selected="${ordVO.ordStatus == 2}" th:text="已送達"></option>
+									    <option th:value="3" th:selected="${ordVO.ordStatus == 3}" th:text="退貨"></option>
+									    <option th:value="4" th:selected="${ordVO.ordStatus == 4}" th:text="已取消"></option>
+									</select><br>
+								<div>
+									<button class="btn btn-primary  change_status " type="submit" style="background-color:#9ac972; border:#9ac972;">修改狀態</button>
+								</div>
+				</div>
+			</form>
+		</main>
+	</div>
+</div>
+
+
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+  <script>
+    $(".backendSidebarPage").load("/backendSidebar.html");
+  </script>
+</body>
+
+</html>

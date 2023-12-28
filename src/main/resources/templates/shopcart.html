@@ -118,24 +118,18 @@ width: 600px;
     </div>
 
     <!-- 結帳表單 -->
-    <form th:action="@{/checkout/process}" method="post" id="checkoutForm">
-        <button type="submit" class="btn btn-primary" id="checkoutBtn" style="background-color: #9ac972; border: #9ac972;">送出結帳</button>
-    </form>
+    <form th:action="@{/shopcart/checkout}" method="post" id="checkoutForm">
+	    <button type="submit" class="btn btn-primary" id="checkoutBtn" style="background-color: #9ac972; border: #9ac972;" name="checkoutBtn" value="submitCheckout">送出結帳</button>
+	</form>
 </main>
+</div>
+<footer class="footerPage"></footer>
 
-
-		
-	</div>
-
-
-
-
-	<footer class="footerPage"></footer>
-
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-	<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js}"></script>
-	<script type="text/javascript">
+<script th:src="@{/js/constant.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js}"></script>
+<script type="text/javascript">
 	    $(document).ready(function () {
 	        $("#twzipcode").twzipcode();
 	        $(".headerPage").load("/header.html");
@@ -201,7 +195,7 @@ width: 600px;
 	            errorContainer.text('');
 	
 	            $.ajax({
-	                url: 'http://localhost:8080/sale/coupon',
+	                url: `${API_BASE_URL}/sale/coupon`,
 	                type: 'POST',
 	                contentType: 'application/json',
 	                data: JSON.stringify(saleDTO),
@@ -228,7 +222,7 @@ width: 600px;
 	            
 	            $.ajax({
 	                type: 'POST',
-	                url: 'http://localhost:8080/shopcart/remove',  // 修改成你的後端處理路徑
+	                url: `${API_BASE_URL}/shopcart/remove`,  // 修改成你的後端處理路徑
 	                data: { 'pID': pID },
 	                success: function (data) {
 	                    // 處理成功回傳的資料，這裡可以根據需要進行相應的處理
