@@ -66,5 +66,19 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
             @Param("endTimestamp") Timestamp endTimestamp,
             @Param("empID") Integer empID);
 
-    Integer findEmpIDByEstabCaseID(Integer estabCaseID);
+
+
+//    @Query("SELECT SUM(e.planPricePerCase) " +
+//            "FROM EstabCase e " +
+//            "WHERE e.estabCaseEnd >= :startTimestamp " +
+//            "AND e.estabCaseEnd <= :endTimestamp " +
+//            "AND e.estabCaseStatus = 1 " +
+//            "AND e.takeStatus IS TRUE " +
+//            "AND e.empID = :empID " +
+//            "GROUP BY FUNCTION('MONTH', e.estabCaseEnd)")
+//    BigDecimal findTotalPlanPriceByEmpIDAndStatus(
+//            @Param("startTimestamp") Timestamp startTimestamp,
+//            @Param("endTimestamp") Timestamp endTimestamp,
+//            @Param("empID") Integer empID
+//    );
 }

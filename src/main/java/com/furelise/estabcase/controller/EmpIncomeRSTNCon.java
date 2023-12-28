@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,13 +46,17 @@ public class EmpIncomeRSTNCon {
     //統計案件數與收入API
     @PostMapping("/mappingInf")
     public ResponseEntity<Map<String, Object>> getMappingInf(
-            @RequestParam Integer empID,
-            @RequestBody Map<String, Integer> params) {
+//            @RequestParam Integer empID
+            @RequestBody Map<String, Integer> params
+    ) {
 
+        System.out.println(params);
+
+        int empID = params.get("empID");
         int year = params.get("year");
         int month = params.get("month");
 
-        Map<String, Object> mappingInf = empIncomeServer.getTotalInf(year, month, empID);
+        Map<String, Object> mappingInf = empIncomeServer.getTotalInf(empID, year, month);
 
         return ResponseEntity.ok(mappingInf);
     }

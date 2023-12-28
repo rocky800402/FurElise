@@ -92,7 +92,7 @@
                         <!-- <button class="jack_button_reject" onclick="showReportIssuePopup()">回報問題</button> -->
                     </div>
                     <div class="col-2">
-                        <button class="jack_button_accept">完成收取</button>
+                        <button id="btnCaseInfo" class="jack_button_accept" onclick="redirectToCompletedPage()">完成收取</button>
                     </div>
                 </div>
 
@@ -168,7 +168,11 @@
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/jack_ongoingCases.js}"></script>
 <script>
-    // JavaScript 部分
+    function redirectToCompletedPage() {
+        var estabCaseID = [[${empOngoingCase.estabCaseID}]];
+        window.location.href = '/completed/' + estabCaseID;
+    }
+
     function submitComplaint() {
         // 取需要的資料
         var comTelNumber = document.getElementById('recipient-name').value;
@@ -249,7 +253,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/estabcase/updateCaseStatus',
+            url: '/estabcase/updateCaseStatus',
             data: {
                 action: action,
                 estabCaseID: estabCaseID
