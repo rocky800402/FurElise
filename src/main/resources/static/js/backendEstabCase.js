@@ -17,7 +17,7 @@ $(document).ready(function() {
         "scrollY": "267.55px", // 若有設置為Y軸(垂直)最大高度
         "dom": 'lrtip',// 設置搜尋div、頁碼div...等基本位置/外觀..等，詳細可看官網
         "ajax": {
-            "url": "http://localhost:8080/backend-estab-case",           // 資料請求的網址
+            "url": `${API_BASE_URL}/backend-estab-case`,           // 資料請求的網址
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
             "data":{
@@ -75,7 +75,7 @@ $(document).ready(function() {
         "scrollY": "267.55px", // 若有設置為Y軸(垂直)最大高度
         "dom": 'lrtip',// 設置搜尋div、頁碼div...等基本位置/外觀..等，詳細可看官網
         "ajax": {
-            "url": "http://localhost:8080/backend-estab-case/dispatch",           // 資料請求的網址
+            "url": `${API_BASE_URL}/backend-estab-case/dispatch`,           // 資料請求的網址
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
             "data":{
@@ -131,7 +131,7 @@ $(document).ready(function() {
         "scrollY": "267.55px", // 若有設置為Y軸(垂直)最大高度
         "dom": 'lrtip',// 設置搜尋div、頁碼div...等基本位置/外觀..等，詳細可看官網
         "ajax": {
-            "url": "http://localhost:8080/backend-estab-case/status",           // 資料請求的網址
+            "url": `${API_BASE_URL}/backend-estab-case/status`,           // 資料請求的網址
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
             "data":{
