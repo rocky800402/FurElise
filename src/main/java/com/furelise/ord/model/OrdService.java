@@ -1,20 +1,27 @@
 package com.furelise.ord.model;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.furelise.city.model.City;
+import com.furelise.city.model.CityRepository;
 import com.furelise.mem.repository.MemRepository;
 import com.furelise.orddetail.model.OrdDetail;
+import com.furelise.orddetail.model.OrdDetailRepository;
 import com.furelise.product.model.Product;
+import com.furelise.product.model.ProductRepository;
+import com.furelise.product.model.ProductService;
+import com.furelise.sale.model.Sale;
 import com.furelise.sale.model.SaleService;
 import com.furelise.shopcart.model2.ShopCartService;
 //import com.furelise.shopcart.model2.ShopCart;
@@ -30,13 +37,24 @@ public class OrdService {
 	MemRepository memDao;
 
 	@Autowired
-	SaleService saleDao;
+	SaleService sDao;
 
 	@Autowired
 	ShopCartService scSvc;
+	
+	@Autowired
+    OrdDetailRepository odR;
+	
+    @Autowired
+    ProductRepository pR;
+    @Autowired
+    ProductService pSvc;
+    
+    @Autowired
+    CityRepository cR;
 
 	// 創建訂單 用OrdDTO抓
-	public Ord createOrder(OrdDTO req, Model model, BigDecimal totalAmount) {
+	public Ord createOrder(OrdDTO req, Model model) {
 
 		Ord ord = new Ord();
 
@@ -49,8 +67,8 @@ public class OrdService {
 		ord.setDeliverDate(null); //出貨時間初始為null
 		ord.setSum(req.getSum()); 
 		ord.setShipping(req.getShipping());
-		ord.setTotal(totalAmount);
-		ord.setSaleID(saleDao.getSaleByCoupon(req.getCoupon()).getSaleID());
+		ord.setTotal(req.getTotal());
+		ord.setSaleID(sDao.getSaleByCoupon(req.getCoupon()).getSaleID());
 		ord.setOrdStatus(0); // 預設都為0(處理中)
 		ord.setArrival(null); //送達時間初始為null
 
@@ -92,23 +110,42 @@ public class OrdService {
 	}
 
 	//
-	public Ord updateOrd(Integer ordID,Integer ordStatus) {
-		Ord ord = new Ord();
+	public Ord updateOrd(Integer ordID,  Integer ordStatus) {
+		Ord ord = dao.findById(ordID).orElse(null);
 		ord.setOrdStatus(ordStatus);
+		ord.setDeliverDate(new Date(System.currentTimeMillis()));
 		dao.save(ord);
 		return ord;
 
 	}
 	
 	public List<Ord> getAllOrds(){
-		
 		return dao.findAll();
+	}
+	
+	public OrdVO getOrdById(Integer ordID) {
+		Ord ord =  dao.findById(ordID).orElseThrow();
+		return this.getOrdVO(ord);
 	}
 	
 	public List<Ord> getByStatus(Integer ordStatus){
 		return dao.findByOrdStatus(ordStatus);
 	}
-
+	
+	private OrdVO getOrdVO(Ord ord) {
+		City city = cR.findByCityCode(ord.getCityCode());
+        List<OrdDetailBO> ordDetailBOList = getOrdDetailBO(ord);
+        Sale sale = Objects.isNull(ord.getSaleID()) ? null : sDao.getOneSale(ord.getSaleID());
+        return new OrdVO(city, ord, ordDetailBOList, sale);
+	}
+	
+	public List<OrdDetailBO> getOrdDetailBO(Ord ord) {
+        List<OrdDetail> ordDetails = odR.findByOrdID(ord.getOrdID());
+        return ordDetails.stream().map((ordDetail) -> {
+            Product product = pSvc.getProductById(ordDetail.getPID());
+            return new OrdDetailBO(product, ordDetail);
+        }).toList();
+    }
 
 	// 創建訂單 從購物車直接抓
 //	public Ord createOrder(Map<String, String> shopCartItems, BigDecimal totalAmount) {
