@@ -2,7 +2,7 @@ function init() {
     const urlParams = new URLSearchParams(location.search);
     console.log(urlParams);
     $.ajax({
-        url: `http://localhost:8080/backend-estab-case/Detail/${urlParams.get('estabCaseID')}`,           // 資料請求的網址
+        url: `${API_BASE_URL}/backend-estab-case/Detail/${urlParams.get('estabCaseID')}`,           // 資料請求的網址
         type: "GET",                  // GET | POST | PUT | DELETE | PATCH
         xhrFields: {
             withCredentials: true
@@ -194,7 +194,7 @@ $(document).on("click", ".mb_btn_03", function () {
     console.log(form_data);
 
         $.ajax({
-            url: `http://localhost:8080/backend-estab-case`,           // 資料請求的網址
+            url: `${API_BASE_URL}/backend-estab-case`,           // 資料請求的網址
             type: "PATCH",                  // GET | POST | PUT | DELETE | PATCH
             xhrFields: {
                 withCredentials: true
