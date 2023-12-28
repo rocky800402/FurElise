@@ -39,11 +39,13 @@
             </ul>
         </nav>
     </div>
+    <script src="/js/me.js" th:src="@{/js/me.js}"></script>
     <script>
         const logout = async () => {
             var result = confirm("確定要登出嗎？");
             if (result) {
                 document.cookie = 'JSESSIONID' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                location.replace('/login')
             }
         }
     </script>

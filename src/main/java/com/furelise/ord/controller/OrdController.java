@@ -3,10 +3,7 @@ package com.furelise.ord.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.furelise.ord.model.MemOrdService;
 import com.furelise.ord.model.Ord;
@@ -17,13 +14,13 @@ import com.furelise.orddetail.model.OrdDetailRepository;
 import com.furelise.product.model.Product;
 
 @Controller
-@RequestMapping("/backen-ord")
+@RequestMapping("/backend-ord")
 public class OrdController {
 	
 	@Autowired
 	OrdService oSvc;
 
-	@GetMapping("/")
+	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
 	public String getAllOrds(Model model) {
 
 		model.addAttribute("ordList", oSvc.getAllOrds());
@@ -53,7 +50,7 @@ public class OrdController {
 		Ord ord = oSvc.updateOrd(ordID,ordStatus);
         // 根据需要将更新后的订单信息放入模型中
         model.addAttribute("ord", ord);
-		return "redirect:/backen-ord/";
+		return "redirect:/backend-ord";
 		
 	}
 	
