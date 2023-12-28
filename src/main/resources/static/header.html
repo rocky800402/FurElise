@@ -8,10 +8,44 @@
                 <li class="mb_header_line"><a href="#">方案介紹</a></li>
                 <li class="mb_header_line"><a href="/shopmall">購物商城</a></li>
                 <li><a href="#">成為收取夥伴</a></li>
-                <li><a href="/shopcart"><img class="mb_shopping_cart" src="/images/shopping-cart2.svg" alt="shopping cart"></a></li>
-                <li><button class="btn btn-outline-success rounded-pill mb_login_btn" type="button">登入/註冊</button></li>
+                <li><a href="/shopcart"><img class="mb_shopping_cart" src="/images/shopping-cart2.svg"
+                                             alt="shopping cart"></a>
+                </li>
+                <li id="logoutSection">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle mb-mem-btn" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            name
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <button class="dropdown-item" onclick="location.replace('/member/info')">會員中心
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" onclick="logout()">登出</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="loginSection">
+                    <button class="btn btn-outline-success rounded-pill mb_login_btn"
+                            type="button"
+                            onclick="location.replace('/login')"
+                    >
+                        登入/註冊
+                    </button>
+                </li>
             </ul>
         </nav>
     </div>
+    <script>
+        const logout = async () => {
+            var result = confirm("確定要登出嗎？");
+            if (result) {
+                document.cookie = 'JSESSIONID' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+            }
+        }
+    </script>
 </header>
 <hr class="mb_header_shadow_line">

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員中心-方案管理</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/header.css">
+    <link rel="stylesheet" href="./css/memPlanFornt.css">
+    <link rel="stylesheet" href="./css/mem_sidebar.css">
+    <link rel="stylesheet" href="css/mem_ord_detail.css">
+</head>
+
+<body>
+<div class="mb_mem_wrap">
+
+    <div class="headerPage"></div>
+    <div class="mb_info_bar">
+        <p class="mb_mem_bar_text1">會員中心</p>
+        <p class="mb_mem_bar_text2">方案管理</p>
+    </div>
+    <div class="mb_container">
+        <div class="mb_flex">
+
+            <div class="memSidebarPage"></div>
+            <!-- Modal -->
+            <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="titleModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mb_modal_body">
+                            <form id="myForm">
+                                <div class="mb-3 mb_modal_body_div">
+
+                                    <!-- 會員名稱 -->
+                                    <label class="col-form-label mb_mem_name"></label>
+                                    <br>
+                                    <div id="commentModalStar" class="star_block mb_star"></div>
+                                </div>
+                                <div class="mb-3 ">
+                                    <label class="col-form-label">內容</label>
+                                    <textarea id="commentModalContent" class="form-control mb_level_feedback"
+                                              placeholder='說說你的建議'></textarea>
+                                </div>
+                                <div class="modal-footer mb_estab_case_level_modal_footer">
+                                    <button type="button" class="btn btn-secondary mb_estab_case_level_cancel_btn"
+                                            data-bs-dismiss="modal">取消
+                                    </button>
+                                    <button type="submit" class="btn btn-primary mb_estab_case_level_confirm_btn"
+                                            id="level_confirm_btn${index}">送出
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <main class="mb_content_main"></main>
+        </div>
+    </div>
+
+    <div class="mb_pop_up_windows">
+
+    </div>
+
+    <div class="mem_div_modal">
+
+    </div>
+
+</div>
+
+
+<div class="footerPage"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+<script src="./js/bootstrap.bundle.min.js"></script>
+<script src="./js/jquery-3.7.1.min.js"></script>
+<script src="./js/dayjs.min.js"></script>
+<script src="./js/me.js"></script>
+<script src="./js/memOrdDetail.js"></script>
+
+
+<script>
+    $(".headerPage").load("header.html");
+    $(".footerPage").load("footer.html");
+    $(".memSidebarPage").load("memSidebar.html");
+</script>
+</body>
+
+</html>

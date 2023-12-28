@@ -44,6 +44,7 @@ public class AuthController {
     @GetMapping("/mem/me")
     public MemVO memMe(HttpServletRequest req) {
         Mem mem = authService.validateMem(req);
+        System.out.println(mem);
         return new MemVO(mem);
     }
 
@@ -53,13 +54,14 @@ public class AuthController {
         return new EmpVO(emp);
     }
     
-    @PostMapping("/logout/mem")
+    @GetMapping("/logout/mem")
     public void memLogout(HttpServletRequest req) {
     	HttpSession session = req.getSession();
 		session.invalidate();
+        System.out.println("aaaa");
     }
     
-    @PostMapping("/logout/emp")
+    @GetMapping("/logout/emp")
     public void empLogout(HttpServletRequest req) {
     	HttpSession session = req.getSession();
     	session.invalidate();

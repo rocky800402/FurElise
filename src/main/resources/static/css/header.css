@@ -65,7 +65,7 @@ body {
 }
 
 
-.navigation ul {
+.navigation > ul {
   list-style: none;
   margin-top: revert;
   padding: 0;
@@ -75,14 +75,14 @@ body {
 }
 
 
-.navigation ul li {
+.navigation > ul > li {
  padding-right: 45px;
 }
 
 
 
 
-.navigation ul li:last-child {
+.navigation > ul > li:last-child {
   margin-right: 0;
 }
 
@@ -147,6 +147,10 @@ body {
 .footer a {
   text-decoration: none;
   color: #000;
+}
+
+.hidden{
+  display: none;
 }
 
 
