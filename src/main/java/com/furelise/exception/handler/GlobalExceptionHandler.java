@@ -49,7 +49,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public ErrorMessageVO handleUnauthorizedException(UnauthorizedException e) {
-        e.printStackTrace();
         return new ErrorMessageVO(e.getMessage());
     }
 
@@ -78,7 +77,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorMessageVO handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        e.printStackTrace();
     	return new ErrorMessageVO(e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(",")));
     }
@@ -87,12 +85,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ErrorMessageVO handleMethodArgumentNotValidException(MethodArgumentTypeMismatchException e) {
-//		System.out.println("MethodArgumentNotValidException");
-//		System.out.println(e.getName());
-//		System.out.println(e.getParameter());
-//		System.out.println(e.getMessage());
-//		System.out.println(e.getValue());
-
         return new ErrorMessageVO(e.getValue() + " is not found");
     }
 
@@ -100,12 +92,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoSuchElementException.class)
     public ErrorMessageVO handleMethodArgumentNotValidException(NoSuchElementException e) {
-//		System.out.println("MethodArgumentNotValidException");
-//		System.out.println(e.getName());
-//		System.out.println(e.getParameter());
-//		System.out.println(e.getMessage());
-//		System.out.println(e.getValue());
-
         return new ErrorMessageVO("ID number not found");
     }
 

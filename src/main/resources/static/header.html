@@ -5,9 +5,9 @@
         </div>
         <nav class="navigation">
             <ul>
-                <li class="mb_header_line"><a href="#">方案介紹</a></li>
+                <li class="mb_header_line"><a href="/planord/intro">方案介紹</a></li>
                 <li class="mb_header_line"><a href="/shopmall">購物商城</a></li>
-                <li><a href="#">成為收取夥伴</a></li>
+                <li><a href="/becomeEmp">成為收取夥伴</a></li>
                 <li><a href="/shopcart"><img class="mb_shopping_cart" src="/images/shopping-cart2.svg"
                                              alt="shopping cart"></a>
                 </li>
@@ -44,7 +44,8 @@
         const logout = async () => {
             var result = confirm("確定要登出嗎？");
             if (result) {
-                document.cookie = 'JSESSIONID' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                await $.get(`${API_PATH}/auth/logout/mem`)
+                // document.cookie = 'JSESSIONID=; path=/; expires=' + new Date(0).toUTCString();
                 location.replace('/login')
             }
         }
