@@ -3,9 +3,12 @@ package com.furelise.shopcart.controller;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,31 +42,36 @@ public class ShopCartController {
 
 	@Autowired
 	private SaleService saleSvc;
-	
+
 	@Autowired
 	private OrdService oSvc;
 
-	@GetMapping("/")
-	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model) {
-
-		if (memID == null) {
-			String guest = "guestCart:guest";
-			Map<Product, String> guestCart = scSvc.getCartProducts(guest);
-
-			if (guestCart == null) {
+	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
+	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		Mem mem = (Mem) session.getAttribute("mem");
+		System.out.println(mem);
+		if (Objects.isNull(mem)) {
+			String guestCartkey = (String) session.getAttribute("guestCart");
+			System.out.println("guestCartkey");
+			System.out.println(guestCartkey);
+			if (Objects.isNull(guestCartkey)) {
+				return "empty-cart";
+			} 
+			Map<Product, String> guestCart = scSvc.getCartProducts(guestCartkey);
+			System.out.println("guestCart");
+			System.out.println(guestCart);
+			if (guestCart.isEmpty()) {
 				return "empty-cart";
 			} else {
-
 				Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
+				System.out.println("cartEntrtSet");
+				System.out.println(cartEntrtSet);
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
 			}
-
 		} else {
-
-			String cartID = memID.toString();
-
-			Map<Product, String> memCart = scSvc.getCartProducts(cartID);
-
+			String key = "memCart:" + mem.getMemID();
+			Map<Product, String> memCart = scSvc.getCartProducts(key);
 			if (memCart == null || memCart.isEmpty()) {
 				return "empty-cart";
 			} else {
@@ -76,25 +85,24 @@ public class ShopCartController {
 	}
 
 	@PostMapping("/remove")
-	public String removeFromCart(@RequestParam(name = "memID", required = false) Integer memID,
-			@RequestParam Integer pID, Model model) {
-		if (memID == null) {
-			String guest = "guestCart:guest";
-			Map<Product, String> guestCart = scSvc.getCartProducts(guest);
-			scSvc.removeProduct(memID, pID); 
-
+	public String removeFromCart(@RequestParam Integer pID, Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		Mem mem = (Mem) session.getAttribute("mem");
+		if (Objects.isNull(mem)) {
+			String guestCartkey = (String) session.getAttribute("guestCart");
+			Map<Product, String> guestCart = scSvc.getCartProducts(guestCartkey);
+			scSvc.removeProduct(guestCartkey, pID);
+			Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
+			if(cartEntrtSet.isEmpty()) session.removeAttribute("guestCart");
+			model.addAttribute("cartEntrtSet", cartEntrtSet);
+		} else {
+			String key = "memCart:" + mem.getMemID();
+			Map<Product, String> guestCart = scSvc.getCartProducts(key);
+			scSvc.removeProduct(key, pID);
 			Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
 			model.addAttribute("cartEntrtSet", cartEntrtSet);
-		}else {
-			String cartID = "memCart:" + memID;
-			Map<Product, String> guestCart = scSvc.getCartProducts(cartID);
-			scSvc.removeProduct(memID, pID); 
-
-			Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
-			model.addAttribute("cartEntrtSet", cartEntrtSet);
-			
 		}
-		return "redirect:/shopcart/?memID="+memID;
+		return "redirect:/shopcart";
 
 	}
 
@@ -109,19 +117,18 @@ public class ShopCartController {
 	}
 
 	@PostMapping("/update")
-	public String updateCart(@RequestParam Integer memID, @RequestParam Integer pID, @RequestParam Integer quantity) {
-		scSvc.updateQuantity(memID, pID, quantity);
-		return "redirect:/shopcart/?memID=" + memID;
+	public String updateCart(@RequestParam Integer pID, @RequestParam Integer quantity, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		Mem mem = (Mem) session.getAttribute("mem");
+		String key = Objects.isNull(mem)? (String) session.getAttribute("guestCart"): "memCart:" + mem.getMemID();
+		scSvc.updateQuantity(key, pID, quantity);
+		return "redirect:/shopcart";
 	}
-	
-	
 
 //	@PostMapping("/clear")
 //	public String clearCart(@RequestParam Integer memID) {
 //		scSvc.clearCart(memID);
 //		return "redirect:/shopcart/view?memID=" + memID;
 //	}
-	
-
 
 }
