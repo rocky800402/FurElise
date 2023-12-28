@@ -12,14 +12,19 @@ import com.furelise.city.model.City;
 public class ComplaintService {
 
 	@Autowired
-	ComplaintRepository dao;
+	private ComplaintRepository dao;
 	
-	public List<Complaint> getAllComplaint(){
+	public java.util.List<Complaint> getAllComplaint(){
 		return dao.findAll();
 	}
 	
 	public Complaint updateComplaint(Complaint complaint) {
-		return dao.save(complaint);
+		dao.save(complaint);
+		return complaint;
+	}
+	
+	public Complaint getOneComplaint(Integer complaintID) {
+		return dao.getReferenceById(complaintID);
 	}
 	
 	public Complaint getComplaintById(Integer complaintID) {

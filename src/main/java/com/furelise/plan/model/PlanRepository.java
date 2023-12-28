@@ -9,8 +9,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Integer>{
-	@Query("SELECT DISTINCT planName, planPrice, liter FROM Plan WHERE times = 1")
-	List<Object[]> findDistinctPlanNamesPriceLiter();
+
+	//PlanOrdController // create planName drop down menu
+	List<Plan> findByTimes(Integer times);
 	
 	@Query("SELECT planID FROM Plan WHERE planName = :planName AND times = :times")
 	Integer findIdByPlanNameAndTimes(@Param(value = "planName") String planName, @Param(value = "times") Integer times);

@@ -24,4 +24,6 @@ import com.furelise.common.BigDecimalSerializer;
 @JsonDeserialize(using = BigDecimalDeSerializer.class)
 public @interface BigDecimalFormat {
     String value() default "###,##0.00";
+
+	String message() default "請輸入有效的數字";
 }

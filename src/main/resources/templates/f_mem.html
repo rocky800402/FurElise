@@ -1,12 +1,41 @@
 <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
-        <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="css/backend_form.css">
+        <title>會員管理</title>
+        <link rel="stylesheet" type="text/css"
+		th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/backend_sidebar.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
+		<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+        <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+        <style>
+        .active {
+            background-color: lightgreen; /* 綠色背景 */
+            color: black; 
+            border: 1px solid lightgreen; /* 深綠色邊框 */
+        }
+
+        .suspended {
+            background-color: lightcoral; /* 紅色背景 */
+            color: black; 
+            border: 1px solid red; /* 深紅色邊框 */
+        }
+        
+        .suspended-status {
+    		background-color: lightcoral; /* 紅色背景 */
+    		color: black;
+   			border: 1px solid red; /* 深紅色邊框 */
+		}
+
+		.active-status {
+		    background-color: lightgreen; /* 綠色背景 */
+		    color: black;
+		    border: 1px solid lightgreen; /* 深綠色邊框 */
+		}
+    </style>
     </head>
     
     
@@ -27,40 +56,74 @@
                             <th>電子信箱</th>
                             <th>電話</th>
                             <th>生日</th>
-                            <th>查看詳情</th>
+                            <th>會員密碼</th>
+                            <th>註冊時間</th>
+                            <th>修改時間</th>
+                            <th>狀態</th>
+                            <th>編輯</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>A0001</td>
-                            <td>王曉明</td>
-                            <td>edinburgh@gmail.com</td>
-                            <td>0912-345678</td>
-                            <td>1997/11/22</td>
-                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
-                                        style="background-color: #9ac972">查看詳情</span></a></td>
-                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
-                        </tr>
-                        <tr>
-                            <td>A0002</td>
-                            <td>王忠明</td>
-                            <td>tokyo@gmail.com</td>
-                            <td>0988-123456</td>
-                            <td>1993/09/22</td>
-                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
-                                        style="background-color: #9ac972">查看詳情</span></a></td>
-                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
-                        </tr>
-                        <tr>
-                            <td>A0003</td>
-                            <td>王大明</td>
-                            <td>osaka@gmail.com</td>
-                            <td>0939-123456</td>
-                            <td>2000/10/22</td>
-                            <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge"
-                                        style="background-color: #9ac972">查看詳情</span></a></td>
-                            <!-- <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
-                        </tr>
+                    <th:block th:each = "mem : ${ memList }">
+						<tr>
+							<td th:text="${mem.memID}"></td>
+			                <td th:text="${mem.memName}"></td>
+			                <td th:text="${mem.memMail}"></td>
+			                <td th:text="${mem.memTel}"></td>
+			                <td th:text="${mem.memBirth}"></td>
+			                <td th:text="${mem.memPass}"></td>
+			                <td th:text="${mem.memRegiDate}"></td>
+			                <td th:text="${mem.memLastModified}"></td>
+			                <td th:text="${mem.memIsSuspended}?'停權':'啟用'"
+			                th:class="${mem.memIsSuspended} ? 'suspended-status' : 'active-status'"></td>
+
+							<td>
+					            <form method="post" th:action="@{/mem/update}">
+<!-- 					                <button type="submit" class="sl_sp_badge"  -->
+<!-- 					                        th:classappend="${mem.memIsSuspended} ? 'active':'suspended' " -->
+<!-- 					                        th:text="${mem.memIsSuspended} ? '啟用' : '停權'"></button> -->
+									<button>編輯狀態</button>
+					                <input type="hidden" name="memID" th:value="${mem.memID}">
+					            </form>
+					        </td>
+<!-- 							<td> -->
+<!-- 								<form method="post" th:action="@{/mem/delete}"> -->
+<!-- 									<input type="hidden" name="cityID" th:value="${city.cityID}" /> -->
+<!-- 									<input id="del" class="sl_btn_chakan" type="submit" value="刪除"> -->
+<!-- 								</form> -->
+<!-- 							</td> -->
+						</tr>
+					</th:block>
+<!--                         <tr> -->
+<!--                             <td>A0001</td> -->
+<!--                             <td>王曉明</td> -->
+<!--                             <td>edinburgh@gmail.com</td> -->
+<!--                             <td>0912-345678</td> -->
+<!--                             <td>1997/11/22</td> -->
+<!--                             <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge" -->
+<!--                                         style="background-color: #9ac972">查看詳情</span></a></td> -->
+<!--                             <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+<!--                         </tr> -->
+<!--                         <tr> -->
+<!--                             <td>A0002</td> -->
+<!--                             <td>王忠明</td> -->
+<!--                             <td>tokyo@gmail.com</td> -->
+<!--                             <td>0988-123456</td> -->
+<!--                             <td>1993/09/22</td> -->
+<!--                             <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge" -->
+<!--                                         style="background-color: #9ac972">查看詳情</span></a></td> -->
+<!--                             <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+<!--                         </tr> -->
+<!--                         <tr> -->
+<!--                             <td>A0003</td> -->
+<!--                             <td>王大明</td> -->
+<!--                             <td>osaka@gmail.com</td> -->
+<!--                             <td>0939-123456</td> -->
+<!--                             <td>2000/10/22</td> -->
+<!--                             <td><a href="./b_plan_ord_detail.html"><span class="sl_sp_badge" -->
+<!--                                         style="background-color: #9ac972">查看詳情</span></a></td> -->
+<!--                             <td><button type="button" class="sl_btn_chakan">查看詳情</button></td> -->
+<!--                         </tr> -->
                     </tbody>
                     <tfoot>
                         <tr>
@@ -69,7 +132,11 @@
                             <th>電子信箱</th>
                             <th>電話</th>
                             <th>生日</th>
-                            <th>查看詳情</th>
+                            <th>會員密碼</th>
+                            <th>註冊時間</th>
+                            <th>修改時間</th>
+                            <th>狀態</th>
+                            <th>編輯</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -80,14 +147,14 @@
         <div class="footerPage"></div>
     
     
-        <script src="./js/bootstrap.bundle.min.js"></script>
-        <script src="./js/jquery-3.7.1.min.js"></script>
-        <script src="./js/jquery.dataTables.min.js"></script>
+        <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
         <script>
             new DataTable('#example');
         </script>
         <script>
-            $(".backendSidebarPage").load("backendSidebar.html");
+            $(".backendSidebarPage").load("/backendSidebar.html");
          </script>
     </body>
     

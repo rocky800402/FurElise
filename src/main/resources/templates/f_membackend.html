@@ -1,62 +1,57 @@
 <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="css/backend_form.css">
-    <link rel="stylesheet" href="css/membackend.css">
+    <title>會員停權頁面</title>
+    <link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/backend_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sl.css}">
+	<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+    <link rel="stylesheet" th:href="@{/css/membackend.css}">
 </head>
 
-
 <body>
-    
-
-
     <div class="container">
         <div class="backendSidebarPage"></div>
         <main class="content">
             <p class="p_title">會員管理 </p>
             <table id="example" class="display" style="width:100%">
                 
-
-                
-
-                <form action="#" method="post">
+                <form th:action="@{/mem/edit}" method="post" th:value="${mem.memID}">
                     <label for="memberID">會員ID：</label>
-                    <input type="text" id="memberID" name="memberID" required>
+                    <input type="text" id="memberID" name="memID" th:value="${mem.memID}" readonly>
                     <br>
                     <br>
                 
                     <label for="memberName">會員名字：</label>
-                    <input type="text" id="memberName" name="memberName" required>
+                    <input type="text" id="memberName" name="memName" th:value="${mem.memName}" readonly>
                     <br>
                     <br>
                     <label for="email">電子信箱：</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="memMail" th:value="${mem.memMail}" readonly>
                     <br>
                     <br>
                     <label for="phone">電話：</label>
-                    <select id="phone" name="phone">
-                        <option value="mobile">0912-345678</option>
-                        <option value="home">0988-654321</option>
-                    </select>
+                    <input type="text" id="phone" name="memTel" th:value="${mem.memTel}" readonly>
                     <br>
                     <br>
                     <label for="registrationTime">註冊時間：</label>
-                    <input type="datetime-local" id="registrationTime" name="registrationTime" required>
+                    <input type="datetime-local" id="memRegiDate" name="memRegiDate" th:value="${mem.memRegiDate}" readonly>
                     <br>
                     <br>
                     <label for="birthday">生日：</label>
-                    <input type="date" id="birthday" name="birthday" required>
+                    <input type="date" id="birthday" name="memBirth" th:value="${mem.memBirth}" readonly>
                     <br>
                     <br>
                     <button type="button" onclick="history.back()">回上一頁</button>
-                    <button type="submit" name="suspend">停權</button>
+<!--                     <button type="submit" name="suspend">停權</button> -->
+                    <button type="submit" class="sl_sp_badge" th:text="${mem.memIsSuspended} ? '啟用' : '停權'"></button>
                 </form>
 
                 <tfoot>
@@ -66,19 +61,56 @@
         </main>
     </div>
 
-
     <div class="footerPage"></div>
 
-
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/jquery-3.7.1.min.js"></script>
-    <script src="./js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script>
         new DataTable('#example');
     </script>
     <script>
        $(".backendSidebarPage").load("backendSidebar.html");
     </script>
+    
+    <!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	
+</script>
 </body>
 
 

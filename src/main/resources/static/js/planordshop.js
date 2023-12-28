@@ -2,7 +2,7 @@
 
 function planName_selector() {
 	$.ajax({
-		url: "http://localhost:8080/planord/planname", // 資料請求的網址
+		url: "/planord/planname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -12,7 +12,7 @@ function planName_selector() {
 			let list_html = "";
 			$.each(data, function(index, item) {
 				list_html += `
-                <option value="${item[0]}" data-price="${item[1]}">${item[0]}(${item[2]}公升)</option>
+                <option value="${item.planName}" data-price="${item.planPrice}">${item.planName}(${item.liter}公升)</option>
             `;
 			});
 			$("select[name='planName']").html(list_html);
@@ -22,12 +22,11 @@ function planName_selector() {
 
 function pickupTime_selector() {
 	$.ajax({
-		url: "http://localhost:8080/planord/timerange", // 資料請求的網址
+		url: "/planord/timerange", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 			$.each(data, function(index, item) {
 				list_html += `
@@ -41,12 +40,11 @@ function pickupTime_selector() {
 
 function period_selector() {
 	$.ajax({
-		url: "http://localhost:8080/planord/planperiod", // 資料請求的網址
+		url: "/planord/planperiod", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 
 			$.each(data, function(index, item) {
@@ -62,12 +60,11 @@ function period_selector() {
 
 function way_selector() {
 	$.ajax({
-		url: "http://localhost:8080/planord/wayname", // 資料請求的網址
+		url: "/planord/wayname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 
 			$.each(data, function(index, item) {
@@ -82,12 +79,11 @@ function way_selector() {
 
 function city_selector() {
 	$.ajax({
-		url: "http://localhost:8080/planord/citycode", // 資料請求的網址
+		url: "/planord/citycode", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
-			// console.log(data);
 			let list_html = "";
 
 			$.each(data, function(index, item) {
@@ -103,19 +99,18 @@ function city_selector() {
 //上架新方案
 function new_plan() {
 	$.ajax({
-		url: "http://localhost:8080/planord/planname", // 資料請求的網址
+		url: "/planord/planname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
 			let list_html = "";
-			console.log(data.length); //5
 			for (let i = 3; i < data.length; i++) {
 				list_html = `
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">
                                     <p class="sl_plan_name">${data[i][0]}</p>
-                                    <img src="/furelise/images/product.png" alt="" width="90%">
+                                    <img src="/images/product.png" alt="" width="90%">
                                     <p>介紹還沒想</p>
                                 </div>
                             </div>
@@ -142,14 +137,13 @@ $(document).on("click", "button#show_sale", function() {
 			if (times == weekdayChoice) {
 
 				$.ajax({
-					url: "http://localhost:8080/planord/checkenddate", // 資料請求的網址
+					url: "/planord/checkenddate", // 資料請求的網址
 					type: "POST", // GET | POST | PUT | DELETE | PATCH
 					// data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
 					data: JSON.stringify({ "planStart": planStart }),
 					contentType: "application/json",
 					dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 					success: function(data) {
-						// console.log(data)
 						if (data) {
 							$(".first select, input").prop('disabled', true); //選好的不可改
 
@@ -218,7 +212,7 @@ $(document).on("click", "#task_discount", function() {
 		}
 
 		$.ajax({
-			url: "http://localhost:8080/sale/coupon", // 資料請求的網址
+			url: "/sale/coupon", // 資料請求的網址
 			type: "POST", // GET | POST | PUT | DELETE | PATCH
 			// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
@@ -296,7 +290,7 @@ $(document).on("click", "#task_add", function() {
 	};
 
 	$.ajax({
-		url: "http://localhost:8080/planorddto/adding", // 資料請求的網址
+		url: "/planorddto/adding", // 資料請求的網址
 		type: "POST", // GET | POST | PUT | DELETE | PATCH
 		// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 		contentType: "application/json",

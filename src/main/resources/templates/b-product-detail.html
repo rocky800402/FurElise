@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後台-商品查詢-查看詳情</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
+<link rel="stylesheet" th:href="@{/css/backen_pro_detail.css}">
+</head>
+
+
+<body>
+	<div class="headerPage"></div>
+
+
+	<div class="container">
+
+		<div>
+
+			<div class="backendSidebarPage"></div>
+			<main class="content">
+
+				<div class="yh_pro_detail">
+					<p class="yh_the_detail_n">商品管理>商品查詢>查看詳情</p>
+					<div class="yh_the_detail">
+						<h2>商品詳情</h2>
+						<div align="center">
+							<form th:action="@{/product-backen/update}"
+								th:object="${product}" method="post">
+								<div class="input-group mb-3">
+									<label>商品編號 : </label> <input type="text" th:field="*{pID}"
+										readonly />
+								</div>
+
+								<div class="input-group mb-3">
+									<label>商品名稱 : </label> <input type="text" th:field="*{pName}"
+										onclick="hideContent('pName.errors');" required readonly /> <span
+										th:if="${#fields.hasErrors('pName')}" th:errors="*{pName}"
+										class="error" id="pName.errors"></span> <span class="error"
+										th:utext="${errorMsgs}">${errorMsgs}</span>
+								</div>
+
+								<div class="input-group mb-3">
+									<label>商品價格 : </label> <input type="text" th:field="*{pPrice}"
+										onclick="hideContent('pPrice.errors');" required readonly />
+
+									<div class="input-group mb-3">
+										<label>庫存 : </label> <input type="text" th:field="*{pStock}"
+											onclick="hideContent('pStock.errors');" required readonly />
+									</div>
+
+
+									<div class="input-group mb-3">
+										<label for="pStatus">商品狀態 : </label> <select name="pStatus"
+											id="pStatus" disabled>
+											<option th:value="true"
+												th:text="${product.pStatus == null ? '上架中' : product.pStatus ? '上架中' : '未上架'}"></option>
+											<option th:value="false"
+												th:text="${product.pStatus == null ? '未上架' : product.pStatus ? '未上架' : '上架中'}"></option>
+										</select>
+									</div>
+
+
+									<div class="input-group mb-3">
+										<label for="pUpload">上傳日期 : </label> <input id="pUpload"
+											name="pUpload" type="date" th:field="*{pUpload}"
+											onclick="hideContent('pUpload.errors');" disabled />
+									</div>
+									<br>
+
+									<div class="input-group mb-3">
+										<label for="pDetail">商品描述 : </label> <input id="pDetail"
+											name="pDetail" type="text" th:field="*{pDetail}"
+											onclick="hideContent('pDetail.errors');" readonly />
+									</div>
+									<br>
+
+
+									<div class="input-group mb-3">
+										<label for="pClassID">商品類別 : </label> <select id="pClassID"
+											name="pClassID" th:field="*{productClass.pClassID}" disabled>
+											<option th:each="productClass : ${productClassListData}"
+												th:value="${productClass.pClassID}"
+												th:text="${productClass.pClassName}"></option>
+										</select>
+									</div>
+									<br>
+
+
+									<div class="input-group mb-3">
+										<label for="pImage1">圖片一 :</label>
+										<div id="blob_holder1">
+											<img
+												th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}"
+												width="100px">
+										</div>
+									</div>
+									<br>
+
+									<div class="input-group mb-3">
+										<label for="pImage2">圖片二 :</label>
+										<div id="blob_holder2">
+											<img
+												th:src="@{/product/DBGifReader(pID=${product.pID}, image=2)}"
+												width="100px">
+										</div>
+									</div>
+									<br>
+
+									<div class="input-group mb-3">
+										<label for="pImage3">圖片三 :</label>
+										<div id="blob_holder3">
+											<img
+												th:src="@{/product/DBGifReader(pID=${product.pID}, image=3)}"
+												width="100px">
+										</div>
+									</div>
+								</div>
+								<br>
+
+
+
+
+								<!-- 				<div class="row justify-content-start"> -->
+								<!-- 					<div class="col-4"> -->
+								<!-- 						<a -->
+								<!-- 							href="all"><button -->
+								<!-- 								style="width: 120px" type="button" class="sl_btn_disable">回郵遞區號列表</button></a> -->
+								<!-- 						<button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button> -->
+							</form>
+
+
+							<button type="submit" onclick="history.go(-1)"
+								class="sl_btn_disable btn btn-primary"
+								style="background-color: white; color: #9ac972; border: solid 1px #9ac972;">回上一頁</button>
+
+							<form method="post" th:action="@{/product-backen/getone}">
+								<button type="submit" class="sl_sp_badge"
+									style="background-color: #9ac972; color: white; border: solid 1px #9ac972;">修改</button>
+								<input type="hidden" name="pID" th:value="${product.pID}" />
+							</form>
+
+
+
+							<!-- 								<input type="submit" value="修改" -->
+							<!-- 									class="sl_sp_badge btn btn-primary"> <input -->
+							<!-- 									type="hidden" name="pID" value="${product.pID}"> <input -->
+							<!-- 									type="hidden" name="action" value="getOne_For_Update"> -->
+
+
+
+
+						</div>
+
+
+					</div>
+				</div>
+
+
+			</main>
+		</div>
+	</div>
+
+
+	<!-- 	<div class="footerPage"></div> -->
+
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+	<script>
+		$(".backendSidebarPage").load("/backendSidebar.html");
+		
+	</script>
+</body>
+
+</html>

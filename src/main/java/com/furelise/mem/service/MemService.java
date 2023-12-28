@@ -1,7 +1,10 @@
-	package com.furelise.mem.service;
+package com.furelise.mem.service;
 
-import java.sql.Date;
+
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,7 @@ public class MemService {
 		return memR.findByMemMail(memMail);
 	}
 	
-	public Mem addMem(String memName, String memMail, String memTel, Date memBirth, String memPass) {
+	public Mem addMem(String memName, String memMail, String memTel, LocalDate memBirth, String memPass) {
 
 		Mem mem = new Mem();
 
@@ -39,8 +42,8 @@ public class MemService {
 		return mem;
 	}
 	
-	public Mem updateMem(Integer memID, String memName, String memMail, String memTel, Date memBirth, String memPass, 
-			Timestamp memLastModified, Boolean memIsSuspended) {
+	public Mem updateMem(Integer memID, String memName, String memMail, String memTel, LocalDate memBirth, String memPass, 
+			LocalDateTime memLastModified, Boolean memIsSuspended) {
 
 		Mem mem = new Mem();
 
@@ -65,6 +68,10 @@ public class MemService {
 	
 	public Mem getOneMem(Integer memID) {
 		return memR.getReferenceById(memID);
+	}
+	
+	public java.util.List<Mem> getAllMem(){
+		return memR.findAll();
 	}
 	
 	

@@ -7,7 +7,7 @@ function init() {
 
     function getApi() {
         $.ajax({
-            url: "http://localhost:8080/mem-estab-case",           // 資料請求的網址
+            url: `${API_BASE_URL}/mem-estab-case`,           // 資料請求的網址
             type: "GET",                  // GET | POST | PUT | DELETE | PATCH
             xhrFields: {
                 withCredentials: true
@@ -523,7 +523,7 @@ $(function () {
         };
 
         $.ajax({
-            url: "http://localhost:8080/mem-estab-case",           // 資料請求的網址
+            url: `${API_BASE_URL}/mem-estab-case`,           // 資料請求的網址
             type: "PATCH",                  // GET | POST | PUT | DELETE | PATCH
             xhrFields: {
                 withCredentials: true
@@ -564,7 +564,7 @@ $(function () {
 
 
         $.ajax({
-            url: "http://localhost:8080/mem-estab-case",           // 資料請求的網址
+            url: `${API_BASE_URL}/mem-estab-case`,           // 資料請求的網址
             type: "POST",                  // GET | POST | PUT | DELETE | PATCH
             xhrFields: {
                 withCredentials: true
@@ -612,7 +612,7 @@ $(function () {
             let yes = confirm("你確定要修改這筆訂單嗎?") 
             if(yes){
                 $.ajax({
-                    url: "http://localhost:8080/mem-estab-case/mem-plan-ord",           // 資料請求的網址
+                    url: `${API_BASE_URL}/mem-estab-case/mem-plan-ord`,           // 資料請求的網址
                     type: "POST",                  // GET | POST | PUT | DELETE | PATCH
                     xhrFields: {
                         withCredentials: true
@@ -661,7 +661,7 @@ $(function () {
         if(yes){
 
             $.ajax({
-                url: "http://localhost:8080/mem-estab-case/mem-plan-ord-status",           // 資料請求的網址
+                url: `${API_BASE_URL}/mem-estab-case/mem-plan-ord-status`,           // 資料請求的網址
                 type: "PATCH",                  // GET | POST | PUT | DELETE | PATCH
                 xhrFields: {
                     withCredentials: true

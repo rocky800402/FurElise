@@ -1,8 +1,8 @@
 package com.furelise.mem.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -41,16 +42,19 @@ public class Mem implements Serializable {
 	private String memName; // 2
 	private String memMail; // 3
 	private String memTel; // 4
-	private Date memBirth; // 5
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate memBirth; // 5
 	private String memPass; // 6
 	
 	// 自動創建時間
     @CreatedDate()
-	private Timestamp memRegiDate; // 7
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private LocalDateTime memRegiDate; // 7
     
     // 修改時自動創建時間
     @LastModifiedDate
-	private Timestamp memLastModified; // 8
+	private LocalDateTime memLastModified; // 8
 	
 	@Column(name = "memIsSuspended", columnDefinition = "BIT(1) DEFAULT 0")
 	private Boolean memIsSuspended = false; // 9

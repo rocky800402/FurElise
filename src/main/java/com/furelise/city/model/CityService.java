@@ -24,15 +24,26 @@ public class CityService {
 		return proceed;
 	}
 	
-	public boolean updateCity(City city) {
-		//verify if cityCode duplicated
+	public boolean updateCity(City city, String oldCityCode) {
+//		verify if cityCode duplicated, only accept original or unique one
 		boolean proceed = false;
-		if (!dao.existsByCityCode(city.getCityCode())) {
+		String newCityCode = city.getCityCode();
+		if (newCityCode.equals(oldCityCode) || !dao.existsByCityCode(newCityCode)) {
 			dao.save(city);
 			proceed = true;
 		}
 		return proceed;
 	}
+	
+//	public boolean updateCity(City city) {
+////		verify if cityCode duplicated //!should only accept original
+////		boolean proceed = false;
+////		if (!dao.existsByCityCode(city.getCityCode())) {
+//		dao.save(city);
+////			proceed = true;
+////		}
+//		return true;
+//	}
 
 	public void delete(Integer cityID) {
 		dao.deleteById(cityID);

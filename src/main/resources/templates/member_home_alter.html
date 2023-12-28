@@ -83,7 +83,7 @@
 	        <div style="max-width: 1200px; display: flex;">
 	            <div class="memSidebarPage"></div>
 	            <!--  -->
-			<form th:action="@{'/member_home_alter/' + ${memID} + '/updateMem'}" method="post" th:object="${mem}" enctype="multipart/form-data">
+			<form th:action="@{'/member/info/' + ${memID} + '/updateMem'}" method="post" th:object="${mem}" enctype="multipart/form-data">
 	            <div style="width: 950px; padding: 20px; margin-left: 50px;">
 	            <!-- 寫在這裡 -->
 			        <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
@@ -105,7 +105,7 @@
 	                <br><br>
 	                <p>變更密碼</p>
 	                <p>目前的密碼</p>
-	                <input type="text" th:field="*{memPass}" name="memPass" readonly>
+	                <input type="password" th:value="${mem.memPass}" name="memPass" readonly>
 	                <p>新密碼</p>
 	                <input type="password" name="mem_pw_new">
 	                <p>確認新密碼</p>

@@ -3,6 +3,8 @@ package com.furelise.mem.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class RegisterController {
     private RedisTemplate<String, String> redisTemplate;
 
     @PostMapping("/register")
-    protected String doRegister(HttpServletRequest req, Model model, HttpSession session)
+    public String doRegister(HttpServletRequest req, Model model, HttpSession session)
             throws ServletException, IOException {
 
         // ===獲得請求參數===
@@ -62,7 +64,7 @@ public class RegisterController {
             errMsgs.add(" 電子信箱格式有誤，請修正！");
         } else if (memSvc.findByMemMail(email) != null) {
             // 該電子信箱(帳號)已有註冊紀錄
-            errMsgs.add(" 己有帳號使用此電子信箱，請選擇其他電子信箱。");
+            errMsgs.add(" 已有帳號使用此電子信箱，請選擇其他電子信箱。");
         }
 
         // name錯誤處理
@@ -71,25 +73,24 @@ public class RegisterController {
          * 模式包含大小寫字母、底線 [a-zA-Z_] 和漢字的 Unicode 範圍 \u4e00-\u9fa5。
          * {2,15} 指定捕獲組內容的長度應在 2 到 15 個字符之間。
          */
-        String nameReg = "^([a-zA-Z_\u4e00-\u9fa5]{2,15})$";
+        String nameReg = "^([a-zA-Z_\u4e00-\u9fa5]{2,20})$";
         if (name == null || (name.trim().length()) == 0) {
             // 未輸入
             errMsgs.add(" 請輸入姓名！");
         } else if (!name.trim().matches(nameReg)) {
-            errMsgs.add(" 姓名格式有誤：僅能輸入中、英文字母與底線，且長度必需在2到15之間。");
+            errMsgs.add(" 姓名格式有誤：僅能輸入中、英文字母與底線，且長度必需在2到20之間。");
         }
 
         // birth錯誤處理
-        Date birthDate = null;
-        long nowMillis = System.currentTimeMillis();
-        Date nowDate = new Date(nowMillis);
+        LocalDate birthDate = null;
+        LocalDate nowDate = LocalDate.now();
         if (birth == null || (birth.trim().length()) == 0) {
             errMsgs.add(" 請選擇生日日期！");
         } else {
             // yyyy/mm/dd轉成yyyy-mm-dd，再從String轉成Date
-            String birthStr = birth.replaceAll("/", "-");
-            birthDate = Date.valueOf(birthStr);
-            if (birthDate.after(nowDate)) {
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    		birthDate = LocalDate.parse(birth, formatter);
+            if (birthDate.isAfter(nowDate)) {
                 // 生日不可以選比今天晚的日期
                 errMsgs.add(" 生日輸入有誤：不可選擇晚於今日的日期。");
             }

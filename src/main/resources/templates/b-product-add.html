@@ -12,14 +12,8 @@
 <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
 <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
 <link rel="stylesheet" th:href="@{/css/backen_pro_add.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/datetimepicker/jquery.datetimepicker.css}" />
 
-<!-- <style type="text/css"> -->
-<!--  label, input, span, select {  -->
-<!-- 	display: table-cell;  -->
-<!--  	margin: 5px;  -->
-<!--  	text-align: left;  -->
-<!--  }  -->
-<!-- </style> -->
 </head>
 
 
@@ -56,16 +50,12 @@
 								<input placeholder="必填" id="pName" name="pName" type="text" th:field="*{pName}" onclick="hideContent('pName.errors');" /> 
 								<span  th:if="${#fields.hasErrors('pName')}" th:errors="*{pName}" class="error" id="pName.errors"></span>
 								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
-<!-- 								<span th:if="${#fields.hasErrors('pName')}" th:errors="*{pName}" class="error" id="pName.errors"></span> -->
 							</div><br>
 
 							<div>
 								<label for="pPrice">商品價格:</label> <input placeholder="必填" id="pPrice" name="pPrice" type="text" th:field="*{pPrice}" onclick="hideContent('pPrice.errors');" /> 
 								<span  th:if="${#fields.hasErrors('pPrice')}" th:errors="*{pPrice}" class="error" id="pPrice.errors"></span>
 								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
-<!-- 									<span -->
-<!-- 									th:if="${#fields.hasErrors('pPrice')}" th:errors="*{pPrice}" -->
-<!-- 									class="error" id="pPrice.errors"></span> -->
 							</div><br>
 
 							<div>
@@ -102,29 +92,27 @@
 									<option th:each="productClass : ${productClassListData}" th:value="${productClass.pClassID}"  th:text="${productClass.pClassName}"></option>
 								</select>
 							</div><br>
-
+							
 							<div>
-								<label for="pImage1">照片:</label> 
-								<input id="pImage1" name="pImage1" type="file" onchange="previewImage(this, 'blob_holder1')" multiple="multiple" /> 
-								<span  th:if="${#fields.hasErrors('pImage1')}" th:errors="*{pImage1}" class="error" id="pImage1.errors"></span>
-								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
-								<div id="blob_holder1">
-								</div>
-							</div><br>
-
+							<label for="pImage1">照片:</label>
+							<input id ="pImage1" th:field="*{pImage1}" name="pImage1" type="file" onChange="previewImage(this, 'blob_holder1')" multiple="multiple" />
+				            <span  th:if="${#fields.hasErrors('pImage1')}" th:errors="*{pImage1}" class="error" id="pImage1.errors"></span> 
+							<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
+							<div id="blob_holder1"></div>
+							</div>
+							
+							
 							<div>
-								<label for="pImage2">照片:</label> 
-								<input id="pImage2" name="pImage2" type="file" onchange="previewImage(this, 'blob_holder2')" multiple="multiple" /> 
-								<div id="blob_holder2">
-								</div>
-							</div><br>
-
+							<label for="pImage2">照片:</label>
+							<input id ="pImage2" name="pImage2" type="file" onChange="previewImage(this, 'blob_holder2')" multiple="multiple" />
+							<div id="blob_holder2"></div>
+							</div>
+							
 							<div>
-								<label for="pImage3">照片:</label> 
-								<input id="pImage3" name="pImage3" type="file" onchange="previewImage(this, 'blob_holder3')" multiple="multiple" /> 
-								<div id="blob_holder3">
-								</div>
-							</div><br>
+							<label for="pImage3">照片:</label>
+							<input id ="pImage3" name="pImage3" type="file" onChange="previewImage(this, 'blob_holder3')" multiple="multiple" />
+							<div id="blob_holder3"></div>
+							</div>
 
 							<div>
 								<div style="display:float">
@@ -150,92 +138,87 @@
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
-	<link rel="stylesheet" type="text/css" th:href="@{/datetimepicker/jquery.datetimepicker.css}" />
 	<script th:src="@{/datetimepicker/jquery.js}"></script>
 	<script th:src="@{/datetimepicker/jquery.datetimepicker.full.js}"></script>
 
 	<script type="text/javascript">
-		$(".backendSidebarPage").load("/backendSidebar.html");
-		
-				 // 取得當前日期
-		        var today = new Date();
-				 
-				// 預設日期為 'YYYY-MM-DD'
-		        var formattedDate = today.toISOString().split('T')[0];
-		
-		        // 設置優惠開始日和優惠結束日输入框的值為今天
-		        $('#pUpload').val(formattedDate);
-		
-		        // 初始化 datetimepicker
-		        $('#f_date1').datetimepicker({
-		            theme: '',
-		            timepicker: false,
-		            step: 1,
-		            format: 'Y-m-d',
-		            value: saleStartValue,
-		            minDate: '-1970-01-01',
-		        });
-				//清除提示信息
-				function hideContent(d) {
-					document.getElementById(d).style.display = "none";
-				}
+			window.addEventListener("load",function() {
+					$(".backendSidebarPage").load("/backendSidebar.html");
 
-				//照片上傳-預覽用1
-				var filereader_support = typeof FileReader != 'undefined';
-				if (!filereader_support) {
-					alert("No FileReader support");
-				}
-				acceptedTypes = {
-					'image/png' : true,
-					'image/jpeg' : true,
-					'image/gif' : true
-				};
-				function previewImage(inputElement, targetId) {
-					// 	var upfile1 = document.getElementById("pImage1");
+					 // 取得當前日期
+			        var today = new Date();
 
-					// 	upfile1.addEventListener("change", function(event) {
-					var files = inputElement.files;
-					for (var i = 0; i < files.length; i++) {
-						previewfile(files[i], targetId)
-					}
-					// 	}, false);
-				}
-				function previewfile(file, targetId) {
-					const blobHolderElement = document.querySelector('#' + targetId);
+					// 預設日期為 'YYYY-MM-DD'
+			        var formattedDate = today.toISOString().split('T')[0];
 
-					if (filereader_support === true
-							&& acceptedTypes[file.type] === true) {
-						var reader = new FileReader();
-						reader.onload = function(event) {
-							var image = new Image();
-							image.src = event.target.result;
-							image.width = 100;
-							image.height = 75;
-							image.border = 2;
-							if (blobHolderElement.hasChildNodes()) {
-								blobHolderElement
-										.removeChild(blobHolderElement.childNodes[0]);
-							}
-							blobHolderElement.appendChild(image);
-						};
-						reader.readAsDataURL(file);
-						document.getElementById('submit').disabled = false;
-					} else {
-						blobHolderElement.innerHTML = "<div  style='text-align: left;'>"
-								+ "● filename: "
-								+ file.name
-								+ "<br>"
-								+ "● ContentTyp: "
-								+ file.type
-								+ "<br>"
-								+ "● size: "
-								+ file.size
-								+ "bytes"
-								+ "<br>"
-								+ "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
-						document.getElementById('submit').disabled = true;
-					}
-				}
+			        // 設置商品上船日期输入框的值為今天
+			        $('#pUpload').val(formattedDate);
+
+			        // 初始化 datetimepicker
+			        $('#f_date1').datetimepicker({
+			            theme: '',
+			            timepicker: false,
+			            step: 1,
+			            format: 'Y-m-d',
+			            value: saleStartValue,
+			            minDate: '-1970-01-01',
+			        });
+			});
+			
+			//照片上傳-預覽用1
+	        var filereader_support = typeof FileReader != 'undefined';
+	        if (!filereader_support) {
+	        	alert("No FileReader support");
+	        }
+	        acceptedTypes = {
+	        		'image/png' : true,
+	        		'image/jpeg' : true,
+	        		'image/gif' : true
+	        };
+	        function previewImage(inputElement, targetId) {
+//	         	var upfile1 = document.getElementById("pImage1");
+	        	
+//	         	upfile1.addEventListener("change", function(event) {
+	        		var files = inputElement.files;
+	        		for (var i = 0; i < files.length; i++) {
+	        			previewfile(files[i], targetId)
+	        		}
+//	         	}, false);
+	        }
+	        function previewfile(file, targetId) {
+	        const blobHolderElement = document.querySelector('#' + targetId);
+	        	
+	        	
+	        	if (filereader_support === true && acceptedTypes[file.type] === true) {
+	        		
+	        		if (file.size > 1048576) {
+	                    alert("檔案大小不能超過 1 MB");
+	                    blobHolderElement.innerHTML = ""; // 清空目標元素內容
+	                    return;
+	                }
+	        		var reader = new FileReader();
+	        		reader.onload = function(event) {
+	        			var image = new Image();
+	        			image.src = event.target.result;
+	        			image.width = 100;
+	        			image.height = 75;
+	        			image.border = 2;
+	        			
+	        			if (blobHolderElement.hasChildNodes()) {
+	        				blobHolderElement.removeChild(blobHolderElement.childNodes[0]);
+	        			}
+	        			blobHolderElement.appendChild(image);
+	        		};
+	        		reader.readAsDataURL(file);
+	        		document.getElementById('submit').disabled = false;
+	        	} else {
+	        		blobHolderElement.innerHTML = "<div  style='text-align: left;'>" + "● filename: " + file.name
+	        				+ "<br>" + "● ContentTyp: " + file.type
+	        				+ "<br>" + "● size: " + file.size + "bytes"
+	        				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+	        		document.getElementById('submit').disabled = true;
+	        	}
+	        }
 	</script>
 </body>
 

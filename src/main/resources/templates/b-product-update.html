@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="image/png" charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>商品管理-商品查詢-修改商品</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+<link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
+<link rel="stylesheet" th:href="@{/css/backen_pro_detail_change.css}">
+<style type="text/css">
+.sl_btn_chakan {
+	cursor: pointer;
+	--bs-btn-color: #fff;
+	--bs-btn-bg: #9ac972;
+	--bs-btn-border-color: #9ac972;
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: #9ac972;
+	--bs-btn-hover-border-color: #9ac972;
+	--bs-btn-focus-shadow-rgb: 49, 132, 253;
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: #9ac972;
+	--bs-btn-active-border-color: #9ac972;
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: #fff;
+	--bs-btn-disabled-bg: #9ac972;
+	--bs-btn-disabled-border-color: #9ac972;
+	--bs-btn-padding-x: 0.75rem;
+	--bs-btn-padding-y: 0.375rem;
+	--bs-btn-font-family: --bs-btn-font-size: 1rem;
+	--bs-btn-font-weight: 400;
+	--bs-btn-line-height: 1.5;
+	--bs-btn-border-width: 1px;
+	--bs-btn-border-radius: 0.375rem;
+	--bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px
+		rgba(0, 0, 0, 0.075);
+	--bs-btn-disabled-opacity: 0.65;
+	--bs-btn-focus-box-shadow: 0 0 0 0.25rem
+		rgba(var(--bs-btn-focus-shadow-rgb), .5);
+	display: inline-block;
+	padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+	font-family: var(--bs-btn-font-family);
+	font-size: var(--bs-btn-font-size);
+	font-weight: var(--bs-btn-font-weight);
+	line-height: var(--bs-btn-line-height);
+	color: var(--bs-btn-color);
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	-moz-user-select: none;
+	user-select: none;
+	border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+	border-radius: var(--bs-btn-border-radius);
+	background-color: var(--bs-btn-bg);
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* disable button */
+.sl_btn_disable {
+	cursor: pointer;
+	--bs-btn-color: #9ac972;
+	--bs-btn-bg: #fff;
+	--bs-btn-border-color: #9ac972;
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: #fff;
+	--bs-btn-hover-border-color: #9ac972;
+	--bs-btn-focus-shadow-rgb: 49, 132, 253;
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: #fff;
+	--bs-btn-active-border-color: #9ac972;
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: #fff;
+	--bs-btn-disabled-bg: #fff;
+	--bs-btn-disabled-border-color: #9ac972;
+	--bs-btn-padding-x: 0.75rem;
+	--bs-btn-padding-y: 0.375rem;
+	--bs-btn-font-family: --bs-btn-font-size: 1rem;
+	--bs-btn-font-weight: 400;
+	--bs-btn-line-height: 1.5;
+	--bs-btn-border-width: 1px;
+	--bs-btn-border-radius: 0.375rem;
+	--bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px
+		rgba(0, 0, 0, 0.075);
+	--bs-btn-disabled-opacity: 0.65;
+	--bs-btn-focus-box-shadow: 0 0 0 0.25rem
+		rgba(var(--bs-btn-focus-shadow-rgb), .5);
+	display: inline-block;
+	padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+	font-family: var(--bs-btn-font-family);
+	font-size: var(--bs-btn-font-size);
+	font-weight: var(--bs-btn-font-weight);
+	line-height: var(--bs-btn-line-height);
+	color: var(--bs-btn-color);
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	-moz-user-select: none;
+	user-select: none;
+	border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+	border-radius: var(--bs-btn-border-radius);
+	background-color: var(--bs-btn-bg);
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* 狀態badge */
+.sl_sp_badge {
+	--bs-badge-padding-x: 0.65em;
+	--bs-badge-padding-y: 0.35em;
+	--bs-badge-font-size: 0.75em;
+	--bs-badge-font-weight: 700;
+	--bs-badge-color: #fff;
+	--bs-badge-border-radius: 0.375rem;
+	display: inline-block;
+	padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+	font-size: var(--bs-badge-font-size);
+	font-weight: var(--bs-badge-font-weight);
+	line-height: 1;
+	color: var(--bs-badge-color);
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: var(--bs-badge-border-radius);
+	color: #fff !important;
+	/* background-color: #FFC2A0 !important; */
+}
+
+.error {
+	color: red;
+	font-size: 20px;
+}
+</style>
+</head>
+
+
+<body>
+	<!--   <div class="headerPage"></div> -->
+
+	<div class="container">
+
+		<div style="display: flex;">
+
+			<div class="backenSidebarPage"></div>
+			<main class="content">
+				<p class="p_title">商品資料修改</p>
+
+				<form th:action="@{/product-backen/update}" th:object="${product}"
+					method="post" enctype="multipart/form-data">
+
+					<div>
+						<label>商品編號:</label> <input type="text" th:field="*{pID}" readonly />
+					</div>
+
+					<div>
+						<label>商品名稱:</label> 
+						<input placeholder="必填" type="text" th:field="*{pName}" onclick="hideContent('pName.errors');" required readonly /> 
+					</div>
+
+					<div>
+						<label>商品價格:</label> <input placeholder="必填" type="text"
+							th:field="*{pPrice}" onclick="hideContent('pPrice.errors');" />
+						<span  th:if="${#fields.hasErrors('pPrice')}" th:errors="*{pPrice}" class="error" id="pPrice.errors"></span>
+								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
+					</div>
+
+					<div>
+						<label>庫存:</label> <input placeholder="必填" type="text"
+							th:field="*{pStock}" onclick="hideContent('pStock.errors');" />
+						<span  th:if="${#fields.hasErrors('pStock')}" th:errors="*{pStock}" class="error" id="pStock.errors"></span>
+								<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
+					</div>
+
+					<div>
+						<label for="pStatus">商品狀態:</label> <select name="pStatus"
+							id="pStatus">
+							<option th:value="true" th:selected="${product.pStatus == true}"
+								th:text="上架中"></option>
+							<option th:value="false"
+								th:selected="${product.pStatus == false}" th:text="未上架"></option>
+						</select>
+					</div>
+
+					<div>
+						<label for="pUpload">上傳日期:</label> <input id="pUpload"
+							name="pUpload" type="date" th:field="*{pUpload}"
+							onclick="hideContent('pUpload.errors');" />  
+							<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
+					</div>
+					<br>
+
+					<div>
+						<label for="pDetail">商品描述:</label> <input id="pDetail"
+							name="pDetail" type="text" th:field="*{pDetail}"
+							onclick="hideContent('pDetail.errors');" />
+					</div>
+					<br>
+
+					<div>
+						<label for="pClassID">商品類別:</label> <select id="pClassID"
+							name="pClassID" th:field="*{productClass.pClassID}">
+							<option th:each="productClass : ${productClassListData}"
+								th:value="${productClass.pClassID}"
+								th:text="${productClass.pClassName}"></option>
+						</select>
+					</div>
+					<br>
+
+					<div>
+						<label for="pImage1">照片:</label> 
+						<input id="pImage1" name="pImage1" type="file" th:field="*{pImage1}" onchange="previewImage(this, 'blob_holder1')" multiple="multiple" />
+						<span th:if="${#fields.hasErrors('pImage1')&& #fields.getError('pImage1').codes[0] == 'Max'}" th:errors="*{pImage1}" class="error" id="pImage1.errors"></span>
+						<span class="error" th:utext="${errorMsgs}">${errorMsgs}</span>
+						<div id="blob_holder1"><img th:src="@{/product/DBGifReader(pID=${product.pID}, image=1)}" width="100px"></div>
+					</div>
+					<br>
+
+					<div>
+						<label for="pImage2">照片:</label> <input id="pImage2"
+							name="pImage2" type="file" th:field="*{pImage2}"
+							onchange="previewImage(this, 'blob_holder2')" multiple="multiple" />
+						<div id="blob_holder2">
+							<img
+								th:src="@{/product/DBGifReader(pID=${product.pID}, image=2)}"
+								width="100px">
+						</div>
+					</div>
+					<br>
+
+					<div>
+						<label for="pImage3">照片:</label> <input id="pImage3"
+							name="pImage3" type="file" th:field="*{pImage3}"
+							onchange="previewImage(this, 'blob_holder3')" multiple="multiple" />
+						<div id="blob_holder3">
+							<img
+								th:src="@{/product/DBGifReader(pID=${product.pID}, image=3)}"
+								width="100px">
+						</div>
+					</div>
+					<br> <a th:href="all"><button style="width: 120px"
+							type="button" class="sl_btn_disable">回商品列表</button></a>
+					<button type="submit" id="submit"
+						class="btn btn-primary sl_btn_chakan"
+						style="background-color: #9ac972; border: #9ac972; margin-top: 0;">確認修改</button>
+
+
+
+				</form>
+
+
+				<!-- 						<a -->
+				<!-- 							href="all"><button -->
+				<!-- 								style="width: 120px" type="button" class="sl_btn_disable">回郵遞區號列表</button></a> -->
+				<!-- 						<button type="submit" class="sl_btn_chakan" style="float: right;">確認送出</button> -->
+
+
+
+				<!--             <center><button class="btn btn-primary btn_confirm" type="submit"><a href="./backen_prod_update_suc.html">確認修改</a></button></center> -->
+				<!--             <center><button class="btn btn-primary btn_check" type="submit">預覽</button></center> -->
+
+
+
+			</main>
+		</div>
+	</div>
+
+
+	<!--   <div class="footerPage"></div> -->
+
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+	<!--   <script> -->
+	<!--      new DataTable('#example'); -->
+	<!--    </script> -->
+	<script>
+		window.addEventListener("load",function() {
+
+			$(".backenSidebarPage").load("/backendSidebar.html");
+			
+				// 取得當前日期
+				var today = new Date();
+
+				// 預設日期為 'YYYY-MM-DD'
+				var formattedDate = today.toISOString().split('T')[0];
+
+				// 設置商品上船日期输入框的值為今天
+				$('#pUpload').val(formattedDate);
+
+				// 初始化 datetimepicker
+				$('#f_date1').datetimepicker({
+				theme : '',
+				timepicker : false,
+				step : 1,
+				format : 'Y-m-d',
+				value : saleStartValue,
+				minDate : '-1970-01-01',
+			});
+		});
+		//照片上傳-預覽用1
+		var filereader_support = typeof FileReader != 'undefined';
+		if (!filereader_support) {
+		    alert("No FileReader support");
+		}
+		acceptedTypes = {
+		    'image/png': true,
+		    'image/jpeg': true,
+		    'image/gif': true
+		};
+		function previewImage(inputElement, targetId) {
+		    var files = inputElement.files;
+		    // 移除目标元素中的旧图片
+		    const blobHolderElement = document.querySelector('#' + targetId);
+		    while (blobHolderElement.firstChild) {
+		        blobHolderElement.removeChild(blobHolderElement.firstChild);
+		    }
+
+		    for (var i = 0; i < files.length; i++) {
+		        previewfile(files[i], targetId);
+		    }
+		}
+
+		function previewfile(file, targetId) {
+		    const blobHolderElement = document.querySelector('#' + targetId);
+
+		    if (filereader_support === true && acceptedTypes[file.type] === true) {
+		    	
+		    	if (file.size > 1048576) {
+                    alert("檔案大小不能超過 1 MB");
+                    blobHolderElement.innerHTML = ""; // 清空目標元素內容
+                    return;
+                }
+		        var reader = new FileReader();
+		        reader.onload = function (event) {
+		            var image = new Image();
+		            image.src = event.target.result;
+		            image.width = 100;
+		            image.height = 75;
+		            image.border = 2;
+		            blobHolderElement.appendChild(image);
+		        };
+		        reader.readAsDataURL(file);
+		        document.getElementById('submit').disabled = false;
+		    } else {
+		        blobHolderElement.innerHTML = "<div  style='text-align: left;'>"
+		            + "● filename: "
+		            + file.name
+		            + "<br>"
+		            + "● ContentTyp: "
+		            + file.type
+		            + "<br>"
+		            + "● size: "
+		            + file.size
+		            + "bytes"
+		            + "<br>"
+		            + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+		        document.getElementById('submit').disabled = true;
+		    }
+		}
+		
+		
+
+	</script>
+</body>
+
+</html>

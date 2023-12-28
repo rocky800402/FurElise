@@ -13,7 +13,7 @@
 	<groupId>com.furelise</groupId>
 	<artifactId>furelise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>furelise</name>
 	<description>com.furelise</description>
 
@@ -242,7 +242,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.4</version>
+			<version>1.18.30</version>
 			<scope>provided</scope> <!-- ※provided只提供編譯，jar檔不匯出 -->
 		</dependency>
 

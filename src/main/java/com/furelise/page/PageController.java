@@ -1,5 +1,7 @@
 package com.furelise.page;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,12 +20,17 @@ import com.furelise.ecpay.payment.integration.domain.AioCheckOutALL;
 @Controller
 public class PageController {
 	
+//	public PageController() throws UnknownHostException {
+//		String ip = InetAddress.getLocalHost().getHostAddress();
+//	}
+	
+	
 	@Autowired
 	EcpayService ecpayService;
 
-	@GetMapping("/home")
+	@GetMapping("/pay")
 	public String home() {
-		return "f_homePage";
+		return "pay";
 	}
 
 	@PostMapping("/payResult")
@@ -64,7 +71,7 @@ public class PageController {
 		obj.setMerchantTradeDate("2023/12/17 08:05:23");
 		obj.setTotalAmount("50");
 		obj.setTradeDesc("test Description");
-		obj.setItemName("item1#item2#item3");
+		obj.setItemName("垃圾袋#掃把#酒精");
 		obj.setReturnURL("localhost:8080/payResult");
 		obj.setNeedExtraPaidInfo("N");
 		

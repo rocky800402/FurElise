@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für Elise-成為夥伴</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .hc_headerBox {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ececec;
+            border-top: 1px solid #ececec;
+            margin-bottom: 100px;
+        }
+
+        .hc_headerText {
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 15px;
+            padding-top: 15px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hc_becomeEmp_p1 {
+            position: absolute;
+            top: 500px;
+            left: 400px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 50px;
+        }
+
+        .hc_becomeEmp_p2 {
+            position: absolute;
+            top: 600px;
+            left: 510px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .hc_becomeEmp_img {
+            width: 100%;
+            margin-top: -100px;
+            opacity: 0.6;
+        }
+
+        /* .hc_becomeEmp_form {
+            display: flex;
+            justify-content: center;
+        } */
+
+        .hc_becomeEmp_formBox {
+            position: relative;
+            height: 1900px;
+            width: 80%;
+            background-color: #fff;
+            margin: 40px 0 40px 0;
+            -webkit-box-shadow: 3px 3px 5px 5px #ddd;
+            -moz-box-shadow: 3px 3px 5px 5px #ddd;
+            box-shadow: 3px 3px 5px 5px #ddd;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+
+        .hc_becomeEmp_formBox p, span {
+            font-size: 20px;
+            margin: 10px 0 10px 0;
+            font-weight: bold;
+            text-align: left;
+            margin-left: 140px;
+        }
+
+        .hc_becomeEmp_formBox input {
+            width: 350px;
+            margin-left: -380px;
+        }
+
+        .hc_becomeEmp_title {
+            font-size: 40px !important;
+            margin: 0 auto !important;
+            color: #676767 !important;
+            font-weight: bold !important;
+            text-align: center !important;
+        }
+
+        #becomeEmp_vehicle {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        img.hc_preview{
+            width: 300px;
+            height: 200px;
+        }
+
+        .hc_becomeEmp_submitBtn {
+            width: 120px;
+            height: 40px;
+            border: .3px solid lightgray;
+            font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+            left: 50%; /* 放在元素水平中央 */
+            transform: translateX(-300%);
+        }
+
+        ul.hc_list{
+            margin: 24px 0 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul.hc_list > li{
+            margin-bottom: 30px;
+        }
+
+        ul.hc_list > li:last-child{
+            margin-bottom: 0;
+        }
+
+        ul.hc_list > li > a.hc_link_title{
+            display: block;
+            width: 100%;
+            color: white;
+            background-color: #9ac972;
+            box-shadow: 2px 2px 8px 0 rgba(56, 55, 53, 0.33);
+            border-radius: 26px;
+            padding: 8px 40px;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        ul.hc_list > li > a.hc_link_title::after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+                    
+        ul.hc_list > li > a.hc_link_title button.hc_switch_btn{
+            
+            display: inline-block;
+            background: none;
+            border: 0;
+            outline: none;
+            color: white;
+            font-size: 24px;
+        }
+                    
+        ul.hc_list > li > a.hc_link_title button.hc_switch_btn span.hc-minus{
+            display: none;
+        }
+        ul.hc_list > li > div.hc_inner_block{
+            font-size: 18px;
+            color: #4a4a4a;
+            margin-top: 8px;
+            padding: 0 40px;
+            line-height: 1.6;
+            display: none;
+        }
+        ul.hc_list > li.hc-on > a.hc_link_title button.hc_switch_btn span.hc-plus{
+            display: none;
+        }
+        ul.hc_list > li.hc-on > a.hc_link_title button.hc_switch_btn span.hc-minus{
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+    <div class="headerPage"></div>
+
+    <div class="hc_headerBox">
+        <div class="hc_headerText">成為夥伴</div>
+    </div>
+
+    <div class="hc_becomeEmp_banner">
+        <img src="./images/delivery_man.jpg" th:src="@{/images/delivery_man.jpg}" class="hc_becomeEmp_img">
+        <p class="hc_becomeEmp_p1">成為給愛麗絲收取夥伴！</p>
+        <p class="hc_becomeEmp_p2">各式職缺熱烈招募中！</p>
+    </div>
+    
+    <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}" style=" margin-top: 30px;" id="becomeEmp_errMsgs">
+		<span style="color:red; font-size: 18px; margin-left: 40%;">請修正以下錯誤:</span>
+			<ul>
+				<li th:each="message : ${errMsgs}" style="color:red; font-size: 18px;  margin-left: 40%;" th:text="${message}"></li>
+			</ul>
+	</div>
+
+	<form action="registerEmp" method="post" enctype="multipart/form-data">
+    <div th:object="${emp}">
+        <div class="hc_becomeEmp_formBox">
+            <p class="hc_becomeEmp_title">立即填寫資料，</p>
+            <p class="hc_becomeEmp_title">專人電話聯繫上工！</p>
+
+            <br>
+            <div style="margin: 10px 0; text-align: left;">
+                <p style="display: inline-block; margin: 10px 0 10px 0; margin-left: 140px;">您的姓名</p>
+                <p style="display: inline-block; margin: 0 auto; margin: 10px 0 10px 0;  margin-left: 300px;">生日</p><br>
+            </div>
+            <input type="text" name="becomeEmp_name" th:value="${emp != null? emp.empName : ''}" style="width: 350px; margin-left: 5px;">
+            <input type="date" name="becomeEmp_birth" th:value="${emp != null? emp.empBirth : null}" style="width: 350px; margin-left: 30px;"><br>
+            <p>您的手機</p>
+            <input type="text" name="becomeEmp_tel" th:value="${emp != null? emp.empTel : ''}" placeholder="僅輸入數字即可">
+            <p>您的信箱（將作為帳號使用）</p>
+            <input type="email" name="becomeEmp_email" th:value="${emp != null? emp.empMail : ''}">
+            <div style="margin: 10px 0; text-align: left;">
+                <p style="display: inline-block; margin: 10px 0 10px 0; margin-left: 140px;">密碼</p>
+                <p style="display: inline-block; margin: 0 auto; margin: 10px 0 10px 0;  margin-left: 340px;">確認密碼</p><br>
+            </div>
+            <input type="password" name="becomeEmp_pass" th:value="${emp != null? emp.empPass : ''}" style="width: 350px; margin-left: 5px;">
+            <input type="password" name="becomeEmp_cfmPass" style="width: 350px; margin-left: 30px;"><br>
+            <div style="margin: 10px 0; text-align: left;">
+                <p style="display: inline-block; margin: 10px 0 10px 0; margin-left: 140px;">身分證號碼</p>
+                <p style="display: inline-block; margin: 0 auto; margin: 10px 0 10px 0;  margin-left: 280px;">工作時段</p><br>
+            </div>
+            <input type="text" name="becomeEmp_idNo" th:value="${emp != null? emp.IDNumber : ''}" style="width: 350px; margin-left: 5px;">
+            <select name="becomeEmp_workTime" style="width: 350px; margin-left: 30px; height: 30px;">
+                <option value="240000">請選擇工作時段</option>
+                <option value="240001" th:selected="${emp != null? emp.timeID eq 240001 : false}">9:00-17:00</option>
+                <option value="240002" th:selected="${emp != null? emp.timeID eq 240002 : false}">19:00-21:00</option>
+                <option value="240003" th:selected="${emp != null? emp.timeID eq 240003 : false}">21:00-22:30</option>
+            </select>
+            <p>您的收取車種</p>
+            <div style="padding-left: 15px;">
+                <input type="radio" id="becomeEmp_vehicle" name="becomeEmp_vehicle" value="0" th:checked="${emp != null? emp.empLicense == false : false}">
+                <label for="becomeEmp_vehicle0">汽車</label>
+                <input type="radio" id="becomeEmp_vehicle" name="becomeEmp_vehicle" value="1" th:checked="${emp != null? emp.empLicense == true : false}">
+                <label for="becomeEmp_vehicle1">機車</label>
+            </div><br>
+            <p>您可安排工作的區域</p>
+            <div style="margin-left: -630px;">
+            <span>第一順位：</span>
+                <select name="emp_workArea1" style="height: 30px;">
+                    <option value="0">請選擇工作區域</option>
+                    <option value="100" th:selected="${emp != null and emp.empArea1 eq '100'}">台北市中正區</option>
+				    <option value="103" th:selected="${emp != null and emp.empArea1 eq '103'}">台北市大同區</option>
+				    <option value="104" th:selected="${emp != null and emp.empArea1 eq '104'}">台北市中山區</option>
+				    <option value="105" th:selected="${emp != null and emp.empArea1 eq '105'}">台北市松山區</option>
+				    <option value="106" th:selected="${emp != null and emp.empArea1 eq '106'}">台北市大安區</option>
+				    <option value="108" th:selected="${emp != null and emp.empArea1 eq '108'}">台北市萬華區</option>
+				    <option value="110" th:selected="${emp != null and emp.empArea1 eq '110'}">台北市信義區</option>
+				    <option value="111" th:selected="${emp != null and emp.empArea1 eq '111'}">台北市士林區</option>
+				    <option value="112" th:selected="${emp != null and emp.empArea1 eq '112'}">台北市北投區</option>
+				    <option value="114" th:selected="${emp != null and emp.empArea1 eq '114'}">台北市內湖區</option>
+				    <option value="115" th:selected="${emp != null and emp.empArea1 eq '115'}">台北市南港區</option>
+				    <option value="116" th:selected="${emp != null and emp.empArea1 eq '116'}">台北市文山區</option>
+                </select>
+                <br><br>
+                <span>第二順位：</span>
+                <select name="emp_workArea2" style="height: 30px;">
+                    <option value="0" selected>請選擇工作區域</option>
+                    <option value="100" th:selected="${emp != null and emp.empArea2 eq '100'}">台北市中正區</option>
+				    <option value="103" th:selected="${emp != null and emp.empArea2 eq '103'}">台北市大同區</option>
+				    <option value="104" th:selected="${emp != null and emp.empArea2 eq '104'}">台北市中山區</option>
+				    <option value="105" th:selected="${emp != null and emp.empArea2 eq '105'}">台北市松山區</option>
+				    <option value="106" th:selected="${emp != null and emp.empArea2 eq '106'}">台北市大安區</option>
+				    <option value="108" th:selected="${emp != null and emp.empArea2 eq '108'}">台北市萬華區</option>
+				    <option value="110" th:selected="${emp != null and emp.empArea2 eq '110'}">台北市信義區</option>
+				    <option value="111" th:selected="${emp != null and emp.empArea2 eq '111'}">台北市士林區</option>
+				    <option value="112" th:selected="${emp != null and emp.empArea2 eq '112'}">台北市北投區</option>
+				    <option value="114" th:selected="${emp != null and emp.empArea2 eq '114'}">台北市內湖區</option>
+				    <option value="115" th:selected="${emp != null and emp.empArea2 eq '115'}">台北市南港區</option>
+				    <option value="116" th:selected="${emp != null and emp.empArea2 eq '116'}">台北市文山區</option>
+                </select>
+                <br><br>
+                <span>第三順位：</span>
+                <select name="emp_workArea3" style="height: 30px;">
+                    <option value="0" selected>請選擇工作區域</option>
+                    <option value="100" th:selected="${emp != null and emp.empArea3 eq '100'}">台北市中正區</option>
+				    <option value="103" th:selected="${emp != null and emp.empArea3 eq '103'}">台北市大同區</option>
+				    <option value="104" th:selected="${emp != null and emp.empArea3 eq '104'}">台北市中山區</option>
+				    <option value="105" th:selected="${emp != null and emp.empArea3 eq '105'}">台北市松山區</option>
+				    <option value="106" th:selected="${emp != null and emp.empArea3 eq '106'}">台北市大安區</option>
+				    <option value="108" th:selected="${emp != null and emp.empArea3 eq '108'}">台北市萬華區</option>
+				    <option value="110" th:selected="${emp != null and emp.empArea3 eq '110'}">台北市信義區</option>
+				    <option value="111" th:selected="${emp != null and emp.empArea3 eq '111'}">台北市士林區</option>
+				    <option value="112" th:selected="${emp != null and emp.empArea3 eq '112'}">台北市北投區</option>
+				    <option value="114" th:selected="${emp != null and emp.empArea3 eq '114'}">台北市內湖區</option>
+				    <option value="115" th:selected="${emp != null and emp.empArea3 eq '115'}">台北市南港區</option>
+				    <option value="116" th:selected="${emp != null and emp.empArea3 eq '116'}">台北市文山區</option>
+                </select>
+                <br><br>
+            </div>
+            <p>上傳您的身分證正、反面及駕照</p>
+
+            <p style="font-size: 18px; font-weight: lighter;">身分證正面照：</p>
+            <input type="file" name="becomeEmp_IDF" class="hc_the_file" required>
+                <ul class="hc_picture_list" style="list-style: none;"></ul>
+            <p style="font-size: 18px; font-weight: lighter;">身分證反面照：</p>
+                <input type="file" name="becomeEmp_IDB" class="hc_the_file" required>
+                <ul class="hc_picture_list" style="list-style: none;"></ul>
+            <p style="font-size: 18px; font-weight: lighter;">駕照：</p>
+                <input type="file" name="becomeEmp_license" class="hc_the_file" required>
+                <ul class="hc_picture_list" style="list-style: none;"></ul>
+
+            <button type="submit" class="hc_becomeEmp_submitBtn">提交表單</button>
+        </div>
+    </div>
+	</form>
+	
+    <br><br>
+
+
+    <div>
+        <p style="font-size: 40px; font-weight: bold; color:#9ac972; text-align: center;">常見問題</p>
+        <ul class="hc_list">
+  
+            <li>
+              <a class="hc_link_title" href="#">
+                <button type="button" class="hc_switch_btn">
+                  <span class="hc-plus">+</span><span class="hc-minus">-</span>
+                </button>
+                Q1. 如何成為收取夥伴？
+              </a>
+              
+              <div class="hc_inner_block">
+                A1. 只要填寫完基本資料後，若您符合資格，專人就會再主動聯繫您。
+              </div>
+                
+            </li>
+            
+            <li>
+              <a class="hc_link_title" href="#">
+                <button type="button" class="hc_switch_btn">
+                  <span class="hc-plus">+</span><span class="hc-minus">-</span>
+                </button>
+                Q2. 收入如何計算？發放方式與頻率？
+              </a>
+              <div class="hc_inner_block">
+                A2. 按件計酬，每單平均 $80，每小時平均可收 4-6 單；收入皆會以轉帳方式於每月五號發放。
+              </div>
+                
+            </li>
+
+            <li>
+                <a class="hc_link_title" href="#">
+                  <button type="button" class="hc_switch_btn">
+                    <span class="hc-plus">+</span><span class="hc-minus">-</span>
+                  </button>
+                  Q3. 需要準備哪些文件與資料？
+                </a>
+                <div class="hc_inner_block">
+                  A3. 本人駕照、轉帳用本人金融帳戶、本人身份證。
+                </div>
+                  
+              </li>
+          </ul>
+    </div>
+    <br><br>
+
+
+
+
+
+    <script>
+        window.addEventListener("load", function(){
+            var the_file_elements = document.getElementsByClassName("hc_the_file");
+
+            for (let i = 0; i < the_file_elements.length; i++) {
+                the_file_elements[i].addEventListener("change", function(e){          
+                    var picture_list = this.nextElementSibling; // 取得下一個兄弟元素（即 ul.hc_picture_list）
+
+                    picture_list.innerHTML = ""; // 清空
+
+                    for (let j = 0; j < this.files.length; j++) {
+                        let reader = new FileReader(); // 用來讀取檔案
+                        reader.readAsDataURL(this.files[j]); // 讀取檔案
+
+                        reader.addEventListener("load", function () {
+                            let li_html = `<li><img src="${reader.result}" class="hc_preview"></li>`;
+                            picture_list.insertAdjacentHTML("beforeend", li_html); // 加進節點
+                        });
+                    }
+                });
+            }
+            
+            
+            
+         	// 滑動效果
+            var errMsgs = document.getElementById("becomeEmp_errMsgs");
+            if (errMsgs != null) {
+            	window.scrollTo({
+                    top: errMsgs.offsetTop, // 使用元素的上側位置
+                    behavior: 'smooth' // 使用平滑滾動效果
+                });
+            }
+            
+        });
+
+        $("a.hc_link_title").on("click", function(e){
+            e.preventDefault();
+            $(this).closest("li").toggleClass("hc-on");
+            $(this).closest("li").find("div.hc_inner_block").slideToggle();
+        });
+    </script>
+
+    <div class="footerPage"></div>
+    <script>
+        $(".headerPage").load("header.html");
+        $(".footerPage").load("footer.html");
+    </script>
+</body>
+</html>
+
+	

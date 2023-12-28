@@ -17,6 +17,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.Timestamp;
 import javax.transaction.Transactional;
 
+import java.sql.Date;
+import java.util.List;
 
 @Repository
 public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
@@ -39,6 +41,9 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
 
     List<EstabCase> findByEmpID(Integer empID);
 
+
+    @Query("SELECT e FROM EstabCase e WHERE e.estabCaseDate >= CURRENT_DATE AND e.estabCaseDate <= CURRENT_DATE + 2 AND e.takeStatus = 0")
+    List<EstabCase> findEstabCasesWithinLastTwoDaysAndTakeStatusZero();
     Page<EstabCase> findAllByTakeStatus(boolean takeStatus, Pageable pageable);
 
     List<EstabCase> findByEmpIDAndEstabCaseStatusOrderByEstabCaseEndDesc(Integer empID, Integer estabCaseStatus);

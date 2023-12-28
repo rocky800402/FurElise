@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+    <style>
+    	.hidden {
+            display: none;
+        }
+    
+        .p_title {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .loginbox {
+            border: 1px solid #9ac972;
+            text-align: center;
+            margin-top: 50px;
+            border-radius: 20px; /* 調整此值以改變弧形的半徑 */
+            width: 50%;
+        }
+
+        .loginbox input {
+            margin: 10px 0 10px 0;
+        }
+
+        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+        .btn-primary {
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+        .btn-primary:hover {
+            background-color: rgba(26, 137, 26, 0.801);
+            border-color: rgba(26, 137, 26, 0.801);
+            color: white;
+        }
+    </style>
+</head>
+
+
+<body>
+    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+
+
+    <div class="container">
+        <main class="content">
+            <p class="p_title">Für Elise後台管理系統</p>
+            <table id="example" class="display" style="width:100%">
+                
+            <div class="loginbox">
+                <p style="margin-top: 20px;">登出成功！</p>
+
+                <button type="button" id="hc_adLogin" class="btn-primary" style="margin: 20px 0 20px 0;">重新登入</button>
+            </div>
+
+                <tfoot>
+                    
+                </tfoot>
+            </table>
+        </main>
+    </div>
+
+
+    <div class="footerPage"></div>
+
+    <script>
+       //$(".backendSidebarPage").load("backendSidebar.html");
+       $("#hc_adLogin").on("click", function(e){
+    	   e.preventDefault();
+    	   window.location.href=`${API_BASE_URL}/adminlogin`;
+       });
+    </script>
+</body>
+
+
+</html>
+

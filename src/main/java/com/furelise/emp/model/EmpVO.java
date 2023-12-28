@@ -1,6 +1,8 @@
 package com.furelise.emp.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.sql.Date;
 
 import com.furelise.emp.model.Emp;
@@ -14,12 +16,12 @@ public class EmpVO {
     private String empName;
     private String empMail;
     private String empTel;
-    private Date empBirth;
+    private LocalDate empBirth;
     private String IDNumber;
     private boolean empLicense;
-    private Integer empArea1;
-    private Integer empArea2;
-    private Integer empArea3;
+    private String empArea1;
+    private String empArea2;
+    private String empArea3;
     private Integer timeID;
     private byte[] IDF;
     private byte[] IDB;
@@ -28,7 +30,7 @@ public class EmpVO {
     private String accountNo;
     private byte[] bankPic;
     private Integer workSum;
-    private Timestamp empRegiDate;
+    private LocalDateTime empRegiDate;
 //    private Integer empStatus;
     
     

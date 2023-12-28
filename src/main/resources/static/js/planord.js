@@ -1,7 +1,7 @@
 // 載入
 function init() {
     $.ajax({
-        url: "http://localhost:8080/planorddto/finding", // 資料請求的網址
+        url: "/planorddto/finding", // 資料請求的網址
         type: "GET", // GET | POST | PUT | DELETE | PATCH
         // data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
         dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -57,7 +57,7 @@ $("button#task_update").on("click", function () {
 	            "planUpload": planUpload
         }
         $.ajax({
-            url: "http://localhost:8080/planord/updating",           // 資料請求的網址
+            url: "/planord/updating",           // 資料請求的網址
             type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
             // data: { "wayID": wayID, "wayName": wayName },                // 將物件資料(不用雙引號) 傳送到指定的 url
             contentType: "application/json",
@@ -68,7 +68,7 @@ $("button#task_update").on("click", function () {
 
             success: function (data) {//第一層子元素為li標籤
                 alert('更改成功！');
-                window.location.href = '/furelise/plan/';
+                window.location.href = '/planord/';
             },
 
             complete: function () {

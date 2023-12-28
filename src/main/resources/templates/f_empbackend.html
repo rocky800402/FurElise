@@ -1,150 +1,97 @@
 <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="css/backend_form.css">
-    <link rel="stylesheet" href="css/empbackend.css">
+    <title>夥伴停權頁面</title>
+    <link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+    <link rel="stylesheet" th:href="@{/css/empbackend.css}">
 </head>
 
-
-<body>
-    
-
-
+<body>    
     <div class="container">
         <div class="backendSidebarPage"></div>
         <main class="content">
             <p class="p_title">夥伴管理 > 夥伴詳細資料</p>
             <table id="example" class="display" style="width:100%">
-                
-
-                
-
-                <form action="#" method="post">
-                    <label for="partnerID">夥伴ID：</label>
-                    <input type="text" id="partnerID" name="partnerID" required>
+                               
+                <form th:action="@{/emp/edit}" method="post" th:value="${emp.empID}">
+                    <label for="empID">夥伴ID：</label>
+                    <input type="text" id="empID" name="empID" th:value="${emp.empID}" readonly>
                     <br>
                     <br>
-                    <label for="partnerName">夥伴姓名：</label>
-                    <input type="text" id="partnerName" name="partnerName" required>
+                    <label for="empName">夥伴姓名：</label>
+                    <input type="text" id="empName" name="empName" th:value="${emp.empName}" readonly>
                     <br>
                     <br>
                     <label for="email">電子信箱：</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="empMail" th:value="${emp.empMail}" readonly>
                     <br>
                     <br>
-                    <label for="phone">電話：</label>
-                    <select id="phone" name="phone">
-                        <option value="mobile">0912-345678</option>
-                        <option value="home">0988-654321</option>
-                    </select>
+                    <label for="phone">夥伴電話：</label>
+                    <input type="text" id="phone" name="empTel" th:value="${emp.empTel}" readonly>
                     <br>
                     <br>
                     <label for="registrationTime">註冊時間：</label>
-                    <input type="datetime-local" id="registrationTime" name="registrationTime" required>
+                    <input type="datetime-local" id="empRegiDate" name="empRegiDate" th:value="${emp.empRegiDate}" readonly>
                     <br>
                     <br>
-                    <label for="transportation">交通工具：</label>
-                    <select id="transportation" name="transportation">
-                        <option value="car">汽車</option>
-                        <option value="motor">機車</option>
-                    </select>
+                    <label for="empLicense">交通工具：</label>
+                    <input type="text" id="empLicense" name="empLicense" th:value="${emp.empLicense}? '機車' : '汽車'" readonly>
                     <br>
                     <br>
-                    <label for="workShift">工作時段：</label>
-                    <select id="workShift" name="workShift">
-                        <option value="morning">早上10點~下午5點</option>
-                        <option value="night">下午5點~晚上10點</option>
-                    </select>
+                    <label for="timeID">工作時段ID：</label>
+                    <input type="text" id="timeID" name="timeID" th:value="${emp.timeID}" readonly>
                     <br>
                     <br>
-                    <label for="workLocation1">工作地區-第一順位：</label>
-                    <select id="workLocation1" name="workLocation1">
-                        <option value="area1">北投區</option>
-                        <option value="area2">士林區</option>
-                        <option value="area3">中山區</option>
-                        <option value="area4">內湖區</option>
-                        <option value="area5">大同區</option>
-                        <option value="area6">松山區</option>
-                        <option value="area7">萬華區</option>
-                        <option value="area8">中正區</option>
-                        <option value="area9">大安區</option>
-                        <option value="area10">信義區</option>
-                        <option value="area11">南港區</option>
-                        <option value="area12">文山區</option>
-                    </select>
+                    <label for="empArea1">第一順位工作區：</label>
+                    <input type="text" id="empArea1" name="empArea1" th:value="${emp.empArea1}" readonly>
                     <br>
                     <br>
-                    <label for="workLocation2">工作地區-第二順位：</label>
-                    <select id="workLocation2" name="workLocation2">
-                        <option value="area13">北投區</option>
-                        <option value="area14">士林區</option>
-                        <option value="area15">中山區</option>
-                        <option value="area16">內湖區</option>
-                        <option value="area17">大同區</option>
-                        <option value="area18">松山區</option>
-                        <option value="area19">萬華區</option>
-                        <option value="area20">中正區</option>
-                        <option value="area21">大安區</option>
-                        <option value="area22">信義區</option>
-                        <option value="area23">南港區</option>
-                        <option value="area24">文山區</option>
-                    </select>
+                    <label for="empArea2">第二順位工作區：</label>
+                    <input type="text" id="empArea2" name="empArea2" th:value="${emp.empArea2}" readonly>
                     <br>
                     <br>
-                    <label for="workLocation3">工作地區-第三順位：</label>
-                    <select id="workLocation3" name="workLocation3">
-                        <option value="area25">北投區</option>
-                        <option value="area26">士林區</option>
-                        <option value="area27">中山區</option>
-                        <option value="area28">內湖區</option>
-                        <option value="area29">大同區</option>
-                        <option value="area30">松山區</option>
-                        <option value="area31">萬華區</option>
-                        <option value="area32">中正區</option>
-                        <option value="area33">大安區</option>
-                        <option value="area34">信義區</option>
-                        <option value="area35">南港區</option>
-                        <option value="area36">文山區</option>
-                    </select>
+                    <label for="empArea3">第三順位工作區：</label>
+                    <input type="text" id="empArea3" name="empArea3" th:value="${emp.empArea3}" readonly>
                     <br>
                     <br>
-                    <label for="salaryBank">薪資金融機構：</label>
-                    <input type="text" id="salaryBank" name="salaryBank" required>
+                    <label for="bankCode">薪資金融機構：</label>
+                    <input type="text" id="bankCode" name="bankCode" th:value="${emp.bankCode}" readonly>
                     <br>
                     <br>
-                    <label for="salaryAccount">薪資戶帳號：</label>
-                    <input type="text" id="salaryAccount" name="salaryAccount" required>
+                    <label for="accountNo">薪資戶帳號：</label>
+                    <input type="text" id="accountNo" name="accountNo" th:value="${emp.accountNo}" readonly>
                     <br>
                     <br>
                     <!-- 身分證圖片顯示區 -->
-                    <div id="idImageDisplay">
-                        <img src="example_id_image.jpg" alt="身分證照片(正面)">
+                    <div id="IDF">
+                        <img th:src="${emp.IDF}" alt="身分證照片(正面)">
                     </div>
                     <br>
                     <br>
                     <!-- 身分證圖片顯示區 -->
-                    <div id="idImageDisplay2">
-                        <img src="example_id_image2.jpg" alt="身分證照片(背面)">
+                    <div id="IDB">
+                        <img th:src="${emp.IDB}" alt="身分證照片(背面)">
                     </div>
                     <br>
                     <br>
                     <!-- 汽機車駕照圖片顯示區 -->
-                    <div id="driveImageDisplay">
-                        <img src="example_drive_image.jpg" alt="汽機車駕照圖片">
+                     <div id="licenseF">
+                        <img th:src="${emp.licenseF}" alt="汽機車駕照(正面)">
                     </div>
                     <br>
                     <br>
                     <!-- 三個按鈕 -->
                     <button type="button" onclick="history.back()">回上一頁</button>
-                    <button type="button" name="modify">修改</button>
-                    <button type="submit" name="suspend">停權</button>
+                    
+                    <button type="submit" class="sl_sp_badge" th:text="${emp.empIsSuspended} ? '啟用' : '停權'"></button>
                 </form>
                 
                 <tfoot>
@@ -163,9 +110,9 @@
     <div class="footerPage"></div>
 
 
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/jquery-3.7.1.min.js"></script>
-    <script src="./js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script>
         new DataTable('#example');
     </script>

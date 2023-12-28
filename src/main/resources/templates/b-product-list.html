@@ -31,8 +31,7 @@
 	--bs-btn-disabled-border-color: #9ac972;
 	--bs-btn-padding-x: 0.75rem;
 	--bs-btn-padding-y: 0.375rem;
-	--bs-btn-font-family:
-	--bs-btn-font-size: 1rem;
+	--bs-btn-font-family: --bs-btn-font-size: 1rem;
 	--bs-btn-font-weight: 400;
 	--bs-btn-line-height: 1.5;
 	--bs-btn-border-width: 1px;
@@ -80,8 +79,7 @@
 	--bs-btn-disabled-border-color: #9ac972;
 	--bs-btn-padding-x: 0.75rem;
 	--bs-btn-padding-y: 0.375rem;
-	--bs-btn-font-family:
-	--bs-btn-font-size: 1rem;
+	--bs-btn-font-family: --bs-btn-font-size: 1rem;
 	--bs-btn-font-weight: 400;
 	--bs-btn-line-height: 1.5;
 	--bs-btn-border-width: 1px;
@@ -139,7 +137,6 @@
 		<div class="backendSidebarPage"></div>
 		<main class="content">
 			<div>
-				<!--     <p class="p_subtitle" style="float:left; margin-top:0;">優惠碼</p> -->
 				<a th:href="add" class="sl_btn_chakan btn btn-primary"
 					style="float: right; margin-bottom: 20px;">新增</a>
 			</div>
@@ -176,16 +173,10 @@
 
 						<td>
 							<form method="get" th:action="@{/product-backen/check-detail}">
-								<button type="submit" class="sl_sp_badge" 
- 									style="background-color: #9ac972; color: white; border: solid 1px #9ac972;">查看詳情</button> 
+								<button type="submit" class="sl_sp_badge"
+									style="background-color: #9ac972; color: white; border: solid 1px #9ac972;">查看詳情</button>
 								<input type="hidden" name="pID" th:value="${product.pID}" />
 							</form>
-<!-- 							<form method="post" th:action="@{/product/getone}"> -->
-<!-- 								<button type="submit" class="sl_sp_badge" -->
-<!-- 									style="background-color: #9ac972;">查看詳情</button> -->
-<!-- 								<input type="hidden" name="pID" th:value="${product.pID}" /> <input -->
-<!-- 									type="hidden" name="action" value="getOne_For_Check" /> -->
-<!-- 							</form> -->
 						</td>
 					</tr>
 				</tbody>
@@ -202,36 +193,37 @@
 				</tfoot>
 			</table>
 
+		</main>
+	</div>
+
+	<!-- 	<div class="footerPage"></div> -->
 
 
-			<!-- 	<div class="footerPage"></div> -->
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
 
+	<script>
+		new DataTable('#example');
+	</script>
+	<script>
+		$(".backendSidebarPage").load("/backendSidebar.html");
 
-			<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-			<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-			<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		// 		const statusElements = document.querySelectorAll('.pStatus');
 
-			<script>
-				new DataTable('#example');
-			</script>
-			<script>
-				$(".backendSidebarPage").load("/backendSidebar.html");
+		// 	    // 迭代每個元素
+		// 	    statusElements.forEach(element => {
+		// 	        const status = element.textContent.trim(); // 獲取元素內文本並去除空格
 
-				// 		const statusElements = document.querySelectorAll('.pStatus');
-
-				// 	    // 迭代每個元素
-				// 	    statusElements.forEach(element => {
-				// 	        const status = element.textContent.trim(); // 獲取元素內文本並去除空格
-
-				// 	        if (status === '上架中') {
-				// 	            // 如果商品狀態為 '上架中'，添加 'status-true' 類別
-				// 	            element.classList.add('status-true');
-				// 	        } else if (status === '未上架') {
-				// 	            // 如果商品狀態為 '未上架'，添加 'status-false' 類別
-				// 	            element.classList.add('status-false');
-				// 	        }
-				// 	    });
-			</script>
+		// 	        if (status === '上架中') {
+		// 	            // 如果商品狀態為 '上架中'，添加 'status-true' 類別
+		// 	            element.classList.add('status-true');
+		// 	        } else if (status === '未上架') {
+		// 	            // 如果商品狀態為 '未上架'，添加 'status-false' 類別
+		// 	            element.classList.add('status-false');
+		// 	        }
+		// 	    });
+	</script>
 </body>
 
 </html>

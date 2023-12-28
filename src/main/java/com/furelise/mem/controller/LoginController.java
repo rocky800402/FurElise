@@ -25,7 +25,7 @@ public class LoginController {
     }
 	
     
-    @GetMapping("/member_home_alter/{memID}")
+    @GetMapping("/member/info/{memID}")
 	public String memInfo(@PathVariable("memID") Integer memID, Model model, HttpSession session) {
 		Mem mem = (Mem) session.getAttribute("mem");
 		model.addAttribute("mem", mem);
@@ -39,7 +39,7 @@ public class LoginController {
 	}
     
     
-    @GetMapping("/emp_home_alter/{empID}")
+    @GetMapping("/emp/info/{empID}")
 	public String empInfo(@PathVariable("empID") Integer empID, Model model, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("emp");
 		model.addAttribute("emp", emp);

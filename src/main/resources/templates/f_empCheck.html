@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 
 
@@ -6,90 +7,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="css/backend_form.css">
-    <link rel="stylesheet" href="css/empbackend.css">
+    <link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/backend_form.css}">
+    <link rel="stylesheet" th:href="@{/css/empbackend.css}">
 </head>
 
-
 <body>
-    
-
-
     <div class="container">
         <div class="backendSidebarPage"></div>
         <main class="content">
             <p class="p_title">夥伴管理 > 註冊審查</p>
             <table id="example" class="display" style="width:100%">
+            
+                <form th:action="@{/emp/changeStatus}" method="post" th:value="${emp.empID}">
                 
-
-                
-
-                <form action="#" method="post">
-                    <label for="partnerName">夥伴姓名：</label>
-                    <input type="text" id="partnerName" name="partnerName" required>
+                	<label for="empID">夥伴ID：</label>
+                    <input type="text" id="empID" name="empID" th:value="${emp.empID}" readonly>
                     <br>
                     <br>
-                    <label for="birthday">生日：</label>
-                    <input type="date" id="birthday" name="birthday" required>
+                    <label for="empName">夥伴姓名：</label>
+                    <input type="text" id="empName" name="empName" th:value="${emp.empName}" readonly>
                     <br>
                     <br>
-                    <label for="phone">手機號碼：</label>
-                    <select id="phone" name="phone">
-                        <option value="mobile">0912-345678</option>
-                        <option value="home">0988-654321</option>
-                    </select>
+                    <label for="empBirth">夥伴生日：</label>
+                    <input type="text" id="empBirth" name="empBirth" th:value="${emp.empBirth}" readonly>
                     <br>
                     <br>
-                    <label for="IDnumber">身分證號碼：</label>
-                    <input type="text" id="IDnumber" name="IDnumber" required>
+                    <label for="phone">夥伴電話：</label>
+                    <input type="text" id="phone" name="empTel" th:value="${emp.empTel}" readonly>
                     <br>
                     <br>
-                    <label for="transportation">交通工具：</label>
-                    <select id="transportation" name="transportation">
-                        <option value="car">汽車</option>
-                        <option value="motor">機車</option>
-                    </select>
+                    <label for="IDNumber">身分證號碼：</label>
+                    <input type="text" id="IDNumber" name="IDNumber" th:value="${emp.IDNumber}" readonly>
+                    <br>
+                    <br>
+                    <label for="empLicense">交通工具：</label>
+                    <input type="text" id="empLicense" name="empLicense" th:value="${emp.empLicense}? '機車' : '汽車'" readonly>
                     <br>
                     <br>
                     <label for="email">電子信箱：</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="empMail" th:value="${emp.empMail}" readonly>
                     <br>
                     <br>
-                    <label for="applyDate">申請審查日期：</label>
-                    <input type="date" id="applyDate" name="applyDate" required>
+                    <label for="registrationTime">註冊時間：</label>
+                    <input type="datetime-local" id="empRegiDate" name="empRegiDate" th:value="${emp.empRegiDate}" readonly>
                     <br>
                     <br>
-                    <label for="workShift">工作時段：</label>
-                    <select id="workShift" name="workShift">
-                        <option value="morning">早上10點~下午5點</option>
-                        <option value="night">下午5點~晚上10點</option>
-                    </select>
+                    <label for="timeID">工作時段ID：</label>
+                    <input type="text" id="timeID" name="timeID" th:value="${emp.timeID}" readonly>
                     <br>
                     <br>
                     <!-- 身分證圖片顯示區 -->
-                    <div id="idImageDisplay">
-                        <img src="example_id_image.jpg" alt="身分證照片(正面)">
+                    <div id="IDF">
+                        <img th:src="${emp.IDF}" alt="身分證照片(正面)">
                     </div>
                     <br>
                     <br>
                     <!-- 身分證圖片顯示區 -->
-                    <div id="idImageDisplay2">
-                        <img src="example_id_image2.jpg" alt="身分證照片(背面)">
+                    <div id="IDB">
+                        <img th:src="${emp.IDB}" alt="身分證照片(背面)">
                     </div>
                     <br>
                     <br>
                     <!-- 汽機車駕照圖片顯示區 -->
-                    <div id="driveImageDisplay">
-                        <img src="example_drive_image.jpg" alt="汽機車駕照圖片">
+                     <div id="licenseF">
+                        <img th:src="${emp.licenseF}" alt="汽機車駕照(正面)">
                     </div>
                     <br>
                     <br>
-                    <!-- 三個按鈕 -->
-                    
-                    <button type="button" name="modify">審核成功</button>
-                    <button type="submit" name="suspend">審核失敗</button>
+                    <label for="newStatus">新的審核狀態:</label>
+				    <select id="newStatus" name="newStatus" th:value="newStatus" required>
+				    
+				        <option value="0">未通過</option>
+				        <option value="1">已通過</option>
+				        <option value="2">審核中</option>
+				    </select>
+				    
+                    <!-- 三個按鈕 -->           
+                    <button type="button" onclick="history.back()">回上一頁</button>
+<!--                <button type="submit" name="suspend">審核失敗</button> -->
+					<button type="submit">提交</button>
                 </form>
                 
                 <tfoot>
@@ -108,9 +107,9 @@
     <div class="footerPage"></div>
 
 
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/jquery-3.7.1.min.js"></script>
-    <script src="./js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script>
         new DataTable('#example');
     </script>

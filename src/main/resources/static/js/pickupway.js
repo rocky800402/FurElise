@@ -1,7 +1,7 @@
 // 載入
 function init() {
 	$.ajax({
-		url: "http://localhost:8080/pickupway/all", // 資料請求的網址
+		url: "/pickupway/all", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -44,7 +44,7 @@ $("button#task_add").on("click", function() {
 			};
 
 			$.ajax({
-				url: "http://localhost:8080/pickupway/adding", // 資料請求的網址
+				url: "/pickupway/adding", // 資料請求的網址
 				type: "POST", // GET | POST | PUT | DELETE | PATCH
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
@@ -76,7 +76,7 @@ $(document).on("click", "input#del", function() {
 		let wayID = $(this).closest('tr').data('wayid');
 		let that = this;
 		$.ajax({
-			url: "http://localhost:8080/pickupway/deleting",           // 資料請求的網址
+			url: "/pickupway/deleting",           // 資料請求的網址
 			type: "DELETE",
 			contentType: "application/json", // Set the content type to JSON
 			data: JSON.stringify({ "wayID": wayID }), // Convert the data to JSON                  // GET | POST | PUT | DELETE | PATCH
@@ -121,7 +121,7 @@ $("button#task_update").on("click", function() {
 			"wayName": update_text
 		}
 		$.ajax({
-			url: "http://localhost:8080/pickupway/updating",           // 資料請求的網址
+			url: "/pickupway/updating",           // 資料請求的網址
 			type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
 			// data: { "wayID": wayID, "wayName": wayName },                // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
@@ -132,7 +132,7 @@ $("button#task_update").on("click", function() {
 
 			success: function(data) {//第一層子元素為li標籤
 				alert('更改成功！');
-				window.location.href = '/furelise/pickupway/';
+				window.location.href = '/pickupway/';
 			},
 
 			complete: function() {

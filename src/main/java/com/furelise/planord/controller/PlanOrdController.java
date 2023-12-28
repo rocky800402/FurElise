@@ -90,18 +90,12 @@ public class PlanOrdController {
 	public String planShop() {
 		return "planord_shop";
 	}
-	
-	//return view, not in use currently
-	@GetMapping("/cart")
-	public String planCart() {
-		return "planord_cart";
-	}
 
 	// create planName drop down menu
 	@GetMapping("/planname")
 	@ResponseBody
-	public List<Object[]> getAllPlanNames() {
-		return planOrdSvc.findDistinctPlanNamesPriceLiter();
+	public List<Plan> getAllPlanNames() {
+		return planOrdSvc.findByTimes();
 	}
 
 	// create timeRange drop down menu
@@ -145,7 +139,7 @@ public class PlanOrdController {
 			return planOrdSvc.verifyPlanOrdPurchase(memID, planStart) ;
 			// true:可以訂 false:不可以訂
 //		} else
-//			return false;		
+//			return "login";		
 	}
 
 //	// 暫不做修改功能

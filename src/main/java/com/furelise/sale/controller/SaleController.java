@@ -87,4 +87,6 @@ public class SaleController {
         String result = saleSvc.verifyCoupon(req.getCoupon(), req.getTotal());
         return result;
     }
+    
+    
 }
