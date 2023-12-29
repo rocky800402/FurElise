@@ -247,8 +247,6 @@ public class PlanOrdService {
 		return cityDao.findAll();
 	}
 
-	
-	
 //	//取得各方案可選的收取次數 //沒完成
 //	public List<Integer> getTimeByPlanName(){
 //		List<Plan> planList = planDao.findAll();
@@ -256,31 +254,6 @@ public class PlanOrdService {
 //			p.getTimes();
 //		}
 //		return planDao.findTimeByPlanName(null)
-//	}
-	
-	// 取得月數 //沒用到
-//	private Integer getPeriod(Integer periodID) {
-//		return periodDao.findById(periodID).get().getPlanPeriod();
-//	}
-
-//	// 取得方案價格 //沒用到
-//	private BigDecimal getPlanPrice(Integer planID, Integer periodID) {
-//		// 拿月數
-//		Integer planPeriod = getPeriod(periodID);
-//		System.out.println("planPeriod: " + planPeriod);
-//		// 拿到方案
-//		Plan plan = planDao.findById(planID).get();
-//		System.out.println(plan);
-//		// 方案價格*月數
-//		return plan.getPlanPrice().multiply(new BigDecimal(planPeriod));
-//	}
-
-//	// 計算結束日期 //沒用到
-//	private Date getEndDate(Date planStart, Integer periodID) {
-//		Integer planPeriod = getPeriod(periodID);
-//		LocalDate ld = planStart.toLocalDate();
-//		Date planEnd = Date.valueOf(ld.plusDays(planPeriod * 28 - 1));
-//		return planEnd;
 //	}
 	
 }

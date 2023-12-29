@@ -2,7 +2,7 @@
 
 function planName_selector() {
 	$.ajax({
-		url: "/planord/planname", // 資料請求的網址
+		url: "/planmall/planname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -22,7 +22,7 @@ function planName_selector() {
 
 function pickupTime_selector() {
 	$.ajax({
-		url: "/planord/timerange", // 資料請求的網址
+		url: "/planmall/timerange", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -40,7 +40,7 @@ function pickupTime_selector() {
 
 function period_selector() {
 	$.ajax({
-		url: "/planord/planperiod", // 資料請求的網址
+		url: "/planmall/planperiod", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -60,7 +60,7 @@ function period_selector() {
 
 function way_selector() {
 	$.ajax({
-		url: "/planord/wayname", // 資料請求的網址
+		url: "/planmall/wayname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -79,7 +79,7 @@ function way_selector() {
 
 function city_selector() {
 	$.ajax({
-		url: "/planord/citycode", // 資料請求的網址
+		url: "/planmall/citycode", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -99,7 +99,7 @@ function city_selector() {
 //上架新方案
 function new_plan() {
 	$.ajax({
-		url: "/planord/planname", // 資料請求的網址
+		url: "/planmall/planname", // 資料請求的網址
 		type: "GET", // GET | POST | PUT | DELETE | PATCH
 		// data: { user_id: user_id }, // 將物件資料(不用雙引號) 傳送到指定的 url
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
@@ -137,7 +137,7 @@ $(document).on("click", "button#show_sale", function() {
 			if (times == weekdayChoice) {
 
 				$.ajax({
-					url: "/planord/checkenddate", // 資料請求的網址
+					url: "/planmall/checkenddate", // 資料請求的網址
 					type: "POST", // GET | POST | PUT | DELETE | PATCH
 					// data: { "planStart": planStart }, // 將物件資料(不用雙引號) 傳送到指定的 url
 					data: JSON.stringify({ "planStart": planStart }),
