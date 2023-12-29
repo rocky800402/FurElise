@@ -2,228 +2,232 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>購物車</title>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/css/bootstrap.min.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/mallStyles.css}">
-<!-- <script th:src="'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'"></script> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/mallStyles.css}">
+    <!-- <script th:src="'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'"></script> -->
 
-<style type="text/css">
-.form-select{
-width: 600px;
-}
-.mb-3{
-width: 600px;
-}
-</style>
+    <style type="text/css">
+        .form-select {
+            width: 600px;
+        }
+
+        .mb-3 {
+            width: 600px;
+        }
+    </style>
 </head>
 
 <body style="background-color: #fff;">
-	<header class="headerPage"></header>
+    <header class="headerPage"></header>
 
-	<div
-		style="display: flex; align-items: center; justify-content: center">
-		<main class="content" style="min-height: 1000px;">
+    <div style="display: flex; align-items: center; justify-content: center">
+        <main class="content" style="min-height: 1000px;">
 
-    <!-- 購物車商品列表 -->
-    <div th:id="${product.key.pID}" class="card mb-3" th:each="product : ${cartEntrtSet}" style="width: 600px">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <!-- 商品圖片 -->
-                <img th:src="@{/product/DBGifReader(pID=${product.key.pID}, image=1)}" alt="Product Image" class="img-fluid rounded-start" width="300px" height="300px">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body" style="width: 500px;">
-                    <a th:href="@{/shopmall/getone/{pID}(pID=${product.key.pID})}" style="color: black;">
-                    <input name="pID" th:value="${product.key.pID}" type="hidden"></p>
-                        <!-- 商品名稱 -->
-                        <h5 class="card-title" th:utext="${product.key.pName}" style="margin-top: 20px;">Product Name</h5>
-                    </a>
-                    <p style="display: inline;">單價:</p>
-                    <p style="display: inline-block; width: 60px;" class="card-title" th:utext="${product.key.pPrice}" name="pPrice">Product Price</p>
-                    <p style="display: inline;">x</p>
-                    <!-- 更新購物車商品數量的表單 -->
-                    <form th:action="@{/shopcart/update}" th:id="'updateForm' + ${product.key.pID}" style="display: inline;">
-					    <input type="hidden" name="memID" th:value="110001" />
-					    <input type="hidden" name="pID" th:value="${product.key.pID}" />
-					    <input type="number" name="quantity" min="1" th:value="${product.value}" style="width: 50px; margin-bottom: 20px;" oninput="updateQuantityWithAjax(this)"/>
-				    </form>
-                    <p style="display: inline; margin-right: 30px;">小計:</p>
-                    <p style="display: inline-block; width: 60px;" id="totalPrice" th:utext="${product.key.pPrice}*${product.value}"></p>
-                    <!-- 從購物車移除商品的表單 -->
-                    <div style="display: inline;">
-					    <img th:src="@{/images/garbagecan.png}" style="width: 30px; height: 30px; margin-left: 20px;" class="deleteBtn" th:data-product-id="${product.key.pID}" type="button">
-					    <input type="hidden" name="pID" th:value="${product.key.pID}" />
-					</div>
+            <!-- 購物車商品列表 -->
+            <div th:id="${product.key.pID}" class="card mb-3" th:each="product : ${cartEntrtSet}" style="width: 600px">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <!-- 商品圖片 -->
+                        <img th:src="@{/product/DBGifReader(pID=${product.key.pID}, image=1)}"
+                            alt="Product Image" class="img-fluid rounded-start" width="300px" height="300px">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body" style="width: 500px;">
+                            <a th:href="@{/shopmall/getone/{pID}(pID=${product.key.pID})}" style="color: black;">
+                                <input name="pID" th:value="${product.key.pID}" type="hidden"></p>
+                                <!-- 商品名稱 -->
+                                <h5 class="card-title" th:utext="${product.key.pName}" style="margin-top: 20px;">Product Name</h5>
+                            </a>
+                            <p style="display: inline;">單價:</p>
+                            <p style="display: inline-block; width: 60px;" class="card-title" th:utext="${product.key.pPrice}" name="pPrice">Product Price</p>
+                            <p style="display: inline;">x</p>
+                            <!-- 更新購物車商品數量的表單 -->
+							 <div th:action="@{/shopcart/update}" th:id="'updateForm' + ${product.key.pID}" style="display: inline;">
+                                <input type="hidden" name="memID" th:value="${#request.getParameter('memID')}" />
+                                <input type="hidden" name="pID" th:value="${product.key.pID}" />
+                                <input type="number" name="quantity" min="1" th:value="${product.value}" style="width: 50px; margin-bottom: 20px;" oninput="updateQuantityWithAjax(this)" />
+                            </div>
+
+
+
+
+                            <p style="display: inline; margin-right: 30px;">小計:</p>
+                            <p style="display: inline-block; width: 60px;" id="totalPrice" th:utext="${product.key.pPrice}*${product.value}"></p>
+                            <!-- 從購物車移除商品的表單 -->
+                            <div style="display: inline;">
+                                <img th:src="@{/images/garbagecan.png}" style="width: 30px; height: 30px; margin-left: 20px;" class="deleteBtn" th:data-product-id="${product.key.pID}" type="button">
+                                <input type="hidden" name="pID" th:value="${product.key.pID}" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <!-- 寄送方式選擇 -->
+            <label for="deliver">寄送方式：</label>
+            <select id="deliver" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;" name="deliver">
+                <option th:value="0" data-shipping-fee="120.00" selected>黑貓宅急便</option>
+            </select>
+
+            <!-- 郵遞區號 -->
+            <label for="cityCode">行政區：</label>
+            <select id="cityCode" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;" name="cityID">
+                <option th:each="city : ${cityList}" th:value="${city.cityID}" th:text="${city.cityName}"></option>
+            </select>
+
+            <!-- 詳細地址輸入框 -->
+            <label for="floor">詳細地址：</label>
+            <div class="input-group mb-3">
+                <input id="address" placeholder="必填" type="text" size="40%" required class="form-select form-select-sm" name="address">
+            </div>
+
+            <!-- 付款方式選擇 -->
+            <label for="payment">付款方式：</label>
+            <select id="payment" class="form-select form-select-sm" aria-label=".form-select-sm example" name="payment">
+                <option th:value="0">信用卡</option>
+            </select>
+            <br>
+            <hr>
+
+            <!-- 優惠碼輸入和應用按鈕 -->
+            <div style="display:flex;">
+                <div>
+                    <label for="couponInput">優惠代碼：</label><br>
+                    <input id="couponInput" type="text" style="display: inline-block" name="coupon">
+                    <button id="applyCouponBtn" class="btn btn-primary" style="background-color: #9ac972; border: #9ac972;">使用優惠代碼</button>
+                    <div id="errorContainer"></div>
+                </div>
+
+                <!-- 訂單金額資訊 -->
+                <div style="margin-left:100px;">
+                    <p style="display: inline-block; margin-right: 10px;">金額小計:</p>
+                    <input name="sum" type="hidden">
+                    <p style="display: inline-block" id="orderTotalAmount">111</p><br>
+                    <p style="display: inline-block; margin-right: 10px;">優惠折抵:</p>
+                    <input name="dis" type="hidden">
+                    <p style="display: inline-block" id="resultElement">0</p><br>
+                    <p style="display: inline-block; margin-right: 10px;">運費:
+                        <input name="shipping" type="hidden">
+                        <span id="shippingFee">120</span>
+                    </p><br>
+                    <p style="display: inline-block; margin-right: 10px;">付款金額:</p>
+                    <input name="total" type="hidden">
+                    <p style="display: inline-block" id="orderGrandTotal"></p>
+                </div>
+
+            </div>
+
+            <!-- 結帳表單 -->
+            <form th:action="@{/shopcart/checkout}" method="post" id="checkoutForm">
+                <input type="hidden" name="memID" th:value="${#request.getParameter('memID')}" />
+                <button type="submit" class="btn btn-primary" id="checkoutBtn" style="background-color: #9ac972; border: #9ac972;" name="checkoutBtn" value="submitCheckout">送出結帳</button>
+            </form>
+        </main>
     </div>
+    <footer class="footerPage"></footer>
 
-    <!-- 寄送方式選擇 -->
-    <label for="deliver">寄送方式：</label>
-    <select id="deliver" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;" name="deliver">
-        <option th:value="0" data-shipping-fee="120.00" selected>黑貓宅急便</option>
-    </select> <br>
+    <script th:src="@{/js/constant.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".headerPage").load("/header.html");
+            $(".footerPage").load("/footer.html");
 
-    <!-- 台灣郵政編碼 -->
-    <div id="twzipcode" name="cityCode"></div>
+            $('#deliver').change(function () {
+                $('#selectedOption').text($('#deliver option:selected').text());
+                var shippingFee = $('option:selected', this).data('shipping-fee');
+                $('#shippingFee').text(shippingFee);
+                recalculateOrderTotal();
+            });
 
-    <br>
+            var quantityInputs = $("input[name='quantity']");
+            quantityInputs.change(function () {
+                var quantity = parseInt($(this).val()) || 0;
+                var productPriceText = $(this).closest(".card-body").find(".card-title").text();
+                var productPrice = parseFloat(productPriceText.replace(/[^\d.-]/g, '')) || 0;
+                var totalPrice = (productPrice * quantity).toFixed(2);
+                $(this).closest(".card-body").find("#totalPrice").text(totalPrice);
+                recalculateOrderTotal();
+            });
 
-    <!-- 詳細地址輸入框 -->
-    <label for="floor">詳細地址：</label>
-    <div class="input-group mb-3">
-        <input id="address" placeholder="必填" type="text" size="40%" required class="form-select form-select-sm" style="margin-top:20px;" name="address">
-    </div>
+            var totalAmount = 0;
+            $(".card-body").each(function () {
+                var productTotalPrice = parseFloat($(this).find("#totalPrice").text()) || 0;
+                totalAmount += productTotalPrice;
+            });
 
-    <!-- 付款方式選擇 -->
-    <label for="payment">付款方式：</label>
-    <select id="payment" class="form-select form-select-sm" aria-label=".form-select-sm example" name="payment">
-        <option th:value="0">信用卡</option>
-    </select>
-    <br>
-    <hr>
+            var shippingFee = parseFloat($("#shippingFee").text()) || 0;
+            $("#orderTotalAmount").text(totalAmount.toFixed(2));
+            var orderGrandTotal = totalAmount + shippingFee;
+            $("#orderGrandTotal").text(orderGrandTotal.toFixed(2));
 
-    <!-- 優惠碼輸入和應用按鈕 -->
-   <div style="display:flex;">
-    <div>
-        <label for="couponInput">優惠代碼：</label><br>
-        <input id="couponInput" type="text" style="display: inline-block" name="coupon">
-        <button id="applyCouponBtn" class="btn btn-primary" style="background-color: #9ac972; border: #9ac972;">使用優惠代碼</button>
-        <div id="errorContainer"></div>
-    </div>
+            function recalculateOrderTotal() {
+                var totalAmount = 0;
+                $(".card-body").each(function () {
+                    var productTotalPrice = parseFloat($(this).find("#totalPrice").text()) || 0;
+                    totalAmount += productTotalPrice;
+                });
 
-    <!-- 訂單金額資訊 -->
-   
-       <div style="margin-left:100px;">
-		    <p style="display: inline-block; margin-right: 10px;">金額小計:</p>
-		    <input name="sum" type="hidden">
-		    <p style="display: inline-block" id="orderTotalAmount" >111</p><br>
-		    <p style="display: inline-block; margin-right: 10px;">優惠折抵:</p>
-		    <input name="dis" type="hidden">
-		    <p style="display: inline-block" id="resultElement">0</p><br>
-		    <p style="display: inline-block; margin-right: 10px;">運費: 
-		    	<input name="shipping" type="hidden">
-		    	<span id="shippingFee" >120</span>
-		    </p><br>
-		    <p style="display: inline-block; margin-right: 10px;">付款金額:</p>
-		    <input name="total" type="hidden">
-		    <p style="display: inline-block" id="orderGrandTotal"></p>
-		</div>
-    
-    </div>
+                var discountAmount = parseFloat($("#resultElement").text()) || 0;
+                var shippingFee = parseFloat($("#shippingFee").text()) || 0;
+                var orderGrandTotal = discountAmount + shippingFee + totalAmount;
 
-    <!-- 結帳表單 -->
-    <form th:action="@{/shopcart/checkout}" method="post" id="checkoutForm">
-	    <button type="submit" class="btn btn-primary" id="checkoutBtn" style="background-color: #9ac972; border: #9ac972;" name="checkoutBtn" value="submitCheckout">送出結帳</button>
-	</form>
-</main>
-</div>
-<footer class="footerPage"></footer>
+                $("#orderTotalAmount").text(totalAmount.toFixed(2));
+                $("#orderGrandTotal").text(orderGrandTotal.toFixed(2));
+            }
 
-<script th:src="@{/js/constant.js}"></script>
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js}"></script>
-<script type="text/javascript">
-	    $(document).ready(function () {
-	        $("#twzipcode").twzipcode();
-	        $(".headerPage").load("/header.html");
-	        $(".footerPage").load("/footer.html");
-	        
-	
-	        $('#deliver').change(function () {
-	            $('#selectedOption').text($('#deliver option:selected').text());
-	            var shippingFee = $('option:selected', this).data('shipping-fee');
-	            $('#shippingFee').text(shippingFee);
-	            recalculateOrderTotal();
-	        });
-	
-	        var quantityInputs = $("input[name='quantity']");
-	        quantityInputs.change(function () {
-	            var quantity = parseInt($(this).val()) || 0;
-	            var productPriceText = $(this).closest(".card-body").find(".card-title").text();
-	            var productPrice = parseFloat(productPriceText.replace(/[^\d.-]/g, '')) || 0;
-	            var totalPrice = (productPrice * quantity).toFixed(2);
-	            $(this).closest(".card-body").find("#totalPrice").text(totalPrice);
-	            recalculateOrderTotal();
-	        });
-	
-	        var totalAmount = 0;
-	        $(".card-body").each(function () {
-	            var productTotalPrice = parseFloat($(this).find("#totalPrice").text()) || 0;
-	            totalAmount += productTotalPrice;
-	        });
+            document.getElementById('applyCouponBtn').addEventListener('click', function () {
+                var coupon = document.getElementById('couponInput').value;
+                var orderTotalAmountElement = $("#orderTotalAmount");
 
-	        var shippingFee = parseFloat($("#shippingFee").text()) || 0;
-	        $("#orderTotalAmount").text(totalAmount.toFixed(2));
-	        var orderGrandTotal = totalAmount + shippingFee;
-	        $("#orderGrandTotal").text(orderGrandTotal.toFixed(2));
-			
-	        function recalculateOrderTotal() {
-	            var totalAmount = 0;
-	            $(".card-body").each(function () {
-	                var productTotalPrice = parseFloat($(this).find("#totalPrice").text()) || 0;
-	                totalAmount += productTotalPrice;
-	            });
-	
-	            var discountAmount = parseFloat($("#resultElement").text()) || 0;
-	            var shippingFee = parseFloat($("#shippingFee").text()) || 0;
-	            var orderGrandTotal = discountAmount + shippingFee + totalAmount;
-	
-	            $("#orderTotalAmount").text(totalAmount.toFixed(2));
-	            $("#orderGrandTotal").text(orderGrandTotal.toFixed(2));
-	        }
-	
-	        document.getElementById('applyCouponBtn').addEventListener('click', function () {
-	            var coupon = document.getElementById('couponInput').value;
-	            var orderTotalAmountElement = $("#orderTotalAmount");
-	
-	            var saleDTO = {
-	                coupon: coupon,
-	                total: orderTotalAmountElement.text().trim()
-	            };
-	
-	            var resultElement = $("#resultElement");
-	            resultElement.text('');
-	
-	            var errorContainer = $("#errorContainer");
-	            errorContainer.text('');
-	
-	            $.ajax({
-	                url: `${API_BASE_URL}/sale/coupon`,
-	                type: 'POST',
-	                contentType: 'application/json',
-	                data: JSON.stringify(saleDTO),
-	                success: function (data) {
-	                    if (data === '折扣碼不存在' || data === '未達折扣門檻') {
-	                        errorContainer.html(data);
-	                    } else {
-	                        resultElement.html(data);
-	                    }
-	                    recalculateOrderTotal();
-	                },
-	                error: function (jqXHR, textStatus, errorThrown) {
-	                    console.error('Error:', errorThrown);
-	                    errorContainer.text('折扣碼不存在');
-	                }
-	            });
-	        });
-	    });
-	    
-	    $('.deleteBtn').click(function () {
-   		 var pID = $(this).data('product-id');
-   		 
-   		 console.log('Clicked on delete button. pID:', pID);
-	            
-	            $.ajax({
-	                type: 'POST',
-	                url: `${API_BASE_URL}/shopcart/remove`,  // 修改成你的後端處理路徑
-	                data: { 'pID': pID },
+                var saleDTO = {
+                    coupon: coupon,
+                    total: orderTotalAmountElement.text().trim()
+                };
+
+                var resultElement = $("#resultElement");
+                resultElement.text('');
+
+                var errorContainer = $("#errorContainer");
+                errorContainer.text('');
+
+                $.ajax({
+                    url: `${API_BASE_URL}/sale/coupon`,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(saleDTO),
+                    success: function (data) {
+                        if (data === '折扣碼不存在' || data === '未達折扣門檻') {
+                            errorContainer.html(data);
+                        } else {
+                            resultElement.html(data);
+                        }
+                        recalculateOrderTotal();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        errorContainer.text('折扣碼不存在');
+                    }
+                });
+            });
+        });
+
+        $('.deleteBtn').click(function () {
+            var pID = $(this).data('product-id');
+            console.log('Clicked on delete button. pID:', pID);
+
+            $.ajax({
+                type: 'POST',
+                url: `${API_BASE_URL}/shopcart/remove`,  // 修改成你的後端處理路徑
+                data: { 'pID': pID },
+               
+
 	                success: function (data) {
 	                    // 處理成功回傳的資料，這裡可以根據需要進行相應的處理
 	                    console.log('Remove successful:', data);
@@ -236,25 +240,31 @@ width: 600px;
 	                }
 	            });
 	        });
-	
-	    function updateQuantityWithAjax(inputElement) {
-	        var form = $(inputElement).closest('form');
-	        var formData = form.serialize();  // 將表單資料轉為字串
+        function updateQuantityWithAjax(inputElement) {
+            var container = $(inputElement).closest('div');
+            var formData = {};
 
-	        $.ajax({
-	            type: 'POST',
-	            url: 'http://localhost:8080/shopcart/update',
-	            data: formData,
-	            success: function (data) {
-	                // 處理成功回傳的資料，這裡可以根據需要進行相應的處理
-	                console.log('Update successful:', data);
-	            },
-	            error: function (error) {
-	                // 處理錯誤情況，這裡可以根據需要進行相應的處理
-	                console.error('Update failed:', error);
-	            }
-	        });
-	    }
+            // 選擇容器中的所有輸入元素
+            container.find('input').each(function() {
+                var input = $(this);
+                formData[input.attr('name')] = input.val();
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: `${API_BASE_URL}/shopcart/update`,
+                data: formData,
+                success: function (data) {
+                    // 處理成功回傳的資料，這裡可以根據需要進行相應的處理
+                    console.log('Update successful:', data);
+                },
+                error: function (error) {
+                    // 處理錯誤情況，這裡可以根據需要進行相應的處理
+                    console.error('Update failed:', error);
+                }
+            });
+        }
+
 	</script>
 
 
