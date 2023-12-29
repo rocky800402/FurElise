@@ -92,18 +92,11 @@ public class EmpIncomeServer {
         return estabCaseRepository.findByEstabCaseEndBetweenAndStatus(startTimestamp, endTimestamp);
     }
 
-    @GetMapping("/summary")
-    public ResponseEntity<List<IncomeSummaryDTO>> getIncomeSummary(
-            @RequestParam int year,
-            @RequestParam int month,
-            @RequestParam Integer empID) {
 
-        LocalDateTime startTimestamp = LocalDateTime.of(year, month, 1, 0, 0);
-        LocalDateTime endTimestamp = LocalDateTime.of(year, month, Month.of(month).maxLength(), 23, 59, 59);
+    public List<IncomeSummaryDTO> getIncomeSummary(Integer empID) {
 
-        List<IncomeSummaryDTO> incomeSummaryList = estabCaseRepository.sumPlanPricePerCaseByMonthAndEmpID(
-                empID, startTimestamp, endTimestamp);
 
-        return new ResponseEntity<>(incomeSummaryList, HttpStatus.OK);
+        return estabCaseRepository.findTotalPlanPriceByEmpIDAndStatusGroupByMonth(empID);
     }
+
 }
