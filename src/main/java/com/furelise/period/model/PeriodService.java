@@ -17,14 +17,27 @@ public class PeriodService {
 	@Autowired
 	PlanOrdRepository planOrdDao;
 
-	public Period addPeriod(Period req) {
-		Period period = new Period(req.getPlanPeriod());
-		return dao.save(period);
+	public String addPeriod(Period req) {
+		String result = "";
+		if (!dao.existsByPlanPeriod(req.getPlanPeriod())) {
+			Period period = new Period(req.getPlanPeriod());
+			dao.save(period);
+			result = "新增成功";
+		} else {
+			result = "訂購期間已存在";
+		}
+		return result;
 	}
 
-	public Period updatePeriod(Period req) {
-		Period period = new Period(req.getPeriodID(), req.getPlanPeriod());
-		return dao.save(period);
+	public String updatePeriod(Period req) {
+		String result = "";
+		Integer oldPlanPeriod = dao.findById(req.getPeriodID()).get().getPlanPeriod();
+		if (!dao.existsByPlanPeriod(req.getPlanPeriod()) || oldPlanPeriod.equals(req.getPlanPeriod())) {
+			Period period = new Period(req.getPeriodID(), req.getPlanPeriod());
+			result = "更新成功";
+		} else
+			result = "訂購期間已存在";
+		return result;
 	}
 
 	public String deletePeriod(Integer periodID) {

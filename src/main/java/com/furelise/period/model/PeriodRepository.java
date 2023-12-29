@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PeriodRepository extends JpaRepository<Period,Integer>{
+	
+	boolean existsByPlanPeriod(Integer planPeriod);
 
 }

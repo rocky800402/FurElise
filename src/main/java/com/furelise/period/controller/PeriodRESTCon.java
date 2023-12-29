@@ -29,28 +29,15 @@ public class PeriodRESTCon {
 	@Autowired
 	PeriodService periodSvc;
 
-	//驗證
-//	
-//	@PostMapping("/adding")
-//	public Period addPeriod(@RequestBody Period req, BindingResult result) {
-//		if (!result.hasErrors())
-//			return periodSvc.addPeriod(req);
-//		else
-//			return null;
-//	}
-
-	
 	@PostMapping("/adding")
-	public Period addPeriod(@Valid @RequestBody Period req) {
+	public String addPeriod(@Valid @RequestBody Period req) {
 		return periodSvc.addPeriod(req);
 	}
-
 	
 	@PutMapping("/updating")
-	public Period updatePeriod(@Valid @RequestBody Period req) {
+	public String updatePeriod(@Valid @RequestBody Period req) {
 		return periodSvc.updatePeriod(req);
 	}
-
 	
 	@GetMapping("/all")
 	public List<Period> getAllPeriods() {
