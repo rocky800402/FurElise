@@ -34,6 +34,7 @@ public class PeriodService {
 		Integer oldPlanPeriod = dao.findById(req.getPeriodID()).get().getPlanPeriod();
 		if (!dao.existsByPlanPeriod(req.getPlanPeriod()) || oldPlanPeriod.equals(req.getPlanPeriod())) {
 			Period period = new Period(req.getPeriodID(), req.getPlanPeriod());
+			dao.save(period);
 			result = "更新成功";
 		} else
 			result = "訂購期間已存在";
