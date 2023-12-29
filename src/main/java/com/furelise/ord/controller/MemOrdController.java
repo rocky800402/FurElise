@@ -23,7 +23,7 @@ public class MemOrdController {
 
     @GetMapping
     public List<MemOrdVO> getMemOrdVO(HttpServletRequest req){
-        Mem mem = authService.validateMem(req);
+        Mem mem = (Mem) authService.validate(req, "mem");
         return memOrdService.getMemOrdList(mem.getMemID());
     }
 }

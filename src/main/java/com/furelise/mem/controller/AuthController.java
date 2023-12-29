@@ -43,7 +43,7 @@ public class AuthController {
 
     @GetMapping("/mem/me")
     public MemVO memMe(HttpServletRequest req) {
-        Mem mem = authService.validateMem(req);
+        Mem mem = (Mem) authService.validate(req, "mem");
         System.out.println(mem);
         return new MemVO(mem);
     }

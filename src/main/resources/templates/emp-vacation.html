@@ -77,174 +77,169 @@
             border-bottom: 1px solid lightgray;
             margin: 20px 0 20px 20px;
         }
-    
+
     </style>
 </head>
 <body>
-    <script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
-	<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
-    
-    
-    <div class="headerPage"></div>
-    <div class="hc_headerBox">
-        <div class="hc_headerText">會員中心</div>
-    </div>
-    <div style="width: 100%; justify-content: center; display: flex;">
+<script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script src="./js/dayjs.min.js"></script>
+<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
 
-        <div style="max-width: 1200px; display: flex;">
-            <div class="empSidebarPage"></div>
-            <!--  -->
 
-            <div style="width: 950px; padding: 20px; margin-left: 50px;">
+<div class="headerPage"></div>
+<div class="hc_headerBox">
+    <div class="hc_headerText">會員中心</div>
+</div>
+<div style="width: 100%; justify-content: center; display: flex;">
+
+    <div style="max-width: 1200px; display: flex;">
+        <div class="empSidebarPage"></div>
+        <!--  -->
+
+        <div style="width: 950px; padding: 20px; margin-left: 50px;">
             <!-- 寫在這裡 -->
-                <p style="font-size: 25px; font-weight: bold; display: inline-block;">已請假日</p>
-                <!-- <select name="emp_vacation_month" style="width: 130px; margin-left: 150px;">
-                    <option selected>2023/12</option>
-                    <option>2023/11</option>
-                    <option>2023/10</option>
-                    <option>2023/09</option>
-                    <option>2023/08</option>
-                </select> -->
+            <p style="font-size: 25px; font-weight: bold; display: inline-block;">已請假日</p>
+            <!-- <select name="emp_vacation_month" style="width: 130px; margin-left: 150px;">
+                <option selected>2023/12</option>
+                <option>2023/11</option>
+                <option>2023/10</option>
+                <option>2023/09</option>
+                <option>2023/08</option>
+            </select> -->
 
-                <div class="emp_vacationBox">
-                    <div>
-                        <span style="margin-left: 20px; border-bottom: 1px solid lightgray;">開始休假日</span>
-                        <span style="margin-left: 100px; border-bottom: 1px solid lightgray;">結束休假日</span>
-                        <ul class="emp_vacaList">
-                            <li><span>2023/10/01</span><span style="margin-left: 110px;">2023/10/12</span></li>
-                            
-                        </ul>
-                    </div>
-                </div>
-                
+            <div class="emp_vacationBox">
                 <div>
-                    <p>開始休假日</p>
-                    <input type="date" name="emp_vacationFrom" id="emp_vaStart">
-                    <p>結束休假日</p>
-                    <input type="date" name="emp_vacationTo" id="emp_vaEnd">
-                    <br>
-                    <button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn" id="sendVa_btn">送出假單</button>
-                </div>
+                    <span style="margin-left: 20px; border-bottom: 1px solid lightgray;">開始休假日</span>
+                    <span style="margin-left: 100px; border-bottom: 1px solid lightgray;">結束休假日</span>
+                    <ul class="emp_vacaList">
 
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <p>開始休假日</p>
+                <input type="date" name="emp_vacationFrom" id="emp_vaStart">
+                <p>結束休假日</p>
+                <input type="date" name="emp_vacationTo" id="emp_vaEnd">
+                <br>
+                <button type="button" class="btn btn-primary btn-lg hc_mem_saveBtn" id="sendVa_btn">送出假單</button>
             </div>
 
         </div>
+
     </div>
-    
-    
-   
+</div>
 
-    <div class="footerPage"></div>
-    
-    <script>
-        function init(){
-            // emp_tag更改到
-            // $("li").removeClass("emp_tag");
-            // $("ul li:nth-child(5)").addClass("emp_tag");
-            
-            
-            function getEmpIDFromURL() {
-	    		// 獲取當前網頁的 URL
-	    		var url = window.location.href;
-	
-	    		// 使用正則表達式提取 URL 中的 empID，這裡假設 empID 是數字
-	    		var match = url.match(/\/vacation\/(\d+)/);
-	
-	    		// 如果匹配成功，返回提取到的 empID，否則返回 null
-	    		return match ? parseInt(match[1], 10) : null;
-			}
 
-			// 使用示例
-			var empID = getEmpIDFromURL();
-			
-			if (empID !== null) {
-			    console.log("EmpID found in URL:", empID);
-			    // 發送 AJAX 請求
-			    $.ajax({
-	                url: `${API_BASE_URL}/vacation/${empID}/all`,
-	                type: "GET",
-	                contentType: "application/json",
-	                //data: JSON.stringify({
-	                //    "empID": empID
-	                //}),
-	                success: (data) => {
-	                    console.log("getting all holidays of emp successfully");
-	                    console.log(data);
+<div class="footerPage"></div>
 
-	                    let list_html = "";
+<script>
+    function init(){
+        // emp_tag更改到
+        // $("li").removeClass("emp_tag");
+        // $("ul li:nth-child(5)").addClass("emp_tag");
+        const qVaStart = $("#emp_vaStart")
+        const today = dayjs().format('YYYY-MM-DD')
+        qVaStart.attr("min", today)
+        const qVaEnd = $("#emp_vaEnd")
+        qVaEnd.attr("min", today)
 
-	                 	// Assuming data is an array of objects
-	                    $.each(data, function(index, item){
-            				list_html += `<li><span>${item.vaStart}</span><span style="margin-left: 110px;">${item.vaEnd}</span></li>`;
-        				});
+        function getEmpIDFromURL() {
+            // 獲取當前網頁的 URL
+            var url = window.location.href;
 
-	                    // 插入到指定的元素
-	                    $(".emp_vacaList").html(list_html);
-	                },
-	                error: function(xhr){      
-	                    console.log("error");
-	                    console.log(xhr);
-	                }
-	            });
-			} else {
-   				console.log("EmpID not found in URL");
-			}
+            // 使用正則表達式提取 URL 中的 empID，這裡假設 empID 是數字
+            var match = url.match(/\/vacation\/(\d+)/);
 
-            $("#sendVa_btn").on("click", function(){
-            	
-            	if ($("#emp_vaStart").val() == null || $("#emp_vaEnd").val() == null) {
-            		
-            	} else {
-            		
-            		$.ajax({
-                        url: `${API_PATH}/vacation/${empID}/add`,
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            vaStart: $("#emp_vaStart").val(),
-                            vaEnd: $("#emp_vaEnd").val()
-                        }),
-                        beforeSend: function(){
-                            $("#sendVa_btn").addClass("-disabled");
-                        },
-                        success: (data) => {
+            // 如果匹配成功，返回提取到的 empID，否則返回 null
+            return match ? parseInt(match[1], 10) : null;
+        }
 
-                            console.log("add new vacation into vacation list");
+        // 使用示例
+        // var empID = getEmpIDFromURL();
 
-                            let list_html = "";
+        // 發送 AJAX 請求
+        $.ajax({
+            url: `${API_PATH}/vacation`,
+            type: "GET",
+            contentType: "application/json",
+            success: (data) => {
+                let list_html = "";
 
-                            list_html +=
-                                `<li><span>${data.vaStart}</span><span style="margin-left: 110px;">${data.vaEnd}</span></li>`
+                // Assuming data is an array of objects
+                $.each(data, (index, item) => {
+                    list_html += `<li><span>${item.vaStart}</span><span style="margin-left: 110px;">${item.vaEnd}</span></li>`;
+                });
 
-                            $(".emp_vacaList").prepend(list_html);
-                            $("#emp_vaStart").val("");
-                            $("#emp_vaEnd").val("");
+                // 插入到指定的元素
+                $(".emp_vacaList").html(list_html);
+            },
+            error: (xhr) => {
+                console.log(xhr);
 
-                        },
-                        complete: function(){
-                            $("#sendVa_btn").removeClass("-disabled");
-                            //location.reload();
-                        }
-                    });
-            		
-            	}
+            }
+        });
 
-                
+        $("#sendVa_btn").on("click", () => {
+            const vaStart = qVaStart.val()
+            if(!vaStart) {
+                alert('必須選一個開始休假日')
+                return
+            }
 
+            const vaEnd = qVaEnd.val()
+            if(!vaEnd) {
+                alert('必須選一個結束休假日')
+                return
+            }
+
+            $.ajax({
+                url: `${API_PATH}/vacation`,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    vaStart: vaStart,
+                    vaEnd: vaEnd
+                }),
+                beforeSend: () => {
+                    $("#sendVa_btn").addClass("-disabled");
+                },
+                success: (data) => {
+
+                    console.log("add new vacation into vacation list");
+
+                    let list_html = "";
+
+                    list_html +=
+                        `<li><span>${data.vaStart}</span><span style="margin-left: 110px;">${data.vaEnd}</span></li>`
+
+                    $(".emp_vacaList").prepend(list_html);
+                    qVaStart.val("");
+                    qVaEnd.val("");
+
+                },
+                complete: () => {
+                    $("#sendVa_btn").removeClass("-disabled");
+                    //location.reload();
+                },
+                error: (xhr) => {
+                    console.log("error");
+                    var errorMessage = xhr.responseText;
+                    alert(errorMessage)
+                }
             });
+        });
+    };
 
 
-        };
+    window.addEventListener("load", init);
+</script>
 
-
-        window.addEventListener("load", init);
-    </script>
-
-    <script>
-        $(".headerPage").load("/header.html");
-        $(".footerPage").load("/footer.html");
-        $(".empSidebarPage").load("/empSidebar.html");
-        </script>
+<script>
+    $(".footerPage").load("/footer.html");
+    $(".empSidebarPage").load("/empSidebar.html");
+</script>
 </body>
 </html>
