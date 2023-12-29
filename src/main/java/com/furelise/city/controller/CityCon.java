@@ -50,13 +50,15 @@ public class CityCon {
 		if (result.hasErrors()) {
 			return "b_city_create";
 		} else {
-			// true: break; false: proceed
-			boolean proceed = citySvc.addCity(city);
-			if (proceed) {
-				return "redirect:/city/all";
-			} else {
-				model.addAttribute("errorMessage", "郵遞區號已存在");
+			String proceed = citySvc.addCity(city);
+			if (proceed.equals("duplicated cityCode")) {
+				model.addAttribute("errorMessage1", "郵遞區號已存在");
 				return "b_city_create";
+			} else if (proceed.equals("duplicated cityName")) {
+				model.addAttribute("errorMessage2", "區域已存在");
+				return "b_city_create";
+			} else {
+				return "redirect:/city/all";
 			}
 		}
 	}
@@ -72,19 +74,23 @@ public class CityCon {
 	@PostMapping("/update")
 	public String cityUpdate(@Valid City city, BindingResult result, @RequestParam Integer cityID, Model model) {
 		String oldCityCode = citySvc.getCityById(cityID).getCityCode();
+		String oldCityName = citySvc.getCityById(cityID).getCityName();
 		if (result.hasErrors()) {
 			return "b_city_update";
 		} else {
-			boolean proceed = citySvc.updateCity(city, oldCityCode);
-			if(proceed) 
-				return "redirect:/city/all";
-			else {
-				model.addAttribute("errorMessage", "郵遞區號已存在");
+			String proceed = citySvc.updateCity(city, oldCityCode, oldCityName);
+			if (proceed.equals("duplicated cityCode")) {
+				model.addAttribute("errorMessage1", "郵遞區號已存在");
 				return "b_city_update";
+			} else if (proceed.equals("duplicated cityName")) {
+				model.addAttribute("errorMessage2", "區域已存在");
+				return "b_city_update";
+			} else {
+				return "redirect:/city/all";
 			}
 		}
 	}
-	
+
 //	@PostMapping("/update")
 //	public String cityUpdate(@Valid @ModelAttribute City city, BindingResult result, Model model) {
 //		if (result.hasErrors()) {

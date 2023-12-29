@@ -14,25 +14,34 @@ public class CityService {
 	@Autowired
 	CityRepository dao;
 
-	public boolean addCity(City city) {
-		//verify if cityCode duplicated
-		boolean proceed = false;
-		if (!dao.existsByCityCode(city.getCityCode())) {
+	public String addCity(City city) {
+		//verify if cityCode/cityName duplicated
+		String result = "";
+		if (dao.existsByCityCode(city.getCityCode())) {
+			result = "duplicated cityCode";
+		} else if (dao.existsByCityName(city.getCityName())) {
+			result = "duplicated cityName";
+		} else {
 			dao.save(city);
-			proceed = true;
+			result = "added successfully";
 		}
-		return proceed;
+		return result;
 	}
 	
-	public boolean updateCity(City city, String oldCityCode) {
-//		verify if cityCode duplicated, only accept original or unique one
-		boolean proceed = false;
+	public String updateCity(City city, String oldCityCode, String oldCityName) {
+//		verify if cityCode/cityName duplicated, only accept original or unique one
+		String result = "";
 		String newCityCode = city.getCityCode();
-		if (newCityCode.equals(oldCityCode) || !dao.existsByCityCode(newCityCode)) {
+		String newCityName = city.getCityName();
+		if (!newCityCode.equals(oldCityCode) && dao.existsByCityCode(newCityCode)) {
+			result = "duplicated cityCode";
+		} else if (!newCityName.equals(oldCityName) && dao.existsByCityName(newCityName)) {
+			result = "duplicated cityName";
+		} else {
 			dao.save(city);
-			proceed = true;
+			result = "updated successfully";
 		}
-		return proceed;
+		return result;
 	}
 	
 //	public boolean updateCity(City city) {
