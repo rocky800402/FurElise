@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/emp_sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
     <link rel="stylesheet" th:href="@{/css/jack_ongoingCases.css}">
 </head>
 
@@ -165,9 +166,40 @@
 
 <div class="footerPage"></div>
 <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/js/jack_ongoingCases.js}"></script>
+
 <script>
+
+    $(document).ready(function () {
+        var modal = $('#exampleModal2');
+
+        $('.jack_button_return').click(function () {
+            console.log("有進來");
+            modal.modal('show');
+        });
+
+    });
+
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("/empSidebar.html");
+
+
+        function showReportIssuePopup() {
+            // 取得浮動框元素
+            var popup = document.querySelector('.jack_report_issue_popup');
+            // 顯示浮動框
+            popup.style.display = 'block';
+        }
+
+        function hideReportIssuePopup() {
+            // 取得浮動框元素
+            var popup = document.querySelector('.jack_report_issue_popup');
+            // 隱藏浮動框
+            popup.style.display = 'none';
+        }
+
+
     function redirectToCompletedPage() {
         var estabCaseID = [[${empOngoingCase.estabCaseID}]];
         const files = $('#myFile').prop('files')
