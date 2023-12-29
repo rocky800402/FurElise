@@ -1,5 +1,7 @@
 package com.furelise.ecpay.payment.integration;
 
+import java.nio.file.Paths;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -35,8 +37,9 @@ public class AllInOneBase {
 //			String configPath = URLDecoder.decode(classLoader.getResource("/payment_conf.xml").getPath(), "UTF-8");
 //			doc = EcpayFunction.xmlParser(configPath);
 			/* when using testing code*/
-			String paymentConfPath = "./src/main/resources/payment_conf.xml";
-			doc = EcpayFunction.xmlParser(paymentConfPath);
+			String paymentConfPath = "src/main/resources/payment_conf.xml";
+			String uriString = Paths.get(paymentConfPath).toUri().toString();
+			doc = EcpayFunction.xmlParser(uriString);
 			
 			doc.getDocumentElement().normalize();
 			//OperatingMode
