@@ -1,8 +1,10 @@
 package com.furelise.estabcase.controller;
 
 import com.furelise.estabcase.empcasemanage.EmpIncomeServer;
+import com.furelise.estabcase.empcasemanage.IncomeSummaryDTO;
 import com.furelise.estabcase.model.EstabCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +63,7 @@ public class EmpIncomeRSTNCon {
         return ResponseEntity.ok(mappingInf);
     }
 
-//    @PostMapping("/byMonth")
+    //    @PostMapping("/byMonth")
 //    public List<EstabCase> getEstabCasesByMonth(@RequestParam int year, @RequestParam int month) {
 //        return empIncomeServer.getEstabCasesByMonth(year, month);
 //    }
@@ -72,6 +74,15 @@ public class EmpIncomeRSTNCon {
         int month = params.get("month");
 
         return empIncomeServer.getEstabCasesByMonth(year, month);
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<List<IncomeSummaryDTO>> getIncomeSummary(
+            @RequestParam Integer empID) {
+
+        List<IncomeSummaryDTO> incomeSummaryList = empIncomeServer.getIncomeSummary(empID);
+
+        return new ResponseEntity<>(incomeSummaryList, HttpStatus.OK);
     }
 }
 

@@ -38,6 +38,7 @@
             <div class="jack_container">
                 <div class="container mt-5">
                     <canvas id="incomeChart" width="400" height="200"></canvas>
+                    <!-- 長條圖顯示-->
                 </div>
             </div>
 
@@ -62,7 +63,7 @@
                         </div>
 
                         <div id="total">
-                            <!--                            <p>本期收入: </p>-->
+                            <!-- <p>本月總收入: </p>-->
                         </div>
                     </div>
                     <table id="example" class="display" style="width:100%">
@@ -315,10 +316,10 @@
                 `;
                 }else {
                     document.getElementById('mappingInf').innerHTML = `
-                    <span>本期收入: ${data.totalPlanPrice}</span>
+                    <span>本月總收入: ${data.totalPlanPrice}</span>
                 `;
                     document.getElementById('total').innerHTML = `
-                    <span>本期收入: ${data.totalPlanPrice}</span>
+                    <span>本月總收入: ${data.totalPlanPrice}</span>
                 `;
                 }
             })

@@ -75,16 +75,16 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
 
 
 
-    @Query("SELECT SUM(e.planPricePerCase) " +
+
+
+
+    @Query("SELECT NEW com.furelise.estabcase.empcasemanage.IncomeSummaryDTO(" +
+            "YEAR(e.estabCaseEnd), MONTH(e.estabCaseEnd), SUM(e.planPricePerCase)) " +
             "FROM EstabCase e " +
-            "WHERE e.estabCaseEnd >= :startTimestamp " +
-            "AND e.estabCaseEnd <= :endTimestamp " +
-            "AND e.estabCaseStatus = 1 " +
+            "WHERE e.estabCaseStatus = 1 " +
             "AND e.takeStatus = TRUE " +
             "AND e.empID = :empID " +
-            "GROUP BY FUNCTION('MONTH', e.estabCaseEnd)")
-    List<IncomeSummaryDTO> sumPlanPricePerCaseByMonthAndEmpID(
-            @Param("empID") Integer empID,
-            @Param("startTimestamp") LocalDateTime startTimestamp,
-            @Param("endTimestamp") LocalDateTime endTimestamp);
+            "GROUP BY YEAR(e.estabCaseEnd), MONTH(e.estabCaseEnd)")
+    List<com.furelise.estabcase.empcasemanage.IncomeSummaryDTO> findTotalPlanPriceByEmpIDAndStatusGroupByMonth(
+            @Param("empID") Integer empID);
 }
