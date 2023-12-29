@@ -16,14 +16,28 @@ public class PickupTimeService {
 	@Autowired
 	PlanOrdRepository planOrdDao;
 
-	public PickupTime addPickupTime(PickupTime req) {
-		PickupTime pickupTime = new PickupTime(req.getTimeRange());
-		return dao.save(pickupTime);
+	public String addPickupTime(PickupTime req) {
+		String result = "";
+		if (!dao.existsByTimeRange(req.getTimeRange())) {
+			PickupTime pickupTime = new PickupTime(req.getTimeRange());
+			dao.save(pickupTime);
+			result = "新增成功";
+		} else {
+			result = "收取時段已存在";
+		}
+		return result;
 	}
 
-	public PickupTime updatePickupTime(PickupTime req) {
-		PickupTime pickupTime = new PickupTime(req.getTimeID(), req.getTimeRange());
-		return dao.save(pickupTime);
+	public String updatePickupTime(PickupTime req) {
+		String result = "";
+		String oldTime = dao.findById(req.getTimeID()).get().getTimeRange();
+		if(oldTime.equals(req.getTimeRange()) || !dao.existsByTimeRange(req.getTimeRange())) {
+			PickupTime pickupTime = new PickupTime(req.getTimeID(), req.getTimeRange());
+			dao.save(pickupTime);
+			result = "更新成功";
+		} else
+			result = "收取時段已存在";
+		return result;
 	}
 
 	public String deletePickupTime(Integer timeID) {
@@ -33,7 +47,7 @@ public class PickupTimeService {
 		if (list.isEmpty()) {
 			dao.deleteById(timeID);
 			result = "deleted successfully";
-		}else
+		} else
 			result = timeID + " is in use!";
 		return result;
 	}
