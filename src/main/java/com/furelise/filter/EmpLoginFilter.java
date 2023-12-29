@@ -18,7 +18,13 @@ import java.util.List;
 public class EmpLoginFilter extends OncePerRequestFilter {
 
     // 定義需要進行過濾的路徑清單
-    private final List<String> pathsToFilter = Arrays.asList(/*"/emp", */"/otherPath");
+    private final List<String> pathsToFilter = Arrays.asList(
+            "/estabcasemanage/",
+            "/incomepage/",
+            "/emp/info",
+            "/emp/bankinfo",
+            "/vacation",
+            "/otherPath");
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)

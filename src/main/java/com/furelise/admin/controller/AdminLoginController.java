@@ -5,10 +5,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.furelise.admin.model.dto.AdminLoginDTO;
 import com.furelise.admin.model.entity.Admin;
@@ -30,7 +27,7 @@ public class AdminLoginController {
 		return new AdminVO(admin);
 	}
 	
-	@PostMapping("/logout/admin")
+	@GetMapping("/logout/admin")
 	public void adminLogout(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		session.invalidate();
