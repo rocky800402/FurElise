@@ -42,7 +42,7 @@ public class SaleService {
 
 	public Sale getSaleByCoupon(String coupon) { 
 		if(coupon == null || coupon.isBlank()||coupon.isEmpty()) {
-			coupon = "sale000";
+			coupon = "sale0000";
 			
 			
 			return dao.findSaleByCoupon(coupon);

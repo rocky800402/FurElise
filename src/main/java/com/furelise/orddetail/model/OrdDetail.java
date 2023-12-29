@@ -2,19 +2,14 @@ package com.furelise.orddetail.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
-
-import com.furelise.ord.model.Ord;
-import com.furelise.product.model.Product;
 
 import lombok.Data;
 
@@ -34,16 +29,16 @@ public class OrdDetail implements Serializable{
 //	@JoinColumn(name = "pID", referencedColumnName = "pID")
 //	private Product product;
 	 
-//	@EmbeddedId
-//	private OrdDetailPK ordDetailPK;
+	@EmbeddedId
+	private OrdDetailPK ordDetailPK;
 	
-	@Id
-	@Column(name = "ordID")
-	private Integer ordID;
-	
-	@Id
-	@Column(name = "pID")
-	private Integer pID;
+	@MapsId("ordID")
+    @JoinColumn(name = "ordID", insertable = false, updatable = false)
+    private Integer ordID;
+
+	@MapsId("pID")
+    @JoinColumn(name = "pID", insertable = false, updatable = false)
+    private Integer pID;
 	
 	@Column(name = "detaQty")
 	private Integer detaQty;
@@ -63,9 +58,9 @@ public class OrdDetail implements Serializable{
 	
 	
 	public OrdDetail(Integer ordID, Integer pID, Integer detaQty, String feedback, Integer level, Timestamp fbTime) {
-		super();
-		this.ordID = ordID;
-		this.pID = pID;
+		
+		this.ordID = ordDetailPK.getOrdID();
+		this.pID = ordDetailPK.getPID();
 		this.detaQty = detaQty;
 		this.feedback = feedback;
 		this.level = level;

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.furelise.ord.model.MemOrdService;
 import com.furelise.ord.model.Ord;
 import com.furelise.ord.model.OrdRepository;
 import com.furelise.ord.model.OrdService;
