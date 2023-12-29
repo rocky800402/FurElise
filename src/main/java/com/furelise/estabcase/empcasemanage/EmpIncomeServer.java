@@ -3,7 +3,11 @@ package com.furelise.estabcase.empcasemanage;
 import com.furelise.estabcase.model.EstabCase;
 import com.furelise.estabcase.model.EstabCaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -11,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.*;
 
 
@@ -52,7 +57,7 @@ public class EmpIncomeServer {
         LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
         Timestamp endTimestamp = Timestamp.valueOf(endOfMonth.atTime(23, 59, 59));
 
-        BigDecimal totalPlanPrice = estabCaseRepository.findTotalPlanPriceByEmpIDAndStatus(startTimestamp, endTimestamp, empID);
+        BigDecimal totalPlanPrice = estabCaseRepository.findTotalPlanPriceByEmpIDAndStatus(empID, startTimestamp, endTimestamp);
 
         //把數據寫入map
         Map<String, Object> mappingInf = new HashMap<>();
@@ -85,5 +90,20 @@ public class EmpIncomeServer {
         Timestamp endTimestamp = Timestamp.valueOf(endOfMonth.atTime(23, 59, 59));
 
         return estabCaseRepository.findByEstabCaseEndBetweenAndStatus(startTimestamp, endTimestamp);
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<List<IncomeSummaryDTO>> getIncomeSummary(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam Integer empID) {
+
+        LocalDateTime startTimestamp = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDateTime endTimestamp = LocalDateTime.of(year, month, Month.of(month).maxLength(), 23, 59, 59);
+
+        List<IncomeSummaryDTO> incomeSummaryList = estabCaseRepository.sumPlanPricePerCaseByMonthAndEmpID(
+                empID, startTimestamp, endTimestamp);
+
+        return new ResponseEntity<>(incomeSummaryList, HttpStatus.OK);
     }
 }
