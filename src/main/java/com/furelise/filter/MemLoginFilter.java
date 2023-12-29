@@ -19,7 +19,7 @@ public class MemLoginFilter extends OncePerRequestFilter {
 
     // 定義需要進行過濾的路徑清單
     private final List<String> pathsToFilter = Arrays.asList(
-            "/planord/shop",
+            "/planmall/shop",
             "/member/info/",
             "/memPlanFront.html",
             "/memOrdDetail.html",
