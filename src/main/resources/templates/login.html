@@ -438,7 +438,7 @@
                     }),
                     success: (data) => {
                         console.log('login success')
-                         window.location.href = `${API_BASE_URL}/emp/info/${data.empID}`;
+                         window.location.href = `${API_BASE_URL}/emp/info`;
                     },
                     error: () => {
                      $("#emp_error").removeClass("hidden");
