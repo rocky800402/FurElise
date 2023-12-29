@@ -62,6 +62,7 @@ public class ShopCartController {
 			String key = "memCart:" + mem.getMemID();
 			Map<Product, String> memCart = scSvc.getCartProducts(key);
 			if (memCart == null || memCart.isEmpty()) { //購物車為空
+				
 				return "empty-cart";
 			} else { //購物車內有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = memCart.entrySet();
@@ -101,7 +102,7 @@ public class ShopCartController {
 	public String checkout(HttpServletRequest req, Model model, @RequestParam(name = "checkoutBtn", required = false) String checkoutBtn, OrdDTO ordDTO) {
 		Mem mem = (Mem) req.getSession().getAttribute("mem");
 		if (mem == null) {
-	        return "redirect:/shopcart";
+	        return "redirect:/login";
 	    } else {
 	    	
 	    	 if ("submitCheckout".equals(checkoutBtn)) {

@@ -12,6 +12,15 @@
 <link rel="stylesheet" th:href="@{/css/backend_form.css}">
 <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
 <style type="text/css">
+/* 狀態的顏色 */
+.status-up {
+    color: #9ac972;  /* 上架中的颜色 */
+}
+
+.status-down {
+    color: red;    /* 未上架的颜色 */
+}
+
 /* 查看詳情button */
 .sl_btn_chakan {
 	cursor: pointer;
@@ -161,7 +170,10 @@
 						<td th:text="${product.pName}"></td>
 						<td th:text="${product.pPrice}"></td>
 						<td th:text="${product.pStock}"></td>
-						<td class="pStatus" th:text="${product.pStatus ? '上架中' : '未上架'}"></td>
+						<td>
+						    <span th:if="${product.pStatus}" style="background-color: #9ac972; color: white;">上架中</span>
+						    <span th:if="${not product.pStatus}" style="background-color: #FFC2A0; color: white;">未上架</span>
+						</td>
 
 						<td>
 							<form method="post" th:action="@{/product-backen/getone}">
@@ -210,20 +222,6 @@
 	<script>
 		$(".backendSidebarPage").load("/backendSidebar.html");
 
-		// 		const statusElements = document.querySelectorAll('.pStatus');
-
-		// 	    // 迭代每個元素
-		// 	    statusElements.forEach(element => {
-		// 	        const status = element.textContent.trim(); // 獲取元素內文本並去除空格
-
-		// 	        if (status === '上架中') {
-		// 	            // 如果商品狀態為 '上架中'，添加 'status-true' 類別
-		// 	            element.classList.add('status-true');
-		// 	        } else if (status === '未上架') {
-		// 	            // 如果商品狀態為 '未上架'，添加 'status-false' 類別
-		// 	            element.classList.add('status-false');
-		// 	        }
-		// 	    });
 	</script>
 </body>
 
