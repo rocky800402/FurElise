@@ -3,8 +3,10 @@ package com.furelise.estabcase.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.furelise.estabcase.empcasemanage.IncomeSummaryDTO;
 import com.furelise.product.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,23 +69,22 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
             "AND e.takeStatus IS TRUE " +
             "AND e.empID = :empID")
     BigDecimal findTotalPlanPriceByEmpIDAndStatus(
+            @Param("empID") Integer empID,
             @Param("startTimestamp") Timestamp startTimestamp,
-            @Param("endTimestamp") Timestamp endTimestamp,
-            @Param("empID") Integer empID);
+            @Param("endTimestamp") Timestamp endTimestamp);
 
 
 
-//    @Query("SELECT SUM(e.planPricePerCase) " +
-//            "FROM EstabCase e " +
-//            "WHERE e.estabCaseEnd >= :startTimestamp " +
-//            "AND e.estabCaseEnd <= :endTimestamp " +
-//            "AND e.estabCaseStatus = 1 " +
-//            "AND e.takeStatus IS TRUE " +
-//            "AND e.empID = :empID " +
-//            "GROUP BY FUNCTION('MONTH', e.estabCaseEnd)")
-//    BigDecimal findTotalPlanPriceByEmpIDAndStatus(
-//            @Param("startTimestamp") Timestamp startTimestamp,
-//            @Param("endTimestamp") Timestamp endTimestamp,
-//            @Param("empID") Integer empID
-//    );
+    @Query("SELECT SUM(e.planPricePerCase) " +
+            "FROM EstabCase e " +
+            "WHERE e.estabCaseEnd >= :startTimestamp " +
+            "AND e.estabCaseEnd <= :endTimestamp " +
+            "AND e.estabCaseStatus = 1 " +
+            "AND e.takeStatus = TRUE " +
+            "AND e.empID = :empID " +
+            "GROUP BY FUNCTION('MONTH', e.estabCaseEnd)")
+    List<IncomeSummaryDTO> sumPlanPricePerCaseByMonthAndEmpID(
+            @Param("empID") Integer empID,
+            @Param("startTimestamp") LocalDateTime startTimestamp,
+            @Param("endTimestamp") LocalDateTime endTimestamp);
 }

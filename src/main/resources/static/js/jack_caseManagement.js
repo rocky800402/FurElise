@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#example').DataTable( {
+    const exampleTable = $('#example').DataTable( {
         /*設定屬性(預設功能)區塊*/
         "searching": false,// 預設為true 搜尋功能，若要開啟不用特別設定
         // "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]], //顯示筆數設定 預設為[10, 25, 50, 100] 用戶在下拉選單中看到的是第二個數組中的文本值，而實際上應用到表格的是第一個數組中對應的數字。
@@ -103,7 +103,48 @@ $(document).ready(function() {
         ]
     });
 
+    function updateStatus(action, estabCaseID) {
+        // var table = $('#example').DataTable();
+        var table = exampleTable;
 
+        console.log(action);
+        console.log(estabCaseID);
+        var acceptButton = $('.jack_button_accept.update-status-button[data-id="' + estabCaseID + '"]');
+        var rejectButton = $('.jack_button_reject.update-status-button[data-id="' + estabCaseID + '"]');
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080//estabcase/updateCaseStatus',
+            data: {
+                action: action,
+                estabCaseID: estabCaseID
+            },
+            success: function (response) {
+
+                console.log('Update successful');
+
+                if (response) {
+                    if (action === 'accept') {
+                        acceptButton.text('已接').prop('disabled', true);
+                        rejectButton.prop('disabled', true);
+                        console.log('Accept logic');
+                        table.ajax.reload();//重整table的資料
+
+                    } else if (action === 'reject') {
+
+                        rejectButton.text('已拒').prop('disabled', true);
+                        acceptButton.prop('disabled', true);
+                        console.log('Reject logic');
+                        table.ajax.reload();//重整table的資料
+                    }
+                } else {
+                    console.log('Unexpected success response');
+                }
+            },
+            error: function (error) {
+                console.error('Update failed', error);
+            }
+        });
+    }
 
     $('#example1').DataTable( {
         /*設定屬性(預設功能)區塊*/
@@ -170,57 +211,16 @@ $(document).ready(function() {
         ]
     });
 
+    $('#example').on('click', '.update-status-button', function () {
+        var action = $(this).data('action');
+        var estabCaseID = $(this).data('id');
+        updateStatus(action, estabCaseID);
+    });
 
 })
 
-$('#example').on('click', '.update-status-button', function () {
 
-    var action = $(this).data('action');
-    var estabCaseID = $(this).data('id');
-    updateStatus(action, estabCaseID);
-});
-function updateStatus(action, estabCaseID) {
 
-    var table = $('#example').DataTable();
-
-    console.log(action);
-    console.log(estabCaseID);
-    var acceptButton = $('.jack_button_accept.update-status-button[data-id="' + estabCaseID + '"]');
-    var rejectButton = $('.jack_button_reject.update-status-button[data-id="' + estabCaseID + '"]');
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost:8080//estabcase/updateCaseStatus',
-        data: {
-            action: action,
-            estabCaseID: estabCaseID
-        },
-        success: function (response) {
-
-            console.log('Update successful');
-
-            if (response) {
-                if (action === 'accept') {
-                    acceptButton.text('已接').prop('disabled', true);
-                    rejectButton.prop('disabled', true);
-                    console.log('Accept logic');
-                    table.ajax.reload();//重整table的資料
-
-                } else if (action === 'reject') {
-
-                    rejectButton.text('已拒').prop('disabled', true);
-                    acceptButton.prop('disabled', true);
-                    console.log('Reject logic');
-                    table.ajax.reload();//重整table的資料
-                }
-            } else {
-                console.log('Unexpected success response');
-            }
-        },
-        error: function (error) {
-            console.error('Update failed', error);
-        }
-    });
-}
 
     //日歷中文化
 //     $.fn.datepicker.dates['zh-CN'] = {
