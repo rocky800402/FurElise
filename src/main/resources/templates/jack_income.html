@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 收入查詢 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收入查詢</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/emp_sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <style>
+        .jack_container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        tr, td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="headerPage"></div>
+<div style="width: 100%; display: flex; justify-content: center;">
+    <div style="max-width: 1200px; display: flex;">
+        <div class="empSidebarPage"></div>
+        <!-- empsidebar -->
+        <div style="width: 950PX; padding: 10px;">
+
+            <div class="jack_container">
+                <div class="container mt-5">
+                    <canvas id="incomeChart" width="400" height="200"></canvas>
+                    <!-- 長條圖顯示-->
+                </div>
+            </div>
+
+
+            <div class="jack_container">
+                <div class="container mt-5">
+                    <div class="d-flex justify-content-between">
+
+                        <div class="container">
+                            <label for="year">年份:</label>
+                            <select id="year">
+                                <!-- 年份選項 -->
+                                <!-- 修改範圍，這裡的例子是 2023 到 2013 -->
+                            </select>
+                            <label for="month">月份:</label>
+                            <select id="month">
+                                <!-- 月份選項 -->
+                                <!-- 1 到 12 -->
+                            </select>
+                            <!-- 按鈕觸發 JavaScript 函數 -->
+                            <button onclick="submitData()">查詢</button>
+                        </div>
+
+                        <div id="total">
+                            <!-- <p>本月總收入: </p>-->
+                        </div>
+                    </div>
+                    <table id="example" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>案件編號</th>
+                            <th>完成日期</th>
+                            <th>案件收入</th>
+                        </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+            <div class="jack_container">
+                <div class="container mt-3">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p id="dateInfo"></p>
+                        <div id="mappingInf"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="footerPage"></div>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    var dataTable;
+    var yearSelect = document.getElementById("year");
+    var monthSelect = document.getElementById("month");
+
+    var currentYear = new Date().getFullYear();
+
+    for (var i = currentYear; i >= currentYear - 10; i--) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        yearSelect.add(option);
+    }
+
+    for (var j = 1; j <= 12; j++) {
+        var option = document.createElement("option");
+        option.value = j;
+        option.text = j;
+        monthSelect.add(option);
+    }
+
+
+    $(document).ready(function () {
+
+
+        dataTable = $('#example').DataTable({
+            /*設定屬性(預設功能)區塊*/
+            "searching": false,// 預設為true 搜尋功能，若要開啟不用特別設定
+            "ajax": {
+                "url": "http://localhost:8080/income/120001/3",           // 資料請求的網址，利用 /0 來做案件狀態分類
+                // "url": "http://localhost:8080/estabcase/" + empID + "/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
+                "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
+                "dataSrc": "",
+                // "data": {
+                //     'limit': 100,
+                //     'page': 1,
+                //     'empID': 120001,
+                //     'estabCaseStatus': 1
+                // }
+            },
+            columns: [
+                {
+                    data: 'estabCaseID',
+                },
+                {
+                    data: 'estabCaseEnd',
+                    render: function (data) {
+                        // 將日期轉為字串物件
+                        var date = null;
+                        var formattedDate = null;
+                        if (data != null) {
+                            date = new Date(data);
+                            formattedDate = date.toISOString().split('T')[0];//擷取日期的部分
+                            console.log('!!!',formattedDate)
+                        }
+                        return formattedDate;
+                    },
+                },
+                {
+                    data: 'planPricePerCase',
+                },
+            ]
+        });
+
+
+        $(".footerPage").load("/footer.html");
+        $(".empSidebarPage").load("/empSidebar.html");
+
+        // 假設這是你的月份和收入數據
+        // var months = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+        // var incomes = [500, 800, 1200, 950, 1100, 750, 900, 1300, 1000, 850, 1050, 1150];
+
+        var monthlyData = {
+            "一月": 1,
+            "二月": 2,
+            "三月": 3,
+            "四月": 4,
+            "五月": 5,
+            "六月": 6,
+            "七月": 7,
+            "八月": 8,
+            "九月": 9,
+            "十月": 10,
+            "十一月": 11,
+            "十二月": 12
+        };
+
+        // 使用Chart.js製作長條圖
+        var ctx = document.getElementById('incomeChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(monthlyData),
+                datasets: [{
+                    label: '月份收入',
+                    data: Object.values(monthlyData),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // 長條的背景顏色
+                    borderColor: 'rgba(75, 192, 192, 1)', // 長條的邊框顏色
+                    borderWidth: 1 // 長條的邊框寬度
+                }]
+            },
+            options: {
+                plugins: {
+                    zoom: {
+                        pan: {
+                            enabled: false,
+                            mode: 'x'
+                        },
+                        zoom: {
+                            enabled: false,
+                            mode: 'x'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+    });
+
+    function submitData() {
+        // 獲取選擇的年份和月份
+        var selectedYear = yearSelect.value;
+        var selectedMonth = monthSelect.value;
+
+        // console.log(selectedYear);
+        // console.log(selectedMonth);
+
+        // 使用 fetch 函數：
+        fetch('/income/byMonth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                year: parseInt(selectedYear, 10),
+                month: parseInt(selectedMonth, 10),
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 這裡處理後端返回的數據
+                console.log('後端返回的日期:', data);
+
+                const newData = data.map(item => {
+                    const newItem = { ...item };
+                    newItem.estabCaseEnd = new Date(item.estabCaseEnd);
+                    return newItem;
+                });
+
+
+                //datatable只能在$(document).ready(function (){})裡面執行
+                //但submitData() 需要放在$(document).ready(function (){})外才能被按鈕做案件綁定
+                //解決方式:把 $('#example').DataTable 放到全域變數裡面
+                //在$(document).ready(function (){})與DataTable綁定 之後submitData()函式就能進行調用
+
+                // $('#example').DataTable().clear();
+                //
+                // // 加新的數據到 DataTable
+                // $('#example').DataTable().rows.add(newData);
+                //
+                // // 刷新 DataTable
+                // $('#example').DataTable().draw();
+
+
+                dataTable.clear();
+
+                // 加新的數據到 DataTable
+                dataTable.rows.add(newData);
+
+                // 刷新 DataTable
+                dataTable.draw();
+            })
+            .catch((error) => {
+                console.error('錯誤:', error);
+            });
+
+        const requestData = {
+            empID: 120001,
+            year: selectedYear,
+            month: selectedMonth
+        };
+
+        // 發送 POST 請求
+        fetch('/income/mappingInf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+        })
+            .then(response => {
+                console.log(response)
+                return response.json()
+            })
+            .then(data => {
+                // 在這裡處理後端返回的數據
+                console.log('後端返回的金額數據:', data);
+                // 顯示後端統計數據
+                if(data.totalPlanPrice == null){
+                    document.getElementById('mappingInf').innerHTML = `
+                    <span>本期未有案件紀錄</span>
+                `;
+                    document.getElementById('total').innerHTML = `
+                    <span>本期未有案件紀錄</span>
+                `;
+                }else {
+                    document.getElementById('mappingInf').innerHTML = `
+                    <span>本月總收入: ${data.totalPlanPrice}</span>
+                `;
+                    document.getElementById('total').innerHTML = `
+                    <span>本月總收入: ${data.totalPlanPrice}</span>
+                `;
+                }
+            })
+            .catch((error) => {
+                console.error('錯誤:', error);
+            });
+
+        // const empID = ;
+        // fetch('/income/mappingInf?empID=${empID}&estabCaseStatus=3')
+
+        // fetch('/income/mappingInf?empID=120001&estabCaseStatus=1')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // 顯示後端統計數據
+        //         document.getElementById('mappingInf').innerHTML = `
+        //             <span>完成件數: ${data.totalCount}</span>
+        //             <span>本期收入: ${data.totalIncome}</span>
+        //         `;
+        //         document.getElementById('total').innerHTML = `
+        //             <span>完成件數: ${data.totalCount}</span>
+        //             <span>本期收入: ${data.totalIncome}</span>
+        //         `;
+        //     })
+        //     .catch(error => console.error('Error fetching mappingInf:', error));
+    }
+</script>
+</body>
+
+</html>

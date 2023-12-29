@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 派單管理頁面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>派單管理</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/backend_form.css">
+</head>
+
+
+<body>
+    <div class="backendSidebarPage"></div>
+
+    <div class="container">
+
+        <main class="content" >
+            <p class="p_title">未派單案件</p>
+            <table id="t1" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>案件ID</th>
+                        <th>訂單日期</th>
+                        <th>預計收取時間</th>
+                        <th>收取地址</th>
+                        <th>案件狀態</th>
+                        <th>收取人編號</th>
+                        <th>金額</th>
+                        <th>詳情</th>
+                    </tr>
+                </thead>
+                
+               
+            </table>
+            <br>
+            <br>
+            <hr>
+            <p class="p_title">已派單案件</p>
+            <table id="t2" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>案件ID</th>
+                        <th>訂單日期</th>
+                        <th>預計收取時間</th>
+                        <th>收取地址</th>
+                        <th>案件狀態</th>
+                        <th>收取人編號</th>
+                        <th>金額</th>
+                        <th>詳情</th>
+                    </tr>
+                </thead>
+                
+               
+            </table>
+            <br>
+            <br>
+            <hr>
+            <p class="p_title">已結案</p>
+            <table id="t3" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>案件ID</th>
+                        <th>訂單日期</th>
+                        <th>預計收取時間</th>
+                        <th>收取地址</th>
+                        <th>案件狀態</th>
+                        <th>收取人編號</th>
+                        <th>金額</th>
+                        <th>詳情</th>
+                    </tr>
+                </thead>
+                
+               
+            </table>
+        </main>
+    </div>
+
+   
+
+
+    <div class="footerPage"></div>
+
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script src="./js/jquery.dataTables.min.js"></script>
+    <script src="./js/constant.js"></script>
+    <script src="./js/backendEstabCase.js"></script>
+    <script >
+        $(".backendSidebarPage").load("backendSidebar.html");
+    </script>
+</body>
+
+
+</html>

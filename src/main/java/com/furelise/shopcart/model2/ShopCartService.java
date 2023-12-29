@@ -33,7 +33,6 @@ public class ShopCartService {
 			return "guestCart:guest";
 		} else {
 			// 否則，返回正常的購物車key
-			memID = 110001;
 			return "memCart:" + Integer.toString(memID);
 		}
 	}
@@ -108,15 +107,8 @@ public class ShopCartService {
 
 	// 取得訪客購物車內的所有商品
 	public Map<Product, String> getCartProducts(String key) {
-//		System.out.println("=========================");
-//		System.out.println(memID);
-//		System.out.println("=========================");
 		HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
-		System.out.println("key");
-		System.out.println(key);
 		Map<String, String> map = hashOps.entries(key);
-		System.out.println("map");
-		System.out.println(map);
 		Map<Product, String> map2 = new HashMap<Product, String>();
 		for (String thePID : map.keySet()) {
 			Product product = pSvc.getProductById(Integer.valueOf(thePID));
@@ -154,9 +146,6 @@ public class ShopCartService {
 
 			// 使用 HashOperations 進行操作
 			HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
-
-			// 印出來看
-			System.out.println(hashOps.get(key, Integer.toString(pID)));// null
 
 			// 從 Redis 中獲取特定商品的數量
 			return hashOps.get(key, Integer.toString(pID));

@@ -2,23 +2,39 @@ package com.furelise.page;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.furelise.ecpay.payment.integration.AllInOne;
-import com.furelise.ecpay.payment.integration.EcpayService;
+import com.furelise.ecpay.payment.integration.EcpayDto;
 import com.furelise.ecpay.payment.integration.domain.AioCheckOutALL;
+import com.furelise.ecpay.payment.integration.domain.QueryTradeInfoObj;
+import com.furelise.ecpay.payment.integration.service.EcpayService;
+import com.furelise.planord.model.PlanOrdDTO;
 
 @Controller
+@RequestMapping("ecpay")
 public class PageController {
+	
+	
 	
 //	public PageController() throws UnknownHostException {
 //		String ip = InetAddress.getLocalHost().getHostAddress();
@@ -27,11 +43,39 @@ public class PageController {
 	
 	@Autowired
 	EcpayService ecpayService;
-
-	@GetMapping("/pay")
-	public String home() {
-		return "pay";
+	
+	@GetMapping("/status")
+	@ResponseBody
+	public Boolean isOrderSuccess(String tradeNo) {
+		
+		QueryTradeInfoObj queryTradeInfoObj = new QueryTradeInfoObj();
+		queryTradeInfoObj.setMerchantID("3002607");
+		queryTradeInfoObj.setMerchantTradeNo(tradeNo);
+		queryTradeInfoObj.setTimeStamp(String.valueOf(System.currentTimeMillis()/1000));
+		return ecpayService.isOrderSuccess(queryTradeInfoObj);
 	}
+	
+	@PostMapping("/updateStatus")
+	@ResponseBody
+	public ResponseEntity<String> updateStatus(String tradeNo,  String status) {
+		
+		System.out.println("ecpay/updateStatus get request: " + tradeNo + ", " + status);
+		try {
+			ecpayService.setOrderStatus(tradeNo, status);
+			return ResponseEntity.ok("update status success");
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("update status fail");
+		}
+		
+		
+	}
+	
+	
+
+//	@GetMapping("/pay")
+//	public String home() {
+//		return "pay";
+//	}
 
 	@PostMapping("/payResult")
 	public String getPayResult(@RequestParam Map<String, Object> params) {
@@ -62,26 +106,37 @@ public class PageController {
 	}
 
 	@PostMapping("/pay")
-	public String startPay(Model model) {
+	@ResponseBody
+	public EcpayDto startPay(@Valid @RequestBody PlanOrdDTO dto, Model model) {
+		System.out.println("/ecpay/pay get request: "+dto);
 		AllInOne all = new AllInOne("");
 		AioCheckOutALL obj = new AioCheckOutALL();
 		// 填入必要的資料
-		String string = String.valueOf((int) (Math.random() * 10000000 + 1)) + "202312171651";
-		obj.setMerchantTradeNo(string);
-		obj.setMerchantTradeDate("2023/12/17 08:05:23");
-		obj.setTotalAmount("50");
+		obj.setMerchantTradeNo(String.valueOf(dto.getPlanOrdID()));
+		String tradeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss"));
+		obj.setMerchantTradeDate(tradeDate);
+		obj.setTotalAmount(String.valueOf(dto.getTotal().intValue()));
 		obj.setTradeDesc("test Description");
-		obj.setItemName("垃圾袋#掃把#酒精");
+		obj.setItemName(ecpayService.getPlanName(dto.getPlanID()));
 		obj.setReturnURL("localhost:8080/payResult");
 		obj.setNeedExtraPaidInfo("N");
 		
 		Map<String, String> form = ecpayService.doPayment(obj);
 
+		EcpayDto ecpayDto = new EcpayDto();
+		ecpayDto.setAction("https://payment-stage.ecPay.com.tw/Cashier/AioCheckOut/V5");
+		ecpayDto.setMethod("post");
+		ecpayDto.setFormData(form);
 		// 回傳form表單的資料
-		model.addAttribute("action", "https://payment-stage.ecPay.com.tw/Cashier/AioCheckOut/V5");
-        model.addAttribute("method", "post");
-        model.addAttribute("formData", form);
-        return "paymentForm";
+//		model.addAttribute("action", "https://payment-stage.ecPay.com.tw/Cashier/AioCheckOut/V5");
+//        model.addAttribute("method", "post");
+//        model.addAttribute("formData", form);
+        return ecpayDto;
+	}
+	
+	@GetMapping("/paymentForm")
+	public String finishPay() {
+		return "paymentForm";
 	}
 
 	

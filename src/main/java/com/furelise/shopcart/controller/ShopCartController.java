@@ -1,33 +1,27 @@
 package com.furelise.shopcart.controller;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.furelise.city.model.CityService;
 import com.furelise.mem.model.entity.Mem;
+import com.furelise.ord.model.Ord;
+import com.furelise.ord.model.OrdDTO;
 import com.furelise.ord.model.OrdService;
 import com.furelise.product.model.Product;
 import com.furelise.product.model.ProductService;
-import com.furelise.sale.model.SaleDTO;
-import com.furelise.sale.model.SaleService;
 import com.furelise.shopcart.model2.ShopCartService;
 
 @Controller
@@ -39,44 +33,41 @@ public class ShopCartController {
 
 	@Autowired
 	ProductService pSvc;
-
+	
 	@Autowired
-	private SaleService saleSvc;
-
+	OrdService oSvc; 
+	
 	@Autowired
-	private OrdService oSvc;
+	CityService cSvc;
 
 	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
-	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req) {
+	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req, OrdDTO ordDTO) {
 		HttpSession session = req.getSession();
 		Mem mem = (Mem) session.getAttribute("mem");
-		System.out.println(mem);
-		if (Objects.isNull(mem)) {
+		if (Objects.isNull(mem)) { //沒有登入
 			String guestCartkey = (String) session.getAttribute("guestCart");
-			System.out.println("guestCartkey");
-			System.out.println(guestCartkey);
-			if (Objects.isNull(guestCartkey)) {
+			if (Objects.isNull(guestCartkey)) { //也沒有建立過訪客購物車
 				return "empty-cart";
 			} 
 			Map<Product, String> guestCart = scSvc.getCartProducts(guestCartkey);
-			System.out.println("guestCart");
-			System.out.println(guestCart);
-			if (guestCart.isEmpty()) {
+			if (guestCart.isEmpty()) { // 有建立過訪客購物車但現在裡面沒有商品
 				return "empty-cart";
-			} else {
+			} else { //有建立過訪客購物車且裡面有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
-				System.out.println("cartEntrtSet");
-				System.out.println(cartEntrtSet);
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
+				model.addAttribute("cityList", cSvc.getAllCity());
 			}
-		} else {
+		} else { //已登入的會員
+			
 			String key = "memCart:" + mem.getMemID();
 			Map<Product, String> memCart = scSvc.getCartProducts(key);
-			if (memCart == null || memCart.isEmpty()) {
+			if (memCart == null || memCart.isEmpty()) { //購物車為空
 				return "empty-cart";
-			} else {
+			} else { //購物車內有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = memCart.entrySet();
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
+				model.addAttribute("cityList", cSvc.getAllCity());
+				model.addAttribute("ordDTO", ordDTO);
 			}
 		}
 
@@ -107,13 +98,23 @@ public class ShopCartController {
 	}
 
 	@PostMapping("/checkout")
-	public String checkout(HttpServletRequest req) {
+	public String checkout(HttpServletRequest req, Model model, @RequestParam(name = "checkoutBtn", required = false) String checkoutBtn, OrdDTO ordDTO) {
 		Mem mem = (Mem) req.getSession().getAttribute("mem");
 		if (mem == null) {
-			return "redirect:/login";
-		}
-		return "redirect:/shopcart-checkout";
-
+	        return "redirect:/shopcart";
+	    } else {
+	    	
+	    	 if ("submitCheckout".equals(checkoutBtn)) {
+	    		 oSvc.createOrder(ordDTO, model, req);
+	    	
+//		        // 清空購物車
+//		        scSvc.clearCart(mem.getMemID());
+	
+		        // 重定向到 "/mem-ord"
+		        return "/test-mem-ord";
+	    	 }
+	    	 return "/test-mem-ord";
+	    }
 	}
 
 	@PostMapping("/update")

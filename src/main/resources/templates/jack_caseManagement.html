@@ -32,8 +32,6 @@
                     <p class="jack_section_title">進行中案件</p>
                     <table id="example" class="display" style="width:100%">
 
-
-
                         <thead>
                         <tr>
                             <th>案件編號</th>
@@ -44,34 +42,6 @@
                             <th>是否棄單</th>
                         </tr>
                         </thead>
-                        <!--                        <tbody id="inProgressCasesBody">-->
-                        <!--                        <div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div>-->
-                        <!--                        <br>-->
-                        <!--                        <th:block th:each="unsendcase, stat : ${estabCase0}">-->
-                        <!--                            <tr>-->
-                        <!--                                <td th:text="${unsendcase.estabCaseID}"></td>-->
-                        <!--                                <td th:utext="${unsendcase.estabCaseDate + '<br>' + unsendcase.timeRange}"></td>-->
-                        <!--                                <td th:text="${unsendcase.cityName}"></td>-->
-                        <!--                                <td><a class="jack_information">資訊</a></td>-->
-                        <!--                                <td>-->
-                        <!--                                    <span th:if="${unsendcase.estabCaseStatus == 0 and unsendcase.takeStatus == false}">待收取</span>-->
-                        <!--                                    <span th:if="${unsendcase.estabCaseStatus == 0 and unsendcase.takeStatus == true}">執行中</span>-->
-                        <!--                                    <span th:if="${unsendcase.estabCaseStatus == 1}">完成收取</span>-->
-                        <!--                                </td>-->
-                        <!--                                <td>-->
-                        <!--                                    <button class="jack_button_accept"-->
-                        <!--                                            th:attr="data-action='accept', data-id=${unsendcase.estabCaseID}"-->
-                        <!--                                            onclick="updateStatus('accept', this.getAttribute('data-id'))">接單-->
-                        <!--                                    </button>-->
-                        <!--                                    <button class="jack_button_reject"-->
-                        <!--                                            th:attr="data-action='reject', data-id=${unsendcase.estabCaseID}"-->
-                        <!--                                            onclick="updateStatus('reject', this.getAttribute('data-id'))">拒單-->
-                        <!--                                    </button>-->
-                        <!--                                </td>-->
-                        <!--                            </tr>-->
-                        <!--                        </th:block>-->
-                        <!--                        </tbody>-->
-
 
                     </table>
                 </main>
@@ -90,20 +60,6 @@
                                         <th>收入</th>
                                         <th>案件資訊</th>
                                     </tr>
-            <!--                        </thead>-->
-            <!--                        <tbody id="completedCasesBody">-->
-            <!--                        <div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div>-->
-            <!--                        <br>-->
-            <!--                        <th:block th:each="completedcase, stat : ${estabCase1}">-->
-            <!--                            <tr>-->
-            <!--                                <td th:text="${completedcase.estabCaseID}"></td>-->
-            <!--                                <td th:text="${completedcase.estabCaseDate}"></td>-->
-            <!--                                <td th:text="${completedcase.cityName}"></td>-->
-            <!--                                <td th:text="${completedcase.planPricePerCase}"></td>-->
-            <!--                                <td><a class="jack_information">資訊</a></td>-->
-            <!--                            </tr>-->
-            <!--                        </th:block>-->
-            <!--                        </tbody>-->
                                 </table>
                             </main>
                         </div>
@@ -114,15 +70,17 @@
 </div>
 
 <div class="footerPage"></div>
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-<script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+
+
 <script th:src="@{/js/jack_caseManagement.js}"></script>
 
 
 <script>
-    $(".headerPage").load("/header.html");
     $(".footerPage").load("/footer.html");
     $(".empSidebarPage").load("/empSidebar.html");
 

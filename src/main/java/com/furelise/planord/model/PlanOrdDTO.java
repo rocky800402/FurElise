@@ -26,6 +26,7 @@ public class PlanOrdDTO {
 	private String floor;
 	private String pickupStop;
 	private String afterTotal;
+	private String planID;
 	
 	//方案訂單列表用
 	private Integer planOrdID;

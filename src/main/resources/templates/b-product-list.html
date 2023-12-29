@@ -103,7 +103,7 @@
 	user-select: none;
 	border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
 	border-radius: var(--bs-btn-border-radius);
-	background-color: var(--bs-btn-bg);
+	background-color:  #9ac972;
 	transition: color .15s ease-in-out, background-color .15s ease-in-out,
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
@@ -138,7 +138,7 @@
 		<main class="content">
 			<div>
 				<a th:href="add" class="sl_btn_chakan btn btn-primary"
-					style="float: right; margin-bottom: 20px;">新增</a>
+					style="float: right; margin-bottom: 20px; background-color: #9ac972; border:#9ac972;">新增</a>
 			</div>
 
 			<p class="p_title">後臺-商品管理-商品查詢</p>
@@ -166,7 +166,7 @@
 						<td>
 							<form method="post" th:action="@{/product-backen/getone}">
 								<button type="submit" class="sl_sp_badge"
-									style="background-color: white; color: #9ac972; border: solid 1px #9ac972;">修改</button>
+									style="background-color: #9ac972; border: solid 1px #9ac972;">修改</button>
 								<input type="hidden" name="pID" th:value="${product.pID}" />
 							</form>
 						</td>

@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+main.content{
+  margin: 0 20% 0 9%;
+}
+
+main.content:first-child {
+  /* border: 1px solid black; */
+  /* text-align: center; */
+  margin-left: 80px;
+  background-color: #fff;
+}
+
+div.container{
+  padding-left: 200px;
+}
+
+div.yh_ord {
+  /* border: 1px solid red; */
+  padding: 20px;
+  margin: 10px 0;
+}
+
+div.ord_detail {
+  /* border: 1px solid red; */
+  width: 700px;
+  min-height: 200px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+div.ord_product {
+  /* border: 1px solid green; */
+  padding: 10px;
+  vertical-align: bottom;
+  position: relative;
+}
+
+img.ord_detail_pic {
+  width: 85px;
+  height: 85px;
+  margin: 0 20px 0 20px;
+  display: inline-block;
+}
+
+div.ord_detail_text {
+  display: inline-block;
+  vertical-align: middle;
+  width: 300px;
+}
+
+div.ord_detail_text>p {
+  margin-bottom: 0;
+}
+
+img.btn_feedback {
+  width: 50px;
+  height: 25px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+div.ord_status {
+  /* border: 1px solid blue; */
+  padding: 10px;
+  width: 450px;
+}
+
+div.ordno>p {
+  font-size: 12px;
+  margin: 2px 0 0 25px;
+  display: inline-block;
+}
+
+img.show_status {
+  width: 50px;
+  height: 20px;
+  margin-left: 25px;
+}
+
+div.ord_total {
+  position: relative;
+  margin: 0 0 0 20px;
+  width: 170px;
+}
+
+div.ord_total>p {
+
+  font-size: 12px;
+  margin-bottom: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+p.total_price {
+  position: absolute;
+  right: 10px;
+  margin-left: 70px;
+
+}
+
+div.lightbox {
+  display: none;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: hsla(0, 0%, 0%, .5);
+}
+
+#artical{
+  padding: 20px;
+  position: absolute;
+  width: 500px;
+  height: 350px;
+  left: calc(50% - 500px/2);
+  top: calc(50% - 300px/2);
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+#impute_feedback{
+  text-align: center;
+  position: absolute;
+  left: 50px;
+  width: 400px;
+  height: 150px;
+}
+
+/* 星星 */
+div.star_block{
+  display: inline-block;
+  margin: 20px;
+}
+div.star_block > span.star{
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 3px;
+}
+div.star_block > span.star.-on{
+  color: yellow;
+}
+
+div > img.feedback_c_btn,img.feedback_o_btn{
+  cursor: pointer;
+  margin-top: 160px;
+  width: 150px;
+}
+
+div.ord_product > p.yh_p_price{
+  position: absolute;
+  left: 550px;
+  top: 40px;
+}
+
+body{
+  background-color: #f1f1f1;
+}
+
+button.change_status{
+  margin-top: 20px;
+}
+

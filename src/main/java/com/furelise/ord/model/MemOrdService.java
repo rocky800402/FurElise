@@ -54,4 +54,9 @@ public class MemOrdService {
         return new MemOrdVO(city, ord, memOrdDetailBOList, sale);
     }
 
+    public MemOrdLevelDTO updateMemOrdDetail(MemOrdLevelDTO memOrdLevelDTO){
+
+        return null;
+    }
+
 }

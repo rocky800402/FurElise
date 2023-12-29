@@ -25,8 +25,8 @@ public class LoginController {
     }
 	
     
-    @GetMapping("/member/info/{memID}")
-	public String memInfo(@PathVariable("memID") Integer memID, Model model, HttpSession session) {
+    @GetMapping("/member/info")
+	public String memInfo(Model model, HttpSession session) {
 		Mem mem = (Mem) session.getAttribute("mem");
 		model.addAttribute("mem", mem);
 		if (mem != null) {
@@ -39,8 +39,8 @@ public class LoginController {
 	}
     
     
-    @GetMapping("/emp/info/{empID}")
-	public String empInfo(@PathVariable("empID") Integer empID, Model model, HttpSession session) {
+    @GetMapping("/emp/info")
+	public String empInfo(Model model, HttpSession session) {
 		Emp emp = (Emp) session.getAttribute("emp");
 		model.addAttribute("emp", emp);
 		if (emp != null) {
