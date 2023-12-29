@@ -297,10 +297,11 @@ $(document).on("click", "#task_add", function() {
 		data: JSON.stringify(form_data),
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(item) {
-			alert("成功新增資料，接著跳轉綠界");
+			alert("前往付款");
+			
 			$.ajax({
 			    type: "POST",
-			    url: "http://localhost:8080/ecpay/pay",
+			    url: "/ecpay/pay",
 			    data: JSON.stringify(item),
 			    headers: {
 			        "Content-Type": "application/json; charset=utf-8"  // 加入 Content-Type header
@@ -315,6 +316,7 @@ $(document).on("click", "#task_add", function() {
 			    },
 			    error: function(xhr) {
 			        alert("發生錯誤");
+					location.reload();		        
 			    }
 			});			
 
@@ -333,6 +335,10 @@ $(document).on("click", "#task_add", function() {
 				alert('連線異常');
 				location.reload();
 			}
+		},
+		complete: function() {
+			$(".first select, input").prop('disabled', true);
+			$("#task_add").prop('disabled', true);
 		}
 	});
 });
