@@ -26,12 +26,13 @@ function init() {
 	});
 }
 
-// enter送出
+// enter送出、清空提醒字
 $("input#planPeriod").on("keyup", function(e) {
 	if (e.which == 13) {
 		//enter也等於按按鍵
 		$("button#task_add, button#task_update").click();
 	}
+	$("#replaceMe").text("訂購期間");
 });
 
 // ====新增====
@@ -50,25 +51,23 @@ $("button#task_add").on("click", function() {
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
 				data: JSON.stringify(form_data),
-				dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+				dataType: "text", // 預期會接收到回傳資料的格式： json | xml | html
 				statusCode: {                 // 狀態碼
-					400: function(res) {
-						// alert('輸入格式不正確');
-					},
-					404: function(res) {
-					},
-					500: function(res) {
-						alert('server error');
-					}
 				},
 				success: function(item) {
-					alert('新增成功');
-					window.location.href = 'add';
+					if(item == '新增成功') {
+						alert(item);
+						window.location.href = 'add';
+					} else {
+						let replacement = `<p id="replaceMe">${item}</p>`;
+						$("#verify_here").html(replacement);
+					}
 				},
 				error: function(xhr) {         // request 發生錯誤的話執行
 					if (xhr.status === 400) {
 						var errorMessage = xhr.responseText;
-						alert(errorMessage);
+						let replacement = `<p id="replaceMe">${errorMessage}</p>`;
+						$("#verify_here").html(replacement);
 					} else {
 						alert('連線異常');
 					}
@@ -135,25 +134,23 @@ $("button#task_update").on("click", function() {
 			type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
 			contentType: "application/json",
 			data: JSON.stringify(update_data),
-			dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
 			statusCode: {                 // 狀態碼
-				400: function(res) {
-					// alert('輸入格式不正確');
-				},
-				404: function(res) {
-				},
-				500: function(res) {
-					alert('server error');
-				}
 			},
-			success: function(data) {//第一層子元素為li標籤
-				alert('更改成功！');
-				window.location.href = '/period/';
+			success: function(item) {//第一層子元素為li標籤
+				if(item == "更新成功") {
+					alert(item);
+					window.location.href = '/period/';
+				} else {
+					let replacement = `<p id="replaceMe">${item}</p>`;
+					$("#verify_here").html(replacement);
+				}
 			},
 			error: function(xhr) {         // request 發生錯誤的話執行
 				if (xhr.status === 400) {
 					var errorMessage = xhr.responseText;
-					alert(errorMessage);
+					let replacement = `<p id="replaceMe">${errorMessage}</p>`;
+					$("#verify_here").html(replacement);
 				} else {
 					alert('連線異常');
 				}

@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PickupTimeRepository extends JpaRepository<PickupTime, Integer>{
-	
+
+	boolean existsByTimeRange(String timeRange);
 }

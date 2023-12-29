@@ -25,7 +25,7 @@ import com.furelise.plan.model.*;
 import com.furelise.mem.model.entity.*;
 
 @Controller
-@RequestMapping("/planord")
+//@RequestMapping("/planord")
 public class PlanOrdController {
 
 	@Autowired
@@ -34,20 +34,20 @@ public class PlanOrdController {
 	PlanService planSvc;
 
 	// return view
-	@GetMapping("/")
+	@GetMapping("/planord/")
 	public String planOrdList() {
 		return "planord_list";
 	}
 
 	// list data, for ajax using
-	@GetMapping("/all")
+	@GetMapping("/planord/all")
 	@ResponseBody
 	public List<PlanOrd> getAllPlanOrds() {
 		return planOrdSvc.getAllPlanOrd();
 	}
 
 	// return view planord_detail
-	@GetMapping("/detail")
+	@GetMapping("/planord/detail")
 	public String planDetail(@RequestParam String planOrdID, Model model) {
 		PlanOrd planOrd = planOrdSvc.getPlanOrdById(Integer.valueOf(planOrdID));
 		Plan plan = planSvc.getPlanById(planOrd.getPlanID());
@@ -74,60 +74,60 @@ public class PlanOrdController {
 	}
 
 	// return view
-	@GetMapping("/intro")
+	@GetMapping("/planmall/intro")
 	public String planIntro() {
 		return "planord_intro";
 	}
 
 	// return view
-	@GetMapping("/try")
+	@GetMapping("/planmall/try")
 	public String planTry() {
 		return "planord_try";
 	}
 
 	// return view
-	@GetMapping("/shop")
+	@GetMapping("/planmall/shop")
 	public String planShop() {
 		return "planord_shop";
 	}
 
 	// create planName drop down menu
-	@GetMapping("/planname")
+	@GetMapping("/planmall/planname")
 	@ResponseBody
 	public List<Plan> getAllPlanNames() {
 		return planOrdSvc.findByTimes();
 	}
 
 	// create timeRange drop down menu
-	@GetMapping("/timerange")
+	@GetMapping("/planmall/timerange")
 	@ResponseBody
 	public List<PickupTime> getAllPickupTimes() {
 		return planOrdSvc.getPickupTime();
 	}
 
 	// create planPeriod drop down menu
-	@GetMapping("/planperiod")
+	@GetMapping("/planmall/planperiod")
 	@ResponseBody
 	public List<Period> getAllPeriod() {
 		return planOrdSvc.getPeriod();
 	}
 
 	// create wayName drop down menu
-	@GetMapping("/wayname")
+	@GetMapping("/planmall/wayname")
 	@ResponseBody
 	public List<PickupWay> getAllPickupWay() {
 		return planOrdSvc.getPickupWay();
 	}
 
 	// create city drop down menu
-	@GetMapping("/citycode")
+	@GetMapping("/planmall/citycode")
 	@ResponseBody
 	public List<City> getAllCity() {
 		return planOrdSvc.getCity();
 	}
 	
 	// verify member w/o planord on progress
-	@PostMapping("/checkenddate")
+	@PostMapping("/planmall/checkenddate")
 	@ResponseBody
 	public boolean verifyPlanOrdPurchase(HttpServletRequest req, @RequestBody PlanOrd planOrd) {
 		//測試時先把mem寫死(ajax測試時要搭配好planOrdDtoCon的addPlanOrd)
@@ -142,15 +142,33 @@ public class PlanOrdController {
 //			return "login";		
 	}
 
-//	// 暫不做修改功能
-//	// return view
-//	@GetMapping("/update")
-//	public String updatePlanOrd(@RequestParam String planOrdID, Model model) {
-//		PlanOrd planOrd = planOrdSvc.getPlanOrdById(Integer.valueOf(planOrdID));
-//		model.addAttribute("planOrdID", planOrd.getPlanOrdID());
-//		model.addAttribute("planID", planOrd.getPlanID());
-//		return "planord_update";
-//	}
+	// return view
+	@GetMapping("/planord/update")
+	public String updatePlanOrd(@RequestParam String planOrdID, Model model) {
+		PlanOrd planOrd = planOrdSvc.getPlanOrdById(Integer.valueOf(planOrdID));
+		Plan plan = planSvc.getPlanById(planOrd.getPlanID());
+
+		model.addAttribute("times", plan.getTimes());
+		model.addAttribute("planOrdID", planOrdID);
+		model.addAttribute("memName", planOrdSvc.getMemNameById(planOrd.getMemID()));
+		model.addAttribute("planName", plan.getPlanName());
+		model.addAttribute("timeRange", planOrdSvc.getTimeRange(planOrd.getTimeID()));
+		model.addAttribute("day", planOrd.getDay());
+		model.addAttribute("wayName", planOrdSvc.getWayName(planOrd.getWayID()));
+		model.addAttribute("total", planOrd.getTotal());
+		model.addAttribute("planPeriod", planOrdSvc.getPlanPeriod(planOrd.getPeriodID()));
+		model.addAttribute("planStart", planOrd.getPlanStart());
+		model.addAttribute("planEnd", planOrd.getPlanEnd());
+		model.addAttribute("cityCode", planOrd.getCityCode());
+		model.addAttribute("floor", planOrd.getFloor());
+		model.addAttribute("pickupStop", planOrd.getPickupStop());
+		model.addAttribute("contact", planOrd.getContact());
+		model.addAttribute("contactTel", planOrd.getContactTel());
+		model.addAttribute("planOrdDate", planOrd.getPlanOrdDate());
+		model.addAttribute("amendLog", planOrd.getAmendLog());
+		model.addAttribute("planStatus", planOrdSvc.getPlanStatus(planOrd.getPlanStatusID()));
+		return "planord_update";
+	}
 
 //	// amend data, for ajax using
 //	

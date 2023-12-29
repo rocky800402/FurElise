@@ -30,13 +30,13 @@ public class PickupTimeRESTCon {
 
 	
 	@PostMapping("/adding")
-	public PickupTime addPickupTime(@Valid @RequestBody PickupTime req) {
+	public String addPickupTime(@Valid @RequestBody PickupTime req) {
 		return pickupTimeSvc.addPickupTime(req);
 	}
 
 	
 	@PutMapping("/updating")
-	public PickupTime updatePickupTime(@Valid @RequestBody PickupTime req) {
+	public String updatePickupTime(@Valid @RequestBody PickupTime req) {
 		return pickupTimeSvc.updatePickupTime(req);
 	}
 	

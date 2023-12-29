@@ -49,10 +49,12 @@ $("button#task_add").on("click", function() {
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
 				data: JSON.stringify(form_data),
-				dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+				dataType: "text", // 預期會接收到回傳資料的格式： json | xml | html
 				success: function(item) {
-					alert("新增成功");
-					window.location.href = 'add'; // Redirect to http://localhost:8081/furelise/pickuptime/add
+					alert(item);
+					if (item == "新增成功") {
+						window.location.href = 'add';
+					}
 				},
 
 				error: function(xhr) {         // request 發生錯誤的話執行
@@ -85,19 +87,19 @@ $(document).on("click", "input#del", function() {
 			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
 			beforeSend: function() {       // 在 request 發送之前執行
 			},
-			success: function (data) {
-                if (data == 'deleted successfully') {
-                    alert(data);
+			success: function(data) {
+				if (data == 'deleted successfully') {
+					alert(data);
 
-                    $(that).closest('tr').animate({
-                        "opacity": 0
-                    }, 1000, "swing", function () {
-                        $(this).remove();
-                    });
-                } else {
-                    alert(data);
-                }
-            },
+					$(that).closest('tr').animate({
+						"opacity": 0
+					}, 1000, "swing", function() {
+						$(this).remove();
+					});
+				} else {
+					alert(data);
+				}
+			},
 			error: function(xhr) {         // request 發生錯誤的話執行
 				alert("不可刪除！");
 			},
@@ -124,13 +126,15 @@ $("button#task_update").on("click", function() {
 			type: "PUT",                  // GET | POST | PUT | DELETE | PATCH
 			contentType: "application/json",
 			data: JSON.stringify(update_data),
-			dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
 			beforeSend: function() {       // 在 request 發送之前執行
 			},
 
-			success: function(data) {//第一層子元素為li標籤
-				alert('更改成功！');
-				window.location.href = '/pickuptime/';
+			success: function(item) {
+				alert(item);
+				if (item == "更新成功") {
+					window.location.href = '/pickuptime/';
+				}
 			},
 			error: function(xhr) {         // request 發生錯誤的話執行
 				if (xhr.status === 400) {
