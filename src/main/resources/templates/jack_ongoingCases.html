@@ -170,6 +170,32 @@
 <script>
     function redirectToCompletedPage() {
         var estabCaseID = [[${empOngoingCase.estabCaseID}]];
+        const files = $('#myFile').prop('files')
+        if (!files[0]) {
+            alert('請上傳案件執行狀況')
+            return
+        }
+        const completedestabCaseID = '[[${empOngoingCase.estabCaseID}]]';
+        var formData = new FormData();
+        formData.append('file', files[0]);
+        $.ajax({
+            url: `/estabcaseongo/` + completedestabCaseID,
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: (data) => {
+                $("#jack-preview").html(
+                    `
+                        <div><img alt="preview" style="max-width: 50%; max-height: 50%;" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
+                       `
+                )
+            },
+            error: (jqXHR, exception) => {
+                alert(jqXHR.responseJSON.message)
+            }
+        })
         window.location.href = '/completed/' + estabCaseID;
     }
 

@@ -127,8 +127,8 @@
         var selectedYear = yearSelect.value;
         var selectedMonth = monthSelect.value;
 
-        console.log(selectedYear);
-        console.log(selectedMonth);
+        // console.log(selectedYear);
+        // console.log(selectedMonth);
 
         // 使用 fetch 函數：
         fetch('/income/byMonth', {
@@ -144,7 +144,7 @@
             .then(response => response.json())
             .then(data => {
                 // 這裡處理後端返回的數據
-                console.log('後端返回的數據:', data);
+                console.log('後端返回的日期:', data);
 
                 const newData = data.map(item => {
                     const newItem = { ...item };
@@ -185,14 +185,23 @@
             })
             .then(data => {
                 // 在這裡處理後端返回的數據
-                console.log('後端返回的數據!!!:', data);
+                console.log('後端返回的金額數據:', data);
                 // 顯示後端統計數據
-                document.getElementById('mappingInf').innerHTML = `
+                if(data.totalPlanPrice == null){
+                    document.getElementById('mappingInf').innerHTML = `
+                    <span>本期未有案件紀錄</span>
+                `;
+                    document.getElementById('total').innerHTML = `
+                    <span>本期未有案件紀錄</span>
+                `;
+                }else {
+                    document.getElementById('mappingInf').innerHTML = `
                     <span>本期收入: ${data.totalPlanPrice}</span>
                 `;
-                document.getElementById('total').innerHTML = `
+                    document.getElementById('total').innerHTML = `
                     <span>本期收入: ${data.totalPlanPrice}</span>
                 `;
+                }
             })
             .catch((error) => {
                 console.error('錯誤:', error);
