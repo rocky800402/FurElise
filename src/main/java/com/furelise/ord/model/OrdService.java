@@ -1,5 +1,6 @@
 package com.furelise.ord.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -75,17 +76,28 @@ public class OrdService {
 		ord.setAddress(ordDto.getAddress()); //
 		ord.setCityCode(ordDto.getCityCode());
 		ord.setDeliverDate(null); // 出貨時間初始為null
-		ord.setSum(ordDto.getSum());
-		ord.setShipping(ordDto.getShipping());
-		ord.setTotal(ordDto.getTotal());
+		
 		ord.setSaleID(sSvc.getSaleByCoupon(coupon).getSaleID());
 		ord.setOrdStatus(0); // 預設都為0(處理中)
 		ord.setArrival(null); // 送達時間初始為null
 
 		// 創建訂單明細OrdDetail
 		
-		Map<Product, String> shopCartItems = scSvc.getCartProducts(mem.getMemID().toString());
-		
+		Map<Product, String> shopCartItems = scSvc.getCartProducts(mem.getMemID().toString());//問題在於沒有獲取到購物車中的商品
+		// 计算订单金额
+		System.out.println("=====================");
+	    System.out.println(shopCartItems);
+	    System.out.println("=====================");
+	    BigDecimal sum = calculateOrderSum(shopCartItems);
+	    BigDecimal discount = calculateDiscount(); // 根据实际逻辑计算折扣
+	    BigDecimal shippingFee = calculateShippingFee(); // 根据实际逻辑计算运费
+	    BigDecimal total = sum.subtract(discount).add(shippingFee);
+	    
+	    
+	    // 设置订单金额到 Ord 对象
+	    ord.setSum(sum);
+	    ord.setShipping(shippingFee);
+	    ord.setTotal(total);
 		List<OrdDetail> ordDetails = new ArrayList<>();
 
 		for (Map.Entry<Product, String> entry : shopCartItems.entrySet()) {
@@ -115,10 +127,37 @@ public class OrdService {
 		ord.setOrdDetails(ordDetails);
 		
 		dao.save(ord);
-
+		// 清空購物車
+        scSvc.clearCart(mem.getMemID());
 		return ord;
-
+		
 	} // createOrder
+	
+	// 计算订单总金额的方法，根据你的业务逻辑实现
+	private BigDecimal calculateOrderSum(Map<Product, String> shopCartItems) {
+	    BigDecimal sum = BigDecimal.ZERO;
+
+	    for (Map.Entry<Product, String> entry : shopCartItems.entrySet()) {
+	        // 计算每个商品的小计并累加到总金额
+	        BigDecimal price = entry.getKey().getPPrice();
+	        int quantity = Integer.parseInt(entry.getValue());
+	        BigDecimal itemTotal = price.multiply(BigDecimal.valueOf(quantity));
+	        sum = sum.add(itemTotal);
+	    }
+
+	    return sum;
+	}
+
+	// 其他计算折扣、运费等的方法，根据你的业务逻辑实现
+	private BigDecimal calculateDiscount() {
+	    // 根据业务逻辑计算折扣
+	    return BigDecimal.ZERO;
+	}
+
+	private BigDecimal calculateShippingFee() {
+	    // 根据业务逻辑计算运费
+	    return BigDecimal.valueOf(120);
+	}
 
 	//
 	public Ord updateOrd(Integer ordID, Integer ordStatus) {

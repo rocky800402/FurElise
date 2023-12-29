@@ -41,7 +41,7 @@ public class ShopCartController {
 	CityService cSvc;
 
 	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
-	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req) {
+	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req, OrdDTO ordDTO) {
 		HttpSession session = req.getSession();
 		Mem mem = (Mem) session.getAttribute("mem");
 		if (Objects.isNull(mem)) { //沒有登入
@@ -67,6 +67,7 @@ public class ShopCartController {
 				Set<Map.Entry<Product, String>> cartEntrtSet = memCart.entrySet();
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
 				model.addAttribute("cityList", cSvc.getAllCity());
+				model.addAttribute("ordDTO", ordDTO);
 			}
 		}
 
@@ -100,14 +101,14 @@ public class ShopCartController {
 	public String checkout(HttpServletRequest req, Model model, @RequestParam(name = "checkoutBtn", required = false) String checkoutBtn, OrdDTO ordDTO) {
 		Mem mem = (Mem) req.getSession().getAttribute("mem");
 		if (mem == null) {
-	        return "redirect:/test-mem-ord";
+	        return "redirect:/shopcart";
 	    } else {
 	    	
 	    	 if ("submitCheckout".equals(checkoutBtn)) {
 	    		 oSvc.createOrder(ordDTO, model, req);
 	    	
-		        // 清空購物車
-		        scSvc.clearCart(mem.getMemID());
+//		        // 清空購物車
+//		        scSvc.clearCart(mem.getMemID());
 	
 		        // 重定向到 "/mem-ord"
 		        return "/test-mem-ord";
