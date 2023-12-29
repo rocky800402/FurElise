@@ -25,7 +25,7 @@ public class BackendLoginFilter extends OncePerRequestFilter {
             "/backen-ord/",
             "/planord/",
             "/plan/",
-            "/city/all",
+            "/city/",
             "/period/",
             "/pickuptime/",
             "/pickupway/",
