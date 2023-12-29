@@ -248,6 +248,7 @@
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script th:src="@{/js/planordshop.js}"></script>
+    <script th:src="@{/js/constant.js}"></script>
 
     <script>
 	    $(".headerPage").load("/header.html");
@@ -345,7 +346,6 @@
             var periodLength = $("select#period option:selected").data('month');
             var timesPerWeek = a;
             var totalPrice = planNamePrice * periodLength * timesPerWeek;
-            console.log(totalPrice);
             $('#total').val(totalPrice);
         }
     </script>
