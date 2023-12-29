@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PickupWayRepository extends JpaRepository<PickupWay, Integer>{
+	
+	boolean existsByWayName(String wayName);
 
 }

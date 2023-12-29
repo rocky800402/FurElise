@@ -15,14 +15,29 @@ public class PickupWayService {
 	@Autowired
 	PlanOrdRepository planOrdDao;
 
-	public PickupWay addPickupWay(PickupWay req) {
-		PickupWay pickupWay = new PickupWay(req.getWayName());
-		return dao.save(pickupWay);
+	public String addPickupWay(PickupWay req) {
+		String result = "";
+		if(!dao.existsByWayName(req.getWayName())) {
+			PickupWay pickupWay = new PickupWay(req.getWayName());
+			dao.save(pickupWay);
+			result = "新增成功";
+		} else {
+			result = "收取方式已存在";
+		}
+		return result;
 	}
 
-	public PickupWay updatePickupWay(PickupWay req) {
-		PickupWay pickupWay = new PickupWay(req.getWayID(), req.getWayName());
-		return dao.save(pickupWay);
+	public String updatePickupWay(PickupWay req) {
+		String result = "";
+		String oldName = dao.findById(req.getWayID()).get().getWayName();
+		if(oldName.equals(req.getWayName()) || !dao.existsByWayName(req.getWayName())) {
+			PickupWay pickupWay = new PickupWay(req.getWayID(), req.getWayName());
+			dao.save(pickupWay);
+			result = "更新成功";
+		} else {
+			result = "收取方式已存在";
+		}
+		return result;
 	}
 
 	public String deletePickupWay(Integer wayID) {

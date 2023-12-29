@@ -49,18 +49,26 @@ $("button#task_add").on("click", function() {
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
 				data: JSON.stringify(form_data),
-				dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+				dataType: "text", // 預期會接收到回傳資料的格式： json | xml | html
 				beforeSend: function() {
 					$("button#task_add").addClass("-disabled");
 				},
-
 				success: function(item) {
-					alert("新增成功");
-					window.location.href = 'add'; // Redirect to http://localhost:8081/furelise/pickupway/add
+					alert(item);
+					if (item == "新增成功") {
+						window.location.href = 'add';
+					}
 				},
-
 				complete: function() {
 					$("button.task_add").removeClass("-disabled");
+				},
+				error: function(xhr) {         // request 發生錯誤的話執行
+					if (xhr.status === 400) {
+						var errorMessage = xhr.responseText;
+						alert(errorMessage);
+					} else {
+						alert('連線異常');
+					}
 				}
 			});
 		}
@@ -126,16 +134,24 @@ $("button#task_update").on("click", function() {
 			// data: { "wayID": wayID, "wayName": wayName },                // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
 			data: JSON.stringify(update_data),
-			dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
 			beforeSend: function() {       // 在 request 發送之前執行
 			},
-
-			success: function(data) {//第一層子元素為li標籤
-				alert('更改成功！');
-				window.location.href = '/pickupway/';
+			success: function(item) {//第一層子元素為li標籤
+				alert(item);
+				if(item == "更新成功"){
+					window.location.href = '/pickupway/';
+				}
 			},
-
 			complete: function() {
+			},
+			error: function(xhr) {         // request 發生錯誤的話執行
+				if (xhr.status === 400) {
+					var errorMessage = xhr.responseText;
+					alert(errorMessage);
+				} else {
+					alert('連線異常');
+				}
 			}
 		});
 	}

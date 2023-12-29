@@ -47,7 +47,7 @@ public class PickupWayCon {
 	// add data, for ajax using
 	@PostMapping("/adding")
 	@ResponseBody
-	public PickupWay addPickupWay(@RequestBody PickupWay req) {
+	public String addPickupWay(@RequestBody PickupWay req) {
 		return pickupWaySvc.addPickupWay(req);
 	}
 
@@ -63,7 +63,7 @@ public class PickupWayCon {
 	// amend data, for ajax using
 	@PutMapping("/updating")
 	@ResponseBody
-	public PickupWay updatePickupWay(@RequestBody PickupWay req) {
+	public String updatePickupWay(@RequestBody PickupWay req) {
 		return pickupWaySvc.updatePickupWay(req);
 	}
 
