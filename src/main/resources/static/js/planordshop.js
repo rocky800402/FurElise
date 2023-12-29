@@ -109,7 +109,7 @@ function new_plan() {
 				list_html = `
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">
-                                    <p class="sl_plan_name">${data[i][0]}</p>
+                                    <p class="sl_plan_name">${data[i].planName}</p>
                                     <img src="/images/product.png" alt="" width="90%">
                                     <p>介紹還沒想</p>
                                 </div>
