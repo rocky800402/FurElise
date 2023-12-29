@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>付款</title>
+    <script type="text/javascript">
+        // 使用 window.onload 事件處理程序確保 DOM 已經完全加載
+        window.onload = function() {
+            // 解析 session storage 中的數據
+            var storedData = JSON.parse(window.sessionStorage.getItem('paymentData'));
+            console.log(storedData);
+
+            // 如果數據存在，則使用原生 JavaScript 動態創建表單並添加參數
+            if (storedData) {
+                var parsedData = storedData.formData;
+                
+                // 創建 form 元素
+                var form = document.createElement("form");
+                form.method = "post";
+                form.action = storedData.action;
+
+                // 將每個參數作為 input 元素添加到表單中
+                for (var key in parsedData) {
+                    if (parsedData.hasOwnProperty(key)) {
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = key;
+                        input.value = parsedData[key];
+                        form.appendChild(input);
+                    }
+                }
+
+                // 添加表單到 body 中
+                document.body.appendChild(form);
+
+                // 提交表單
+                form.submit();
+            }
+        };
+    </script>
 </head>
 <body>
-    <form th:action="${action}" th:method="${method}" id="allPayAPIForm">
-        <div th:each="entry : ${formData}">
-            <input type="hidden" th:name="${entry.key}" th:value="${entry.value}" />
-        </div>
-        <script language="JavaScript">
-            document.getElementById("allPayAPIForm").submit();
-        </script>
-    </form>
+    <!-- 空的 body，因為表單是動態生成的 -->
 </body>
 </html>

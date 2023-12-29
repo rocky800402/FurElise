@@ -1,4 +1,4 @@
-package com.furelise.planord.model;
+package com.furelise.ecpay.payment.integration.repository;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class PlanOrdDTO {
+public class PlanOrdPayDTO {
 
 	// 結帳用
 	private String planName;
@@ -26,7 +26,6 @@ public class PlanOrdDTO {
 	private String floor;
 	private String pickupStop;
 	private String afterTotal;
-	private String planID;
 	
 	//方案訂單列表用
 	private Integer planOrdID;
