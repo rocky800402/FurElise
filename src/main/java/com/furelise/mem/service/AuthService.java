@@ -32,10 +32,10 @@ public class AuthService {
         return mem;
     }
 
-    public Mem validateMem(HttpServletRequest req) throws UnauthorizedException {
-        Mem mem = (Mem) req.getSession().getAttribute("mem");
-        if(Objects.isNull(mem)) throw new UnauthorizedException("Sorry, you are not authorized to access this resource. Please provide valid credentials.");
-        return mem;
+    public Object validate(HttpServletRequest req, String attrName) throws UnauthorizedException {
+        Object entity =  req.getSession().getAttribute(attrName);
+        if(Objects.isNull(entity)) throw new UnauthorizedException("Sorry, you are not authorized to access this resource. Please provide valid credentials.");
+        return entity;
     }
 
 }

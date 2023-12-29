@@ -2,7 +2,7 @@
 
 const getMemOrd = async () => {
     return $.ajax({
-        url: `${API_PATH}/mem-ord`,
+        url: `${API_BASE_URL}/mem-ord`,
         type: "GET",
         xhrFields: {
             withCredentials: true
