@@ -28,7 +28,7 @@ function init() {
     
                     <div class="form-group">
                         <label for="收取日期">收取日期</label>
-                        <input type="text" class="form-control mb_estabCaseDate" id="datepicker" value="${data.estabCaseDate}">
+                        <input type="date" class="form-control mb_estabCaseDate" id="datepicker" value="${data.estabCaseDate}">
                         <div id="errorMessage"></div>
                         <button type="button" class="btn btn-success btn-block mb_btn_03" style="background-color: #A7D87D; border-color:#A7D87D">重新派單</button>
                     </div>
@@ -155,9 +155,11 @@ function init() {
         }
 
         $("div.mb_div_main").html(list_html);
-        $( "#datepicker" ).datepicker({
-            dateFormat: "yy-mm-dd"
-          });
+
+        const qVaStart = $( "#datepicker" )
+        const today = dayjs().add(1,'day')
+        const afterTomorrow = today.format('YYYY-MM-DD')
+        qVaStart.attr("min", afterTomorrow)
         complaintsMem();
         estabCasePic();
         removeReadonly();
