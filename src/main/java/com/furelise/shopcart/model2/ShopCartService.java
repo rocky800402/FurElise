@@ -110,30 +110,6 @@ public class ShopCartService {
 		}
 	}
 
-
-	public void clearCart(BigInteger memID) {
-		try {
-			// 組合購物車的 key
-			String cartkey = getCartKey(memID);
-
-			// 刪除購物車的 key
-			redisTemplate.delete(cartkey);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	private String getCartKey(BigInteger memID) {
-		if (memID == null) {
-			// 如果memID為null，返回一個特定的字串，表示訪客購物車
-			return "guestCart:guest";
-		} else {
-			// 否則，返回正常的購物車key
-			return "memCart:" + memID.toString();
-		}
-	}
-
 	// 取得訪客購物車內的所有商品
 	public Map<Product, String> getCartProducts(String key) {
 		HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
@@ -210,11 +186,31 @@ public class ShopCartService {
 	                String quantity = entry.getValue();
 	                hashOps.put(key, productId, quantity);
 	            }
+	         
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 		return newMemCart;
 	    }
+
+	//用來刪除會員登入後的舊訪客購物車
+	public void clearCart(String guestCartKey) {
+		try {
+			// 組合購物車的 key
+			String cartkey = getCartKey(guestCartKey);
+
+			// 刪除購物車的 key
+			redisTemplate.delete(cartkey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private String getCartKey(String guestCartKey) {
+		
+		return guestCartKey;
+	}
 
 
 }// ShopCartService

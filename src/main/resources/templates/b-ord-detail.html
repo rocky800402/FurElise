@@ -80,6 +80,7 @@
 						                    <p style="display: inline-block;">x</p>
 						                    <p style="display: inline-block;" th:field="*{ordDetailBOs[__${iterStat.index}__].detaQty}" th:utext="*{ordDetailBOs[__${iterStat.index}__].detaQty}"></p>
 						                </div>
+						                <button>查看評價</button>
 						                <p class="yh_p_price" style="display: inline-block;" th:text="${ordDetail.pPrice * ordDetailBOs[__${iterStat.index}__].detaQty}">$100</p>
 						            </div>
 						            <!-- 顯示訂單詳細資訊 -->
