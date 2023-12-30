@@ -22,8 +22,8 @@ public class UpdateEmpController {
 	@Autowired
 	private EmpAuthService empSvc;
 	
-	@PostMapping("/{empID}/updateEmp")
-	public String updateEmp(@PathVariable("empID")Integer empID, HttpServletRequest req, Model model, HttpSession session) {
+	@PostMapping("/updateEmp")
+	public String updateEmp(HttpServletRequest req, Model model, HttpSession session) {
 		
 		// ===1. 獲得請求參數===
 		String name = req.getParameter("empName");
@@ -97,7 +97,7 @@ public class UpdateEmpController {
         	return "emp_home_alter";
         } else {
         	// ===3. 找到該名夥伴，並進行資料修改===
-        	Emp updEmp = empSvc.getOneEmp(empID);
+        	Emp updEmp = empSvc.getOneEmp(emp.getEmpID());
         	
         	updEmp.setEmpName(name);
         	updEmp.setEmpTel(tel);
