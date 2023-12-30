@@ -1,6 +1,5 @@
 package com.furelise.shopcart.controller;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,22 +64,19 @@ public class ShopCartController {
 			Map<Product, String> memCart = scSvc.getCartProducts(key);
 
 			if (memCart == null || memCart.isEmpty()) { // 會員購物車為空
-
 				String guestCartKey = (String) session.getAttribute("guestCart"); // 取得之前的訪客購物車
-
+				
 				if (guestCartKey != null && !guestCartKey.isEmpty()) { // 訪客購物車不為空
-
 					Map<Product, String> guestCart = scSvc.getCartProducts(guestCartKey);
 
 					if (!guestCart.isEmpty()) { // 訪客購物車內有商品
-
 						// 建立新的會員購物車
 						memCart = new HashMap<>(guestCart);
-						;
 						// 將會員購物車存回資料庫
 						memCart = scSvc.saveCartProducts(key, memCart); // key是會員購物車id,memCart是從訪客購物車取得的商品
-
-						// 將購物車內容添加到 model
+						// 刪除原來的訪客購物車
+			            scSvc.clearCart(guestCartKey);
+						// 將購物車內容加到 model
 						Set<Map.Entry<Product, String>> cartEntrtSet2 = memCart.entrySet();
 						model.addAttribute("cartEntrtSet", cartEntrtSet2);
 						model.addAttribute("cityList", cSvc.getAllCity());
@@ -137,10 +134,6 @@ public class ShopCartController {
 
 			if ("submitCheckout".equals(checkoutBtn)) {
 				oSvc.createOrder(ordDTO, model, req);
-
-//		        // 清空購物車
-//		        scSvc.clearCart(mem.getMemID());
-
 				// 重定向到 "/mem-ord"
 				return "redirect:/memOrdDetail.html";
 			}
@@ -156,7 +149,11 @@ public class ShopCartController {
 		scSvc.updateQuantity(key, pID, quantity);
 		return "redirect:/shopcart";
 	}
-
+	
+	@GetMapping("/empty-cart")
+	public String showEmptyCartPage() {
+	    return "empty-cart";
+	}
 //	@PostMapping("/clear")
 //	public String clearCart(@RequestParam Integer memID) {
 //		scSvc.clearCart(memID);
