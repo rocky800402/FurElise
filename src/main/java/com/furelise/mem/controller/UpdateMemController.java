@@ -26,8 +26,8 @@ public class UpdateMemController {
 	@Autowired
 	private MemService memSvc;
 	
-	@PostMapping("/{memID}/updateMem")
-	public String updateMem(@PathVariable("memID")Integer memID, HttpServletRequest req, Model model, HttpSession session) {
+	@PostMapping("/updateMem")
+	public String updateMem(HttpServletRequest req, Model model, HttpSession session) {
 		
 		// ===1. 獲得請求參數===
 		String name = req.getParameter("memName");
@@ -110,7 +110,7 @@ public class UpdateMemController {
         	return "member_home_alter";
         } else {
 			// ===3. 找到該名會員，並進行資料修改===
-			Mem updMem = memSvc.getOneMem(memID);
+			Mem updMem = memSvc.getOneMem(mem.getMemID());
 			
 			updMem.setMemName(name);
 			updMem.setMemTel(tel);

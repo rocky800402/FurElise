@@ -78,7 +78,7 @@
         <div style="max-width: 1200px; display: flex;">
             <div class="empSidebarPage"></div>
             <!--  -->
-	<form th:action="@{'/emp/info/' + ${empID} + '/updateEmp'}" method="post" th:object="${emp}" enctype="multipart/form-data">
+	<form th:action="@{/emp/info/updateEmp}" method="post" th:object="${emp}" enctype="multipart/form-data">
             <div style="width: 950px; padding: 20px; margin-left: 50px;">
             <!-- 寫在這裡 -->
             	<div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
