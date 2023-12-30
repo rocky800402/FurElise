@@ -61,7 +61,11 @@ public class EmpIncomeServer {
 
         //把數據寫入map
         Map<String, Object> mappingInf = new HashMap<>();
-        mappingInf.put("totalPlanPrice", totalPlanPrice.toBigInteger());
+        if (totalPlanPrice != null) {
+            mappingInf.put("totalPlanPrice", totalPlanPrice.toBigInteger());
+        } else {
+            mappingInf.put("totalPlanPrice", 0);
+        }
 
         return mappingInf;
     }

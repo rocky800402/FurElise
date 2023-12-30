@@ -36,7 +36,7 @@ public class EstabCase implements Serializable {
     private Date estabCaseDate;
 
     //	@CreationTimestamp
-    @UpdateTimestamp
+    @UpdateTimestamp//案件最後的修改時間
     @Column(name = "estabCaseStart")
     private Timestamp estabCaseStart;
 
