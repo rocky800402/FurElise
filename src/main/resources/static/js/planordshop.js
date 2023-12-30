@@ -251,6 +251,7 @@ $(document).on("click", "#task_discount", function() {
 
 //新增，成功後跳轉綠界
 $(document).on("click", "#task_add", function() {
+	var that = $(this);
 	$(".first select, input").prop('disabled', false); //選好的不可改
 	let planName = $("select[name='planName']").val(); //String planName
 	let pickupTime = $("select#pickupTime").val(); //timeID
@@ -338,12 +339,17 @@ $(document).on("click", "#task_add", function() {
 		},
 		complete: function() {
 			$(".first select, input").prop('disabled', true);
-			$("#task_add").prop('disabled', true);
+			$("#task_discount").prop('disabled', true);
+			$("#task_discount").css('background-color', 'lightgray');
+			$("#task_discount").css('border-color', 'lightgray');
+			$(that).prop('disabled', true);
+			$(that).css('background-color', 'lightgray');
+			$(that).css('border-color', 'lightgray');
 		}
 	});
 });
 
-//優惠碼驗證
+//更改付款狀態
 $(document).on("click", "#task_next", function() {
 	var paymentDataString = sessionStorage.getItem('paymentData');
 	
