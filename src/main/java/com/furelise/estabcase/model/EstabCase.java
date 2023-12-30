@@ -1,5 +1,6 @@
 package com.furelise.estabcase.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -41,6 +42,7 @@ public class EstabCase implements Serializable {
     private Timestamp estabCaseStart;
 
     @Column(name = "estabCaseEnd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp estabCaseEnd;
 
     @Column(name = "planPricePerCase")
