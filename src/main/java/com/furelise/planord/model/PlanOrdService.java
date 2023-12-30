@@ -49,7 +49,7 @@ public class PlanOrdService {
 	PlanStatusRepository planStatusDao;
 
 	public PlanOrd addPlanOrd(PlanOrdDTO req, Integer memID) {
-		//狀態碼210003=待付款
+		// 狀態碼210003=待付款
 		Integer planID = getPlanId(req.getPlanName(), req.getTimes());
 		String day = getPickupDay(req.getWeekDay());
 
@@ -74,8 +74,6 @@ public class PlanOrdService {
 //			}
 //			return planID;
 	}
-
-
 
 	// 取得收取日字串
 	private String getPickupDay(String[] weekDay) {
@@ -168,21 +166,21 @@ public class PlanOrdService {
 	public String getPlanStatus(Integer planStatusID) {
 		return planStatusDao.findById(planStatusID).get().getPlanStatus();
 	}
-	
+
 // ↑↑↑↑↑for list name instead of ID, PlanOrdController↑↑↑↑
 
-	// 找當前使用者memID的訂單是否有planEndDate晚於三天後的
+	// 找當前使用者進行中的訂單是否有planEndDate晚於三天後的
 	public boolean verifyPlanOrdPurchase(Integer memID, String planStart) {
 		// find planOrd of a member
 		boolean proceed = false;
 		List<PlanOrd> planOrdList = dao.findByMemID(memID);
-		// no purchase record
 		if (planOrdList.isEmpty()) {
 			proceed = true;
 		} else {
 			for (PlanOrd p : planOrdList) {
-				// planStart later than existing planEnd
-				if (Date.valueOf(planStart).compareTo(p.getPlanEnd()) > 0) // 可以買
+				// check if planOrd is valid or in progress
+				if (p.getPlanStatusID().equals(210003) || 
+					Date.valueOf(planStart).compareTo(p.getPlanEnd()) > 0)
 					proceed = true;
 				else {
 					proceed = false;
@@ -226,7 +224,7 @@ public class PlanOrdService {
 		return planDao.findByTimes(1);
 	}
 
-	//for PlanOrdController drop down menu
+	// for PlanOrdController drop down menu
 	// 取得PickupTime
 	public List<PickupTime> getPickupTime() {
 		return pickupTimeDao.findAll();
@@ -255,5 +253,5 @@ public class PlanOrdService {
 //		}
 //		return planDao.findTimeByPlanName(null)
 //	}
-	
+
 }

@@ -29,13 +29,13 @@ public class PlanOrdDTOCon {
 	@PostMapping("/adding")
 	public PlanOrd addPlanOrd(@Valid @RequestBody PlanOrdDTO dto, HttpServletRequest req) {
 		//測試時先把mem寫死(ajax測試時要搭配好planOrdCon的verifyPlanOrdPurchase)
-//		Mem mem = (Mem)(req.getSession().getAttribute("mem"));
-//		if (mem != null){
-//			Integer memID = mem.getMemID();
-			Integer memID = 110003;
+		Mem mem = (Mem)(req.getSession().getAttribute("mem"));
+		if (mem != null){
+			Integer memID = mem.getMemID();
+//			Integer memID = 110002;
 			return planOrdSvc.addPlanOrd(dto, memID); //回傳新增的方案訂單物件
-//		} else 
-//			return "login";
+		} else 
+			return null;
 	}
 
 	// list data, for ajax using

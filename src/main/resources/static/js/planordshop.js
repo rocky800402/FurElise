@@ -251,7 +251,8 @@ $(document).on("click", "#task_discount", function() {
 
 //新增，成功後跳轉綠界
 $(document).on("click", "#task_add", function() {
-	$(".first select, input").prop('disabled', false); //選好的不可改
+	var that = $(this);
+//	$(".first select, input").prop('disabled', false); //選好的不可改
 	let planName = $("select[name='planName']").val(); //String planName
 	let pickupTime = $("select#pickupTime").val(); //timeID
 	let period = $("select#period").val(); //periodID
@@ -297,10 +298,17 @@ $(document).on("click", "#task_add", function() {
 		data: JSON.stringify(form_data),
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(item) {
-			alert("成功新增資料，接著跳轉綠界");
+			alert("前往付款");
+			$("#task_discount").prop('disabled', true);
+			$("#task_discount").css('background-color', 'lightgray');
+			$("#task_discount").css('border-color', 'lightgray');
+			$(that).prop('disabled', true);
+			$(that).css('background-color', 'lightgray');
+			$(that).css('border-color', 'lightgray');
+			
 			$.ajax({
 			    type: "POST",
-			    url: "http://localhost:8080/ecpay/pay",
+			    url: "/ecpay/pay",
 			    data: JSON.stringify(item),
 			    headers: {
 			        "Content-Type": "application/json; charset=utf-8"  // 加入 Content-Type header
@@ -315,6 +323,7 @@ $(document).on("click", "#task_add", function() {
 			    },
 			    error: function(xhr) {
 			        alert("發生錯誤");
+			        location.reload();		        
 			    }
 			});			
 
@@ -333,11 +342,14 @@ $(document).on("click", "#task_add", function() {
 				alert('連線異常');
 				location.reload();
 			}
+		},
+		complete: function() {
+			
 		}
 	});
 });
 
-//優惠碼驗證
+//更改付款狀態
 $(document).on("click", "#task_next", function() {
 	var paymentDataString = sessionStorage.getItem('paymentData');
 	
