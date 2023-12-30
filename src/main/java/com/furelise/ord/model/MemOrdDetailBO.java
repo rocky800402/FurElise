@@ -17,7 +17,7 @@ public class MemOrdDetailBO {
     private String feedback;
     private Timestamp fbTime;
     private byte[] pImage;
-
+    private Integer pID;
     public MemOrdDetailBO() {
     }
 
@@ -29,5 +29,6 @@ public class MemOrdDetailBO {
         this.feedback = ordDetail.getFeedback();
         this.fbTime = ordDetail.getFbTime();
         this.pImage = product.getPImage1();
+        this.pID=product.getPID();
     }
 }
