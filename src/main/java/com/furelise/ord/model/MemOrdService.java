@@ -54,9 +54,19 @@ public class MemOrdService {
         return new MemOrdVO(city, ord, memOrdDetailBOList, sale);
     }
 
-    public MemOrdLevelDTO updateMemOrdDetail(MemOrdLevelDTO memOrdLevelDTO){
+    public OrdDetail updateMemOrdDetail(MemOrdLevelDTO memOrdLevelDTO){
+            OrdDetail ordDetail = ordDetailR.findByOrdIDAndPID(memOrdLevelDTO.getOrdID(), memOrdLevelDTO.getPID());
+            ordDetail.setLevel(memOrdLevelDTO.getLevel());
+            ordDetail.setFeedback(memOrdLevelDTO.getFeedback());
+            ordDetailR.save(ordDetail);
+        return ordDetail;
+    }
 
-        return null;
+    public Ord updateMemOrdStatusDTO(MemOrdStatusDTO memOrdStatusDTO){
+        Ord ord = ordR.findById(memOrdStatusDTO.getOrdID()).orElseThrow();
+        ord.setOrdStatus(memOrdStatusDTO.getOrdStatus());
+        ordR.save(ord);
+        return ord;
     }
 
 }

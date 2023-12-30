@@ -2,12 +2,11 @@ package com.furelise.ord.controller;
 
 import com.furelise.mem.model.entity.Mem;
 import com.furelise.mem.service.AuthService;
-import com.furelise.ord.model.MemOrdService;
-import com.furelise.ord.model.MemOrdVO;
+import com.furelise.ord.model.*;
+import com.furelise.orddetail.model.OrdDetail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,5 +24,16 @@ public class MemOrdController {
     public List<MemOrdVO> getMemOrdVO(HttpServletRequest req){
         Mem mem = (Mem) authService.validate(req, "mem");
         return memOrdService.getMemOrdList(mem.getMemID());
+    }
+    @PatchMapping
+    public OrdDetail updateMemOrdDetail(@Validated @RequestBody MemOrdLevelDTO memOrdLevelDTO){
+
+        return memOrdService.updateMemOrdDetail(memOrdLevelDTO);
+    }
+
+    @PatchMapping("/status")
+    public Ord updateMemOrdStatusDTO(@Validated @RequestBody MemOrdStatusDTO memOrdStatusDTO){
+
+        return memOrdService.updateMemOrdStatusDTO(memOrdStatusDTO);
     }
 }
