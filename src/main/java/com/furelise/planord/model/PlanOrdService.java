@@ -179,7 +179,7 @@ public class PlanOrdService {
 		} else {
 			for (PlanOrd p : planOrdList) {
 				// check if planOrd is valid or in progress
-				if (p.getPlanStatusID().equals(210003) || 
+				if (!p.getPlanStatusID().equals(210001) || 
 					Date.valueOf(planStart).compareTo(p.getPlanEnd()) > 0)
 					proceed = true;
 				else {
