@@ -1,5 +1,7 @@
 package com.furelise.shopcart.controller;
 
+import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.furelise.city.model.CityService;
 import com.furelise.mem.model.entity.Mem;
-import com.furelise.ord.model.Ord;
 import com.furelise.ord.model.OrdDTO;
 import com.furelise.ord.model.OrdService;
 import com.furelise.product.model.Product;
@@ -33,38 +34,65 @@ public class ShopCartController {
 
 	@Autowired
 	ProductService pSvc;
-	
+
 	@Autowired
-	OrdService oSvc; 
-	
+	OrdService oSvc;
+
 	@Autowired
 	CityService cSvc;
 
-	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
-	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model, HttpServletRequest req, OrdDTO ordDTO) {
+	@RequestMapping(value = { "/", "" }, method = RequestMethod.GET)
+	public String viewCart(@RequestParam(name = "memID", required = false) Integer memID, Model model,
+			HttpServletRequest req, OrdDTO ordDTO) {
 		HttpSession session = req.getSession();
 		Mem mem = (Mem) session.getAttribute("mem");
-		if (Objects.isNull(mem)) { //沒有登入
+		if (Objects.isNull(mem)) { // 沒有登入
 			String guestCartkey = (String) session.getAttribute("guestCart");
-			if (Objects.isNull(guestCartkey)) { //也沒有建立過訪客購物車
+			if (Objects.isNull(guestCartkey)) { // 也沒有建立過訪客購物車
 				return "empty-cart";
-			} 
+			}
 			Map<Product, String> guestCart = scSvc.getCartProducts(guestCartkey);
 			if (guestCart.isEmpty()) { // 有建立過訪客購物車但現在裡面沒有商品
 				return "empty-cart";
-			} else { //有建立過訪客購物車且裡面有商品
+			} else { // 有建立過訪客購物車且裡面有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
 				model.addAttribute("cityList", cSvc.getAllCity());
 			}
-		} else { //已登入的會員
-			
+		} else { // 已登入的會員
 			String key = "memCart:" + mem.getMemID();
 			Map<Product, String> memCart = scSvc.getCartProducts(key);
-			if (memCart == null || memCart.isEmpty()) { //購物車為空
-				
+
+			if (memCart == null || memCart.isEmpty()) { // 會員購物車為空
+
+				String guestCartKey = (String) session.getAttribute("guestCart"); // 取得之前的訪客購物車
+
+				if (guestCartKey != null && !guestCartKey.isEmpty()) { // 訪客購物車不為空
+
+					Map<Product, String> guestCart = scSvc.getCartProducts(guestCartKey);
+
+					if (!guestCart.isEmpty()) { // 訪客購物車內有商品
+
+						// 建立新的會員購物車
+						memCart = new HashMap<>(guestCart);
+						;
+						// 將會員購物車存回資料庫
+						memCart = scSvc.saveCartProducts(key, memCart); // key是會員購物車id,memCart是從訪客購物車取得的商品
+
+						// 將購物車內容添加到 model
+						Set<Map.Entry<Product, String>> cartEntrtSet2 = memCart.entrySet();
+						model.addAttribute("cartEntrtSet", cartEntrtSet2);
+						model.addAttribute("cityList", cSvc.getAllCity());
+						model.addAttribute("ordDTO", ordDTO);
+
+						return "shopcart";
+					}
+				}
+
+				// 若訪客購物車為空或者訪客購物車內沒有商品，回傳 "empty-cart"
 				return "empty-cart";
-			} else { //購物車內有商品
+
+			} else { // 購物車內有商品
 				Set<Map.Entry<Product, String>> cartEntrtSet = memCart.entrySet();
 				model.addAttribute("cartEntrtSet", cartEntrtSet);
 				model.addAttribute("cityList", cSvc.getAllCity());
@@ -85,7 +113,8 @@ public class ShopCartController {
 			Map<Product, String> guestCart = scSvc.getCartProducts(guestCartkey);
 			scSvc.removeProduct(guestCartkey, pID);
 			Set<Map.Entry<Product, String>> cartEntrtSet = guestCart.entrySet();
-			if(cartEntrtSet.isEmpty()) session.removeAttribute("guestCart");
+			if (cartEntrtSet.isEmpty())
+				session.removeAttribute("guestCart");
 			model.addAttribute("cartEntrtSet", cartEntrtSet);
 		} else {
 			String key = "memCart:" + mem.getMemID();
@@ -99,30 +128,31 @@ public class ShopCartController {
 	}
 
 	@PostMapping("/checkout")
-	public String checkout(HttpServletRequest req, Model model, @RequestParam(name = "checkoutBtn", required = false) String checkoutBtn, OrdDTO ordDTO) {
+	public String checkout(HttpServletRequest req, Model model,
+			@RequestParam(name = "checkoutBtn", required = false) String checkoutBtn, OrdDTO ordDTO) {
 		Mem mem = (Mem) req.getSession().getAttribute("mem");
 		if (mem == null) {
-	        return "redirect:/login";
-	    } else {
-	    	
-	    	 if ("submitCheckout".equals(checkoutBtn)) {
-	    		 oSvc.createOrder(ordDTO, model, req);
-	    	
+			return "redirect:/login";
+		} else {
+
+			if ("submitCheckout".equals(checkoutBtn)) {
+				oSvc.createOrder(ordDTO, model, req);
+
 //		        // 清空購物車
 //		        scSvc.clearCart(mem.getMemID());
-	
-		        // 重定向到 "/mem-ord"
-		        return "/test-mem-ord";
-	    	 }
-	    	 return "/test-mem-ord";
-	    }
+
+				// 重定向到 "/mem-ord"
+				return "redirect:/memOrdDetail.html";
+			}
+			return "redirect:/memOrdDetail.html";
+		}
 	}
 
 	@PostMapping("/update")
 	public String updateCart(@RequestParam Integer pID, @RequestParam Integer quantity, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		Mem mem = (Mem) session.getAttribute("mem");
-		String key = Objects.isNull(mem)? (String) session.getAttribute("guestCart"): "memCart:" + mem.getMemID();
+		String key = Objects.isNull(mem) ? (String) session.getAttribute("guestCart") : "memCart:" + mem.getMemID();
 		scSvc.updateQuantity(key, pID, quantity);
 		return "redirect:/shopcart";
 	}

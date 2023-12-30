@@ -1,13 +1,18 @@
 package com.furelise.shopcart.model2;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.furelise.mem.model.entity.Mem;
 import com.furelise.product.model.Product;
 import com.furelise.product.model.ProductRepository;
 import com.furelise.product.model.ProductService;
@@ -105,6 +110,30 @@ public class ShopCartService {
 		}
 	}
 
+
+	public void clearCart(BigInteger memID) {
+		try {
+			// 組合購物車的 key
+			String cartkey = getCartKey(memID);
+
+			// 刪除購物車的 key
+			redisTemplate.delete(cartkey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private String getCartKey(BigInteger memID) {
+		if (memID == null) {
+			// 如果memID為null，返回一個特定的字串，表示訪客購物車
+			return "guestCart:guest";
+		} else {
+			// 否則，返回正常的購物車key
+			return "memCart:" + memID.toString();
+		}
+	}
+
 	// 取得訪客購物車內的所有商品
 	public Map<Product, String> getCartProducts(String key) {
 		HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
@@ -115,7 +144,6 @@ public class ShopCartService {
 			map2.put(product, map.get(thePID));
 		}
 		return map2;
-		
 		
 //		if (memID.equals("guestCart:guest")) {
 //			// 在這裡實現訪客購物車的邏輯
@@ -171,5 +199,22 @@ public class ShopCartService {
 			return null;
 		}
 	} // deserialize
+
+	public Map<Product, String> saveCartProducts(String key, Map<Product, String> newMemCart) {
+		 try {
+	            HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+	            // 存儲新的購物車內容
+	            for (Map.Entry<Product, String> entry : newMemCart.entrySet()) {
+	                Product product = entry.getKey();
+	                String productId = String.valueOf(product.getPID());
+	                String quantity = entry.getValue();
+	                hashOps.put(key, productId, quantity);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		return newMemCart;
+	    }
+
 
 }// ShopCartService
