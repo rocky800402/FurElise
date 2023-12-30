@@ -87,7 +87,7 @@
 
                 <div class="row">
                     <div class="col-10">
-                        <button type="button" class="jack_button_return" data-toggle="modal"
+                        <button type="button" id="complaintButton" class="jack_button_return" data-toggle="modal"
                                 data-bs-target="#exampleModal2" onclick="SystemTime()">回報問題
                         </button>
                         <!-- <button class="jack_button_reject" onclick="showReportIssuePopup()">回報問題</button> -->
@@ -139,13 +139,13 @@
 
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">聯絡電話 : </label>
-                            <input type="text" class="form-control" id="recipient-name">
-                            <!--                                           pattern="^09\d{2}-\d{3}-\d{3}$" title="請輸入正確格式的電話號碼 (e.g., 09xx-xxx-xxx)" required-->
+                            <input type="text" class="form-control" id="recipient-name" placeholder="請輸入電話號碼 (e.g., 0912343456)" required>
+<!--                            <input type="text" class="form-control" id="recipient-name" pattern="^(09\d{8})$" title="請輸入正確格式的電話號碼 (e.g., 09xxxxxxxx)" required>-->
                         </div>
                     </div>
                     <div class="mb-3 ">
                         <label for="message-text" class="col-form-label">內容</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea class="form-control" id="message-text" placeholder="申訴內容"></textarea>
                     </div>
                 </form>
             </div>
@@ -168,11 +168,15 @@
 <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/constant.js}"></script>
 
 <script>
 
+    var model;
+    var takeStatus = [[${empOngoingCase.takeStatus}]];//用來更改此頁面的接單狀態
+
     $(document).ready(function () {
-        var modal = $('#exampleModal2');
+        modal = $('#exampleModal2');
 
         $('.jack_button_return').click(function () {
             console.log("有進來");
@@ -204,10 +208,29 @@
         var estabCaseID = [[${empOngoingCase.estabCaseID}]];
         const files = $('#myFile').prop('files')
         if (!files[0]) {
-            alert('請上傳案件執行狀況')
-            return
+            alert('請上傳案件執行狀況');
+            return;
         }
         const completedestabCaseID = '[[${empOngoingCase.estabCaseID}]]';
+
+        if(takeStatus !== true){
+            alert('請先接取訂單');
+            return;
+        }
+        $.ajax({
+            url: '/estabcaseongo/completed',
+            type: 'POST',
+            data: {
+                estabCaseID: completedestabCaseID,
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Error:', textStatus, errorThrown, jqXHR.responseText);
+            }
+        });
+
         var formData = new FormData();
         formData.append('file', files[0]);
         $.ajax({
@@ -223,18 +246,20 @@
                         <div><img alt="preview" style="max-width: 50%; max-height: 50%;" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
                        `
                 )
+                window.location.href = '/completed/' + estabCaseID;
             },
             error: (jqXHR, exception) => {
                 alert(jqXHR.responseJSON.message)
             }
         })
-        window.location.href = '/completed/' + estabCaseID;
+        // window.location.href = '/completed/' + estabCaseID;
     }
 
     function submitComplaint() {
         // 取需要的資料
         var comTelNumber = document.getElementById('recipient-name').value;
         var content = document.getElementById('message-text').value;
+        var telRegex = /^(09\d{8})$/;
 
         console.log("fun有效");
         // JSON
@@ -247,20 +272,31 @@
             comStatus: false,
         };
 
-        // 发送给后端
-        $.ajax({
-            type: "POST",
-            url: "/estabcaseonging/complaint",
-            contentType: "application/json",
-            data: JSON.stringify(complaintData),
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-        $('#exampleModal2').modal('hide');
+        if (!telRegex.test(comTelNumber)) {
+            alert('請輸入正確格式的電話號碼 (e.g., 0912343456)');
+            return;
+        }else if (content.trim() === ''){
+            alert('請填入申訴內容');
+            return;
+        }else {
+            // 发送给后端
+            $.ajax({
+                type: "POST",
+                url: "/estabcaseonging/complaint",
+                contentType: "application/json",
+                data: JSON.stringify(complaintData),
+                success: function (response) {
+                    console.log(response);
+                    var complaintButton = document.getElementById('complaintButton');//更改問題回報按鈕的顯示文字，並禁止用戶再度提交
+                    complaintButton.innerText = '已回報';
+                    complaintButton.disabled = true;
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+            modal.modal('hide');
+        }
     }
 
     $("#upload-btn").click(() => {
@@ -321,14 +357,17 @@
 
                 if (response) {
                     if (action === 'accept') {
+                        takeStatus = true;//在此頁面接單時 更改接單狀態
                         acceptButton.text('已接單').prop('disabled', true);
-                        rejectButton.prop('disabled', true);
+                        // rejectButton.prop('disabled', true);//如果使用者按下接單後，不給拒絕的話，再加這行
                         console.log('Accept logic');
                     } else if (action === 'reject') {
                         rejectButton.text('已拒絕').prop('disabled', true);
                         acceptButton.prop('disabled', true);
                         console.log('Reject logic');
                         history.go(-1);
+                        // location.reload();
+                        // window.location.href = '/estabcasemanage/' //如果這裡要改成這樣，要去從session獲取empID
                     }
                 } else {
                     console.log('Unexpected success response');

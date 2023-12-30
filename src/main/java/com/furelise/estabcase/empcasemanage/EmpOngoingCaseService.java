@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Service
 public class EmpOngoingCaseService {
@@ -45,6 +46,17 @@ public class EmpOngoingCaseService {
     plan
     emp
     */
+    public void CompleteCase(Integer estabCaseID){
+        EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElseThrow();
+        estabCase.setTakeStatus(true);
+        estabCase.setEstabCaseStatus(1);
+
+        //存入系統時間作為完成時間
+        java.util.Date currentDate = new java.util.Date();
+        Timestamp estabCaseEnd = new Timestamp(currentDate.getTime());
+        estabCase.setEstabCaseEnd(estabCaseEnd);
+        estabCaseRepository.save(estabCase);
+    }
 
     public EmpOngoingCaseVO getEmpOngoingCase(Integer estabCaseID){
         EmpOngoingCaseVO empOC = new EmpOngoingCaseVO();
