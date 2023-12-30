@@ -252,7 +252,7 @@ $(document).on("click", "#task_discount", function() {
 //新增，成功後跳轉綠界
 $(document).on("click", "#task_add", function() {
 	var that = $(this);
-	$(".first select, input").prop('disabled', false); //選好的不可改
+//	$(".first select, input").prop('disabled', false); //選好的不可改
 	let planName = $("select[name='planName']").val(); //String planName
 	let pickupTime = $("select#pickupTime").val(); //timeID
 	let period = $("select#period").val(); //periodID
@@ -299,6 +299,12 @@ $(document).on("click", "#task_add", function() {
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(item) {
 			alert("前往付款");
+			$("#task_discount").prop('disabled', true);
+			$("#task_discount").css('background-color', 'lightgray');
+			$("#task_discount").css('border-color', 'lightgray');
+			$(that).prop('disabled', true);
+			$(that).css('background-color', 'lightgray');
+			$(that).css('border-color', 'lightgray');
 			
 			$.ajax({
 			    type: "POST",
@@ -317,7 +323,7 @@ $(document).on("click", "#task_add", function() {
 			    },
 			    error: function(xhr) {
 			        alert("發生錯誤");
-					location.reload();		        
+			        location.reload();		        
 			    }
 			});			
 
@@ -338,13 +344,7 @@ $(document).on("click", "#task_add", function() {
 			}
 		},
 		complete: function() {
-			$(".first select, input").prop('disabled', true);
-			$("#task_discount").prop('disabled', true);
-			$("#task_discount").css('background-color', 'lightgray');
-			$("#task_discount").css('border-color', 'lightgray');
-			$(that).prop('disabled', true);
-			$(that).css('background-color', 'lightgray');
-			$(that).css('border-color', 'lightgray');
+			
 		}
 	});
 });
