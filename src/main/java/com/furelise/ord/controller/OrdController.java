@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.furelise.ord.model.MemOrdService;
 import com.furelise.ord.model.Ord;
 import com.furelise.ord.model.OrdRepository;
 import com.furelise.ord.model.OrdService;
@@ -50,7 +49,7 @@ public class OrdController {
 		Ord ord = oSvc.updateOrd(ordID,ordStatus);
         // 根据需要将更新后的订单信息放入模型中
         model.addAttribute("ord", ord);
-		return "redirect:/backend-ord";
+		return "redirect:/backend-ord/";
 		
 	}
 	

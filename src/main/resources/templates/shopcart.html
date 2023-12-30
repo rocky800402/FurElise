@@ -38,7 +38,7 @@
                     <div class="col-md-8">
                         <div class="card-body" style="width: 500px;">
                             <a th:href="@{/shopmall/getone/{pID}(pID=${product.key.pID})}" style="color: black;">
-                                <input name="pID" th:value="${product.key.pID}" type="hidden"></p>
+                                <input name="pID" th:value="${product.key.pID}" type="hidden" th:field="*{pID}"></p>
                                 <!-- 商品名稱 -->
                                 <h5 class="card-title" th:utext="${product.key.pName}" style="margin-top: 20px;">Product Name</h5>
                             </a>
@@ -49,6 +49,7 @@
 							 <div th:action="@{/shopcart/update}" th:id="'updateForm' + ${product.key.pID}" style="display: inline;">
                                 <input type="hidden" name="memID" th:value="${#request.getParameter('memID')}" />
                                 <input type="hidden" name="pID" th:value="${product.key.pID}" />
+                                <input type="hidden" name="quantity" th:value="${product.value}" th:field="*{quantity}"/>
                                 <input type="number" name="quantity" min="1" th:value="${product.value}" style="width: 50px; margin-bottom: 20px;" oninput="updateQuantityWithAjax(this)" />
                             </div>
 
@@ -74,13 +75,13 @@
             </select>
 
            
-              <!-- 郵遞區號 -->
-	            <label for="cityCode">行政區：</label>
-	            <select  id="cityCode" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;" >
-	                 <option th:each="city : ${cityList}" th:value="${city.cityCode}"> <!-- 修改这一行 -->
-				        <span th:text="${city.cityName}"></span>
-				    </option>
-	            </select>
+            <!-- 郵遞區號 -->
+	        <label for="cityCode">行政區：</label>
+	        <select th:field="*{cityCode}" id="cityCode" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-bottom: 20px;" >
+	             <option th:each="city : ${cityList}" th:value="${city.cityCode}"> <!-- 修改这一行 -->
+				    <span th:text="${city.cityName}"></span>
+				</option>
+	        </select>
 
             <!-- 詳細地址輸入框 -->
             <label for="floor">詳細地址：</label>
