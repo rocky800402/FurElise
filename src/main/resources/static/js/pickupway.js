@@ -50,18 +50,13 @@ $("button#task_add").on("click", function() {
 				contentType: "application/json",
 				data: JSON.stringify(form_data),
 				dataType: "text", // 預期會接收到回傳資料的格式： json | xml | html
-				beforeSend: function() {
-					$("button#task_add").addClass("-disabled");
-				},
 				success: function(item) {
 					alert(item);
 					if (item == "新增成功") {
 						window.location.href = 'add';
 					}
 				},
-				complete: function() {
-					$("button.task_add").removeClass("-disabled");
-				},
+				
 				error: function(xhr) {         // request 發生錯誤的話執行
 					if (xhr.status === 400) {
 						var errorMessage = xhr.responseText;
