@@ -17,9 +17,9 @@ public class CityService {
 	public String addCity(City city) {
 		//verify if cityCode/cityName duplicated
 		String result = "";
-		if (dao.existsByCityCode(city.getCityCode())) {
+		if (dao.existsByCityCode(city.getCityCode().trim())) {
 			result = "duplicated cityCode";
-		} else if (dao.existsByCityName(city.getCityName())) {
+		} else if (dao.existsByCityName(city.getCityName().trim())) {
 			result = "duplicated cityName";
 		} else {
 			dao.save(city);
@@ -31,8 +31,8 @@ public class CityService {
 	public String updateCity(City city, String oldCityCode, String oldCityName) {
 //		verify if cityCode/cityName duplicated, only accept original or unique one
 		String result = "";
-		String newCityCode = city.getCityCode();
-		String newCityName = city.getCityName();
+		String newCityCode = city.getCityCode().trim();
+		String newCityName = city.getCityName().trim();
 		if (!newCityCode.equals(oldCityCode) && dao.existsByCityCode(newCityCode)) {
 			result = "duplicated cityCode";
 		} else if (!newCityName.equals(oldCityName) && dao.existsByCityName(newCityName)) {

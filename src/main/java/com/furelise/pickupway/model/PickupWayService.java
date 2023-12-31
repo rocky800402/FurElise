@@ -17,8 +17,8 @@ public class PickupWayService {
 
 	public String addPickupWay(PickupWay req) {
 		String result = "";
-		if(!dao.existsByWayName(req.getWayName())) {
-			PickupWay pickupWay = new PickupWay(req.getWayName());
+		if(!dao.existsByWayName(req.getWayName().trim())) {
+			PickupWay pickupWay = new PickupWay(req.getWayName().trim());
 			dao.save(pickupWay);
 			result = "新增成功";
 		} else {
@@ -29,9 +29,9 @@ public class PickupWayService {
 
 	public String updatePickupWay(PickupWay req) {
 		String result = "";
-		String oldName = dao.findById(req.getWayID()).get().getWayName();
-		if(oldName.equals(req.getWayName()) || !dao.existsByWayName(req.getWayName())) {
-			PickupWay pickupWay = new PickupWay(req.getWayID(), req.getWayName());
+		String oldName = dao.findById(req.getWayID()).get().getWayName().trim();
+		if(oldName.equals(req.getWayName()) || !dao.existsByWayName(req.getWayName().trim())) {
+			PickupWay pickupWay = new PickupWay(req.getWayID(), req.getWayName().trim());
 			dao.save(pickupWay);
 			result = "更新成功";
 		} else {

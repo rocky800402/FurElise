@@ -18,8 +18,8 @@ public class PickupTimeService {
 
 	public String addPickupTime(PickupTime req) {
 		String result = "";
-		if (!dao.existsByTimeRange(req.getTimeRange())) {
-			PickupTime pickupTime = new PickupTime(req.getTimeRange());
+		if (!dao.existsByTimeRange(req.getTimeRange().trim())) {
+			PickupTime pickupTime = new PickupTime(req.getTimeRange().trim());
 			dao.save(pickupTime);
 			result = "新增成功";
 		} else {
@@ -30,9 +30,9 @@ public class PickupTimeService {
 
 	public String updatePickupTime(PickupTime req) {
 		String result = "";
-		String oldTime = dao.findById(req.getTimeID()).get().getTimeRange();
-		if(oldTime.equals(req.getTimeRange()) || !dao.existsByTimeRange(req.getTimeRange())) {
-			PickupTime pickupTime = new PickupTime(req.getTimeID(), req.getTimeRange());
+		String oldTime = dao.findById(req.getTimeID()).get().getTimeRange().trim();
+		if(oldTime.equals(req.getTimeRange()) || !dao.existsByTimeRange(req.getTimeRange().trim())) {
+			PickupTime pickupTime = new PickupTime(req.getTimeID(), req.getTimeRange().trim());
 			dao.save(pickupTime);
 			result = "更新成功";
 		} else
