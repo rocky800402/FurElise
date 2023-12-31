@@ -53,6 +53,7 @@ public class EmpOngoingCaseRSTNCon {
         return estabCaseRepository.save(estabCase);
     }
 
+    //使用者按下完成案件後 送出資料及改變狀態
     @PostMapping("/completed")
     public void CompleteCase(@RequestParam Integer estabCaseID){
         empOngoingCaseService.CompleteCase(estabCaseID);

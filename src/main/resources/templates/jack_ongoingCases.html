@@ -230,7 +230,7 @@
                         <div><img alt="preview" style="max-width: 50%; max-height: 50%;" src="data: image/jpeg;base64,${data.estabCasePic}"/></div>
                        `
                 )
-                window.location.href = '/completed/' + estabCaseID;
+                window.location.href = '/completed/' + estabCaseID;//利用EmpCompletedCaseController轉發
             },
             error: (jqXHR, exception) => {
                 alert(jqXHR.responseJSON.message)

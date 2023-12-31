@@ -80,12 +80,14 @@
 <script th:src="@{/js/jack_caseManagement.js}"></script>
 <script th:src="@{/js/constant.js}"></script>
 
-
-<script>
+<script th:inline="javascript">
     $(".footerPage").load("/footer.html");
     $(".empSidebarPage").load("/empSidebar.html");
 
+    var empID = /*[[${empID}]]*/ null;//設置全域變數，交給.js檔案使用
+    // console.log('empID:', empID);
 </script>
+
 </body>
 
 
