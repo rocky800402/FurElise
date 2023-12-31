@@ -41,9 +41,11 @@ public class DispatchService {
                 for (Emp emp : empWorkSum) {
                     if (!getEmpDateRange(emp).contains(estabCase.getEstabCaseDate().toLocalDate())) {
                         System.out.println("contains" + emp.getEmpID());
-                        if (Objects.equals(planOrd.getCityCode(), emp.getEmpArea1()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea2()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea3())) {
+                        if ((planOrd.getTimeID()==emp.getTimeID()) && (Objects.equals(planOrd.getCityCode(), emp.getEmpArea1()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea2()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea3()))) {
                             estabCase.setEmpID(emp.getEmpID());
                             System.out.println("Area" + emp.getEmpID());
+                            estabCaseRepository.save(estabCase);
+
                         }
                     }
                 }
