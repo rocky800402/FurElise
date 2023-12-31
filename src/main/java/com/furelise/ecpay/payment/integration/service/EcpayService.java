@@ -7,6 +7,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.furelise.estabcase.model.SplitPlanOrdService;
+import com.furelise.period.model.Period;
+import com.furelise.period.model.PeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,11 @@ public class EcpayService {
 	
 	@Autowired
 	private PlanOrdRepository planOrdRepository;
+	@Autowired
+	private SplitPlanOrdService splitPlanOrdService;
+
+	@Autowired
+	private PeriodRepository periodRepository;
 
 	public String getPlanName(String planID) {
 		Optional<Plan> olanOptional = planRepository.findById(Integer.valueOf(planID));
@@ -109,7 +117,17 @@ public class EcpayService {
 		Optional<PlanOrd> planOrdOptional = planOrdRepository.findById(Integer.valueOf(orderID));
 		PlanOrd planOrd = planOrdOptional.orElseThrow(() -> new NoSuchElementException("Order: "+ orderID+" not found")); 
 		planOrd.setPlanStatusID(Integer.valueOf(status));
-		
+		Plan plan = planRepository.findById(planOrd.getPlanID()).orElseThrow();
+		Period period = periodRepository.findById(planOrd.getPeriodID()).orElseThrow();
+		//猜單
+		splitPlanOrdService.addEstabCases(
+				planOrd.getPlanOrdID(),
+				String.valueOf(planOrd.getPlanStart()),
+				period.getPlanPeriod(),
+				planOrd.getDay(),
+				plan.getPlanPricePerCase()
+		);
+
 		planOrdRepository.save(planOrd);
 		
 	}
