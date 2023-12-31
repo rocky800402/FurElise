@@ -188,22 +188,6 @@
         $(".footerPage").load("/footer.html");
         $(".empSidebarPage").load("/empSidebar.html");
 
-
-        function showReportIssuePopup() {
-            // 取得浮動框元素
-            var popup = document.querySelector('.jack_report_issue_popup');
-            // 顯示浮動框
-            popup.style.display = 'block';
-        }
-
-        function hideReportIssuePopup() {
-            // 取得浮動框元素
-            var popup = document.querySelector('.jack_report_issue_popup');
-            // 隱藏浮動框
-            popup.style.display = 'none';
-        }
-
-
     function redirectToCompletedPage() {
         var estabCaseID = [[${empOngoingCase.estabCaseID}]];
         const files = $('#myFile').prop('files')

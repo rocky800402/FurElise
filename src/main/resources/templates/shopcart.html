@@ -221,29 +221,32 @@
                 });
             });
         });
-
         $('.deleteBtn').click(function () {
             var pID = $(this).data('product-id');
             console.log('Clicked on delete button. pID:', pID);
 
             $.ajax({
                 type: 'POST',
-                url: `${API_BASE_URL}/shopcart/remove`,  // 修改成你的後端處理路徑
+                url: `${API_BASE_URL}/shopcart/remove`,
                 data: { 'pID': pID },
-               
+                success: function (data) {
+                    // 處理成功回傳的資料，這裡可以根據需要進行相應的處理
+                    console.log('Remove successful:', data);
+                    $(`#${pID}`).remove();
 
-	                success: function (data) {
-	                    // 處理成功回傳的資料，這裡可以根據需要進行相應的處理
-	                    console.log('Remove successful:', data);
-	                    $(`#${pID}`).remove()
-	                    // 如果需要在刪除後更新介面，可以在這裡加上相應的程式碼
-	                },
-	                error: function (error) {
-	                    // 處理錯誤情況，這裡可以根據需要進行相應的處理
-	                    console.error('Remove failed:', error);
-	                }
-	            });
-	        });
+                    // 檢查購物車是否為空
+                    if ($('.card').length === 0) {
+                        // 購物車為空，導向到空購物車頁面
+                        window.location.href = '/shopcart';  // 商品刪除完後重新回到empty-cart
+                    }
+                },
+                error: function (error) {
+                    // 處理錯誤情況，這裡可以根據需要進行相應的處理
+                    console.error('Remove failed:', error);
+                }
+            });
+        });
+
         function updateQuantityWithAjax(inputElement) {
             var container = $(inputElement).closest('div');
             var formData = {};
@@ -268,6 +271,8 @@
                 }
             });
         }
+        
+        
 
 	</script>
 
