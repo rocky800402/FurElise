@@ -69,12 +69,13 @@ public class EmpOngoingCaseService {
         for(EstabCase estabCases :allPlanOrd){
             if(estabCases.getTakeStatus() && estabCases.getEstabCaseStatus() == 1){
                 allMatchCondition = true;
-                break;
+            }else {
+                allMatchCondition = false;
             }
         }
 
         if(allMatchCondition){
-            planOrd.setPlanStatusID(0);
+            planOrd.setPlanStatusID(210005);
             planOrdRepository.save(planOrd);
         }
     }
