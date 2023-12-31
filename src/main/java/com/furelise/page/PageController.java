@@ -1,18 +1,12 @@
 package com.furelise.page;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.net.http.HttpResponse;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +22,7 @@ import com.furelise.ecpay.payment.integration.EcpayDto;
 import com.furelise.ecpay.payment.integration.domain.AioCheckOutALL;
 import com.furelise.ecpay.payment.integration.domain.QueryTradeInfoObj;
 import com.furelise.ecpay.payment.integration.service.EcpayService;
+import com.furelise.ord.model.OrdDTO;
 import com.furelise.planord.model.PlanOrdDTO;
 
 @Controller
@@ -133,6 +128,35 @@ public class PageController {
 //        model.addAttribute("formData", form);
         return ecpayDto;
 	}
+	
+//	@PostMapping("/pay-ord")
+//	@ResponseBody
+//	public EcpayDto startPayForOrdDTO(@Valid @RequestBody OrdDTO dto, Model model) {
+//		System.out.println("/ecpay/pay get request: "+dto);
+//		AllInOne all = new AllInOne("");
+//		AioCheckOutALL obj = new AioCheckOutALL(); 
+//		// 填入必要的資料
+//		obj.setMerchantTradeNo(String.valueOf(dto.getOrdID()));
+//		String tradeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss"));
+//		obj.setMerchantTradeDate(tradeDate);
+//		obj.setTotalAmount(String.valueOf(dto.getTotal().intValue()));
+//		obj.setTradeDesc("test Description");
+////		obj.setItemName(ecpayService.getPlanName(dto.getPlanID())); //訂單沒有名稱
+//		obj.setReturnURL("localhost:8080/payResult");
+//		obj.setNeedExtraPaidInfo("N");
+//		
+//		Map<String, String> form = ecpayService.doPayment(obj);
+//		
+//		EcpayDto ecpayDto = new EcpayDto();
+//		ecpayDto.setAction("https://payment-stage.ecPay.com.tw/Cashier/AioCheckOut/V5");
+//		ecpayDto.setMethod("post");
+//		ecpayDto.setFormData(form);
+//		// 回傳form表單的資料
+////		model.addAttribute("action", "https://payment-stage.ecPay.com.tw/Cashier/AioCheckOut/V5");
+////        model.addAttribute("method", "post");
+////        model.addAttribute("formData", form);
+//		return ecpayDto;
+//	}
 	
 	@GetMapping("/paymentForm")
 	public String finishPay() {

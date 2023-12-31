@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+  <title>商品訂單管理</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
   <link rel="stylesheet" th:href="@{/css/backend_form.css}">
@@ -58,9 +58,29 @@
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 		margin-top: 20px;
 }
+.feedback_btn {
+	border-radius: 50rem!important;
+    color: white;
+    background-color: #A7D87D;
+    width: 90px;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 </style>
 </head>
-
 
 <body>
 	<div class="container">
@@ -80,8 +100,8 @@
 						                    <p style="display: inline-block;">x</p>
 						                    <p style="display: inline-block;" th:field="*{ordDetailBOs[__${iterStat.index}__].detaQty}" th:utext="*{ordDetailBOs[__${iterStat.index}__].detaQty}"></p>
 						                </div>
-						                <button>查看評價</button>
-						                <p class="yh_p_price" style="display: inline-block;" th:text="${ordDetail.pPrice * ordDetailBOs[__${iterStat.index}__].detaQty}">$100</p>
+				                        <button class="feedback_btn" onclick="handleFeedbackClick()">查看評價</button>
+						                <p class="yh_p_price" style="display: inline-block;  margin: 0;" th:text="${ordDetail.pPrice * ordDetailBOs[__${iterStat.index}__].detaQty}">$100</p>
 						            </div>
 						            <!-- 顯示訂單詳細資訊 -->
 						            <div class="ord_status" style="display: inline-block;">
@@ -91,7 +111,7 @@
 						                    <p>付款方式:</p><p th:text="${ordVO.payment}"></p><br>
 						                    <p>寄送方式:</p><p th:text="${ordVO.deliver}"></p><br>
 						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd')}"></p><br>
-						                    <p>出貨時間:</p><p></p><br> <!-- th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd HH:mm:ss')}" -->
+						                    <p>出貨時間:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
 						                </div>
 						            </div>
 						            <!-- 顯示訂單總金額等資訊 -->
@@ -119,6 +139,23 @@
 				</div>
 			</form>
 		</main>
+
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" th:each="ordDetail, iterStat : ${ordVO.ordDetailBOs}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModalLabel" th:text="${ordDetail.pName}">商品名稱</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mb_modal_body">
+                <p style="display: inline-block;">評價分數:</p><p th:text="${ordDetail.level}" style="display: inline-block; margin-left:20px;"></p><br>
+                <p style="display: inline-block;">評價內容:</p><p th:text="${ordDetail.feedback}" style="display: inline-block; margin-left:20px;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 	</div>
 </div>
 
@@ -129,7 +166,15 @@
   <script th:src="@{/js/constant.js}"></script>
   <script>
     $(".backendSidebarPage").load("/backendSidebar.html");
-  </script>
+
+    function handleFeedbackClick() {
+        
+        event.preventDefault();
+        $('#detailModal').modal('show');
+
+    }
+</script>
+
 </body>
 
 </html>

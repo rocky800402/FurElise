@@ -15,6 +15,8 @@ import com.furelise.ecpay.payment.integration.EcpayQueryDto;
 import com.furelise.ecpay.payment.integration.domain.AioCheckOutALL;
 import com.furelise.ecpay.payment.integration.domain.QueryTradeInfoObj;
 import com.furelise.ecpay.payment.integration.repository.EcpayRepository;
+import com.furelise.ecpay.payment.integration.repository.OrdEcpayRepository;
+import com.furelise.ecpay.payment.integration.repository.OrdPay;
 import com.furelise.ecpay.payment.integration.repository.PlanOrdPay;
 import com.furelise.plan.model.Plan;
 import com.furelise.plan.model.PlanRepository;
@@ -26,6 +28,9 @@ public class EcpayService {
 
 	@Autowired
 	private EcpayRepository dao;
+	
+	@Autowired
+	private OrdEcpayRepository oDao;
 
 	@Autowired
 	private PlanRepository planRepository;
@@ -42,6 +47,10 @@ public class EcpayService {
 	public PlanOrdPay getOnePlanOrd(Integer planOrdID) {
 		return dao.getReferenceById(planOrdID);
 	}
+	
+//	public OrdPay getOneOrd(Integer ordID) {
+//		return oDao.getReferenceById(ordID);
+//	}
 
 	public Boolean isOrderSuccess(QueryTradeInfoObj queryTradeInfoObj) {
 		Boolean flagBoolean = false;
