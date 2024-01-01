@@ -17,7 +17,7 @@ function init() {
                     <div class="form-group">
                         <label for="收取人員">收取人員</label>
                         
-                        <input type="text" class="form-control" id="收取人員" value="${data.empName}" readonly>
+                        <input type="text" class="form-control" id="empName" value="${data.empName}" readonly>
                         
                     </div>
     
@@ -70,7 +70,7 @@ function init() {
 
                     <div class="form-group">
                     <label for="接單狀態">接單狀態</label>
-                    <input type="text" class="form-control" id="接單狀態" value="${data.takeStatus?'已接單':'未接單'}" readonly>
+                    <input type="text" class="form-control" id="takeStatus" value="${data.takeStatus?'已接單':'未接單'}" readonly>
                     </div>
     
                     <div class="form-group">
@@ -207,6 +207,9 @@ $(document).on("click", ".mb_btn_03", function () {
             beforeSend: function () {       // 在 request 發送之前執行
             },
             success: function (data) {      // request 成功取得回應後執行
+                console.log(data);
+                $("#empName").val("暫無收取員")
+                $("#takeStatus").val(data.takeStatus?'已接單':'未接單')
             },
             error: function (xhr) {         // request 發生錯誤的話執行 
                 console.log('xhr');
