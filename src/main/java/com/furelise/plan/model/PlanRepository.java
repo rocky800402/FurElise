@@ -21,4 +21,6 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>{
 	
 	@Query("SELECT planID FROM Plan WHERE planName = :planName")
 	List<Integer> findIdByPlanName(@Param(value = "planName") String planName);
+	
+	boolean existsByPlanName(String planName);
 }
