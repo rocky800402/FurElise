@@ -101,7 +101,7 @@
           <tr>
             <th>訂單編號</th>
             <th>會員編號</th>
-            <th>訂購時間</th>
+            <th>訂購日期</th>
             <th>狀態</th>
             <th>查看詳情</th>
             <th>修改</th>
@@ -111,7 +111,7 @@
           <tr th:each="ord : ${ordList}">
             <td th:utext="${ord.ordID}"></td>
             <td th:utext="${ord.memID}"></td>
-            <td th:utext="${ord.ordDate}"></td>
+            <td th:utext="${#dates.format(ord.ordDate, 'yyyy/MM/dd')}"></td>
             <td th:class="${'status-' + ord?.ordStatus}">
     <span th:utext="${ord?.ordStatus == 0 ? '處理中' : (ord?.ordStatus == 1 ? '已寄出' : (ord?.ordStatus == 2 ? '已送達' : (ord?.ordStatus == 3 ? '退貨' : (ord?.ordStatus == 4 ? '已取消' : ''))))}">
     </span>
@@ -168,20 +168,7 @@
      // 獲取文本內容
      var ordStatusText = ordStatusElement ? ordStatusElement.innerText.trim() : null;
 	
-     
-//      color_el.forEach((element) => {
-//     	 if(color_el.text = '0') {
-//     		 element.style.color = '#fe9a9a';
-//     	 }else if(color_el.text = '1'){
-//     		 element.style.color = '#9ac972';
-// 		 }else if(color_el.text = '2'){
-// 			 element.style.color = '#aaa';
-//     	 }else if(color_el.text = '3'){
-//     		 element.style.color = '#FFC2A0';
-//     	 }else if(color_el.text = '4'){
-//     		 element.style.color = '#A5A5A5';
-//     	 }
-//      });
+
 
   });
   </script>
