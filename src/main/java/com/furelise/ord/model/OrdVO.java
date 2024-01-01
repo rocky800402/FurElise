@@ -15,6 +15,7 @@ import lombok.Data;
 
 @Data
 public class OrdVO {
+	private Integer memID;
     private Integer ordID;
     private String cityCode;
     private String cityName;
@@ -38,6 +39,7 @@ public class OrdVO {
     }
 
     public OrdVO(@Nullable City city, Ord ord, List<OrdDetailBO> OrdDetailBOList, @Nullable Sale sale) {
+    	this.memID = ord.getMemID();
         this.cityCode = ord.getCityCode();
         this.cityName = city.getCityName();
         this.ordID = ord.getOrdID();
