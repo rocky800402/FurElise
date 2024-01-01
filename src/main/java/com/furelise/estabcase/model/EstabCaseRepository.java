@@ -41,7 +41,7 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
             Integer estabCaseStatus
     );
 
-    List<EstabCase> findByEmpID(Integer empID);
+    List<EstabCase> findByPlanOrdID(Integer planOrdID);
 
 
     @Query("SELECT e FROM EstabCase e WHERE e.estabCaseDate >= CURRENT_DATE AND e.estabCaseDate <= CURRENT_DATE + 2 AND e.takeStatus = 0")

@@ -2,19 +2,11 @@ $(document).ready(function() {
     const exampleTable = $('#example').DataTable( {
         /*設定屬性(預設功能)區塊*/
         "searching": false,// 預設為true 搜尋功能，若要開啟不用特別設定
-        // "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]], //顯示筆數設定 預設為[10, 25, 50, 100] 用戶在下拉選單中看到的是第二個數組中的文本值，而實際上應用到表格的是第一個數組中對應的數字。
-        // "pageLength": '5',// 預設為'10'，若需更改初始每頁顯示筆數，才需設定　
         "ajax": {
-            "url": "http://localhost:8080/estabcase/120001/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
-            // "url": "http://localhost:8080/estabcase/" + empID + "/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
+            // "url": "http://localhost:8080/estabcase/120001/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
+            "url": "/estabcase/" + empID + "/0",           // 資料請求的網址，利用 /0 來做案件狀態分類
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
-            "dataSrc": "",
-            "data": {
-                'limit': 100,
-                'page': 1,
-                'empID': 120001,
-                'estabCaseStatus': 1
-            }
+            "dataSrc": ""
         },
         columns: [
             {
@@ -66,7 +58,7 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    // 根据 estabCaseStatus 和 takeStatus 的值返回不同的显示内容
+                    // 根据 estabCaseStatus 和 takeStatus 的值顯示不同的狀態內容
                     if (row.estabCaseStatus === 0) {
                         if (row.takeStatus === false) {
                             return '<span style="color: green;">未派送</span>';
@@ -113,7 +105,7 @@ $(document).ready(function() {
         var rejectButton = $('.jack_button_reject.update-status-button[data-id="' + estabCaseID + '"]');
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080//estabcase/updateCaseStatus',
+            url: '/estabcase/updateCaseStatus',
             data: {
                 action: action,
                 estabCaseID: estabCaseID
@@ -152,16 +144,10 @@ $(document).ready(function() {
         // "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]], //顯示筆數設定 預設為[10, 25, 50, 100] 用戶在下拉選單中看到的是第二個數組中的文本值，而實際上應用到表格的是第一個數組中對應的數字。
         // "pageLength": '5',// 預設為'10'，若需更改初始每頁顯示筆數，才需設定　
         "ajax": {
-            "url": "http://localhost:8080/estabcase/120001/1",           // 資料請求的網址 目前120001寫死 之後要用empID分類
+            // "url": "http://localhost:8080/estabcase/120001/1",           // 資料請求的網址 目前120001寫死 之後要用empID分類
+            "url": "/estabcase/" + empID + "/1",
             "type": "GET",                  // GET | POST | PUT | DELETE | PATCH
             "dataSrc": "",
-            "data": {
-                'limit': 100,
-                'page': 1,
-                'empID': 120001,
-                'estabCaseStatus': 1
-
-            }
         },
         columns: [
             {
@@ -198,7 +184,7 @@ $(document).ready(function() {
                     // 創建一個新的 button 元素
                     var button = document.createElement('button');
                     button.type = 'submit';
-                    button.textContent = '詳細';
+                    button.textContent = '資訊';
 
                     // 在表單中添加 button 元素
                     form.appendChild(button);
