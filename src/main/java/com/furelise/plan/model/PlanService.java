@@ -15,18 +15,19 @@ public class PlanService {
 
 	@Autowired
 	PlanRepository dao;
-	
+
 	@Autowired
 	PlanOrdRepository planOrdDao;
 
 	// 一次產生五筆
 	@Transactional
-	public List<Plan> addPlan(Plan req) {
+	public String addPlan(Plan req) {
 		BigDecimal planPrice = req.getPlanPrice();
 		BigDecimal planPricePerCase = req.getPlanPricePerCase();
-
-		if (planPrice.compareTo(planPricePerCase) < 0 ) {
-			return null;
+		if (planPrice.compareTo(planPricePerCase) < 0) {
+			return "價格不可低於案件報酬";
+		} else if (dao.existsByPlanName(req.getPlanName())) {
+			return "方案名稱不可重複";
 		} else {
 			List<Plan> pList = new ArrayList<Plan>();
 			for (int i = 0; i < 5; i++) {
@@ -35,33 +36,71 @@ public class PlanService {
 				dao.save(plan);
 				pList.add(plan);
 			}
-			return pList;
+			return "新增成功";
 		}
 	}
 
-	public Plan updatePlan(Plan req) {
+	@Transactional
+	public String updatePlan(Plan req) {
 		BigDecimal planPrice = req.getPlanPrice();
 		BigDecimal planPricePerCase = req.getPlanPricePerCase();
-		
+		String oldName = dao.findById(req.getPlanID()).get().getPlanName();
 		if (planPrice.compareTo(planPricePerCase) < 0) {
-			return null;
-		} else {
+			return "價格不可低於案件報酬";
+		} else if (req.getPlanName().equals(oldName)) {
 			Plan plan = new Plan(req.getPlanID(), req.getPlanName(), req.getLiter(), planPrice, planPricePerCase,
 					req.getTimes(), req.getPlanUpload());
-			return dao.save(plan);
+			dao.save(plan);
+			return "更新成功";
+		} else if (dao.existsByPlanName(req.getPlanName())) {
+			return "方案名稱不可重複";
+			// 修改五筆方案名
+		} else {
+			// 更新中的方案ID
+			Integer thisPlanId = req.getPlanID();
+			Plan plan = new Plan(thisPlanId, req.getPlanName(), req.getLiter(), planPrice, planPricePerCase,
+					req.getTimes(), req.getPlanUpload());
+			dao.save(plan);
+
+			// 找出其餘ID
+			List<Integer> pList = dao.findIdByPlanName(oldName);
+
+			for (Integer id : pList) {
+				if (id != thisPlanId) {
+					Plan other = dao.findById(id).get();
+					// 僅更新方案名
+					Plan newPlan = new Plan(id, req.getPlanName(), other.getLiter(),
+							other.getPlanPrice().stripTrailingZeros(), other.getPlanPricePerCase().stripTrailingZeros(),
+							other.getTimes(), other.getPlanUpload());
+					dao.save(newPlan);
+				}
+			}
+			return "更新成功";
 		}
 	}
 
 	// 同名方案一次刪除
 	@Transactional
-	public void deletePlan(String planName) {
+	public String deletePlan(String planName) {
+		String result = "";
 		// find planID by planName
-		List<Integer> planIDList = dao.findIdByPlanName(planName);
-		// find planOrd by planID
-		for (Integer planID : planIDList) {
-			List<PlanOrd> planOrdList = planOrdDao.findByPlanID(planID);
-				dao.deleteById(planID);
+		List<Integer> idList = dao.findIdByPlanName(planName);
+		// find planOrd with planID mentioned
+		for (Integer planID : idList) {
+			List<PlanOrd> ordList = planOrdDao.findByPlanID(planID);
+			if (ordList.isEmpty()) {
+				result = "刪除成功";
+			} else {
+				result = "不可刪除";
+				break;
+			}
 		}
+		if (result.equals("刪除成功")) {
+			for (Integer planID : idList) {
+				dao.deleteById(planID);
+			}
+		}
+		return result;
 	}
 
 	public List<Plan> getAllPlan() {

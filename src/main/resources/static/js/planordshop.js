@@ -105,7 +105,7 @@ function new_plan() {
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
 			let list_html = "";
-			for (let i = 3; i < data.length; i++) {
+			for (let i = 0; i < data.length; i++) {
 				list_html = `
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">

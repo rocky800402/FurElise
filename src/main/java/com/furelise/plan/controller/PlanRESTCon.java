@@ -24,26 +24,22 @@ public class PlanRESTCon {
 	@Autowired
 	PlanService planSvc;
 	
-	//一次產生五筆，
+	//一次產生五筆
 	@PostMapping("/adding")
 	public String addPlan(@Valid @RequestBody Plan req) {
-		if(planSvc.addPlan(req) == null) 
-			return "價格不可低於案件報酬";
-		else
-			return "新增成功";
+		return planSvc.addPlan(req); 
 	}
 	
 	
 	@PutMapping("/updating")
-	public Plan updatePlan(@Valid @RequestBody Plan req) {
+	public String updatePlan(@Valid @RequestBody Plan req) {
 		return planSvc.updatePlan(req);
 	}
 	
 	//同名方案一次刪除
 	@DeleteMapping("deleting")
 	public String deletePlan(@RequestBody Plan req) {
-		planSvc.deletePlan(req.getPlanName());
-		return "deleted seccessfully";
+		return planSvc.deletePlan(req.getPlanName());
 	}
 
 	

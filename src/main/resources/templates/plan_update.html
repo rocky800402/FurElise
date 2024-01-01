@@ -135,9 +135,9 @@
 				<input type="text" id="planID" th:value="${planID}" readonly style="background-color:lightgrey">
             </div>
 
-            <label>方案名稱(不可修改)</label>
+            <label>方案名稱</label>
             <div class="input-group mb-3">
-				<input type="text" id="planName" th:value="${planName}" readonly style="background-color:lightgrey">
+				<input type="text" id="planName" th:value="${planName}">
             </div>
 
             <label>垃圾容量</label>
@@ -156,10 +156,10 @@
                 <span class="input-group-text">$</span> <input type="text" id="planPricePerCase" th:value="${planPricePerCase.intValue()}" >
             </div>
 
-			<label>每週收取次數</label>
+			<label>每週收取次數(不可修改)</label>
             <div>
 				<select id="times" class="form-select-lg mb-3">
-					<option th:value="${times}" th:text="${times}"></option>
+					<option th:value="${times}" th:text="${times}" readonly></option>
 					
                 </select>
             </div>
