@@ -238,5 +238,8 @@ $(async function () {
         });
 
     });
+
+    $(".mb_tag").removeClass("mb_tag");
+    $(".memOrdDetail").addClass("mb_tag");
     
 })
