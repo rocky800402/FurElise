@@ -18,7 +18,7 @@ public class PeriodController {
 	PeriodService periodSvc;
 	
 	// return view
-	@RequestMapping(value= {"/",""}, method = RequestMethod.GET)
+	@GetMapping("/")
 	public String periodList() {
 		return "period_list";
 	}
