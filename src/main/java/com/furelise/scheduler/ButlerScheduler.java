@@ -21,6 +21,7 @@ public class ButlerScheduler {
     public void assignWork() {
         LocalDateTime now = LocalDateTime.now(ZoneId.of(TW_ZONE_ID));
         if (!(now.getHour() < 7)) {
+            System.out.println("早上7點到晚上12點派單");
             this.logger.info("[assignWork] start assign work");
             dispatchService.assignWorkToEmp();
         }
