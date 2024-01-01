@@ -2,6 +2,7 @@ package com.furelise.orddetail.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -66,6 +67,8 @@ public class OrdDetail implements Serializable{
 		this.level = level;
 		this.fbTime = fbTime;
 	}
+
+
 
 	
 }

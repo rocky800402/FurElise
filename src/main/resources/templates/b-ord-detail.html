@@ -10,7 +10,9 @@
   <link rel="stylesheet" th:href="@{/css/backend_form.css}">
   <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
   <link rel="stylesheet" th:href="@{/css/backend_ord_detail.css}">
- <style type="text/css">/* disable button */
+  
+ <style type="text/css">
+ /* disable button */
 .sl_btn_disable {
 	cursor: pointer;
 	--bs-btn-color: #9ac972;
@@ -79,6 +81,9 @@
     border-radius: 0.25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.-on {
+    color: yellow; /* 或者其他黄色的颜色值 */
+}
 </style>
 </head>
 
@@ -139,27 +144,65 @@
 				</div>
 			</form>
 		</main>
-
-<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" th:each="ordDetail, iterStat : ${ordVO.ordDetailBOs}">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="titleModalLabel" th:text="${ordDetail.pName}">商品名稱</h5>
+		
+	<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" th:object="${ordVO}" method="get">
+            <div class="modal-header mb_modal_header">
+                <div class="mb_modal_header_h5">
+                    <h5 class="modal-title mb_modal_title" id="exampleModalLabel" th:text="'訂單編號 : ' + ${ordVO.ordID}"></h5>
+                    <h3 for="recipient-name" class="col-form-label mb_mem_name" th:text="'會員編號 : ' + ${ordVO.memID}"></h3>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body mb_modal_body">
-                <p style="display: inline-block;">評價分數:</p><p th:text="${ordDetail.level}" style="display: inline-block; margin-left:20px;"></p><br>
-                <p style="display: inline-block;">評價內容:</p><p th:text="${ordDetail.feedback}" style="display: inline-block; margin-left:20px;"></p>
+                <form>
+                    <div class="mb-3 mb_modal_body_div" th:each="ordDetailBO : ${ordVO.ordDetailBOs}">
+                        <div class="mb_modal_div">
+                            <label for="recipient-name" class="col-form-label mb_modal_label"
+       							   th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd')}"></label><br>
+                            <label for="recipient-name" class="col-form-label mb_modal_label"
+                                   th:text="'商品編號 : ' + ${ordDetailBO.pID}"></label><br>
+                            <label for="recipient-name" class="col-form-label mb_modal_label"
+                                   th:text="'商品名稱 : ' + ${ordDetailBO.pName}"></label>
+                        </div>
+                        
+                        <br>
+                        <div class="star_block">
+                            <span class="star mb_star" th:class="${ordDetailBO.level >= 1 ? '-on' : ''}" data-star="1">
+                                <i class="fas fa-star" style="width: 30px; height: 30px;"></i>
+                            </span>
+                            <span class="star mb_star" th:class="${ordDetailBO.level >= 2 ? '-on' : ''}" data-star="2">
+                                <i class="fas fa-star" style="width: 30px; height: 30px;"></i>
+                            </span>
+                            <span class="star mb_star" th:class="${ordDetailBO.level >= 3 ? '-on' : ''}" data-star="3">
+                                <i class="fas fa-star" style="width: 30px; height: 30px;"></i>
+                            </span>
+                            <span class="star mb_star" th:class="${ordDetailBO.level >= 4 ? '-on' : ''}" data-star="4">
+                                <i class="fas fa-star" style="width: 30px; height: 30px;"></i>
+                            </span>
+                            <span class="star mb_star" th:class="${ordDetailBO.level >= 5 ? '-on' : ''}" data-star="5">
+                                <i class="fas fa-star" style="width: 30px; height: 30px;"></i>
+                            </span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">評價內容</label>
+                            <textarea class="form-control" id="message-text" th:text="${ordDetailBO.feedback}" readonly></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer mb_estab_case_level_modal_footer">
+                <button type="button" class="btn btn-secondary mb_estab_case_level_cancel_btn" data-bs-dismiss="modal">返回 </button>
             </div>
         </div>
     </div>
 </div>
 
-
 	</div>
 </div>
 
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
   <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
   <script th:src="@{/js/jquery.dataTables.min.js}"></script>
