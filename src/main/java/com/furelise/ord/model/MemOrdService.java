@@ -11,6 +11,9 @@ import com.furelise.sale.model.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +61,7 @@ public class MemOrdService {
             OrdDetail ordDetail = ordDetailR.findByOrdIDAndPID(memOrdLevelDTO.getOrdID(), memOrdLevelDTO.getPID());
             ordDetail.setLevel(memOrdLevelDTO.getLevel());
             ordDetail.setFeedback(memOrdLevelDTO.getFeedback());
+            ordDetail.setFbTime(Timestamp.valueOf(LocalDateTime.now()));
             ordDetailR.save(ordDetail);
         return ordDetail;
     }
