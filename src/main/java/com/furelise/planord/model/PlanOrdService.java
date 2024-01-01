@@ -245,13 +245,10 @@ public class PlanOrdService {
 		return cityDao.findAll();
 	}
 
-//	//取得各方案可選的收取次數 //沒完成
-//	public List<Integer> getTimeByPlanName(){
-//		List<Plan> planList = planDao.findAll();
-//		for(Plan p : planList) {
-//			p.getTimes();
-//		}
-//		return planDao.findTimeByPlanName(null)
-//	}
+//	取得各方案可選的收取次數
+	public List<Integer> getTimeByPlanName(String planName){
+		System.out.println(planName);
+		return planDao.findTimeByPlanName(planName);
+	}
 
 }
