@@ -111,7 +111,7 @@
           <tr th:each="ord : ${ordList}">
             <td th:utext="${ord.ordID}"></td>
             <td th:utext="${ord.memID}"></td>
-            <td th:utext="${#dates.format(ord.ordDate, 'yyyy/MM/dd')}"></td>
+            <td th:utext="${#dates.format(ord.ordDate, 'yyyy-MM-dd')}"></td>
             <td th:class="${'status-' + ord?.ordStatus}">
     <span th:utext="${ord?.ordStatus == 0 ? '處理中' : (ord?.ordStatus == 1 ? '已寄出' : (ord?.ordStatus == 2 ? '已送達' : (ord?.ordStatus == 3 ? '退貨' : (ord?.ordStatus == 4 ? '已取消' : ''))))}">
     </span>

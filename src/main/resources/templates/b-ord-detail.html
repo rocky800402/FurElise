@@ -115,8 +115,8 @@
 						                    <p>配送地址:</p><p th:text="${ordVO.address}"></p><br>
 						                    <p>付款方式:</p><p th:text="${ordVO.payment}"></p><br>
 						                    <p>寄送方式:</p><p th:text="${ordVO.deliver}"></p><br>
-						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd')}"></p><br>
-						                    <p>出貨時間:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
+						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
+						                    <p>出貨日期:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}"></p><br>
 						                </div>
 						            </div>
 						            <!-- 顯示訂單總金額等資訊 -->
@@ -160,7 +160,7 @@
                     <div class="mb-3 mb_modal_body_div" th:each="ordDetailBO : ${ordVO.ordDetailBOs}">
                         <div class="mb_modal_div">
                             <label for="recipient-name" class="col-form-label mb_modal_label"
-       							   th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd')}"></label><br>
+       							   th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd HH:mm:ss')}"></label><br>
                             <label for="recipient-name" class="col-form-label mb_modal_label"
                                    th:text="'商品編號 : ' + ${ordDetailBO.pID}"></label><br>
                             <label for="recipient-name" class="col-form-label mb_modal_label"
