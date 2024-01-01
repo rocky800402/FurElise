@@ -24,11 +24,21 @@ public class LoginController {
         return "login-test";
     }
 	
+    @GetMapping("/login-google")
+    public String googleRegister(Model model, HttpSession session) {
+    	Mem newMem = (Mem) session.getAttribute("newMem");
+    	model.addAttribute("newMem", newMem);
+    	return "login-google";
+    }
     
     @GetMapping("/member/info")
 	public String memInfo(Model model, HttpSession session) {
 		Mem mem = (Mem) session.getAttribute("mem");
 		model.addAttribute("mem", mem);
+		if (session.getAttribute("google") != null) {
+			boolean isGoogleLogin = (boolean) session.getAttribute("google");
+			model.addAttribute("google", isGoogleLogin);
+		}
 		if (mem != null) {
 	        return "member_home_alter";
 	    } else {

@@ -1,319 +1,421 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Für Elise-帳戶登入</title>
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Für Elise-帳戶登入</title>
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" href="./css/header.css"
+	th:href="@{/css/header.css}">
+<style>
+* {
+	box-sizing: border-box;
+}
 
-        .hidden {
-            display: none;
-        }
+.hidden {
+	display: none;
+}
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
+.btn-group {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
 
-        .btn-group .btn {
-            width: 450px;
-            height: 75px;
-            margin-right: -4px;
-            font-size: 26px;
-            text-align: center;
-            line-height: 60px;
-        }
+.btn-group .btn {
+	width: 450px;
+	height: 75px;
+	margin-right: -4px;
+	font-size: 26px;
+	text-align: center;
+	line-height: 60px;
+}
 
-        .hc_headerBox {
-            background-color: #f7f7f7;
-            border-bottom: 1px solid #ececec;
-            border-top: 1px solid #ececec;
-            margin-bottom: 100px;
-        }
+.hc_headerBox {
+	background-color: #f7f7f7;
+	border-bottom: 1px solid #ececec;
+	border-top: 1px solid #ececec;
+	margin-bottom: 100px;
+}
 
-        .hc_headerText {
-            color: #000;
-            font-weight: bold;
-            text-align: center;
-            padding-bottom: 15px;
-            padding-top: 15px;
-            font-size: 30px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+.hc_headerText {
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	font-size: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-        .btn-check:focus+.btn-outline-primary,.btn-outline-primary:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-outline-primary,.btn-check:checked+.btn-outline-primary,.btn-outline-primary.active,.btn-outline-primary.dropdown-toggle.show,.btn-outline-primary:active{color:#fff !important;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-outline-primary:focus,.btn-check:checked+.btn-outline-primary:focus,.btn-outline-primary.active:focus,.btn-outline-primary.dropdown-toggle.show:focus,.btn-outline-primary:active:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-outline-primary.disabled,.btn-outline-primary:disabled{color:#9ac972;background-color:transparent}
+.btn-check:focus+.btn-outline-primary, .btn-outline-primary:focus {
+	box-shadow: 0 0 0 .25rem #DEF5EE
+}
 
-        .btn-group .btn.btn-outline-primary {
-            color: #9ac972;
-            border-color: #9ac972;
-        }
+.btn-check:active+.btn-outline-primary, .btn-check:checked+.btn-outline-primary,
+	.btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show,
+	.btn-outline-primary:active {
+	color: #fff !important;
+	background-color: #9ac972;
+	border-color: #9ac972
+}
 
-        .btn-group .btn.btn-outline-primary:hover {
-            color: #fff;
-            background-color: #9ac972;
-            border-color: #9ac972;
-        }
+.btn-check:active+.btn-outline-primary:focus, .btn-check:checked+.btn-outline-primary:focus,
+	.btn-outline-primary.active:focus, .btn-outline-primary.dropdown-toggle.show:focus,
+	.btn-outline-primary:active:focus {
+	box-shadow: 0 0 0 .25rem #DEF5EE
+}
 
-        .btn-group .btn.btn-outline-primary:checked {
-            color: #fff;
-            background-color: #9ac972;
-            border-color: #9ac972;
-        }
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+	color: #9ac972;
+	background-color: transparent
+}
 
-        .hc_login_allBox {
-            display: inline-block;
-            vertical-align: middle;
-            width: 60%;
-            margin: auto;
-        }
+.btn-group .btn.btn-outline-primary {
+	color: #9ac972;
+	border-color: #9ac972;
+}
 
-        .hc_login, .hc_login_emp {
-            display: inline-block;
-            vertical-align: middle;
-            width: 55%;
-            margin: auto;
-        }
+.btn-group .btn.btn-outline-primary:hover {
+	color: #fff;
+	background-color: #9ac972;
+	border-color: #9ac972;
+}
 
-        .hc_login p, .hc_register p, .hc_login_emp p {
-            font-size: 20px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
+.btn-group .btn.btn-outline-primary:checked {
+	color: #fff;
+	background-color: #9ac972;
+	border-color: #9ac972;
+}
 
-        .hc_login input, .hc_login_emp input {
-            font-size: 24px;
-            width: 190%;
-        }
+.hc_login_allBox {
+	display: inline-block;
+	vertical-align: middle;
+	width: 60%;
+	margin: auto;
+}
 
-        .hc_rmbMe {
-            font-size: 24px;
-            height: 100px;
-            margin-top: 10px;
-            width: 860px;
-        }
+.hc_login, .hc_login_emp {
+	display: inline-block;
+	vertical-align: middle;
+	width: 55%;
+	margin: auto;
+}
 
-        .hc_rmbMe_box {
-            text-align: left;
-            display: inline-block;
-        }
+.hc_login p, .hc_register p, .hc_login_emp p {
+	font-size: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 
-        .hc_rmbMe input {
-            width: 20px;
-        }
+.hc_login input, .hc_login_emp input {
+	font-size: 24px;
+	width: 190%;
+}
 
-        #hc_forgetPW_btn, #hc_forgetPW_btn_emp {
-            background-color: white;
-            border: 2px solid white;
-            color: #000;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 24px;
-            margin-top: 10px;
-            margin-left: 65%;
-        }
+.hc_rmbMe {
+	font-size: 24px;
+	height: 100px;
+	margin-top: 10px;
+	width: 860px;
+}
 
-        #hc_forgetPW_btn:hover,  #hc_forgetPW_btn_emp:hover {
-            text-decoration: underline; /* 滑鼠懸停時添加底線效果 */
-        }
+.hc_rmbMe_box {
+	text-align: left;
+	display: inline-block;
+}
 
-        .hc_login_btn {
-            margin-bottom: 90px;
-        }
+.hc_rmbMe input {
+	width: 20px;
+}
 
-        .hc_login_btn button {
-            width: 400px;
-            height: 60px;
-            margin-bottom: 50px;
-        }
+#hc_forgetPW_btn, #hc_forgetPW_btn_emp {
+	background-color: white;
+	border: 2px solid white;
+	color: #000;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 24px;
+	margin-top: 10px;
+	margin-left: 65%;
+}
 
-        .btn-primary {
-            background-color: #9ac972;
-            border-color: #9ac972;
-        }
+#hc_forgetPW_btn:hover, #hc_forgetPW_btn_emp:hover {
+	text-decoration: underline; /* 滑鼠懸停時添加底線效果 */
+}
 
-        .hc_login_btn button.btn:hover {
-            background-color: rgba(26, 137, 26, 0.801);
-            border-color: rgba(26, 137, 26, 0.801);
-            color: white;
-        }
+.hc_login_btn {
+	margin-bottom: 90px;
+}
 
+.hc_login_btn button {
+	width: 400px;
+	height: 50px;
+	margin-bottom: 50px;
+}
 
-        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+.btn-primary {
+	background-color: #9ac972;
+	border-color: #9ac972;
+}
 
-        .hc_forgetPW p {
-            margin-top: 70px;
-            font-size: 22px;
-        }
+.hc_login_btn button.btn:hover {
+	background-color: rgba(26, 137, 26, 0.801);
+	border-color: rgba(26, 137, 26, 0.801);
+	color: white;
+}
 
-        .hc_forgetPW input {
-            font-size: 22px;
-            width: 842px;
-        }
+.btn-primary:focus {
+	color: #fff;
+	background-color: #9ac972;
+	border-color: #9ac972;
+	box-shadow: 0 0 0 .25rem #DEF5EE
+}
 
-        .hc_forgetPW > div {
-            margin-top: 50px;
-        }
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary,
+	.btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #9ac972;
+	border-color: #9ac972
+}
 
-        .hc_register input {
-            font-size: 24px;
-            text-align: left;
-            width: 104.5%;
-        }
+.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus,
+	.btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus
+	{
+	box-shadow: 0 0 0 .25rem #DEF5EE
+}
 
-        /* .hc_register_inputHalf {
+.btn-primary.disabled, .btn-primary:disabled {
+	color: #fff;
+	background-color: #9ac972;
+	border-color: #9ac972
+}
+
+.hc_forgetPW p {
+	margin-top: 70px;
+	font-size: 22px;
+}
+
+.hc_forgetPW input {
+	font-size: 22px;
+	width: 842px;
+}
+
+.hc_forgetPW>div {
+	margin-top: 50px;
+}
+
+.hc_register input {
+	font-size: 24px;
+	text-align: left;
+	width: 104.5%;
+}
+
+/* .hc_register_inputHalf {
             display: inline-block;
         } */
-
-
-    </style>
+.googleAuth {
+	transform: scale(1.2);
+	margin-left: 37px;
+}
+</style>
 </head>
 <body>
-<script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
-<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+	<script src="./js/bootstrap.bundle.min.js"
+		th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script src="./js/jquery-3.7.1.min.js"
+		th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+	<script src="https://accounts.google.com/gsi/client" async></script>
 
-<div class="headerPage"></div>
+	<div class="headerPage"></div>
 
-<div class="hc_headerBox">
-    <div class="hc_headerText">我的帳戶</div>
-</div>
-<!-- switching button -->
-<div class="hc_login_allBox">
-    <div class="btn-group text-center" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-        <label class="btn btn-outline-primary" for="btnradio1">會員登入</label>
+	<div class="hc_headerBox">
+		<div class="hc_headerText">我的帳戶</div>
+	</div>
+	<!-- switching button -->
+	<div class="hc_login_allBox">
+		<div class="btn-group text-center" role="group"
+			aria-label="Basic radio toggle button group">
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+				autocomplete="off" checked> <label
+				class="btn btn-outline-primary" for="btnradio1">會員登入</label> <input
+				type="radio" class="btn-check" name="btnradio" id="btnradio3"
+				autocomplete="off"> <label class="btn btn-outline-primary"
+				for="btnradio3" style="border-left: none; border-right: none;">夥伴登入</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio3"
-               style="border-left: none; border-right: none;">夥伴登入</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+				autocomplete="off"
+				th:checked="${#strings.contains(#request.getRequestURI(), '/register') and not #strings.isEmpty(errMsgs)}">
+			<label class="btn btn-outline-primary" for="btnradio2">註冊</label>
+		</div>
+		<br> <br>
+		<!-- member login -->
+		<div class="hc_login">
+			<div id="member_error" class="hidden">
+				<p style="color: red;">登入失敗，請重新登入。</p>
+			</div>
+			<div>
+				<p>使用者帳戶</p>
+				<input type="email" placeholder="電子信箱" id="hc_memUsername"
+					name="memAccount">
+				<p>密碼</p>
+				<input type="password" id="hc_memPassword" name="memPassword">
+				<input type="hidden" name="action" value="memLogin">
+			</div>
+			<div class="hc_rmbMe">
+				<div class="hc_rmbMe_box">
+					<input type="checkbox" id="hc_rmbMe_btn"> <label
+						for="hc_rmbMe_btn">記住我</label>
+				</div>
+				<button id="hc_forgetPW_btn">忘記密碼？</button>
+			</div>
+			<div class="hc_login_btn">
+				<button type="submit" class="btn btn-primary btn-lg"
+					id="hc_memlogin_btn">登入</button>
+				<br>
+				<!-- <button type="button" class="btn btn-primary btn-lg">使用Google登入</button> -->
+				<html>
+<body>
+	<script src="https://accounts.google.com/gsi/client" async></script>
+	<div id="g_id_onload"
+		data-client_id="831533266849-tvfvcmpicrsvrgkqgortq0r56937tnru.apps.googleusercontent.com"
+		data-login_uri="/api/auth/google-login" data-auto_prompt="false"
+		data-onsuccess="onSignIn"></div>
+	<div class="g_id_signin googleAuth" data-type="standard"
+		data-size="large" data-theme="outline" data-text="sign_in_with"
+		data-shape="rectangular" data-logo_alignment="left"></div>
+</body>
+				</html>
+			</div>
+		</div>
+		<!-- emp login -->
+		<div class="hc_login_emp" style="display: none;">
+			<div id="emp_error" class="hidden">
+				<p style="color: red;">登入失敗，請重新登入。</p>
+			</div>
+			<div>
+				<p>使用者帳戶</p>
+				<input type="text" placeholder="電子信箱" name="empAccount"
+					id="hc_empUsername">
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
-        	   th:checked="${#strings.contains(#request.getRequestURI(), '/register') and not #strings.isEmpty(errMsgs)}">
-        <label class="btn btn-outline-primary" for="btnradio2">註冊</label>
-    </div>
-    <br>
-    <br>
-    <!-- member login -->
-    <div class="hc_login">
-        <div id="member_error" class="hidden">
-            <p style="color: red;">登入失敗，請重新登入。</p>
-        </div>
-        <div>
-            <p>使用者帳戶</p>
-            <input type="email" placeholder="電子信箱" id="hc_memUsername" name="memAccount">
-            <p>密碼</p>
-            <input type="password" id="hc_memPassword" name="memPassword">
-            <input type="hidden" name="action" value="memLogin">
-        </div>
-        <div class="hc_rmbMe">
-            <div class="hc_rmbMe_box">
-                <input type="checkbox" id="hc_rmbMe_btn">
-                <label for="hc_rmbMe_btn">記住我</label>
-            </div>
-            <button id="hc_forgetPW_btn">忘記密碼？</button>
-        </div>
-        <div class="hc_login_btn">
-            <button type="submit" class="btn btn-primary btn-lg" id="hc_memlogin_btn">登入</button>
-            <br>
-            <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>
-        </div>
-    </div>
-    <!-- emp login -->
-        <div class="hc_login_emp" style="display: none;">
-            <div id="emp_error" class="hidden">
-                <p style="color: red;">登入失敗，請重新登入。</p>
-            </div>
-            <div>
-                <p>使用者帳戶</p>
-                <input type="text" placeholder="電子信箱" name="empAccount" id="hc_empUsername">
+				<p>密碼</p>
+				<input type="password" name="empPassword" id="hc_empPassword">
+			</div>
+			<div class="hc_rmbMe">
+				<div class="hc_rmbMe_box">
+					<input type="checkbox" id="hc_emp_rmbMe_btn"> <label
+						for="hc_emp_rmbMe_btn">記住我</label>
+				</div>
+				<button id="hc_forgetPW_btn_emp">忘記密碼？</button>
+			</div>
 
-                <p>密碼</p>
-                <input type="password" name="empPassword" id="hc_empPassword">
-            </div>
-            <div class="hc_rmbMe">
-                <div class="hc_rmbMe_box">
-                    <input type="checkbox" id="hc_emp_rmbMe_btn">
-                    <label for="hc_emp_rmbMe_btn">記住我</label>
-                </div>
-                <button id="hc_forgetPW_btn_emp">忘記密碼？</button>
-            </div>
-
-            <div class="hc_login_btn">
-                <button type="submit" class="btn btn-primary btn-lg" id="hc_emplogin_btn">登入</button>
-                <br>
-            </div>
-        </div>
+			<div class="hc_login_btn">
+				<button type="submit" class="btn btn-primary btn-lg"
+					id="hc_emplogin_btn">登入</button>
+				<br>
+			</div>
+		</div>
 
 
-	<form action="forgetpw" method="post">
-	    <div class="hc_forgetPW" style="display: none;">
-	        <p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
-	        <input type="email" placeholder="請輸入Email" name="memForgetPW">
-	        <input type="email" placeholder="請輸入Email" name="empForgetPW">
-	        
-	        <div th:if="${memMsgs != null}">
-	        	<p th:text="${memMsgs}" style="color:red;"></p>
-	        	<div id="forgetMemMsgs"></div>
-	        </div>
-	        <div th:if="${empMsgs != null}">
-	        	<p th:text="${empMsgs}" style="color:red;"></p>
-	        	<div id="forgetEmpMsgs"></div>
-	        </div>
-	        <div th:if="${resetMsgs != null}">
-	        	<p th:text="${resetMsgs}" style="color:red;"></p>
-	        	<div id="forgetpwMsgs"></div>
-	        </div>
-	        
-	        <div class="hc_login_btn">
-	            <button type="submit" class="btn btn-primary btn-lg">重設密碼</button>
-	            <br>
-	        </div>
-	    </div>
-	</form>
+		<form action="forgetpw" method="post">
+			<div class="hc_forgetPW" style="display: none;">
+				<p>忘記您的密碼嗎？請輸入您註冊的電子郵件。您將會在電子郵件信箱中收到重設密碼的連結。</p>
+				<input type="email" placeholder="請輸入Email" name="memForgetPW">
+				<input type="email" placeholder="請輸入Email" name="empForgetPW">
 
-	<!-- new member register -->
-	    <!-- 錯誤表列, FIXME: 需要調整  -->
-	    <form action="register" method="post">
-        <div class="hc_register" style="display: none;">
-	        <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
-			    <span style="color:red; font-size: 20px">請修正以下錯誤:</span>
-			    <ul>
-			        <li th:each="message : ${errMsgs}" style="color:red; font-size: 20px" th:text="${message}"></li>
-			    </ul>
-		    </div>
-            <!-- <p>使用者名稱</p>
+				<div th:if="${memMsgs != null}">
+					<p th:text="${memMsgs}" style="color: red;"></p>
+					<div id="forgetMemMsgs"></div>
+				</div>
+				<div th:if="${empMsgs != null}">
+					<p th:text="${empMsgs}" style="color: red;"></p>
+					<div id="forgetEmpMsgs"></div>
+				</div>
+				<div th:if="${resetMsgs != null}">
+					<p th:text="${resetMsgs}" style="color: red;"></p>
+					<div id="forgetpwMsgs"></div>
+				</div>
+
+				<div class="hc_login_btn">
+					<button type="submit" class="btn btn-primary btn-lg">重設密碼</button>
+					<br>
+				</div>
+			</div>
+		</form>
+
+		<!-- new member register -->
+		<!-- 錯誤表列, FIXME: 需要調整  -->
+		<form action="register" method="post">
+			<div class="hc_register" style="display: none;">
+				<div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
+					<span style="color: red; font-size: 20px">請修正以下錯誤:</span>
+					<ul>
+						<li th:each="message : ${errMsgs}"
+							style="color: red; font-size: 20px" th:text="${message}"></li>
+					</ul>
+				</div>
+				<!-- <p>使用者名稱</p>
             <input type="text" name="rUsername"> -->
-            <p>電子信箱</p>
-            <input type="email" name="rEmail" th:value="${newMem != null? newMem.memMail : ''}">
-            <p>姓名</p>
-            <input type="text" name="rName" th:value="${newMem != null? newMem.memName : ''}">
-            <p>生日</p>
-            <input type="date" name="rBirth" th:value="${newMem != null? newMem.memBirth : ''}">
-            <p>電話</p>
-            <input type="text" name="rTel" th:value="${newMem != null? newMem.memTel : ''}" placeholder="僅輸入數字即可，例：0227120589">
-            <p>密碼</p>
-            <input type="password" th:value="${newMem != null? newMem.memPass : ''}" class="hc_register_inputHalf" name="rPassword">
-            <p>確認密碼</p>
-            <input type="password" class="hc_register_inputHalf" name="rConfirmPassword">
+				<p>電子信箱</p>
+				<input type="email" name="rEmail"
+					th:value="${newMem != null? newMem.memMail : ''}">
+				<p>姓名</p>
+				<input type="text" name="rName"
+					th:value="${newMem != null? newMem.memName : ''}">
+				<p>生日</p>
+				<input type="date" name="rBirth"
+					th:value="${newMem != null? newMem.memBirth : ''}">
+				<p>電話</p>
+				<input type="text" name="rTel"
+					th:value="${newMem != null? newMem.memTel : ''}"
+					placeholder="僅輸入數字即可，例：0227120589">
+				<p>密碼</p>
+				<input type="password"
+					th:value="${newMem != null? newMem.memPass : ''}"
+					class="hc_register_inputHalf" name="rPassword">
+				<p>確認密碼</p>
+				<input type="password" class="hc_register_inputHalf"
+					name="rConfirmPassword">
 
-            <div class="hc_login_btn">
-                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 70px;">註冊</button><br>
-                <input type="hidden" name="action" value="register">
-                <button type="button" class="btn btn-primary btn-lg">使用Google登入</button>
-            </div>
-        </div>
-    </form>
+				<div class="hc_login_btn">
+					<button type="submit" class="btn btn-primary btn-lg"
+						style="margin-top: 70px;">註冊</button>
+					<br> <input type="hidden" name="action" value="register">
+					<!-- <button type="button" class="btn btn-primary btn-lg">使用Google登入</button> -->
+					<html>
+<body>
+	<script src="https://accounts.google.com/gsi/client" async></script>
+	<div id="g_id_onload"
+		data-client_id="831533266849-tvfvcmpicrsvrgkqgortq0r56937tnru.apps.googleusercontent.com"
+		data-login_uri="/api/auth/google-login" data-auto_prompt="false"
+		data-onsuccess="onSignIn"></div>
+	<div class="g_id_signin googleAuth" data-type="standard"
+		data-size="large" data-theme="outline" data-text="sign_in_with"
+		data-shape="rectangular" data-logo_alignment="left"
+		style="margin-left: 68px;"></div>
+<body>
+					</html>
+				</div>
+			</div>
+		</form>
 
 
-    <script>
+		<script>
         function init(){
+        	
+        	window.google.accounts.id.renderButton(
+      			  document.getElementsByClassName('googleAuth')[0],
+      			  { theme: 'outline', size: 'large', width: 333}
+      		);
+      		window.google.accounts.id.renderButton(
+      			  document.getElementsByClassName('googleAuth')[1],
+      			  { theme: 'outline', size: 'large', width: 333}
+      		);
+        	
             // 會員登入/註冊畫面切換
             $("#btnradio2").on("click", function() {
                 //會員登入收起
@@ -446,15 +548,47 @@
                 });
 
             });
+            
+            
+          	//const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+            function onSignIn(googleUser) {
+            	// 使用 Google Sign-In API 获取 ID 令牌
+                const idToken = googleUser.getAuthResponse().id_token;
+
+                // 将 ID 令牌发送到后端进行验证
+                $.ajax({
+                    url: `${API_PATH}/auth/google-login`,  // 替换为你的后端接口路径
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        idTokenString: idToken
+                    }),
+                    success: (data) => {
+                        console.log('Google login success');
+                        console.log(data);
+                        // 处理后端返回的数据或跳转到其他页面等
+                        if (data === 'new member') {
+                        	window.location.href = `${API_BASE_URL}/login-google`;
+                        } else if (data === 'already has this member') {
+                        	window.location.href = `${API_BASE_URL}/member/info`;
+                        }
+                    },
+                    error: () => {
+                        console.error('Google login failed');
+                        // 处理登录失败的情况
+                        alert('無法使用Google登入，請再試一次。');
+                    }
+                });
+            };
 
         };
 
         window.addEventListener("load", init);
     </script>
-</div>
+	</div>
 
-<div class="footerPage"></div>
-<script>
+	<div class="footerPage"></div>
+	<script>
     $(".headerPage").load("header.html");
     $(".footerPage").load("footer.html");
 </script>
