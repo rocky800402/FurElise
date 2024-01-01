@@ -1,5 +1,6 @@
 package com.furelise.estabcase.controller;
 
+import com.furelise.emp.model.Emp;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,11 @@ import javax.servlet.http.HttpSession;
 public class EmpIncomeController {
 
     @GetMapping("/")
-    public String backEndEstabcase(HttpSession session){
+    public String backEndEstabcase(HttpSession session, ModelMap model){
+
+        Emp emp = (Emp)session.getAttribute("emp");
+        model.addAttribute("empID",emp.getEmpID());
+
         return "jack_income";
     }
 }

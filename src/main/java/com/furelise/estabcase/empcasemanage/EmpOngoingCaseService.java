@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class EmpOngoingCaseService {
@@ -47,6 +48,9 @@ public class EmpOngoingCaseService {
     emp
     */
     public void CompleteCase(Integer estabCaseID){
+
+        boolean allMatchCondition = false;
+
         EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElseThrow();
         estabCase.setTakeStatus(true);
         estabCase.setEstabCaseStatus(1);
@@ -56,6 +60,24 @@ public class EmpOngoingCaseService {
         Timestamp estabCaseEnd = new Timestamp(currentDate.getTime());
         estabCase.setEstabCaseEnd(estabCaseEnd);
         estabCaseRepository.save(estabCase);
+
+
+        //整個方案是否完結的判斷
+        PlanOrd planOrd = planOrdRepository.findById(estabCase.getPlanOrdID()).orElseThrow();
+        List<EstabCase> allPlanOrd = estabCaseRepository.findByPlanOrdID(planOrd.getPlanOrdID());
+
+        for(EstabCase estabCases :allPlanOrd){
+            if(estabCases.getTakeStatus() && estabCases.getEstabCaseStatus() == 1){
+                allMatchCondition = true;
+            }else {
+                allMatchCondition = false;
+            }
+        }
+
+        if(allMatchCondition){
+            planOrd.setPlanStatusID(210005);
+            planOrdRepository.save(planOrd);
+        }
     }
 
     public EmpOngoingCaseVO getEmpOngoingCase(Integer estabCaseID){

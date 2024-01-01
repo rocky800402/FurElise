@@ -287,6 +287,15 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
+        
+        <!--
+		========================================================================================== -->
+		<!-- ●以下為 google用戶端api 使用● -->
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>2.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

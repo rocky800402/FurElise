@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für Elise-帳戶登入</title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="./css/header.css" th:href="@{/css/header.css}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-group .btn {
+            width: 450px;
+            height: 75px;
+            margin-right: -4px;
+            font-size: 26px;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .hc_headerBox {
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ececec;
+            border-top: 1px solid #ececec;
+            margin-bottom: 100px;
+        }
+
+        .hc_headerText {
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 15px;
+            padding-top: 15px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-check:focus+.btn-outline-primary,.btn-outline-primary:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-outline-primary,.btn-check:checked+.btn-outline-primary,.btn-outline-primary.active,.btn-outline-primary.dropdown-toggle.show,.btn-outline-primary:active{color:#fff !important;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-outline-primary:focus,.btn-check:checked+.btn-outline-primary:focus,.btn-outline-primary.active:focus,.btn-outline-primary.dropdown-toggle.show:focus,.btn-outline-primary:active:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-outline-primary.disabled,.btn-outline-primary:disabled{color:#9ac972;background-color:transparent}
+
+        .btn-group .btn.btn-outline-primary {
+            color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .btn-group .btn.btn-outline-primary:hover {
+            color: #fff;
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .btn-group .btn.btn-outline-primary:checked {
+            color: #fff;
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .hc_login_allBox {
+            display: inline-block;
+            vertical-align: middle;
+            width: 60%;
+            margin: auto;
+        }
+
+        .hc_login, .hc_login_emp {
+            display: inline-block;
+            vertical-align: middle;
+            width: 55%;
+            margin: auto;
+        }
+
+        .hc_login p, .hc_register p, .hc_login_emp p {
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hc_login input, .hc_login_emp input {
+            font-size: 24px;
+            width: 190%;
+        }
+
+        .hc_rmbMe {
+            font-size: 24px;
+            height: 100px;
+            margin-top: 10px;
+            width: 860px;
+        }
+
+        .hc_rmbMe_box {
+            text-align: left;
+            display: inline-block;
+        }
+
+        .hc_rmbMe input {
+            width: 20px;
+        }
+
+        #hc_forgetPW_btn, #hc_forgetPW_btn_emp {
+            background-color: white;
+            border: 2px solid white;
+            color: #000;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 24px;
+            margin-top: 10px;
+            margin-left: 65%;
+        }
+
+        #hc_forgetPW_btn:hover,  #hc_forgetPW_btn_emp:hover {
+            text-decoration: underline; /* 滑鼠懸停時添加底線效果 */
+        }
+
+        .hc_login_btn {
+            margin-bottom: 90px;
+        }
+
+        .hc_login_btn button {
+            width: 400px;
+            height: 50px;
+            margin-bottom: 50px;
+        }
+
+        .btn-primary {
+            background-color: #9ac972;
+            border-color: #9ac972;
+        }
+
+        .hc_login_btn button.btn:hover {
+            background-color: rgba(26, 137, 26, 0.801);
+            border-color: rgba(26, 137, 26, 0.801);
+            color: white;
+        }
+
+
+        .btn-primary:focus{color:#fff;background-color:#9ac972;border-color:#9ac972;box-shadow:0 0 0 .25rem #DEF5EE}.btn-check:active+.btn-primary,.btn-check:checked+.btn-primary,.btn-primary.active,.btn-primary:active,.show>.btn-primary.dropdown-toggle{color:#fff;background-color:#9ac972;border-color:#9ac972}.btn-check:active+.btn-primary:focus,.btn-check:checked+.btn-primary:focus,.btn-primary.active:focus,.btn-primary:active:focus,.show>.btn-primary.dropdown-toggle:focus{box-shadow:0 0 0 .25rem #DEF5EE}.btn-primary.disabled,.btn-primary:disabled{color:#fff;background-color:#9ac972;border-color:#9ac972}
+
+        .hc_forgetPW p {
+            margin-top: 70px;
+            font-size: 22px;
+        }
+
+        .hc_forgetPW input {
+            font-size: 22px;
+            width: 842px;
+        }
+
+        .hc_forgetPW > div {
+            margin-top: 50px;
+        }
+
+        .hc_register input {
+            font-size: 24px;
+            text-align: left;
+            width: 104.5%;
+        }
+
+        /* .hc_register_inputHalf {
+            display: inline-block;
+        } */
+        
+        .hc_googleLoginText {
+            font-size: 21px;
+            border: 2px solid #9ac972;
+            margin-bottom: 30px;
+            border-radius: 20px;
+        }
+
+        .hc_googleLoginText > p {
+            margin: 20px 20px 20px 20px;
+        }
+
+    </style>
+</head>
+<body>
+<script src="./js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script src="./js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script src="./js/constant.js" th:src="@{/js/constant.js}"></script>
+<script src="https://accounts.google.com/gsi/client" async></script>
+
+<div class="headerPage"></div>
+
+<div class="hc_headerBox">
+    <div class="hc_headerText">我的帳戶</div>
+</div>
+
+<div class="hc_login_allBox">
+    <div class="hc_googleLoginText">
+        <p>歡迎使用Google帳戶註冊！請協助填寫以下資料以完成註冊流程：</p>
+    </div>
+    <form action="goole-register" method="post">
+        <div class="hc_register">
+            <div th:if="${errMsgs != null and not #lists.isEmpty(errMsgs)}">
+                <span style="color:red; font-size: 20px">請修正以下錯誤:</span>
+                <ul>
+                    <li th:each="message : ${errMsgs}" style="color:red; font-size: 20px" th:text="${message}"></li>
+                </ul>
+            </div>
+            <p>電子信箱</p>
+            <input type="email" name="rEmail" th:value="${newMem != null? newMem.memMail : ''}" readonly>
+            <p>名字</p>
+            <input type="text" name="rName" th:value="${newMem != null? newMem.memName : ''}">
+            <p>生日</p>
+            <input type="date" name="rBirth" th:value="${newMem != null? newMem.memBirth : ''}">
+            <p>電話</p>
+            <input type="text" name="rTel" th:value="${newMem != null? newMem.memTel : ''}" placeholder="僅輸入數字即可，例：0227120589">
+            
+            <div class="hc_login_btn">
+                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 70px;">註冊</button><br>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+    <script>
+        function init(){
+        	
+        	
+
+        };
+
+        window.addEventListener("load", init);
+    </script>
+
+<div class="footerPage"></div>
+<script>
+    $(".headerPage").load("header.html");
+    $(".footerPage").load("footer.html");
+</script>
+</body>
+</html>
