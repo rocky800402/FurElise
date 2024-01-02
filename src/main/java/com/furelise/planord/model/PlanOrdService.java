@@ -49,13 +49,13 @@ public class PlanOrdService {
 	PlanStatusRepository planStatusDao;
 
 	public PlanOrd addPlanOrd(PlanOrdDTO req, Integer memID) {
-		// 狀態碼210003=待付款
+		// 狀態碼210003=待付款，210001進行中
 		Integer planID = getPlanId(req.getPlanName(), req.getTimes());
 		String day = getPickupDay(req.getWeekDay());
 
 		PlanOrd planOrd = new PlanOrd(planID, req.getTimeID(), req.getPeriodID(), day, req.getWayID(), memID,
 				req.getPlanStart(), req.getPlanEnd(), req.getCityCode(), req.getFloor(), req.getPickupStop(),
-				new BigDecimal(req.getAfterTotal()), 0, 210003, req.getContact(), req.getContactTel());
+				new BigDecimal(req.getAfterTotal()), 0, 210001, req.getContact(), req.getContactTel());
 
 		return dao.save(planOrd);
 	}
@@ -245,13 +245,10 @@ public class PlanOrdService {
 		return cityDao.findAll();
 	}
 
-//	//取得各方案可選的收取次數 //沒完成
-//	public List<Integer> getTimeByPlanName(){
-//		List<Plan> planList = planDao.findAll();
-//		for(Plan p : planList) {
-//			p.getTimes();
-//		}
-//		return planDao.findTimeByPlanName(null)
-//	}
+//	取得各方案可選的收取次數
+	public List<Integer> getTimeByPlanName(String planName){
+		System.out.println(planName);
+		return planDao.findTimeByPlanName(planName);
+	}
 
 }
