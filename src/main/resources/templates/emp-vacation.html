@@ -137,9 +137,10 @@
 
 <script>
     function init(){
-        // emp_tag更改到
-        // $("li").removeClass("emp_tag");
-        // $("ul li:nth-child(5)").addClass("emp_tag");
+        // emp_tag更改到假單申請
+        $("li").removeClass("emp_tag");
+        $("ul li:nth-child(9)").addClass("emp_tag");
+        
         const qVaStart = $("#emp_vaStart")
         const today = dayjs().format('YYYY-MM-DD')
         qVaStart.attr("min", today)
