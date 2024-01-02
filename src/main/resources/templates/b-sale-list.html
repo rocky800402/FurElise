@@ -126,7 +126,7 @@
 			<td th:text=${sale.dis}></td>
 			
 			<td>
-			  <FORM METHOD="post" th:action="@{/sale/getone}" style="margin-bottom: 0px;">
+			  <FORM METHOD="get" th:action="@{/sale/getone}" style="margin-bottom: 0px;">
 			     <input type="hidden" name="saleID"  th:value="${sale.saleID}">
 			     <input type="submit" value="修改" class="sl_sp_badge" style="background-color: #9ac972">
 			  </FORM> 
