@@ -223,3 +223,7 @@ div.mem_ord_detail-div{
 .mb_main_01{
   width: 950px;
 }
+
+.mb_btn_none{
+  display: none;
+}
