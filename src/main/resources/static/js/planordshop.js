@@ -299,12 +299,7 @@ $(document).on("click", "#task_add", function() {
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(item) {
 			alert("訂購成功");
-			$("#task_discount").prop('disabled', true);
-			$("#task_discount").css('background-color', 'lightgray');
-			$("#task_discount").css('border-color', 'lightgray');
-			$(that).prop('disabled', true);
-			$(that).css('background-color', 'lightgray');
-			$(that).css('border-color', 'lightgray');
+			window.location.href = '/memPlanFront.html';
 			
 //			$.ajax({
 //			    type: "POST",
