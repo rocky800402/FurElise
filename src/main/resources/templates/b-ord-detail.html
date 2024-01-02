@@ -160,8 +160,10 @@
                 <form>
                     <div class="mb-3 mb_modal_body_div" th:each="ordDetailBO : ${ordVO.ordDetailBOs}">
                         <div class="mb_modal_div">
-                            <label for="recipient-name" class="col-form-label mb_modal_label"
-       							   th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd HH:mm:ss')}"></label><br>
+                            <label for="recipient-name" class="col-form-label mb_modal_label">
+							    <span th:if="${ordDetailBO.fbTime != null}" th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd HH:mm:ss')}"></span>
+							    <span th:if="${ordDetailBO.fbTime == null}" style="color:red;">尚未進行評價</span>
+							</label><br>
                             <label for="recipient-name" class="col-form-label mb_modal_label"
                                    th:text="'商品編號 : ' + ${ordDetailBO.pID}"></label><br>
                             <label for="recipient-name" class="col-form-label mb_modal_label"
