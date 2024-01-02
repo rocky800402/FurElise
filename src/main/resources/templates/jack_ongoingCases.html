@@ -343,7 +343,7 @@
                     if (action === 'accept') {
                         takeStatus = true;//在此頁面接單時 更改接單狀態
                         acceptButton.text('已接單').prop('disabled', true);
-                        // rejectButton.prop('disabled', true);//如果使用者按下接單後，不給拒絕的話，再加這行
+                        rejectButton.prop('disabled', true);//如果使用者按下接單後，不給拒絕的話，再加這行
                         console.log('Accept logic');
                     } else if (action === 'reject') {
                         rejectButton.text('已拒絕').prop('disabled', true);
