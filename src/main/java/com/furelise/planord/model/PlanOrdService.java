@@ -2,6 +2,7 @@ package com.furelise.planord.model;
 
 import com.furelise.city.model.City;
 import com.furelise.city.model.CityRepository;
+import com.furelise.estabcase.model.SplitPlanOrdService;
 import com.furelise.mem.repository.MemRepository;
 import com.furelise.period.model.Period;
 import com.furelise.period.model.PeriodRepository;
@@ -47,6 +48,8 @@ public class PlanOrdService {
 
 	@Autowired
 	PlanStatusRepository planStatusDao;
+	@Autowired
+	SplitPlanOrdService splitPlanOrdService;
 
 	public PlanOrd addPlanOrd(PlanOrdDTO req, Integer memID) {
 		// 狀態碼210003=待付款，210001進行中
@@ -57,7 +60,21 @@ public class PlanOrdService {
 				req.getPlanStart(), req.getPlanEnd(), req.getCityCode(), req.getFloor(), req.getPickupStop(),
 				new BigDecimal(req.getAfterTotal()), 0, 210001, req.getContact(), req.getContactTel());
 
-		return dao.save(planOrd);
+		PlanOrd createPlanOrd =dao.save(planOrd);
+
+		System.out.println(planOrd);
+		//猜單
+		Plan plan = planDao.findById(createPlanOrd.getPlanID()).orElseThrow();
+		Period period = periodDao.findById(createPlanOrd.getPeriodID()).orElseThrow();
+		splitPlanOrdService.addEstabCases(
+				createPlanOrd.getPlanOrdID(),
+                String.valueOf(createPlanOrd.getPlanStart()),
+				period.getPlanPeriod(),
+				createPlanOrd.getDay(),
+				plan.getPlanPricePerCase()
+		);
+
+		return createPlanOrd;
 	}
 
 	// 方案名+收取次數取得方案ID
