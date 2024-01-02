@@ -85,7 +85,11 @@ $(document).ready(function() {
                         buttonsHTML += ' <span class="button-separator"></span> ';
                     }
                     // 拒單按鈕
-                    buttonsHTML += '<button class="jack_button_reject update-status-button" data-action="reject" data-id="' + row.estabCaseID + '">拒單</button>';
+                    if(row.takeStatus){
+                        buttonsHTML += '<button class="jack_button_reject update-status-button" data-action="reject" data-id="' + row.estabCaseID + '" disabled>拒單</button>';
+                    }else {
+                        buttonsHTML += '<button class="jack_button_reject update-status-button" data-action="reject" data-id="' + row.estabCaseID + '">拒單</button>';
+                    }
 
                     return buttonsHTML;
                 }
@@ -118,14 +122,14 @@ $(document).ready(function() {
                     if (action === 'accept') {
                         acceptButton.text('已接').prop('disabled', true);
                         rejectButton.prop('disabled', true);
-                        console.log('Accept logic');
+                        console.log('按下接單按鈕');
                         table.ajax.reload();//重整table的資料
 
                     } else if (action === 'reject') {
 
                         rejectButton.text('已拒').prop('disabled', true);
                         acceptButton.prop('disabled', true);
-                        console.log('Reject logic');
+                        console.log('按下拒單按鈕');
                         table.ajax.reload();//重整table的資料
                     }
                 } else {
@@ -205,51 +209,3 @@ $(document).ready(function() {
 
 })
 
-
-
-
-    //日歷中文化
-//     $.fn.datepicker.dates['zh-CN'] = {
-//         days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-//         daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-//         daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
-//         months: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-//         monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-//         today: "今日",
-//         suffix: [],
-//         meridiem: []
-//     };
-//
-//     // Initialize Datepicker
-//     $('#datepickerButton').datepicker({
-//         language:'zh-CN',
-//         format: 'yyyy/mm/dd', // 設定日期格式
-//         autoclose: true, // 選擇日期後自動關閉
-//         orientation: 'bottom',//日歷顯示相對於按鈕的位置
-//     });
-//
-//     // 預設顯示日期
-//     var defaultDate = new Date();
-//     var formattedDefaultDate = formatDate(defaultDate);
-//     $('#datepickerButton').text(formattedDefaultDate);
-//
-//     // 監聽日期變更事件，更新按鈕文字
-//     $('#datepickerButton').datepicker().on('changeDate', function (e) {
-//         var selectedDate = e.format();
-//         $('#datepickerButton').text(selectedDate);
-//     });
-//
-//     // 格式化日期為指定格式
-//     function formatDate(date) {
-//         var dd = date.getDate();
-//         var mm = date.getMonth() + 1; // 一月是 0!
-//         var yyyy = date.getFullYear();
-//         if (dd < 10) {
-//             dd = '0' + dd;
-//         }
-//         if (mm < 10) {
-//             mm = '0' + mm;
-//         }
-//         return yyyy + '/' + mm + '/' + dd;
-//     }
-// });
