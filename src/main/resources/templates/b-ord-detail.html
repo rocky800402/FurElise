@@ -111,12 +111,14 @@
 						            <!-- 顯示訂單詳細資訊 -->
 						            <div class="ord_status" style="display: inline-block;">
 						                <div class="ordno">
-						                    <p>訂單編號:</p><p th:text="${ordVO.ordID}"></p><br>
-						                    <p>配送地址:</p><p th:text="${ordVO.address}"></p><br>
-						                    <p>付款方式:</p><p th:text="${ordVO.payment}"></p><br>
-						                    <p>寄送方式:</p><p th:text="${ordVO.deliver}"></p><br>
-						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
-						                    <p>出貨日期:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}"></p><br>
+						                    <p>訂單編號:</p><p th:text="${ordVO.ordID}" style="margin-left:30px"></p><br>
+						                    <p>配送地址:</p><p th:text="${ordVO.address}" style="margin-left:30px"></p><br>
+						                    <p>付款方式:</p>
+											<p th:if="${ordVO.payment == 0}" th:text="信用卡"></p><br>
+											<p>寄送方式:</p>
+											<p th:if="${ordVO.deliver == 0}" th:text="黑貓宅急便"></p><br>
+						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd HH:mm:ss')}" style="margin-left:30px"></p><br>
+						                    <p>出貨日期:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}" style="margin-left:30px"></p><br>
 						                </div>
 						            </div>
 						            <!-- 顯示訂單總金額等資訊 -->
@@ -125,7 +127,7 @@
 						                <hr style="margin: 0 0 0 0;">
 						                <p class="total_text">運費:</p><p class="total_price" th:text="${ordVO.shipping}">150</p>
 						                <hr style="margin: 0 0 0 0;">
-						                <p class="total_text">折扣:</p><p class="total_price" th:text="${ordVO.couponDis}">150</p>
+						                <p class="total_text">折扣:</p><p class="total_price" th:text="-${ordVO.couponDis}">150</p>
 						                <hr style="margin: 0 0 0 0;">
 						                <p class="total_text">訂單金額:</p><p class="total_price" th:text="${ordVO.total}">150</p>
 						            </div>
