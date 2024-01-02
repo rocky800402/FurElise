@@ -75,7 +75,7 @@ public class EmpOngoingCaseService {
         }
 
         if(allMatchCondition){
-            planOrd.setPlanStatusID(210005);
+            planOrd.setPlanStatusID(210004);
             planOrdRepository.save(planOrd);
         }
     }
