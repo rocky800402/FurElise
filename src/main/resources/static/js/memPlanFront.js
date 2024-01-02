@@ -80,7 +80,7 @@ function init() {
                                 </div>
                                 <div class="modal-footer mb_estab_case_level_modal_footer">
                                     <button type="button" class="btn btn-secondary mb_estab_case_complaint_cancel_btn" data-bs-dismiss="modal">取消修改</button>
-                                    <button type="button" class="btn btn-primary mb_estab_case_complaint_confirm_btn">確認修改</button>
+                                    <button type="button" class="btn btn-primary mb_estab_case_complaint_confirm_btn mb_estab_case_complaint_btn">確認修改</button>
                                 </div>
                             </div>
                         </div>
@@ -592,7 +592,7 @@ $(function () {
     });
 
     //修改訂單
-    $(document).on("click", ".mb_estab_case_complaint_confirm_btn", function (event) {
+    $(document).on("click", ".mb_estab_case_complaint_btn", function (event) {
         event.preventDefault();
         let dayCodeStr = $(".mb_mon_btn").val() + $(".mb_tue_btn").val() + "0" + $(".mb_thu_btn").val() + $(".mb_fri_btn").val() + $(".mb_sat_btn").val() + "0";
         let planOrdID = $("h5#planOrdID").attr("planOrdID");

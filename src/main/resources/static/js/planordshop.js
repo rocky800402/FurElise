@@ -110,7 +110,7 @@ function new_plan() {
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">
                                     <p class="sl_plan_name">${data[i].planName}</p>
-                                    <img src="/images/product.png" alt="" width="90%">
+                                    <img src="/images/garbage.png" alt="" width="90%">
                                     <p>介紹還沒想</p>
                                 </div>
                             </div>
@@ -299,12 +299,7 @@ $(document).on("click", "#task_add", function() {
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(item) {
 			alert("訂購成功");
-			$("#task_discount").prop('disabled', true);
-			$("#task_discount").css('background-color', 'lightgray');
-			$("#task_discount").css('border-color', 'lightgray');
-			$(that).prop('disabled', true);
-			$(that).css('background-color', 'lightgray');
-			$(that).css('border-color', 'lightgray');
+			window.location.href = '/memPlanFront.html';
 			
 //			$.ajax({
 //			    type: "POST",
