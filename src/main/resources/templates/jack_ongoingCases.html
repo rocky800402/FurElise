@@ -44,12 +44,15 @@
                         <div class="col-10">
                             <button class="jack_button_accept"
                                     th:attr="data-action='accept', data-id=${empOngoingCase.estabCaseID}"
+                                    th:disabled="${empOngoingCase.takeStatus}"
+                                    th:text="${empOngoingCase.takeStatus ? '已接單' : '接受訂單'}"
                                     onclick="updateStatus('accept', this.getAttribute('data-id'))">接受訂單
                             </button>
                         </div>
                         <div class="col-2">
                             <button class="jack_button_reject"
                                     th:attr="data-action='reject', data-id=${empOngoingCase.estabCaseID}"
+                                    th:disabled="${empOngoingCase.takeStatus}"
                                     onclick="showConfirmationDialog(this)">拒絕訂單
                             </button>
                         </div>
