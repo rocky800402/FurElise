@@ -117,9 +117,7 @@
             <select th:field="*{ordStatus}">
 			    <option th:value="0" th:selected="${ordVO.ordStatus == 0}" th:utext="處理中"></option>
 			    <option th:value="1" th:selected="${ordVO.ordStatus == 1}" th:utext="已寄出"></option>
-			</select>
-			
-<br>
+			</select><br>
 
             <!-- 提交表單的按鈕 -->
             <div class="row justify-content-start" style="display:inline-block;">

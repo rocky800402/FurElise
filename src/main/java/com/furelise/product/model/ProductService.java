@@ -47,8 +47,10 @@ public class ProductService {
 	}
 
 	public Product updateProduct(Product product) {
-	
-	        return dao.save(product);
+		if (product.getPStock() < 1)
+			product.setPStatus(false);
+
+		return dao.save(product);
 	}
 
 	public List<Product> getAllProduct() {
@@ -65,6 +67,5 @@ public class ProductService {
 		return list;
 
 	}
-
 
 }
