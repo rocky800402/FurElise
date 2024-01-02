@@ -105,18 +105,19 @@
 						                    <p style="display: inline-block;">x</p>
 						                    <p style="display: inline-block;" th:field="*{ordDetailBOs[__${iterStat.index}__].detaQty}" th:utext="*{ordDetailBOs[__${iterStat.index}__].detaQty}"></p>
 						                </div>
-				                        <button class="feedback_btn" onclick="handleFeedbackClick()">查看評價</button>
 						                <p class="yh_p_price" style="display: inline-block;  margin: 0;" th:text="${ordDetail.pPrice * ordDetailBOs[__${iterStat.index}__].detaQty}">$100</p>
 						            </div>
 						            <!-- 顯示訂單詳細資訊 -->
 						            <div class="ord_status" style="display: inline-block;">
 						                <div class="ordno">
-						                    <p>訂單編號:</p><p th:text="${ordVO.ordID}"></p><br>
-						                    <p>配送地址:</p><p th:text="${ordVO.address}"></p><br>
-						                    <p>付款方式:</p><p th:text="${ordVO.payment}"></p><br>
-						                    <p>寄送方式:</p><p th:text="${ordVO.deliver}"></p><br>
-						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
-						                    <p>出貨日期:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}"></p><br>
+						                    <p>訂單編號:</p><p th:text="${ordVO.ordID}" style="margin-left:30px"></p><br>
+						                    <p>配送地址:</p><p th:text="${ordVO.address}" style="margin-left:30px"></p><br>
+						                    <p>付款方式:</p>
+											<p th:if="${ordVO.payment == 0}" th:text="信用卡"></p><br>
+											<p>寄送方式:</p>
+											<p th:if="${ordVO.deliver == 0}" th:text="黑貓宅急便"></p><br>
+						                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd HH:mm:ss')}" style="margin-left:30px"></p><br>
+						                    <p>出貨日期:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}" style="margin-left:30px"></p><br>
 						                </div>
 						            </div>
 						            <!-- 顯示訂單總金額等資訊 -->
@@ -128,7 +129,10 @@
 						                <p class="total_text">折扣:</p><p class="total_price" th:text="${ordVO.couponDis}">150</p>
 						                <hr style="margin: 0 0 0 0;">
 						                <p class="total_text">訂單金額:</p><p class="total_price" th:text="${ordVO.total}">150</p>
+						                
 						            </div>
+						            <div style="margin-left:30px">
+						            <button class="feedback_btn" onclick="handleFeedbackClick()" style="width:150px; margin-top:30px">查看此訂單評價</button><br>
 						        	<!-- 顯示訂單狀態下拉選單 --><p style="display:inline-block;">訂單狀態</p>
 						            <select th:field="*{ordStatus}" style="display:inline-block;" disabled>
 									    <option th:value="0" th:selected="${ordVO.ordStatus == 0}" th:text="處理中"></option>
@@ -137,9 +141,11 @@
 									    <option th:value="3" th:selected="${ordVO.ordStatus == 3}" th:text="退貨"></option>
 									    <option th:value="4" th:selected="${ordVO.ordStatus == 4}" th:text="已取消"></option>
 									</select><br>
-								<div>
-									<a th:href="@{/backend-ord/}"><button style="width: 160px" type="button" class="sl_btn_disable">返回訂單管理列表</button></a>
-									<button class="btn btn-primary  change_status " type="submit" style="background-color:#9ac972; border:#9ac972;">修改狀態</button>
+									
+									<div>
+										<a th:href="@{/backend-ord/}"><button style="width: 160px" type="button" class="sl_btn_disable">返回訂單管理列表</button></a>
+										<button class="btn btn-primary  change_status " type="submit" style="background-color:#9ac972; border:#9ac972;">修改狀態</button>
+									</div>
 								</div>
 				</div>
 			</form>
@@ -158,10 +164,12 @@
             </div>
             <div class="modal-body mb_modal_body">
                 <form>
-                    <div class="mb-3 mb_modal_body_div" th:each="ordDetailBO : ${ordVO.ordDetailBOs}">
-                        <div class="mb_modal_div">
-                            <label for="recipient-name" class="col-form-label mb_modal_label"
-       							   th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd HH:mm:ss')}"></label><br>
+                    <div class="mb-3 mb_modal_body_div" th:each="ordDetailBO : ${ordVO.ordDetailBOs}" >
+                        <div class="mb_modal_div" >
+                            <label for="recipient-name" class="col-form-label mb_modal_label">
+							    <span th:if="${ordDetailBO.fbTime != null}" th:text="'評價日期 : ' + ${#dates.format(ordDetailBO.fbTime, 'yyyy/MM/dd HH:mm:ss')}"></span>
+							    <span th:if="${ordDetailBO.fbTime == null}" style="color:red;">尚未進行評價</span>
+							</label><br>
                             <label for="recipient-name" class="col-form-label mb_modal_label"
                                    th:text="'商品編號 : ' + ${ordDetailBO.pID}"></label><br>
                             <label for="recipient-name" class="col-form-label mb_modal_label"

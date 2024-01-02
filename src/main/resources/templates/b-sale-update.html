@@ -224,15 +224,7 @@
 $(document).ready(function () {
 	$(".sidebarPage").load("/backendSidebar.html");
 	
-	 // 取得當前日期
-    var today = new Date();
-    
-    // 預設日期為 'YYYY-MM-DD'
-    var formattedDate = today.toISOString().split('T')[0];
-
-    // 設置優惠開始日和優惠結束日输入框的值為今天
-    $('#saleS').val(formattedDate);
-    $('#saleE').val(formattedDate);
+	
  	// min 為當前日期
     document.getElementById('saleS').min = new Date().toISOString().split('T')[0];
     document.getElementById('saleE').addEventListener('input', function () {
