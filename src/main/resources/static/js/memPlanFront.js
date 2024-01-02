@@ -389,7 +389,8 @@ function init() {
                     let localDate = new Date();
                     let planStart = new Date(data.planStart);
                     if (planStart < localDate) {
-                        // $(".mb_update_02").addClass("mb_hide");
+                        console.log(localDate);
+                        $(".mb_update_02").addClass("mb_hide");
                     }
                 }
 
