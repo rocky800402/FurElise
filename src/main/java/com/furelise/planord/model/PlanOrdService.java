@@ -49,13 +49,13 @@ public class PlanOrdService {
 	PlanStatusRepository planStatusDao;
 
 	public PlanOrd addPlanOrd(PlanOrdDTO req, Integer memID) {
-		// 狀態碼210003=待付款
+		// 狀態碼210003=待付款，210001進行中
 		Integer planID = getPlanId(req.getPlanName(), req.getTimes());
 		String day = getPickupDay(req.getWeekDay());
 
 		PlanOrd planOrd = new PlanOrd(planID, req.getTimeID(), req.getPeriodID(), day, req.getWayID(), memID,
 				req.getPlanStart(), req.getPlanEnd(), req.getCityCode(), req.getFloor(), req.getPickupStop(),
-				new BigDecimal(req.getAfterTotal()), 0, 210003, req.getContact(), req.getContactTel());
+				new BigDecimal(req.getAfterTotal()), 0, 210001, req.getContact(), req.getContactTel());
 
 		return dao.save(planOrd);
 	}
