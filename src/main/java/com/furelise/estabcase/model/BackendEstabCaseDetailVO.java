@@ -1,5 +1,6 @@
 package com.furelise.estabcase.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.furelise.complaint.model.Complaint;
 import lombok.Data;
 
@@ -23,6 +24,7 @@ public class BackendEstabCaseDetailVO {
     private Integer estabCaseStatus;
     private BigDecimal planPricePerCase;
     private List<Complaint> complaints;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp estabCaseEnd;
     private byte[] estabCasePic;
     private Boolean takeStatus;
