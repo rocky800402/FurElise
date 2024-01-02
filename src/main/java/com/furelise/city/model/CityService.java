@@ -43,16 +43,6 @@ public class CityService {
 		}
 		return result;
 	}
-	
-//	public boolean updateCity(City city) {
-////		verify if cityCode duplicated //!should only accept original
-////		boolean proceed = false;
-////		if (!dao.existsByCityCode(city.getCityCode())) {
-//		dao.save(city);
-////			proceed = true;
-////		}
-//		return true;
-//	}
 
 	public void delete(Integer cityID) {
 		dao.deleteById(cityID);

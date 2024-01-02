@@ -31,24 +31,43 @@ public class DispatchService {
     VacationRepository vacationRepository;
 
     public void assignWorkToEmp() {
+//        System.out.println("請動排程器");
         List<EstabCase> estabCaseList = estabCaseRepository.findEstabCasesWithinLastTwoDaysAndTakeStatusZero();
+//        System.out.println(estabCaseList);
+        bb:
         for (EstabCase estabCase : estabCaseList) {
+//            System.out.println("尋找到案件"+estabCase);
             PlanOrd planOrd = planOrdRepository.findById(estabCase.getPlanOrdID()).orElseThrow();
+            aa:
             for (int workSum = 0; workSum < 5; workSum++) {
                 List<Emp> empWorkSum = empRepository.findByWorkSum(workSum);
                 Collections.shuffle(empWorkSum);
-                System.out.println("empWorkSum" + empWorkSum);
+//                System.out.println("workSum"+workSum);
+//                System.out.println("empWorkSum" + empWorkSum);
+//                boolean a = false;
+                cc:
                 for (Emp emp : empWorkSum) {
                     if (!getEmpDateRange(emp).contains(estabCase.getEstabCaseDate().toLocalDate())) {
-                        System.out.println("contains" + emp.getEmpID());
-                        if ((planOrd.getTimeID()==emp.getTimeID()) && (Objects.equals(planOrd.getCityCode(), emp.getEmpArea1()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea2()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea3()))) {
+//                        System.out.println("contains" + emp.getEmpID());
+//                        System.out.println("planOrd.getTimeID()" + planOrd.getTimeID());
+//                        System.out.println("emp.getTimeID()" + emp.getTimeID());
+                        if (Objects.equals(planOrd.getTimeID(), planOrd.getTimeID())&& (Objects.equals(planOrd.getCityCode(), emp.getEmpArea1()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea2()) || Objects.equals(planOrd.getCityCode(), emp.getEmpArea3()))) {
                             estabCase.setEmpID(emp.getEmpID());
-                            System.out.println("Area" + emp.getEmpID());
+                            emp.setWorkSum((emp.getWorkSum()+1));
+//                            System.out.println("Area" + estabCase.getEstabCaseID());
+//                            System.out.println("Area" + emp.getEmpID());
+//                            System.out.println("Area" +(emp.getWorkSum()+1));
+//                            a = true;
+                            empRepository.save(emp);
                             estabCaseRepository.save(estabCase);
+                            break aa;
 
                         }
                     }
                 }
+//                if(a){
+//                    break ;
+//                }
             }
         }
 

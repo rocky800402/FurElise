@@ -105,12 +105,12 @@ function new_plan() {
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(data) {
 			let list_html = "";
-			for (let i = 3; i < data.length; i++) {
+			for (let i = 0; i < data.length; i++) {
 				list_html = `
                             <div class="col">
                                 <div class="p-3 border bg-light" style="text-align: center;">
                                     <p class="sl_plan_name">${data[i].planName}</p>
-                                    <img src="/images/product.png" alt="" width="90%">
+                                    <img src="/images/garbage.png" alt="" width="90%">
                                     <p>介紹還沒想</p>
                                 </div>
                             </div>
@@ -298,34 +298,29 @@ $(document).on("click", "#task_add", function() {
 		data: JSON.stringify(form_data),
 		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
 		success: function(item) {
-			alert("前往付款");
-			$("#task_discount").prop('disabled', true);
-			$("#task_discount").css('background-color', 'lightgray');
-			$("#task_discount").css('border-color', 'lightgray');
-			$(that).prop('disabled', true);
-			$(that).css('background-color', 'lightgray');
-			$(that).css('border-color', 'lightgray');
+			alert("訂購成功");
+			window.location.href = '/memPlanFront.html';
 			
-			$.ajax({
-			    type: "POST",
-			    url: "/ecpay/pay",
-			    data: JSON.stringify(item),
-			    headers: {
-			        "Content-Type": "application/json; charset=utf-8"  // 加入 Content-Type header
-			    },
-			    dataType: "json",  // 預期從伺服器接收到的資料類型
-			    success: function(response) {
-					console.log(response);
-					window.sessionStorage.setItem('paymentData', JSON.stringify(response));
-				   	console.log(window.sessionStorage.getItem('paymentData'));
-//				   	window.location.href = '/ecpay/paymentForm';
-					window.open('/ecpay/paymentForm', '_blank');
-			    },
-			    error: function(xhr) {
-			        alert("發生錯誤");
-			        location.reload();		        
-			    }
-			});			
+//			$.ajax({
+//			    type: "POST",
+//			    url: "/ecpay/pay",
+//			    data: JSON.stringify(item),
+//			    headers: {
+//			        "Content-Type": "application/json; charset=utf-8"  // 加入 Content-Type header
+//			    },
+//			    dataType: "json",  // 預期從伺服器接收到的資料類型
+//			    success: function(response) {
+//					console.log(response);
+//					window.sessionStorage.setItem('paymentData', JSON.stringify(response));
+//				   	console.log(window.sessionStorage.getItem('paymentData'));
+////				   	window.location.href = '/ecpay/paymentForm';
+//					window.open('/ecpay/paymentForm', '_blank');
+//			    },
+//			    error: function(xhr) {
+//			        alert("發生錯誤");
+//			        location.reload();		        
+//			    }
+//			});			
 
 		}, error: function(xhr) {         // request 發生錯誤的話執行
 			if (xhr.status === 400) {
@@ -349,46 +344,46 @@ $(document).on("click", "#task_add", function() {
 	});
 });
 
-//更改付款狀態
-$(document).on("click", "#task_next", function() {
-	var paymentDataString = sessionStorage.getItem('paymentData');
-	
-	var paymentData = JSON.parse(paymentDataString);
-	
-	var merchantTradeNo = paymentData.formData.MerchantTradeNo;
-	
-	console.log("quesr status, MerchantTradeNo: " + merchantTradeNo);
-
-	$.ajax({
-		url: "http://localhost:8080/ecpay/status", 
-		type: "GET", 
-		// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
-		data: { tradeNo: merchantTradeNo},
-		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-		success: function(item) {
-			if(item){
-				console.log('pay success')
-				$.ajax({
-					url: "http://localhost:8080/ecpay/updateStatus", 
-					type: "POST", 
-					// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
-					data: { tradeNo: merchantTradeNo, status: '210001'},
-					dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
-					success: function(item) {
-						
-					}
-				});
-				alert('該筆訂單付款已完成, 待實做後續功能')
-			}else{
-				console.log('pay fail')
-				alert('該筆訂單付款尚未完成付款')
-			}
-		}
-	});
-	
-
-
-});
+////更改付款狀態
+//$(document).on("click", "#task_next", function() {
+//	var paymentDataString = sessionStorage.getItem('paymentData');
+//	
+//	var paymentData = JSON.parse(paymentDataString);
+//	
+//	var merchantTradeNo = paymentData.formData.MerchantTradeNo;
+//	
+//	console.log("quesr status, MerchantTradeNo: " + merchantTradeNo);
+//
+//	$.ajax({
+//		url: "http://localhost:8080/ecpay/status", 
+//		type: "GET", 
+//		// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
+//		data: { tradeNo: merchantTradeNo},
+//		dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+//		success: function(item) {
+//			if(item){
+//				console.log('pay success')
+//				$.ajax({
+//					url: "http://localhost:8080/ecpay/updateStatus", 
+//					type: "POST", 
+//					// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
+//					data: { tradeNo: merchantTradeNo, status: '210001'},
+//					dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+//					success: function(item) {
+//						
+//					}
+//				});
+//				alert('該筆訂單付款已完成, 待實做後續功能')
+//			}else{
+//				console.log('pay fail')
+//				alert('該筆訂單付款尚未完成付款')
+//			}
+//		}
+//	});
+//	
+//
+//
+//});
 
 
 // =============

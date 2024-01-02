@@ -10,7 +10,8 @@
   <link rel="stylesheet" th:href="@{/css/backend_form.css}">
   <link rel="stylesheet" th:href="@{/css/backend_sidebar.css}">
   <link rel="stylesheet" th:href="@{/css/backend_ord_detail.css}">
-  <style type="text/css">/* disable button */
+  <style type="text/css">
+  /* disable button */
 .sl_btn_disable {
 	cursor: pointer;
 	--bs-btn-color: #9ac972;
@@ -93,8 +94,8 @@
                     <p>配送地址:</p><p th:text="${ordVO.address}"></p><br>
                     <p>付款方式:</p><p th:text="${ordVO.payment}"></p><br>
                     <p>寄送方式:</p><p th:text="${ordVO.deliver}"></p><br>
-                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd')}"></p><br>
-                    <p>出貨時間:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}"></p><br>
+                    <p>購買時間:</p><p th:text="${#dates.format(ordVO.ordDate, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
+						                    <p>出貨日期:</p><p th:text="${#dates.format(ordVO.deliverDate, 'yyyy-MM-dd')}"></p><br>
                 </div>
             </div>
 
@@ -116,9 +117,7 @@
             <select th:field="*{ordStatus}">
 			    <option th:value="0" th:selected="${ordVO.ordStatus == 0}" th:utext="處理中"></option>
 			    <option th:value="1" th:selected="${ordVO.ordStatus == 1}" th:utext="已寄出"></option>
-			</select>
-			
-<br>
+			</select><br>
 
             <!-- 提交表單的按鈕 -->
             <div class="row justify-content-start" style="display:inline-block;">

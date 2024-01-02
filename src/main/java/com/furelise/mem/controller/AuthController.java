@@ -63,6 +63,13 @@ public class AuthController {
         Emp emp = this.empAuthService.verify(dto, req);
         return new EmpVO(emp);
     }
+
+    @GetMapping("/emp/me")
+    public EmpVO empMe(HttpServletRequest req) {
+        Emp emp = (Emp) authService.validate(req, "emp");
+        System.out.println(emp);
+        return new EmpVO(emp);
+    }
     
     @PostMapping("/google-login")
 	public RedirectView googleLogin(@RequestBody String idTokenString, HttpServletRequest req) 

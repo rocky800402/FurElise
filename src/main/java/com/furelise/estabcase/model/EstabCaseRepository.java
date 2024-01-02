@@ -41,11 +41,15 @@ public interface EstabCaseRepository extends JpaRepository<EstabCase, Integer> {
             Integer estabCaseStatus
     );
 
-    List<EstabCase> findByEmpID(Integer empID);
+    List<EstabCase> findByPlanOrdID(Integer planOrdID);
 
 
-    @Query("SELECT e FROM EstabCase e WHERE e.estabCaseDate >= CURRENT_DATE AND e.estabCaseDate <= CURRENT_DATE + 2 AND e.takeStatus = 0")
+//    @Query("SELECT e FROM EstabCase e WHERE e.estabCaseDate >= CURRENT_DATE AND e.estabCaseDate <= CURRENT_DATE + 2 AND e.takeStatus = 0")
+//    List<EstabCase> findEstabCasesWithinLastTwoDaysAndTakeStatusZero();
+//    @Query(value = "SELECT e FROM EstabCase e WHERE e.estabCaseDate BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 2 DAY AND e.takeStatus = 0")
+    @Query(value = "SELECT * FROM estabcase WHERE (estabcase.estabCaseDate between CURRENT_DATE and DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY)) and estabcase.takeStatus=0", nativeQuery = true)
     List<EstabCase> findEstabCasesWithinLastTwoDaysAndTakeStatusZero();
+
     Page<EstabCase> findAllByTakeStatus(boolean takeStatus, Pageable pageable);
 
     List<EstabCase> findByEmpIDAndEstabCaseStatusOrderByEstabCaseEndDesc(Integer empID, Integer estabCaseStatus);

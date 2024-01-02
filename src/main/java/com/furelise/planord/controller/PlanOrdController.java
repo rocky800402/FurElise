@@ -126,6 +126,13 @@ public class PlanOrdController {
 		return planOrdSvc.getCity();
 	}
 	
+	// create times drop down menu (not in use)
+	@PostMapping("/planmall/times")
+	@ResponseBody
+	public List<Integer> getTimeByPlanName(@RequestBody Plan req){
+		return planOrdSvc.getTimeByPlanName(req.getPlanName());
+	}
+	
 	// verify member w/o planord on progress
 	@PostMapping("/planmall/checkenddate")
 	@ResponseBody

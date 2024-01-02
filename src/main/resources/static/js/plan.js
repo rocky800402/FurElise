@@ -62,12 +62,11 @@ $("button#task_add").on("click", function() {
 				// data: form_data, // 將物件資料(不用雙引號) 傳送到指定的 url
 				contentType: "application/json",
 				data: JSON.stringify(form_data),
-				//                dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+				dataType: "text", // 預期會接收到回傳資料的格式： json | xml | html
 				success: function(item) {
 					alert(item);
-					if (item == '新增成功') {
+					if(item == '新增成功')
 						location.reload();
-					}
 				},
 				error: function(xhr) {         // request 發生錯誤的話執行
 					if (xhr.status === 400) {
@@ -99,16 +98,22 @@ $(document).on("click", "input#del", function() {
 			beforeSend: function() {       // 在 request 發送之前執行
 			},
 			success: function(data) {
-				alert("刪除成功！");
-
-				$(that).closest('tr').animate({
-					"opacity": 0
-				}, 1000, "swing", function() {
-					$(this).remove();
-				});
+				alert(data);
+				if(data == '刪除成功') {
+					$(that).closest('tr').animate({
+						"opacity": 0
+					}, 1000, "swing", function() {
+						$(this).remove();
+					});
+				}
 			},
 			error: function(xhr) {         // request 發生錯誤的話執行
-				alert("不可刪除！");
+				var errorMessage = xhr.responseText;
+				 if (xhr.status === 500) {
+					alert('連線異常');
+				 } else {
+					alert(errorMessage);
+				 }
 			},
 			complete: function() {
 			}
@@ -141,22 +146,19 @@ $("button#task_update").on("click", function() {
 			// data: { "wayID": wayID, "wayName": wayName },                // 將物件資料(不用雙引號) 傳送到指定的 url
 			contentType: "application/json",
 			data: JSON.stringify(update_data),
-			dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-			beforeSend: function() {       // 在 request 發送之前執行
-			},
-
-			success: function(data) {//第一層子元素為li標籤
-				alert('更改成功');
+			dataType: "text",             // 預期會接收到回傳資料的格式： json | xml | html
+			success: function(item) {//第一層子元素為li標籤
+				alert(item);
+				if (item == '更新成功')
 				window.location.href = '/plan/';
 			},
 			error: function(xhr) {         // request 發生錯誤的話執行
 			var errorMessage = xhr.responseText;
-			console.log(xhr);
 				if (xhr.status === 400) {
 					alert(errorMessage);
 				} else if (xhr.status === 500) {
 					alert('連線異常');
-				} else if (xhr.status ===200) {
+				} else if (xhr.status === 200) {
 					alert('價格不可低於案件報酬');
 				}
 			}
