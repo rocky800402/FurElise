@@ -214,7 +214,7 @@ $(async function () {
                   4: '<div class="mem_ord_div_03"><p class="mem_p">已取消</p></div>'
                 }[ord.ordStatus]
               }
-            <button  onclick="onReturnClick(${ord.ordID})" class="btn btn-primary btn_feedback change_status btn_refund btn_off mb_bnt_close" type="submit">取消訂單</button>
+            <button  id="ord-status-btn${ord.ordID}" onclick="onReturnClick(${ord.ordID})" class="btn btn-primary btn_feedback change_status btn_refund btn_off mb_bnt_close" type="submit">取消訂單</button>
             </div>
         </div>
     </section>
@@ -225,6 +225,21 @@ $(async function () {
     $('.mb_content_main').html(renderHtml)
     // console.log("ord",mem);
 
+    function changeOrdStatus(){
+        for(let index = 0;index<memOrds.length;index++){
+            // console.log($(`#ord-status-${memOrds[index].ordID}`).attr("ordStatus"));
+            let memStatus = $(`#ord-status-${memOrds[index].ordID}`).attr("ordStatus");
+            let memStatusBtn ="#ord-status-btn"+memOrds[index].ordID;
+            if(memStatus!=0){
+                console.log(memStatusBtn);
+                $(memStatusBtn).addClass("mb_btn_none");
+            }else{
+                console.log(memStatusBtn);
+                $(memStatusBtn).removeClass("mb_btn_none");
+            }
+        }
+    }
+    changeOrdStatus();
 
     $(document).on("click", "span.star", function () {
         let current_star = parseInt($(this).attr("data-star"));
