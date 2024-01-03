@@ -98,14 +98,13 @@
     const empID = [[${empID}]];
     // console.log(empID);
 
-    var $j = jQuery.noConflict();
     var dataTable;//解決datatable在$(document).ready 才能生效的問題
     var myChart;//用於重新繪製長條圖，如果存在長條圖，將其丟棄重畫
     var yearSelect = document.getElementById("year");
     var monthSelect = document.getElementById("month");
     var currentYear = new Date().getFullYear();
-    $j(".footerPage").load("/footer.html");
-    $j(".empSidebarPage").load("/empSidebar.html");
+    $(".footerPage").load("/footer.html");
+    $(".empSidebarPage").load("/empSidebar.html");
 
     // 年份與月份選單
     for (var i = currentYear; i >= currentYear - 10; i--) {
@@ -123,11 +122,11 @@
     }
 
 
-    $j(document).ready(function () {
+    $(document).ready(function () {
 
 
         console.log("這裡的ID是:",empID);
-        dataTable = $j('#example').DataTable({
+        dataTable = $('#example').DataTable({
             /*設定屬性(預設功能)區塊*/
             "searching": false,// 預設為true 搜尋功能，若要開啟不用特別設定
             "ajax": {
@@ -169,7 +168,7 @@
             myChart.destroy();
         }
 
-        $j("#displaycontroller").hide();
+        $("#displaycontroller").hide();
         // 獲取選擇的年份和月份
         var selectedYear = yearSelect.value;
         var selectedMonth = monthSelect.value;
@@ -253,7 +252,7 @@
                 console.error('錯誤:', error);
             });
 
-        $j.ajax({
+        $.ajax({
             url: '/income/summary',  // 替換成你的後端 API 路徑
             type: 'GET',
             data: {
@@ -262,7 +261,7 @@
             },
             dataType: 'json',
             beforeSend: function () {
-                $j("#displaycontroller").hide();
+                $("#displaycontroller").hide();
             },
             success: function (responseData) {
                 // 在這裡處理後端返回的數據
@@ -323,7 +322,7 @@
                     }
                 });
 
-                $j("#displaycontroller").show();
+                $("#displaycontroller").show();
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
