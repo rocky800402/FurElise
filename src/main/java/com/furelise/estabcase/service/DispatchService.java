@@ -38,12 +38,18 @@ public class DispatchService {
         for (EstabCase estabCase : estabCaseList) {
 //            System.out.println("尋找到案件"+estabCase);
             PlanOrd planOrd = planOrdRepository.findById(estabCase.getPlanOrdID()).orElseThrow();
+            if(estabCase.getEmpID()!=null){
+
+                Emp emp = empRepository.findById(estabCase.getEmpID()).orElseThrow();
+                emp.setWorkSum(emp.getWorkSum()-1);
+                empRepository.save(emp);
+            }
             aa:
             for (int workSum = 0; workSum < 5; workSum++) {
                 List<Emp> empWorkSum = empRepository.findByWorkSum(workSum);
                 Collections.shuffle(empWorkSum);
 //                System.out.println("workSum"+workSum);
-//                System.out.println("empWorkSum" + empWorkSum);
+                System.out.println("empWorkSum" + empWorkSum);
 //                boolean a = false;
                 cc:
                 for (Emp emp : empWorkSum) {
