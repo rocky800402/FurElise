@@ -125,7 +125,7 @@ function init() {
                     <p class="mb_plan_contact_tel"><span>連絡電話 : </span>${data.contactTel}</p>
                     <div class="mb_mem_info_03">
                         <p class="mb_plan_floor"><span>收取地址 : </span><span
-                                class="mb_plan_city">104</span>${data.cityCode}${data.cityName}${data.floor}</p>
+                                class="mb_plan_city"></span>${data.cityCode}${data.cityName}${data.floor}${data.pickupStop}</p>
                         <div class="my_plan_info_btn d-grid gap-2 d-md-block">
                             <button class="btn mb_plan_Update_btn mb_update_01 rounded-pill"
                                  data-bs-toggle="modal" data-bs-target="#exampleModal-dd"
