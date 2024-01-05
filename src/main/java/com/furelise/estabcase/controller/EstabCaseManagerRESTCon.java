@@ -37,32 +37,6 @@ public class EstabCaseManagerRESTCon {
         return Collections.emptyList();
     }
 
-//    @GetMapping({"/", "/{empID}"})
-//    @ResponseBody
-//    public List<EmpCaseManageVO> backEndEstabcase1(
-//            @PathVariable(name = "empID", required = false) Integer empID,
-//            @PathVariable(name = "estabCaseStatus", required = false) Integer estabCaseStatus,
-//            ModelMap model) {
-//        List<EmpCaseManageVO> estabCase = empCaseManageService.getEmpEstabCase(empID, estabCaseStatus);
-//
-//        if (estabCase != null) {
-//
-//            if (estabCaseStatus != null) {
-//                List<EmpCaseManageVO> filteredList = estabCase.stream()
-//                        .filter(empCase -> empCase.getEstabCaseStatus().equals(estabCaseStatus))
-//                        .collect(Collectors.toList());
-//
-//
-//                return filteredList;
-//            } else {
-//                // estabCaseStatus
-//                return estabCase;
-//            }
-//        } else {
-//            // estabCase
-//            return Collections.emptyList();
-//        }
-//    }
 
 
     @PostMapping("/updateCaseStatus")

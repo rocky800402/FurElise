@@ -11,11 +11,8 @@ import com.furelise.planord.model.PlanOrdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-
 @Service
-public class EmpCompletedCaseServer {
+public class EmpCompletedCaseService {
 
     @Autowired
     EstabCaseRepository estabCaseRepository;

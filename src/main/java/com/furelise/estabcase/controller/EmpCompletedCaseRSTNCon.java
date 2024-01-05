@@ -1,7 +1,6 @@
 package com.furelise.estabcase.controller;
 
-import com.furelise.estabcase.empcasemanage.EmpCaseManageVO;
-import com.furelise.estabcase.empcasemanage.EmpCompletedCaseServer;
+import com.furelise.estabcase.empcasemanage.EmpCompletedCaseService;
 import com.furelise.estabcase.empcasemanage.EmpCompletedCaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -15,15 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmpCompletedCaseRSTNCon {
 
     @Autowired
-    EmpCompletedCaseServer empCompletedCaseServer;
+    EmpCompletedCaseService empCompletedCaseServer;
 
     @GetMapping("/{estabcaesID}")
     public EmpCompletedCaseVO goCompletedPage(@PathVariable(name = "estabcaesID") Integer estabcaesID, ModelMap model) {
-
-//        EmpCompletedCaseVO empCaseManageVO = null;
-//        model.addAttribute("estabcaesID",estabcaesID);
-//        empCompletedCaseServer.showCompletedCase(estabcaesID);
-
 
         return empCompletedCaseServer.showCompletedCase(estabcaesID);
     }

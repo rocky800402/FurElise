@@ -23,24 +23,11 @@ public class EmpOngoingCaseRSTNCon {
     @Autowired
     private EmpOngoingCaseService empOngoingCaseService;
 
-//    @PostMapping("/{estabCaseID}")
-//    public EstabCase uploadFile(@PathVariable Integer estabCaseID,
-//                                @RequestParam MultipartFile file,
-//                                ModelMap model) throws IOException {
-//
-////        EmpOngoingCaseVO empOngoingCase = (EmpOngoingCaseVO) model.getAttribute("empOngoingCase");
-////        EstabCase estabCase = estabCaseRepository.findById(empOngoingCase.getEstabCaseID()).orElseThrow();
-//        EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElseThrow();
-//        estabCase.setEstabCasePic(file.getBytes());
-//        return estabCaseRepository.save(estabCase);
-//    }
 
     @PostMapping("/{estabCaseID}")
     public EstabCase uploadFile(@PathVariable Integer estabCaseID,
                                 @RequestParam MultipartFile file) throws IOException {
 
-//        EmpOngoingCaseVO empOngoingCase = (EmpOngoingCaseVO) model.getAttribute("empOngoingCase");
-//        EstabCase estabCase = estabCaseRepository.findById(empOngoingCase.getEstabCaseID()).orElseThrow();
         EstabCase estabCase = estabCaseRepository.findById(estabCaseID).orElseThrow();
         estabCase.setEstabCasePic(file.getBytes());
         estabCase.setEstabCaseStatus(1);//設定案件狀態

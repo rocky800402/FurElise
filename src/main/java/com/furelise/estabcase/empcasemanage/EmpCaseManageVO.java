@@ -17,17 +17,7 @@ public class EmpCaseManageVO {
     private String cityName;
     private Boolean takeStatus;
     private Integer estabCaseStatus;// 案件狀況 estabCase => estabCaseStatus 狀態:0(進行中)，2(逾時) 在進行中案件。1(完成收取)在下面
-//
-//    private String cityName;//郵遞區號+地區
-//    // 案件資訊 planOrd => 抓以下資料
-//    // 案件編號 收取日期 收取區間 收取地址 收區方式 垃圾量
 
-//    private BigDecimal planPricePerCase;//方案收入
-
-//    private String cityCode;
-//    private String floor;
-//    private Integer empID;
-//    private List<EstabCase> estabCaseList;
 
     public EmpCaseManageVO() {
     }
