@@ -203,7 +203,7 @@ function init() {
                                                 <!-- 方案及商品基本資料 -->
                                                 <label  class="col-form-label mb_modal_label">收取日期 : ${estabCaseDate}</label>
                                                 <label  class="col-form-label mb_modal_label">時段 : ${data.timeRange}</label>
-                                                <label  class="col-form-label mb_modal_label">收取員編號 : ${item.empID}</label>
+                                                <label  class="col-form-label mb_modal_label">收取員編號 : ${item.empID == null ? "尚未派單":item.empID}</label>
                                             </div>
                                                 <!-- 會員名稱 -->
                                             <label  class="col-form-label mb_mem_name">${data.memName}</label>
@@ -246,7 +246,7 @@ function init() {
                                                 <!-- 方案及商品基本資料 -->
                                                 <label  class="col-form-label mb_modal_label">收取日期 : ${estabCaseDate}</label>
                                                 <label  class="col-form-label mb_modal_label">時段 : ${data.timeRange}</label>
-                                                <label  class="col-form-label mb_modal_label">收取員編號 : ${item.empID}</label>
+                                                <label  class="col-form-label mb_modal_label">收取員編號 : ${item.empID == null ? "尚未派單":item.empID}</label>
                                             </div>
                                         
                                             <div class="mb-3">

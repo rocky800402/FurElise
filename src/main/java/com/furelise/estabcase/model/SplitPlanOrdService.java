@@ -63,7 +63,7 @@ public class SplitPlanOrdService {
         // 複製起始日期並設定結束日期
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(planStartDate);
-        calEnd.add(Calendar.DATE, (period*(28+1)));
+        calEnd.add(Calendar.DATE, (period*(28)));
 
         // 測試區間日期指定禮拜產製日期
 //		getWeekBetweenDates(calStart, calEnd, "2");
