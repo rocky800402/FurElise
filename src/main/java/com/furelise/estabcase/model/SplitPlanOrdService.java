@@ -58,7 +58,7 @@ public class SplitPlanOrdService {
 
         // 顯示開始計劃日期
 //		String sdfstr2 = sdf.format(planStartDate);
-//		System.out.println(sdfstr2);
+//		
 
         // 複製起始日期並設定結束日期
         Calendar calEnd = Calendar.getInstance();
@@ -74,12 +74,12 @@ public class SplitPlanOrdService {
 
         // 顯示結束計劃日期
 //		String sdfstr = sdf.format(planEndDate);
-//		System.out.println(sdfstr);
+//		
 
         // 取得指定星期的日期列表
         List<java.util.Date> list = getWeekBetweenDates(calStart, calEnd, day);
 //		for (java.util.Date date : list) {
-//			System.out.println(date);
+//			
 //		}
 
         return list;

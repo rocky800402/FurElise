@@ -102,7 +102,7 @@ public class VerificationController {
 			}
 			
 			String code = memSvc.returnAuthCode(); // 產生驗證碼
-			System.out.println("Auth code is: " + code);
+			
 
             // 存入Redis
             redisTemplate.opsForValue().set("MemMail:" + email, code, Duration.ofMinutes(10));

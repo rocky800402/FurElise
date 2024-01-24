@@ -137,7 +137,7 @@ public class RegisterController {
 
 			// ===資料正確，寄發驗證碼信件給電子信箱===
 			String code = memSvc.returnAuthCode(); // 產生驗證碼
-			System.out.println("Auth code is: " + code);
+			
 
 			// 存入Redis
 			redisTemplate.opsForValue().set("MemMail:" + email, code, Duration.ofMinutes(10));

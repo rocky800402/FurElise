@@ -48,16 +48,16 @@ public class BackendEstabCaseService {
         List<BackendEstabCaseVO> listB = new ArrayList<>();
         PageRequest pageReq = PageRequest.of((page-1), limit, Sort.by("takeStatus").descending());
         Page<EstabCase> listE = estabCaseR.findAllByTakeStatus(takeStatus, pageReq);
-//        System.out.println("listE.getTotalElements()");
-//        System.out.println(listE.getTotalElements());
-//        System.out.println("listE.getTotalPages()");
-//        System.out.println(listE.getTotalPages());
+//        
+//        
+//        
+//        
 
         for (EstabCase eC : listE) {
-            System.out.println(eC);
+            
             BackendEstabCaseVO backendVO = new BackendEstabCaseVO();
             PlanOrd planOrd = planOrdR.findById(eC.getPlanOrdID()).orElseThrow();
-            System.out.println(planOrd);
+            
             Plan plan = planR.findById(planOrd.getPlanID()).orElseThrow();
             City city = cityR.findByCityCode(planOrd.getCityCode());
             backendVO.setEstabCaseID(eC.getEstabCaseID());
@@ -78,7 +78,7 @@ public class BackendEstabCaseService {
             listB.add(backendVO);
         }
 
-//        System.out.println(listB);
+//        
 
         return listB;
     }

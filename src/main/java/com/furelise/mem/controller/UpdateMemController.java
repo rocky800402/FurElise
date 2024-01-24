@@ -46,13 +46,13 @@ public class UpdateMemController {
 	    model.addAttribute("mem", mem);
 		
 	    
-//	    System.out.println(name);
-//	    System.out.println(tel);
-//	    System.out.println(birth);
-//	    System.out.println(email);
-//	    System.out.println(newPass);
-//	    System.out.println(cfmPass);
-//	    System.out.println(mem);
+//	    
+//	    
+//	    
+//	    
+//	    
+//	    
+//	    
 	    
 	    
 		

@@ -190,7 +190,7 @@ public class EstabCaseService {
 
 			List<java.util.Date> list = splitPlanOrdS.getSplitPlanOrd(String.valueOf(threeDaysLater),period.getPlanPeriod() , memPlanDTO.getDay());
 			int counts = estabCaseR.countByPlanOrdIDAndEstabCaseDateGreaterThanEqual(memPlanDTO.getPlanOrdID(), Date.valueOf(threeDaysLater));
-			System.out.println(counts);
+			
 			int count=0;
 
 				for (java.util.Date date : list) {

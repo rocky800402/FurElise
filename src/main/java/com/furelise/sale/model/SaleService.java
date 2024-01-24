@@ -59,7 +59,7 @@ public class SaleService {
 		String result = "";
 		// if sale in active
 		List<Sale> saleList = dao.findActiveSalesWithCoupon(coupon);
-		System.out.println(saleList);
+		
 		if (saleList.isEmpty())
 			result = "折扣碼不存在";
 		// if total >= disRequire

@@ -51,9 +51,9 @@ public class ProductBackenController {
 	@PostMapping("/add")
 	public String productSubmit(@Valid Product product, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-	        System.out.println("Validation errors:");
+	        
 	        for (ObjectError error : result.getAllErrors()) {
-	            System.out.println(error);
+	            
 	        }
 			return "b-product-add";
 		} else {

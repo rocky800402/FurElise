@@ -33,7 +33,7 @@ public class EditMemController {
 	@PostMapping("/update")
 	public String update(@RequestParam Integer memID , Model model) {
 		Mem mem = memSvc.getOneMem(memID);
-		System.out.println(mem);
+		
 		model.addAttribute("mem",mem);
 		return "f_membackend";
 	}
@@ -58,8 +58,8 @@ public class EditMemController {
 
 	@PostMapping("/emp.do")
 	public String createMem(@RequestBody Mem mem, HttpServletRequest req) {
-//		System.out.println("here");
-		System.out.println(mem);
+//		
+		
 		
 // 		req.getParameter("memName") -> mem.getXX
 		

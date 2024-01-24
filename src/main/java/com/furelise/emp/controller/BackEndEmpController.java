@@ -51,7 +51,7 @@ public class BackEndEmpController {
 	
 	@PostMapping("/check") //修改欄位按下送出
 	public String check(@RequestParam Integer empID , Model model) {
-		System.out.println(empID);
+		
 		Emp emp = empSvc.getOneEmp(empID);
 		
 		model.addAttribute("emp",emp);

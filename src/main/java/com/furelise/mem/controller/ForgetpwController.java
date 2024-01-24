@@ -50,8 +50,8 @@ public class ForgetpwController {
 		String empMsgs = null;
 		String resetMsgs = null;
 		
-//		System.out.println(memMail);
-//		System.out.println(empMail);
+//		
+//		
 		session.setAttribute("memMail", memMail);
 		session.setAttribute("empMail", empMail);
 		
@@ -106,8 +106,8 @@ public class ForgetpwController {
 		String memMail = (String) session.getAttribute("memMail");
 		String empMail = (String) session.getAttribute("empMail");
 		
-		System.out.println(memMail);
-		System.out.println(empMail);
+		
+		
 		
 		// ===錯誤驗證；新密碼與確認密碼必須相同===
 		if (!newPW.equals(cfmPW)) {

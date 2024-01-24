@@ -28,24 +28,24 @@
 //    @Override
 //    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
 //            throws ServletException, IOException {
-//        System.out.println("LoginFilter");
+//        
 //        // 取得 session
 //        HttpSession session = req.getSession();
 //
 //        // 從 session 判斷此 user 是否登入過
 //        Object account = session.getAttribute("account");
-//        System.out.println("filter account");
-//        System.out.println(account);
+//        
+//        
 //        if (account == null) {
 //            // 如果未登入，將當前請求的路徑存入 session，然後重導向至登入頁面
 //            session.setAttribute("location", req.getRequestURI());
 //            resp.sendRedirect(req.getContextPath() + "/login");
-//            System.out.println("LoginFilter2");
+//            
 //            return;
 //        } else {
 //            // 如果已登入，繼續執行過濾器鏈
 //            filterChain.doFilter(req, resp);
-//            System.out.println("LoginFilter3");
+//            
 //        }
 //    }
 //

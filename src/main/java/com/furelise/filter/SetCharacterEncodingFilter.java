@@ -19,9 +19,9 @@ public class SetCharacterEncodingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-//        System.out.println("SetCharacterEncodingFilter1");
+//        
         request.setCharacterEncoding(encoding);
         filterChain.doFilter(request, response);
-//        System.out.println("SetCharacterEncodingFilter2");
+//        
     }
 }
