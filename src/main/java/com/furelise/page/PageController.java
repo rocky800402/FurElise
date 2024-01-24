@@ -54,7 +54,7 @@ public class PageController {
 	@ResponseBody
 	public ResponseEntity<String> updateStatus(String tradeNo,  String status) {
 		
-		System.out.println("ecpay/updateStatus get request: " + tradeNo + ", " + status);
+		
 		try {
 			ecpayService.setOrderStatus(tradeNo, status);
 			return ResponseEntity.ok("update status success");
@@ -95,7 +95,7 @@ public class PageController {
 		stringBuilder.append("TradeDate: ").append(tradeDate);
 		stringBuilder.append("SimulatePaid: ").append(simulatePaid);
 
-		System.out.println(stringBuilder.toString());
+		
 
 		return "1|OK";
 	}
@@ -103,7 +103,7 @@ public class PageController {
 	@PostMapping("/pay")
 	@ResponseBody
 	public EcpayDto startPay(@Valid @RequestBody PlanOrdDTO dto, Model model) {
-		System.out.println("/ecpay/pay get request: "+dto);
+		
 		AllInOne all = new AllInOne("");
 		AioCheckOutALL obj = new AioCheckOutALL();
 		// 填入必要的資料
@@ -132,7 +132,7 @@ public class PageController {
 //	@PostMapping("/pay-ord")
 //	@ResponseBody
 //	public EcpayDto startPayForOrdDTO(@Valid @RequestBody OrdDTO dto, Model model) {
-//		System.out.println("/ecpay/pay get request: "+dto);
+//		
 //		AllInOne all = new AllInOne("");
 //		AioCheckOutALL obj = new AioCheckOutALL(); 
 //		// 填入必要的資料

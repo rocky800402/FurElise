@@ -140,7 +140,7 @@ public class MemService {
 		// (Receive idTokenString by HTTPS POST)
 
 		String idTokenStr = idTokenString.split("credential=")[1].split("&g_csrf_token")[0];
-		System.out.println("idTokenStr = " + idTokenStr);
+		
 		GoogleIdToken idToken = verifier.verify(idTokenStr);
 
 		return idToken;

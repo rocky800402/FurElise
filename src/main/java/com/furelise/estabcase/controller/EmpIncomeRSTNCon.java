@@ -52,7 +52,7 @@ public class EmpIncomeRSTNCon {
             @RequestBody Map<String, Integer> params
     ) {
 
-        System.out.println(params);
+        
 
         int empID = params.get("empID");
         int year = params.get("year");

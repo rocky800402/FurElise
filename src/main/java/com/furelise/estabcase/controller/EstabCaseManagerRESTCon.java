@@ -72,10 +72,10 @@ public class EstabCaseManagerRESTCon {
         EstabCase estabCase = null;
         if (!action.isEmpty()) {
             if ("accept".equals(action)) {
-                System.out.println("接受");
+                
                 estabCase = empCaseManageService.updateEstabCase(estabCaseID, true, 0);
             } else if ("reject".equals(action)) {
-                System.out.println("拒絕");
+                
                 estabCase = empCaseManageService.setNullForEmpID(estabCaseID, false, 3);
             }
         }

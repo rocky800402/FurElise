@@ -54,7 +54,7 @@ public class AuthController {
     @GetMapping("/mem/me")
     public MemVO memMe(HttpServletRequest req) {
         Mem mem = (Mem) authService.validate(req, "mem");
-        System.out.println(mem);
+        
         return new MemVO(mem);
     }
 
@@ -67,7 +67,7 @@ public class AuthController {
     @GetMapping("/emp/me")
     public EmpVO empMe(HttpServletRequest req) {
         Emp emp = (Emp) authService.validate(req, "emp");
-        System.out.println(emp);
+        
         return new EmpVO(emp);
     }
     
@@ -75,7 +75,7 @@ public class AuthController {
 	public RedirectView googleLogin(@RequestBody String idTokenString, HttpServletRequest req) 
 					throws GeneralSecurityException, IOException {
 		
-	    System.out.println("Received ID token: " + idTokenString);
+	    
 	    
 		GoogleIdToken idToken = memService.googleVerify(idTokenString);
 		
@@ -84,19 +84,19 @@ public class AuthController {
 			
 //			for (String claimName : payload.keySet()) {
 //			    Object value = payload.get(claimName);
-//			    System.out.println(claimName + ": " + value);
+//			    
 //			}
 
 			// Print user identifier
 			String userId = payload.getSubject();
-			System.out.println("User ID: " + userId);
+			
 
 			// Get profile information from payload
 			String email = payload.getEmail();
 			String name = (String) payload.get("name");
 			
-			System.out.println("Email: " + email);
-            System.out.println("Name: " + name);
+			
+            
             
 			// Use or store profile information
             // Use email to search if this email already has an account
@@ -116,7 +116,7 @@ public class AuthController {
     			return new RedirectView("/login-google");
             }
 		} else {
-			System.out.println("Invalid ID token.");
+			
 			return new RedirectView("/login");
 		}
 	}
@@ -125,7 +125,7 @@ public class AuthController {
     public void memLogout(HttpServletRequest req) {
     	HttpSession session = req.getSession();
 		session.invalidate();
-        System.out.println("aaaa");
+        
     }
     
     @GetMapping("/logout/emp")

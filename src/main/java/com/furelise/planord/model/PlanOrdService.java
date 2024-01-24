@@ -62,7 +62,7 @@ public class PlanOrdService {
 
 		PlanOrd createPlanOrd =dao.save(planOrd);
 
-		System.out.println(planOrd);
+		
 		//猜單
 		Plan plan = planDao.findById(createPlanOrd.getPlanID()).orElseThrow();
 		Period period = periodDao.findById(createPlanOrd.getPeriodID()).orElseThrow();
@@ -264,7 +264,7 @@ public class PlanOrdService {
 
 //	取得各方案可選的收取次數
 	public List<Integer> getTimeByPlanName(String planName){
-		System.out.println(planName);
+		
 		return planDao.findTimeByPlanName(planName);
 	}
 

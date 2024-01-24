@@ -121,14 +121,14 @@ public class GlobalExceptionHandler {
 
 //	@ModelAttribute
 //	public void modelAttribute(Model model) {
-//		//System.out.println("1111111111........................作用到所有@RequestMapping注解方法，在其執行之前，把值放入Model(for global model attributes addition)");
+//		//
 //		model.addAttribute("msg", "歡迎 to TibaMe!");
 //	}
 //
 //
 //	@InitBinder
 //	public void initBinder(WebDataBinder webDataBinder) {
-//		//System.out.println("2222222222........................作用到所有@RequestMapping注解方法，在其執行之前，初始化數据綁定器(for global init binding)");
+//		//
 //		webDataBinder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
 //	}
 //
@@ -136,10 +136,10 @@ public class GlobalExceptionHandler {
 //	// for 所有「一般」報錯用 --> 如交由"error/error.jsp"統報錯用
 //	@ExceptionHandler(value = Exception.class)
 //    public ModelAndView exceptionHandler(HttpServletRequest req, Exception e) {
-//		//System.out.println("3333333333........................作用到所有@RequestMapping注解的方法，在其拋出Exception異常時執行(for global exception handling)");
+//		//
 //		String errorMessage = e.getMessage();
 //		String requestURL="error/error"; // --> 如交由"error/error.jsp"統ㄧ報錯用
-//		//System.out.println("(來自GlobalExceptionHandler.java)"+"requestURL="+requestURL);
+//		//
 //		return new ModelAndView(requestURL, "errorMessage", "請修正以下錯誤<br><b><font color=red>(訊息統一來自GlobalExceptionHandler.java):</font color=red></b><br>"+errorMessage);
 //    }
 //
@@ -152,10 +152,10 @@ public class GlobalExceptionHandler {
 //	    for (ConstraintViolation<?> violation : violationsSet ) {
 //	          sb.append(violation.getMessage() + "<br>");
 //	    }
-//	    //System.out.println("3333333333........................作用到所有@RequestMapping注解的方法，在其拋出Exception異常時執行(for global exception handling)");
+//	    //
 //	    String errorMessage = sb.toString();
 //	    String requestURL=req.getParameter("requestURL"); // --> 如返回"emp/select_page.jsp"報錯用
-//	    //System.out.println("(來自GlobalExceptionHandler.java)"+"requestURL="+requestURL);
+//	    //
 //	    return new ModelAndView(requestURL, "errorMessage", "(輸入格式不正確)請修正以下錯誤<br><b><font color=red>(訊息統一來自GlobalExceptionHandler.java):</font color=red></b><br>"+errorMessage);
 //	}
 //
@@ -163,10 +163,10 @@ public class GlobalExceptionHandler {
 //	// for 所有「上傳」報錯用 --> 如返回"upload/upload_Test.jsp"報錯用
 //	@ExceptionHandler(MultipartException.class)
 //    public ModelAndView exceptionHandler(MultipartException e) {
-//		//System.out.println("3333333333........................作用到所有@RequestMapping注解的方法，在其拋出Exception異常時執行(for global exception handling)");
+//		//
 //		String errorMessage = e.getMessage();
 //		String requestURL="upload/upload_Test"; // --> 如返回"upload/upload_Test.jsp"報錯用
-//		//System.out.println("(來自GlobalExceptionHandler.java)"+"requestURL="+requestURL);
+//		//
 //		return new ModelAndView(requestURL, "errorMessage", "(上傳失敗)請修正以下錯誤<br><b><font color=red>(訊息統一來自GlobalExceptionHandler.java):</font color=red></b><br>"+errorMessage);
 //    }
 

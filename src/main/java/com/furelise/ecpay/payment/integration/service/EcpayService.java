@@ -66,9 +66,9 @@ public class EcpayService {
 		AllInOne all = new AllInOne("");
 		String response = all.queryTradeInfo(queryTradeInfoObj);
 		EcpayQueryDto ecpayQueryDto = convertFormDataToDTO(response);
-		System.out.println("check order status: " + ecpayQueryDto);
+		
 		if ("1".equals(ecpayQueryDto.getTradeStatus())) {
-			System.out.println();
+			
 			flagBoolean = true;
 		}
 		

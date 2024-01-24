@@ -275,10 +275,10 @@ public class PlanOrdPayService {
 //	private BigDecimal getPlanPrice(Integer planID, Integer periodID) {
 //		// 拿月數
 //		Integer planPeriod = getPeriod(periodID);
-//		System.out.println("planPeriod: " + planPeriod);
+//		
 //		// 拿到方案
 //		Plan plan = planDao.findById(planID).get();
-//		System.out.println(plan);
+//		
 //		// 方案價格*月數
 //		return plan.getPlanPrice().multiply(new BigDecimal(planPeriod));
 //	}

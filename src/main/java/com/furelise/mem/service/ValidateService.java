@@ -37,7 +37,7 @@ public class ValidateService {
 		if (resetMem != null) {
 			// ===1. 創建token並存入資料庫===
 			String token = UUID.randomUUID().toString().replace("-", "");
-			System.out.println("email: " + email + "/n" + "token: " + token);
+			
 			// 存進redis，設定token有效時間30分鐘
 			redisTemplate.opsForValue().set("ResetMail:" + email, token, Duration.ofMinutes(30));
 			// ===2. 寄發重設密碼信件===
@@ -45,7 +45,7 @@ public class ValidateService {
 			sendResetPWToken(email, urlWithToken);
 			
 		} else {
-			System.out.println("resetMem is null");
+			
 		}
 		
 	}

@@ -26,11 +26,11 @@ public class MemEstabCaseController {
 
 	@GetMapping
 	public MemEstabCaseVO getAllMemEstabCase( HttpServletRequest req){
-//		System.out.println(req);
-//		System.out.println(req.getSession());
+//		
+//		
 		Mem mem = (Mem) authService.validate(req, "mem");
-//		System.out.println("mem");
-//		System.out.println(mem);
+//		
+//		
 		PlanOrd planOrd = planOrdRepository.findByMemIDAndPlanStatusID(mem.getMemID(), 210001);
         return estabCaseService.getMemEstabCase(planOrd.getPlanOrdID());
 	}
@@ -39,7 +39,7 @@ public class MemEstabCaseController {
 //	@GetMapping("/{id}/{no}")
 //	public List<EstabCase> getAllEstabCases(@PathVariable String id, @PathVariable String no){
 //		List<EstabCase> estabCaseList = estabCaseService.getAllEstabCase();
-//		System.out.println(estabCaseList);
+//		
 //		return estabCaseList;
 //	}
 
